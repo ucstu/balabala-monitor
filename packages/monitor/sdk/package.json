@@ -1,0 +1,13 @@
+{
+  "name": "@balabala/monitor-sdk",
+  "description": "SDK for monitoring and reporting",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "types": "types/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.umd.json"
+  }
+}

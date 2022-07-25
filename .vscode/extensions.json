@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "eamodio.gitlens",
+    "syler.sass-indented",
+    "esbenp.prettier-vscode",
+    "sdras.vue-vscode-snippets",
+    "EditorConfig.EditorConfig",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.npm-intellisense",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

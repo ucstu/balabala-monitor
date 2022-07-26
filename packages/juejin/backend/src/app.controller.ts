@@ -14,5 +14,4 @@ export class AppController {
   gettest(): string {
     return "简单测试是否正常使用";
   }
-
 }

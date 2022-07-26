@@ -9,4 +9,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get("/123")
+  gettest(): string {
+    return "简单测试是否正常使用";
+  }
+
 }

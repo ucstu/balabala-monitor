@@ -27,9 +27,9 @@ export class AuthService {
    * @param token  请求头token
    * @returns 校验成功返回 载荷体 Payload,校验失败返回false
    */
-  validate(token: string): boolean | Payload {
+  validate(token: string): null | Payload {
     try {
-      const result:Payload = this.jwtService.verify(token);
+      const result: Payload = this.jwtService.verify(token);
       return result;
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
@@ -39,7 +39,7 @@ export class AuthService {
         //  无效 token
         console.error("无效token");
       }
-      return false;
+      return null;
     }
   }
 }

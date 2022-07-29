@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthService } from "src/auth/auth.service";
 import { Article } from "src/entity/article.entity";
-import { responseRust } from "src/entity/responseRust";
-import { QueryBuilder, Repository } from "typeorm";
 import { Payload } from "src/entity/payload";
+import { responseRust } from "src/entity/responseRust";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class ArticleService {
@@ -69,5 +69,34 @@ export class ArticleService {
     return rust.error();
   }
 
+  //根据id查询文章
+
+  async selectById(articleId: string) {
+    const rust = new responseRust();
+    const data = await this.articleMapper
+      .createQueryBuilder()
+      .where("article_Id=:id", { id: articleId })
+      .getOne();
+    return rust.success_data(data);
+  }
+
   //查询所有文章 （可能会有类别）
+  async select_class_page(
+    type_class: number,
+    page: number,
+    size: number,
+    sort: "ASC" | "DESC"
+  ) {
+    const rust = new responseRust();
+    const sql = this.articleMapper.createQueryBuilder();
+    if (type_class != 0) {
+      sql.where("article_class=:type_class", { type_class });
+    }
+    const data = await sql
+      .skip((page - 1) * size)
+      .take(size)
+      .addOrderBy("created_at", sort)
+      .getMany();
+    return rust.success_data(data);
+  }
 }

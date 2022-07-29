@@ -1,44 +1,27 @@
-type PerformanceEntryHandler = (entry: PerformanceEntry) => void;
+type PerformanceEntryHandler = (
+  entry: PerformanceEntry,
+  stop?: () => void
+) => void;
 
-const performanceEntryHandlersMap: Map<
+const performanceEntryHandlers: Map<
   string,
   Array<PerformanceEntryHandler>
 > = new Map();
 
-const performanceObserverEntryHandler = (
-  list: PerformanceObserverEntryList
+const performanceObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    performanceEntryHandlers.get(entry.entryType)?.forEach((handler, index) => {
+      handler(entry, () => {
+        performanceEntryHandlers.get(entry.entryType)?.splice(index, 1);
+      });
+    });
+  });
+});
+
+export const observerPerformance = (
+  init: PerformanceObserverInit,
+  handler: PerformanceEntryHandler
 ) => {
-  for (const entry of list.getEntries()) {
-    performanceEntryHandlersMap
-      .get(entry.name)
-      ?.forEach((handler) => handler(entry));
-  }
-};
-
-const _performanceObserver = new PerformanceObserver(
-  performanceObserverEntryHandler
-);
-
-export const performanceObserver:
-  | PerformanceObserver
-  | {
-      observe: (
-        options: PerformanceObserverInit,
-        handler: PerformanceEntryHandler
-      ) => void;
-    } = {
-  ..._performanceObserver,
-  observe: (
-    options: PerformanceObserverInit,
-    handler: PerformanceEntryHandler
-  ) => {
-    if (options.type !== undefined) {
-      if (!performanceEntryHandlersMap.has(options.type)) {
-        performanceEntryHandlersMap.set(options.type, [handler]);
-      } else {
-        performanceEntryHandlersMap.get(options.type)?.push(handler);
-      }
-    }
-    _performanceObserver.observe(options);
-  },
+  init.type && performanceObserver.observe(init);
+  init.type && performanceEntryHandlers.get(init.type)?.push(handler);
 };

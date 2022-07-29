@@ -12,7 +12,6 @@ export class Monitor {
   constructor(config: MonitorConfig) {
     this.url = config.url;
     this.vue = config.vue;
-    this.init();
   }
 
   init() {

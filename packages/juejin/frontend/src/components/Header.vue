@@ -3,66 +3,86 @@
     <div class="header">
       <div></div>
       <a href="/" class="logo">
-        <img src="@/assets/logo.png" alt="" class="logo-info">
+        <img src="@/assets/logo.png" alt="" class="logo-info" />
       </a>
       <div class="header-left">
         <div class="header-right-item" v-for="item in TopFence">
-          <a href="/">{{item}}</a>
+          <a href="/">{{ item }}</a>
         </div>
       </div>
       <div class="header-right">
-        <input type="text" placeholder="请输入搜索内容">
+        <input type="text" placeholder="请输入搜索内容" />
         <button>创作者中心</button>
-        <img src="@/assets/vip.png" alt="" class="vip-info">
-        <svg t="1659100227935" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          p-id="3235" data-darkreader-inline-fill="" width="200" height="200">
+        <img src="@/assets/vip.png" alt="" class="vip-info" />
+        <svg
+          t="1659100227935"
+          class="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="3235"
+          data-darkreader-inline-fill=""
+          width="200"
+          height="200"
+        >
           <path
             d="M512.64 0a42.666667 42.666667 0 0 1 42.56 39.466667l0.128 3.2-0.021333 49.92c173.226667 15.573333 307.584 176.576 307.584 370.773333v126.72c0 54.954667 18.176 107.733333 50.602666 147.733333l17.408 21.482667c37.738667 46.549333 8.277333 121.706667-53.610666 121.706667h-188.202667a180.074667 180.074667 0 0 1-345.109333 0H155.733333c-61.888 0-91.349333-75.178667-53.589333-121.706667l17.408-21.504c32.426667-39.978667 50.581333-92.757333 50.581333-147.712v-126.72c0-191.296 130.389333-350.357333 299.84-369.962667V42.666667a42.666667 42.666667 0 0 1 42.666667-42.666667z m83.413333 881.002667h-159.082666a94.656 94.656 0 0 0 159.104 0zM527.765333 176.704H512.64l-0.469333-0.021333h-6.890667c-134.741333 0-246.485333 123.605333-249.728 279.68l-0.085333 7.018666v126.698667c0 74.261333-24.704 146.048-69.610667 201.429333l-3.392 4.138667h668.074667l-3.328-4.117333c-43.2-53.269333-67.712-121.685333-69.546667-192.896l-0.106667-8.554667v-126.72c0-159.36-113.045333-286.656-249.813333-286.656z"
-            p-id="3236"></path>
+            p-id="3236"
+          ></path>
         </svg>
-        <img src="https://th.bing.com/th/id/R.0d4d56a772f73a4c146aa4754f8c17f8?rik=d3RxqOmmhPIZTg&pid=ImgRaw&r=0"
-          class="avatar-info">
+        <img
+          src="https://th.bing.com/th/id/R.0d4d56a772f73a4c146aa4754f8c17f8?rik=d3RxqOmmhPIZTg&pid=ImgRaw&r=0"
+          class="avatar-info"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
-const TopFence = ["首页", "沸点", "课程", "直播", "活动", "商城", "APP", "插件"]
+const TopFence = [
+  "首页",
+  "沸点",
+  "课程",
+  "直播",
+  "活动",
+  "商城",
+  "APP",
+  "插件",
+];
 onMounted(() => {
-  console.log(TopFence)
-})
+  console.log(TopFence);
+});
 </script>
 
 <style lang="scss" scoped>
-.header{
+.header {
   display: grid;
   height: 110px;
-  grid-template-columns:100px 120px 1fr 1fr ;
+  grid-template-columns: 100px 120px 1fr 1fr;
 
-  .logo-info{
+  .logo-info {
     width: 125px;
     height: 40px;
-
   }
 
-  .header-left{
+  .header-left {
     display: grid;
-    grid-template-columns: repeat(8,1fr);
+    grid-template-columns: repeat(8, 1fr);
   }
 
-  .header-right{
+  .header-right {
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
 
-    .vip-info{
+    .vip-info {
       width: 60px;
       height: 40px;
     }
 
-    .avatar-info{
+    .avatar-info {
       width: 40px;
       height: 40px;
       border-radius: 50%;

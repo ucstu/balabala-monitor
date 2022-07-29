@@ -6,15 +6,29 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/home",
-    component: () => import("../pages/HomePage/HomePage.vue"),
+    component: () => import("@/pages/HomePage/HomePage.vue"),
+    children: [
+      {
+        path: "android",
+        component: () => import("@/pages/HomePage/ChildPage/Android.vue"),
+      },
+      {
+        path: "backend",
+        component: () => import("@/pages/HomePage/ChildPage/Backend.vue"),
+      },
+      {
+        path: "frontend",
+        component: () => import("@/pages/HomePage/ChildPage/Frontend.vue"),
+      },
+    ],
   },
   {
     path: "/detail/:id",
-    component: () => import("../pages/DetailPage/DetailPage.vue"),
+    component: () => import("@/pages/DetailPage/DetailPage.vue"),
   },
   {
     path: "/editor",
-    component: () => import("../pages/EditorPage/EditorPage.vue"),
+    component: () => import("@/pages/EditorPage/EditorPage.vue"),
   },
 ];
 const router = createRouter({

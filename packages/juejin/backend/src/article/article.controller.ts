@@ -2,15 +2,23 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Headers,
   Param,
   Post,
   Put,
+  Query,
+  SetMetadata,
+  UseGuards,
 } from "@nestjs/common";
+
 import { Article } from "src/entity/article.entity";
+import { RoleGuard } from "src/role.guard";
 import { ArticleService } from "./article.service";
 
+@UseGuards(RoleGuard)
 @Controller("article")
+@SetMetadata("roles", ["admin", "add"])
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
@@ -36,5 +44,20 @@ export class ArticleController {
 
   //根据id查询文章
 
+  @Get("/:articleId")
+  selecdById(@Param("articleId") articleId) {
+    return this.articleService.selectById(articleId);
+  }
+
   //分页分类型查询文章
+
+  @Get()
+  selectByclass_page(
+    @Query("class") class_type = 0,
+    @Query("page") page = 1,
+    @Query("size") size = 20,
+    @Query("sort") sort: "ASC" | "DESC" = "DESC"
+  ) {
+    return this.articleService.select_class_page(class_type, page, size, sort);
+  }
 }

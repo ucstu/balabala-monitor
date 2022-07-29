@@ -24,8 +24,8 @@ export class responseRust {
   }
   error(): responseRust {
     const rus = new responseRust();
-    rus.status = 400;
-    rus.message = "错误";
+    rus.status = 201;
+    rus.message = "失败";
     rus.timestamp = "";
     return rus;
   }

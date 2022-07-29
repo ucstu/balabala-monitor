@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { AuthService } from "src/auth/auth.service";
 import { Account } from "src/entity/account.entity";
 import { responseRust } from "src/entity/responseRust";
 import { Repository } from "typeorm";
@@ -8,7 +9,9 @@ import { Repository } from "typeorm";
 export class UserService {
   constructor(
     @InjectRepository(Account)
-    private articleMapper: Repository<Account>
+    private articleMapper: Repository<Account>,
+
+    private readonly authService: AuthService
   ) {}
 
   //插入用户
@@ -32,7 +35,7 @@ export class UserService {
       .getOne();
 
     if (user.password == accout.password) {
-      const token = "1111";
+      const token = this.authService.generateToken(user);
 
       return rust.success_data({ token: token });
     } else {

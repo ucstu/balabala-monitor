@@ -9,5 +9,8 @@
   "source": "src/index.ts",
   "scripts": {
     "build": "tsc && tsc -p tsconfig.umd.json"
+  },
+  "dependencies": {
+    "@balabala/api": "^1.0.0"
   }
 }

@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@balabala/api": "^1.0.0",
     "vue": "^3.2.37"
   },
   "devDependencies": {

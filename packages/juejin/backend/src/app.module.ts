@@ -5,6 +5,7 @@ import { AppService } from "./app.service";
 import { ArticleModule } from "./article/article.module";
 import { Article } from "./entity/article.entity";
 import { UserModule } from "./user/user.module";
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserModule } from "./user/user.module";
       autoLoadEntities: true, // 自动加载实体类
     }),
     TypeOrmModule.forFeature([Article]),
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

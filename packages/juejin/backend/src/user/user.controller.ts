@@ -1,7 +1,6 @@
 import { Body, Controller, Param, Post } from "@nestjs/common";
 import { Account } from "src/entity/account.entity";
 import { UserService } from "./user.service";
-
 @Controller("accounts")
 export class UserController {
   constructor(private userservice: UserService) {}
@@ -9,6 +8,13 @@ export class UserController {
   @Post()
   insert(@Body() account: Account) {
     const rest = this.userservice.insert(account);
+    return rest;
+  }
+
+  @Post("login")
+  login(@Body() account: Account) {
+    const rest = this.userservice.login(account);
+
     return rest;
   }
 }

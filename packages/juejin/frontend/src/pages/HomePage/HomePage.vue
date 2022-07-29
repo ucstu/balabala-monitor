@@ -1,11 +1,10 @@
 <template>
   <div>
-    <HeaderVue/>
-1111
+    <HeaderVue />
+    1111
   </div>
 </template>
 
 <script setup lang="ts">
-import HeaderVue from '@/components/Header.vue';
-
+import HeaderVue from "@/components/Header.vue";
 </script>

@@ -1,6 +1,6 @@
 interface MonitorConfig {
   url: string;
-  vue?: Record<string, unknown>;
+  vue?: {};
 }
 export declare class Monitor {
   url: MonitorConfig["url"];
@@ -8,3 +8,4 @@ export declare class Monitor {
   constructor(config: MonitorConfig);
   init(): void;
 }
+export {};

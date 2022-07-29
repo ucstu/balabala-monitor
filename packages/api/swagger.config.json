@@ -1,0 +1,8 @@
+{
+  "url": "swagger.json",
+  "generateEnumAsType": true,
+  "methodParamsByTag": true,
+  "dir": "./src",
+  "local": true,
+  "prefix": "/v1"
+}

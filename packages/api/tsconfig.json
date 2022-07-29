@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "removeComments": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "lib": ["esnext", "dom"],
+    "strict": true,
+    "baseUrl": ".",
+    "rootDir": "src",
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "dist/esm",
+    "declaration": true,
+    "declarationDir": "./types",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "compileOnSave": false
+}

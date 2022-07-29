@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@balabala/api": "^1.0.0",
+    "@balabala/monitor-sdk": "^1.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.13"
   },

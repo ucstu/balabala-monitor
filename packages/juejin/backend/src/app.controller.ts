@@ -6,16 +6,13 @@ import { Article } from "./entity/article.entity";
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @InjectRepository(Article) private articleMapper: Repository<Article>
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
-  @Get()
-  async getHello(): Promise<any> {
-    const result = await this.articleMapper.find();
-    return result;
-  }
+  // @Get()
+  // async getHello(): Promise<any> {
+  //   const result = await this.articleMapper.find();
+  //   return result;
+  // }
 
   @Get("/123")
   gettest(): string {

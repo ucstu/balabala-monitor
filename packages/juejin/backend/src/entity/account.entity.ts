@@ -1,12 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("content")
+@Entity("user")
 export class Account {
   /**
    * 账号ID
    */
-  @PrimaryGeneratedColumn({ name: "id" })
+  @PrimaryGeneratedColumn({ name: "id", type: "tinyint" })
   id: number;
+
   /**
    * 昵称
    */

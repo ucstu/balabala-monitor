@@ -20,8 +20,8 @@ export class Article {
   /**
    * 文章ID
    */
-  @PrimaryGeneratedColumn({ name: "article_id" })
-  articleId: string;
+  @PrimaryGeneratedColumn("increment", { name: "article_id" })
+  articleId: number;
   /**
    * 文章点赞量
    */

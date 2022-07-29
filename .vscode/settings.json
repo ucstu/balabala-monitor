@@ -20,6 +20,7 @@
   "files.trimTrailingWhitespace": true,
   "scm.inputFontFamily": "editor",
   "git.autofetch": true,
+  "git.mergeEditor": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

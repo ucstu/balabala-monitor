@@ -1,20 +1,8 @@
-import { initPerformanceMonitoring } from "./monitoring";
+import { MonitorConfig, setConfig, SetOptional } from "./common/config";
 
-interface MonitorConfig {
-  url: string;
-  vue?: {};
-}
+import { initMonitoring } from "./monitoring";
 
-export class Monitor {
-  url: MonitorConfig["url"];
-  vue?: MonitorConfig["vue"];
-
-  constructor(config: MonitorConfig) {
-    this.url = config.url;
-    this.vue = config.vue;
-  }
-
-  init() {
-    initPerformanceMonitoring();
-  }
-}
+export const createMonitor = (config: SetOptional<MonitorConfig, "userId">) => {
+  setConfig(config);
+  initMonitoring();
+};

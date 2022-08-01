@@ -31,6 +31,7 @@ export const reportWithCache = <K extends keyof PostTypes>(
   apiId: K,
   report: PostTypes[K]
 ) => {
+  console.log("reportWithCache", apiId, report);
   if (apiId === "BasicIndicator") {
     postPerformancesBasicindicators(report as unknown as BasicIndicator).then(
       (res) => {

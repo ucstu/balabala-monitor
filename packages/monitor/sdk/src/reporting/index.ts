@@ -12,6 +12,7 @@ import type {
   VueError,
 } from "@balabala/api";
 import { postPerformancesBasicindicators } from "@balabala/api";
+import { getConfig } from "../common/config";
 
 interface PostTypes {
   BasicIndicator: BasicIndicator;
@@ -33,10 +34,10 @@ export const reportWithCache = <K extends keyof PostTypes>(
 ) => {
   console.log("reportWithCache", apiId, report);
   if (apiId === "BasicIndicator") {
-    postPerformancesBasicindicators(report as unknown as BasicIndicator).then(
-      (res) => {
-        console.log(res);
-      }
-    );
+    postPerformancesBasicindicators(report as unknown as BasicIndicator, {
+      baseURL: getConfig().url,
+    }).then((res) => {
+      console.log(res);
+    });
   }
 };

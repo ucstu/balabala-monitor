@@ -3,7 +3,6 @@
     <div class="author">
       <span>优质作者</span>
       <div v-for="item in authorName" :key="item">
-        <img src="" alt="" />
         {{ item }}
       </div>
     </div>

@@ -17,6 +17,7 @@ export class responseRust {
    * 处理时间
    */
   timestamp: string;
+
   static success(): responseRust {
     const rus = new responseRust();
     rus.status = 200;

@@ -1,1 +1,1 @@
-export declare const initPerformanceMonitoring: () => void;
+export declare const initMonitoring: () => void;

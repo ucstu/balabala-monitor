@@ -20,30 +20,30 @@ export interface Article {
 }
 export interface BasicBehavior {
   appId: string;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   startTime: number;
-  subType: "1001" | "1002" | "1003" | "1004" | "2001" | "3001" | "4001";
+  subType: 1001 | 1002 | 1003 | 1004 | 2001 | 3001 | 4001;
   userID: string;
   value: number;
 }
 export interface BasicIndicator {
   appId: string;
-  mainType: "1" | "2" | "3" | "4" | "5" | "6";
+  mainType: 1 | 2 | 3 | 4 | 5 | 6;
   pageUrl: string;
   startTime: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   userID: string;
   value: number;
 }
@@ -52,21 +52,21 @@ export interface ClickBehavior {
   html: string;
   inner: string;
   left: number;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   startTime: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   target: string;
   top: number;
   userID: string;
@@ -268,23 +268,23 @@ export interface GetPerformancesResourceindicatorstatisticsQueryParams {
 export interface InterfaceIndicator {
   appId: string;
   duration: number;
-  mainType: "1" | "2" | "3" | "4" | "5" | "6";
+  mainType: 1 | 2 | 3 | 4 | 5 | 6;
   method: string;
   pageUrl: string;
   startTime: number;
   statusCode: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   url: string;
   userID: string;
 }
@@ -293,52 +293,52 @@ export interface JavaScriptError {
   column: number;
   errorTime: number;
   line: number;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   msg: string;
   pageUrl: string;
   stack: string;
-  subType: "1001" | "2001" | "3001" | "4001";
+  subType: 1001 | 2001 | 3001 | 4001;
   userID: string;
 }
 export interface PageSkipBehavior {
   appId: string;
   from: string;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   startTime: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   to: string;
   userID: string;
 }
 export interface PromiseError {
   appId: string;
   errorTime: number;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   stack: string;
-  subType: "1001" | "2001" | "3001" | "4001";
+  subType: 1001 | 2001 | 3001 | 4001;
   userID: string;
 }
 export interface ResourceError {
   appId: string;
   errorTime: number;
   html: string;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   path: string;
   resourceType: string;
-  subType: "1001" | "2001" | "3001" | "4001";
+  subType: 1001 | 2001 | 3001 | 4001;
   userID: string;
 }
 export interface ResourceIndicator {
@@ -348,24 +348,24 @@ export interface ResourceIndicator {
   duration: number;
   headerSize: number;
   isCache: boolean;
-  mainType: "1" | "2" | "3" | "4" | "5" | "6";
+  mainType: 1 | 2 | 3 | 4 | 5 | 6;
   pageUrl: string;
   protocol: string;
   redirect: number;
   resourceSize: number;
   startTime: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   tcp: number;
   ttfb: number;
   userID: string;
@@ -373,32 +373,32 @@ export interface ResourceIndicator {
 export interface RoutingSkipBehavior {
   appId: string;
   from: string;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   params: string;
   query: string;
   startTime: number;
   subType:
-    | "1001"
-    | "1002"
-    | "1003"
-    | "1004"
-    | "2001"
-    | "2002"
-    | "3001"
-    | "4001"
-    | "4002"
-    | "5001"
-    | "6001";
+    | 1001
+    | 1002
+    | 1003
+    | 1004
+    | 2001
+    | 2002
+    | 3001
+    | 4001
+    | 4002
+    | 5001
+    | 6001;
   to: string;
   userID: string;
 }
 export interface VueError {
   appId: string;
   errorTime: number;
-  mainType: "1" | "2" | "3" | "4";
+  mainType: 1 | 2 | 3 | 4;
   pageUrl: string;
   stack: string;
-  subType: "1001" | "2001" | "3001" | "4001";
+  subType: 1001 | 2001 | 3001 | 4001;
   userID: string;
 }

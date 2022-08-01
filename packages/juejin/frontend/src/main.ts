@@ -7,11 +7,11 @@ import { getArticle, setBaseURL } from "@balabala/api";
 import { createMonitor } from "@balabala/monitor-sdk";
 
 createMonitor({
-  url: "http://localhost:3000/monitor",
+  url: "https://mock.apifox.cn/m1/1350111-0-default",
   appId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
 });
 
-setBaseURL("http://localhost:3000/api/v1");
+setBaseURL("http://localhost:3000");
 getArticle({ class: 1 }).then((res) => {
   console.log(res);
 });

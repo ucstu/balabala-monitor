@@ -54,7 +54,9 @@
             <span>{{ item }}</span>
           </div>
         </div>
-        <div></div>
+        <div class="biaoqian1">
+          <div class="biaoqian">标签管理</div>
+        </div>
       </div>
     </div>
   </div>
@@ -100,12 +102,13 @@ const toEditor = () => {
   display: grid;
   height: 110px;
   grid-template-rows: 60px 1px 50px;
+
   .header-top {
     display: grid;
     grid-template-columns: 60px 130px 25% 8% 1fr;
     align-items: center;
     column-gap: 20px;
-
+    background-color: #fff;
     .logo-info {
       width: 130px;
       height: 38px;
@@ -179,6 +182,21 @@ const toEditor = () => {
     display: grid;
     grid-template-columns: 18% 45% 1fr;
     column-gap: 20px;
+    .biaoqian1 {
+      position: relative;
+      .biaoqian {
+        position: absolute;
+        color: #666;
+        font-size: 14px;
+        top: 12px;
+        right: 200px;
+        cursor: pointer;
+        &:hover {
+          color: rgb(25, 128, 255);
+        }
+      }
+    }
+
     .label-fence {
       display: grid;
       align-items: center;

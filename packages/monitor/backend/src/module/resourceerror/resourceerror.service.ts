@@ -3,7 +3,9 @@ import { ElasticsearchService } from "@nestjs/elasticsearch";
 import { resourceerrorIndex } from "src/config/db.index";
 import { ResourceError } from "src/entity/resourceError.entity";
 import { responseRust } from "src/entity/responseRust";
-import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
+import { getQueryBody, getTotalBody } from "src/utils/searchBody";
+import { format } from "src/utils/timeUtils";
+import { ResourceerrorTotalVo, ResourceerrorVo } from "src/vo/resourceerror.vo";
 @Injectable()
 export class ResourceerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -14,52 +16,39 @@ export class ResourceerrorService {
     });
     return responseRust.success_creat();
   }
-
-  async totalError(querys: ResourceerrorTotalVo) {
+  async totalError(querys: ResourceerrorTotalVo): Promise<responseRust> {
+    const body = getTotalBody(querys);
     const res = await this.elasticsearchService.search({
       index: resourceerrorIndex,
-      body: {
-        query: {
-          bool: {
-            must: [
-              ,
-              {
-                term: {
-                  appId: querys.appid,
-                },
-              },
-              {
-                term: {
-                  userid: querys.userid,
-                },
-              },
-              {
-                term: {
-                  pageurl: querys.pageurl,
-                },
-              },
-              {
-                term: {
-                  type: querys.type,
-                },
-              },
-              {
-                term: {
-                  subType: querys.subType,
-                },
-              },
-            ],
-          },
-        },
-        range: {
-          errorTime: {
-            gte: new Date(querys.starttime).getTime(),
-            lte: new Date(querys.endtime).getTime(),
-          },
-        },
-      },
+      body,
     });
-    console.log(res);
-    return res;
+    if (res.statusCode !== 200) {
+      return responseRust.error();
+    }
+    const list = [];
+    res.body.aggregations.count.buckets.forEach((element) => {
+      list.push({
+        datetime: format(new Date(element.key)),
+        count: element.doc_count,
+      });
+    });
+    return responseRust.success_data(list);
+  }
+
+  async getErrorList(querys: ResourceerrorVo) {
+    const body = getQueryBody(querys);
+    const res = await this.elasticsearchService.search({
+      index: resourceerrorIndex,
+      body,
+    });
+    if (res.statusCode !== 200) {
+      return responseRust.error();
+    }
+    const list: ResourceError[] = [];
+    res.body.hits.hits.forEach((element) => {
+      const source: ResourceError = element._source;
+      list.push(source);
+    });
+    return responseRust.success_data(list);
   }
 }

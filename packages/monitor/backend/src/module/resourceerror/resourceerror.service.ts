@@ -22,6 +22,7 @@ export class ResourceerrorService {
         query: {
           bool: {
             must: [
+              ,
               {
                 term: {
                   appId: querys.appid,

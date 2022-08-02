@@ -107,12 +107,15 @@ export const valida = (querys: BaseQueryVo): string => {
  * @param querys
  * @returns
  */
-export const getTotalBody = (querys: BaseTotalVo, timeName: string): any => {
+export const getTotalBody = (
+  querys: BaseTotalVo,
+  timeName: "startTime" | "errorTime"
+): any => {
   const body = getQueryBody(querys, timeName);
   const aggs = {
     count: {
       histogram: {
-        field: "errorTime",
+        field: timeName,
         interval: 300,
         min_doc_count: 1,
       },
@@ -127,7 +130,10 @@ export const getTotalBody = (querys: BaseTotalVo, timeName: string): any => {
  * @param querys
  * @returns
  */
-export const getQueryBody = (querys: BaseQueryVo, timeName: string): any => {
+export const getQueryBody = (
+  querys: BaseQueryVo,
+  timeName: "startTime" | "errorTime"
+): any => {
   const body = getBaseBody(querys, timeName);
   return body;
 };

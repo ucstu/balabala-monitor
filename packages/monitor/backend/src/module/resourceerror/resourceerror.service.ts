@@ -23,11 +23,9 @@ export class ResourceerrorService {
       index: resourceerrorIndex,
       body,
     });
-
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
     const list = [];
     res.body.aggregations.count.buckets.forEach((element) => {
       list.push({

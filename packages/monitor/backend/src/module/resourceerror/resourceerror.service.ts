@@ -16,15 +16,18 @@ export class ResourceerrorService {
     });
     return responseRust.success_creat();
   }
+
   async totalError(querys: ResourceerrorTotalVo): Promise<responseRust> {
-    const body = getTotalBody(querys);
+    const body = getTotalBody(querys, "errorTime");
     const res = await this.elasticsearchService.search({
       index: resourceerrorIndex,
       body,
     });
+
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
+
     const list = [];
     res.body.aggregations.count.buckets.forEach((element) => {
       list.push({
@@ -36,7 +39,7 @@ export class ResourceerrorService {
   }
 
   async getErrorList(querys: ResourceerrorVo) {
-    const body = getQueryBody(querys);
+    const body = getQueryBody(querys, "errorTime");
     const res = await this.elasticsearchService.search({
       index: resourceerrorIndex,
       body,

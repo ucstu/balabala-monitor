@@ -5,8 +5,9 @@ import { BaseQueryVo, BaseTotalVo } from "src/vo/base.vo";
  * @param querys
  * @returns
  */
-const getBaseBody = (querys: BaseQueryVo): any => {
-  const body: any = {
+const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
+  let body: any;
+  body = {
     query: {
       bool: {
         must: [
@@ -15,18 +16,22 @@ const getBaseBody = (querys: BaseQueryVo): any => {
               appId: querys.appid,
             },
           },
-          {
-            range: {
-              errorTime: {
-                gte: 1654412803,
-                lte: 1659412803,
-              },
-            },
-          },
         ],
       },
     },
   };
+
+  const range = {
+    range: {},
+  };
+  range.range[timeName] = {
+    // gte: new Date(querys.starttime).getTime() / 1000,
+    // lte: new Date(querys.endtime).getTime() / 1000,
+    gte: 0,
+    lte: 1999999999,
+  };
+  body.query.bool.must.push(range);
+
   // 组装非必选
   notChoice(body, querys);
   return body;
@@ -102,8 +107,8 @@ export const valida = (querys: BaseQueryVo): string => {
  * @param querys
  * @returns
  */
-export const getTotalBody = (querys: BaseTotalVo): any => {
-  const body = getQueryBody(querys);
+export const getTotalBody = (querys: BaseTotalVo, timeName: string): any => {
+  const body = getQueryBody(querys, timeName);
   const aggs = {
     count: {
       histogram: {
@@ -122,7 +127,7 @@ export const getTotalBody = (querys: BaseTotalVo): any => {
  * @param querys
  * @returns
  */
-export const getQueryBody = (querys: BaseQueryVo): any => {
-  const body = getBaseBody(querys);
+export const getQueryBody = (querys: BaseQueryVo, timeName: string): any => {
+  const body = getBaseBody(querys, timeName);
   return body;
 };

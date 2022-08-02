@@ -3,7 +3,12 @@ import { ElasticsearchService } from "@nestjs/elasticsearch";
 import { basicbehaviorIndex } from "src/config/db.index";
 import { BasicIndicator } from "src/entity/basicIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
-import { BasicindicatorsVo } from "src/vo/basicindicators.vo";
+import { getQueryBody, getTotalBody } from "src/utils/searchBody";
+import { format } from "src/utils/timeUtils";
+import {
+  BasicindicatorsTotalVo,
+  BasicindicatorsVo,
+} from "src/vo/basicindicators.vo";
 
 @Injectable()
 export class BasicindicatorService {
@@ -33,55 +38,47 @@ export class BasicindicatorService {
    *
    */
   async queryBasicindicator(querys: BasicindicatorsVo) {
+    const body = getQueryBody(querys, "startTime");
     const res = await this.elasticsearchService.search({
       index: basicbehaviorIndex,
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                term: {
-                  appId: querys.appid,
-                },
-              },
-              {
-                term: {
-                  userid: querys.userid,
-                },
-              },
-              {
-                term: {
-                  pageurl: querys.pageurl,
-                },
-              },
-              {
-                term: {
-                  type: querys.type,
-                },
-              },
-              {
-                term: {
-                  subType: querys.subType,
-                },
-              },
-              {
-                range: {
-                  startTime: {
-                    gte: new Date(querys.starttime).getTime(),
-                    lte: new Date(querys.endtime).getTime(),
-                  },
-                },
-              },
-            ],
-          },
-        },
-      },
+      body,
     });
+    if (res.statusCode !== 200) {
+      return responseRust.error();
+    }
 
-    return res;
+    const list: BasicIndicator[] = [];
+    res.body.hits.hits.forEach((element) => {
+      const source: BasicIndicator = element._source;
+      list.push(source);
+    });
+    return responseRust.success_data(list);
   }
 
   /**
    *统计数据
    */
+  async totalBasicindicator(
+    querys: BasicindicatorsTotalVo
+  ): Promise<responseRust> {
+    const body = getTotalBody(querys, "startTime");
+    const res = await this.elasticsearchService.search({
+      index: basicbehaviorIndex,
+      body,
+    });
+
+    console.log(JSON.stringify(body));
+
+    if (res.statusCode != 200) {
+      return responseRust.error();
+    }
+    const list = [];
+    res.body.aggregations.count.buckets.forEach((element) => {
+      list.push({
+        datetime: format(new Date(element.key)),
+        count: element.doc_count,
+      });
+    });
+    return responseRust.success_data(res);
+  }
 }

@@ -8,7 +8,7 @@ const getTimeStamp = (): number => {
   return new Date().getTime();
 };
 
-const getPageUrl = () => {
+export const getPageUrl = () => {
   const {
     location: { pathname, hash },
   } = window;

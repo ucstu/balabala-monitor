@@ -65,7 +65,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
   if (querys.type) {
     const term = {
       term: {
-        type: querys.type,
+        mainType: querys.type,
       },
     };
     body.query.bool.must.push(term);
@@ -107,14 +107,17 @@ export const valida = (querys: BaseQueryVo): string => {
  * @param querys
  * @returns
  */
-export const getTotalBody = (querys: BaseTotalVo, timeName: string): any => {
+export const getTotalBody = (
+  querys: BaseTotalVo,
+  timeName: "startTime" | "errorTime"
+): any => {
   const body = getQueryBody(querys, timeName);
   const aggs = {
     count: {
       histogram: {
-        field: "errorTime",
-        interval: 300,
-        min_doc_count: 1,
+        field: timeName,
+        interval: 1, // 间隔时间
+        min_doc_count: 1, // 忽略统计数为0的
       },
     },
   };
@@ -127,7 +130,10 @@ export const getTotalBody = (querys: BaseTotalVo, timeName: string): any => {
  * @param querys
  * @returns
  */
-export const getQueryBody = (querys: BaseQueryVo, timeName: string): any => {
+export const getQueryBody = (
+  querys: BaseQueryVo,
+  timeName: "startTime" | "errorTime"
+): any => {
   const body = getBaseBody(querys, timeName);
   return body;
 };

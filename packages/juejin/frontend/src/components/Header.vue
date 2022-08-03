@@ -182,6 +182,8 @@ const toEditor = () => {
     display: grid;
     grid-template-columns: 18% 45% 1fr;
     column-gap: 20px;
+    background-color: #fff;
+    box-shadow: 0px 2px 2px 0px rgb(118 118 118/ 20%);
     .biaoqian1 {
       position: relative;
       .biaoqian {

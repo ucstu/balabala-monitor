@@ -1,9 +1,12 @@
-import initFCP from "./performance/initFCP";
-import initFP from "./performance/initFP";
-import initLCP from "./performance/initLCP";
+import initPageSkipBehavior from "./behavior/initPageSkipBehavior";
 
 export const initMonitoring = () => {
-  initFP();
-  initFCP();
-  initLCP();
+  // initFP();
+  // initFCP();
+  // initLCP();
+  // initLoad();
+  // initFPS();
+  // initFirstScreenLoad();
+  // initPV();
+  initPageSkipBehavior();
 };

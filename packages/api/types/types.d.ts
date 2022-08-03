@@ -290,11 +290,11 @@ export interface InterfaceIndicator {
 }
 export interface JavaScriptError {
   appId: string;
-  column: number;
+  column: number | undefined;
   errorTime: number;
-  line: number;
+  line: string | undefined;
   mainType: 1 | 2 | 3 | 4;
-  msg: string;
+  msg: string | Event;
   pageUrl: string;
   stack: string;
   subType: 1001 | 2001 | 3001 | 4001;

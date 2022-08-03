@@ -15,6 +15,7 @@ import {
   GetErrorsResourceerrorsQueryParams,
   GetErrorsJavascripterrorsQueryParams,
   GetErrorsPromiseerrorsQueryParams,
+  GetErrorsVueerrorsQueryParams,
   GetBehaviorsBasicbehaviorsQueryParams,
   GetBehaviorsClickbehaviorsQueryParams,
   GetBehaviorsPageskipbehaviorsQueryParams,
@@ -597,7 +598,7 @@ getErrorsJavascripterrorstatistics.key = "/errors/javascripterrorstatistics";
 
 /**
  *
- * Vue错误查询
+ * Promise错误查询
  */
 export const getErrorsPromiseerrors = (
   queryParams: GetErrorsPromiseerrorsQueryParams,
@@ -608,9 +609,9 @@ export const getErrorsPromiseerrors = (
      *
      * 数据主体
      *
-     * Vue错误列表
+     * Promise错误列表
      */
-    data: VueError[];
+    data: PromiseError[];
     /**
      *
      * 状态描述
@@ -812,6 +813,54 @@ export const getErrorsResourceerrorstatistics = (
 
 /** Key is end point string without base url */
 getErrorsResourceerrorstatistics.key = "/errors/resourceerrorstatistics";
+
+/**
+ *
+ * Vue错误查询
+ */
+export const getErrorsVueerrors = (
+  queryParams: GetErrorsVueerrorsQueryParams,
+  configOverride?: AxiosRequestConfig
+): Promise<
+  SwaggerResponse<{
+    /**
+     *
+     * 数据主体
+     *
+     * Vue错误列表
+     */
+    data: VueError[];
+    /**
+     *
+     * 状态描述
+     *
+     */
+    message: string;
+    /**
+     *
+     * 状态编码
+     *
+     */
+    status: number;
+    /**
+     *
+     * 处理时间
+     *
+     */
+    timestamp: string;
+  }>
+> => {
+  return Http.getRequest(
+    getErrorsVueerrors.key,
+    queryParams,
+    undefined,
+    undefined,
+    overrideConfig(_CONSTANT0, configOverride)
+  );
+};
+
+/** Key is end point string without base url */
+getErrorsVueerrors.key = "/errors/vueerrors";
 
 /**
  *

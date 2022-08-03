@@ -1,38 +1,39 @@
 import { AxiosRequestConfig } from "axios";
 import { SwaggerResponse } from "./config";
 import {
-  Account,
-  Article,
-  BasicBehavior,
-  BasicIndicator,
-  ClickBehavior,
   GetArticleQueryParams,
+  GetPerformancesBasicindicatorsQueryParams,
+  GetPerformancesInterfaceindicatorsQueryParams,
+  GetPerformancesResourceindicatorsQueryParams,
+  GetErrorsResourceerrorsQueryParams,
+  GetErrorsJavascripterrorsQueryParams,
+  GetErrorsPromiseerrorsQueryParams,
+  GetErrorsVueerrorsQueryParams,
   GetBehaviorsBasicbehaviorsQueryParams,
-  GetBehaviorsBasicbehaviorstatisticsQueryParams,
   GetBehaviorsClickbehaviorsQueryParams,
   GetBehaviorsPageskipbehaviorsQueryParams,
   GetBehaviorsRoutingskipbehaviorsQueryParams,
-  GetErrorsJavascripterrorsQueryParams,
-  GetErrorsJavascripterrorstatisticsQueryParams,
-  GetErrorsPromiseerrorsQueryParams,
-  GetErrorsPromiseerrorstatisticsQueryParams,
-  GetErrorsResourceerrorsQueryParams,
-  GetErrorsResourceerrorstatisticsQueryParams,
-  GetErrorsVueerrorstatisticsQueryParams,
-  GetPerformancesBasicindicatorsQueryParams,
   GetPerformancesBasicindicatorstatisticsQueryParams,
-  GetPerformancesInterfaceindicatorsQueryParams,
   GetPerformancesInterfaceindicatorstatisticsQueryParams,
-  GetPerformancesResourceindicatorsQueryParams,
   GetPerformancesResourceindicatorstatisticsQueryParams,
-  InterfaceIndicator,
-  JavaScriptError,
+  GetErrorsResourceerrorstatisticsQueryParams,
+  GetErrorsJavascripterrorstatisticsQueryParams,
+  GetErrorsPromiseerrorstatisticsQueryParams,
+  GetErrorsVueerrorstatisticsQueryParams,
+  GetBehaviorsBasicbehaviorstatisticsQueryParams,
+  RoutingSkipBehavior,
   PageSkipBehavior,
+  ClickBehavior,
+  BasicBehavior,
+  VueError,
   PromiseError,
+  JavaScriptError,
   ResourceError,
   ResourceIndicator,
-  RoutingSkipBehavior,
-  VueError,
+  InterfaceIndicator,
+  BasicIndicator,
+  Article,
+  Account,
 } from "./types";
 export declare function template(
   path: string,
@@ -189,7 +190,7 @@ export declare const getErrorsPromiseerrors: {
     configOverride?: AxiosRequestConfig
   ): Promise<
     SwaggerResponse<{
-      data: VueError[];
+      data: PromiseError[];
       message: string;
       status: number;
       timestamp: string;
@@ -238,6 +239,20 @@ export declare const getErrorsResourceerrorstatistics: {
         count: number;
         datetime: string;
       }[];
+      message: string;
+      status: number;
+      timestamp: string;
+    }>
+  >;
+  key: string;
+};
+export declare const getErrorsVueerrors: {
+  (
+    queryParams: GetErrorsVueerrorsQueryParams,
+    configOverride?: AxiosRequestConfig
+  ): Promise<
+    SwaggerResponse<{
+      data: VueError[];
       message: string;
       status: number;
       timestamp: string;

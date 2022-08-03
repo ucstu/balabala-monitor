@@ -708,6 +708,49 @@ export interface GetErrorsResourceerrorstatisticsQueryParams {
   userid?: string;
 }
 
+export interface GetErrorsVueerrorsQueryParams {
+  /**
+   *
+   * 应用ID
+   */
+  appid: string;
+  /**
+   *
+   * 结束时间
+   */
+  endtime: string;
+  /**
+   *
+   * 起始时间
+   */
+  starttime: string;
+  /**
+   *
+   * 页面路径
+   */
+  pageurl?: string;
+  /**
+   *
+   * 子错误类型
+   */
+  subType?: number;
+  /**
+   *
+   * 排行前多少
+   */
+  top?: number;
+  /**
+   *
+   * 父错误类型
+   */
+  type?: number;
+  /**
+   *
+   * 用户ID
+   */
+  userid?: string;
+}
+
 export interface GetErrorsVueerrorstatisticsQueryParams {
   /**
    *

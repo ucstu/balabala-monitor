@@ -191,6 +191,16 @@ export interface GetErrorsResourceerrorstatisticsQueryParams {
   type?: number;
   userid?: string;
 }
+export interface GetErrorsVueerrorsQueryParams {
+  appid: string;
+  endtime: string;
+  starttime: string;
+  pageurl?: string;
+  subType?: number;
+  top?: number;
+  type?: number;
+  userid?: string;
+}
 export interface GetErrorsVueerrorstatisticsQueryParams {
   appid: string;
   endtime: string;

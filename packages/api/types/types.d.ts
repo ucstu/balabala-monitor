@@ -191,6 +191,16 @@ export interface GetErrorsResourceerrorstatisticsQueryParams {
   type?: number;
   userid?: string;
 }
+export interface GetErrorsVueerrorsQueryParams {
+  appid: string;
+  endtime: string;
+  starttime: string;
+  pageurl?: string;
+  subType?: number;
+  top?: number;
+  type?: number;
+  userid?: string;
+}
 export interface GetErrorsVueerrorstatisticsQueryParams {
   appid: string;
   endtime: string;
@@ -290,11 +300,11 @@ export interface InterfaceIndicator {
 }
 export interface JavaScriptError {
   appId: string;
-  column: number;
+  column: number | undefined;
   errorTime: number;
-  line: number;
+  line: string | undefined;
   mainType: 1 | 2 | 3 | 4;
-  msg: string;
+  msg: string | Event;
   pageUrl: string;
   stack: string;
   subType: 1001 | 2001 | 3001 | 4001;

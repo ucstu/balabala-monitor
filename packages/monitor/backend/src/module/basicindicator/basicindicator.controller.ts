@@ -1,6 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from "@nestjs/common";
 import { BasicIndicator } from "src/entity/basicIndicator.entity";
-import { responseRust } from "src/entity/responseRust";
 import {
   BasicindicatorsTotalVo,
   BasicindicatorsVo,

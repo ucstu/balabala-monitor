@@ -1,5 +1,5 @@
 /**
- *点击行为
+ *页面跳转行为
  */
 export class PageSkipBehavior {
   /**

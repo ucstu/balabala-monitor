@@ -16,7 +16,7 @@ export class BasicbehaviorController {
    * 基础行为数据插入
    */
   @HttpCode(201)
-  @Post("/basicindicators")
+  @Post("/basicbehaviors")
   totalBasicBehaviorLoad(@Body() basicIndicator: BasicBehavior) {
     return this.basicbehaviorService.upLoadBasicBehavior(basicIndicator);
   }
@@ -32,7 +32,7 @@ export class BasicbehaviorController {
   /**
    * 基础行为数据统计
    */
-  @Get("/basicindicatorstatistics")
+  @Get("/basicbehaviorstatistics")
   totalBasicBehavior(@Query() basicIndicatorTotalVo: BasicBehaviorTotalVo) {
     return this.basicbehaviorService.totalBasicBehavior(basicIndicatorTotalVo);
   }

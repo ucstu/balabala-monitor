@@ -35,7 +35,7 @@ export class ResourceindicatorController {
    * 资源指标统计接口
    */
 
-  @Get("/interfaceindicatorstatistics")
+  @Get("/resourceindicatorstatistics")
   ResourceindicatorTotal(
     @Query() resourceIndicatorTotalVo: ResourceIndicatorTotalVo
   ) {

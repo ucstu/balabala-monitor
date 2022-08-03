@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
-import { basicbehaviorIndex } from "src/config/db.index";
+import { basicindicatorIndex } from "src/config/db.index";
 import { BasicIndicator } from "src/entity/basicIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
 import { getQueryBody, getTotalBody } from "src/utils/searchBody";
@@ -23,7 +23,7 @@ export class BasicindicatorService {
     basicIndicator: BasicIndicator
   ): Promise<responseRust> {
     const res = await this.elasticsearchService.index({
-      index: basicbehaviorIndex,
+      index: basicindicatorIndex,
       body: basicIndicator,
     });
     if (res.statusCode === 201) {
@@ -40,7 +40,7 @@ export class BasicindicatorService {
   async queryBasicindicator(querys: BasicindicatorsVo) {
     const body = getQueryBody(querys, "startTime");
     const res = await this.elasticsearchService.search({
-      index: basicbehaviorIndex,
+      index: basicindicatorIndex,
       body,
     });
     if (res.statusCode !== 200) {
@@ -63,11 +63,9 @@ export class BasicindicatorService {
   ): Promise<responseRust> {
     const body = getTotalBody(querys, "startTime");
     const res = await this.elasticsearchService.search({
-      index: basicbehaviorIndex,
+      index: basicindicatorIndex,
       body,
     });
-
-    console.log(JSON.stringify(body));
 
     if (res.statusCode != 200) {
       return responseRust.error();

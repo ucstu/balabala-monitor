@@ -1,4 +1,51 @@
 import { Injectable } from "@nestjs/common";
+import { ElasticsearchService } from "@nestjs/elasticsearch";
+import { pageskipbehaviorIndex } from "src/config/db.index";
+import { PageSkipBehavior } from "src/entity/pageSkipBehavior.entity";
+import { responseRust } from "src/entity/responseRust";
+import { getQueryBody } from "src/utils/searchBody";
+import { PageSkipBehaviorVo } from "src/vo/PageSkipBehavior.vo";
 
 @Injectable()
-export class PageskipbehaviorService {}
+export class PageskipbehaviorService {
+  constructor(private readonly elasticsearchService: ElasticsearchService) {}
+
+  /**
+   * 上传数据
+   */
+
+  async upLoadPageskipbehavior(
+    pageSkipBehavior: PageSkipBehavior
+  ): Promise<responseRust> {
+    const res = await this.elasticsearchService.index({
+      index: pageskipbehaviorIndex,
+      body: pageSkipBehavior,
+    });
+    if (res.statusCode === 201) {
+      return responseRust.success_creat();
+    } else {
+      return responseRust.error();
+    }
+  }
+
+  /**
+   * 查询数据
+   */
+  async queryPageskipbehavior(querys: PageSkipBehaviorVo) {
+    const body = getQueryBody(querys, "startTime");
+    const res = await this.elasticsearchService.search({
+      index: pageskipbehaviorIndex,
+      body,
+    });
+    if (res.statusCode !== 200) {
+      return responseRust.error();
+    }
+
+    const list: PageSkipBehavior[] = [];
+    res.body.hits.hits.forEach((element) => {
+      const source: PageSkipBehavior = element._source;
+      list.push(source);
+    });
+    return responseRust.success_data(list);
+  }
+}

@@ -39,6 +39,6 @@ export const resourceerrorIndex = "resource_error";
  */
 export const basicindicatorIndex = "basic_indicator";
 /**
- *分页点击行为
+ *页面跳转行为
  */
 export const pageskipbehaviorIndex = "page_skip_behavior";

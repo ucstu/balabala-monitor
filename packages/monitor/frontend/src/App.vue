@@ -1,6 +1,6 @@
 <template>
   <HeaderBar v-show="!route?.meta?.hiddenHeader" :route="route" />
-  <div id="container">
+  <div class="container">
     <AsideBar v-show="!route?.meta?.hiddenAside" :route="route" />
     <router-view v-slot="{ Component, route }">
       <keep-alive v-if="route?.meta?.keepAlive">
@@ -24,7 +24,7 @@ header {
   flex: 0 0 50px;
 }
 
-#container {
+.container {
   display: flex;
   flex-direction: row;
   height: 100%;

@@ -14,7 +14,10 @@ export class ResourceerrorService {
       index: resourceerrorIndex,
       body: resourceError,
     });
-    return responseRust.success_creat();
+    if (res.statusCode === 201) {
+      return responseRust.success_creat();
+    }
+    return responseRust.error("上传失败,原因:" + JSON.stringify(res));
   }
 
   async totalError(querys: ResourceerrorTotalVo): Promise<responseRust> {

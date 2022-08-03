@@ -1,6 +1,6 @@
 import { getConfig } from "../config";
 
-const getAppId = (): string => {
+export const getAppId = (): string => {
   return getConfig().appId;
 };
 
@@ -15,7 +15,7 @@ export const getPageUrl = () => {
   return pathname + hash;
 };
 
-let getUserID = () => {
+export let getUserID = () => {
   return getConfig().userId;
 };
 

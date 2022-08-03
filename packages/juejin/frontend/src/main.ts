@@ -1,3 +1,5 @@
+import "@/assets/iconfont/iconfont.js";
+import SvgIcon from "@/components/SvgIcon.vue";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -16,4 +18,4 @@ getArticle({ class: 1 }).then((res) => {
   console.log(res);
 });
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router).component("SvgIcon", SvgIcon).mount("#app");

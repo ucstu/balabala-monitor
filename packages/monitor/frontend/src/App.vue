@@ -1,31 +1,43 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <HeaderBar v-show="!route?.meta?.hiddenHeader" :route="route" />
+  <div class="container">
+    <AsideBar v-show="!route?.meta?.hiddenAside" :route="route" />
+    <router-view v-slot="{ Component, route }">
+      <keep-alive v-if="route?.meta?.keepAlive">
+        <component :is="Component" :key="route.path" />
+      </keep-alive>
+      <component v-else :is="Component" :key="route.path" />
+    </router-view>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+<script setup lang="ts">
+import AsideBar from "@/components/AsideBar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+</script>
+
+<style scoped lang="scss">
+header {
+  flex: 0 0 50px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  aside {
+    flex: 0 0 200px;
+  }
+  main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
 }
 </style>

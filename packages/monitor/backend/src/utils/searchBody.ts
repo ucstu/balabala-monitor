@@ -65,7 +65,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
   if (querys.type) {
     const term = {
       term: {
-        type: querys.type,
+        mainType: querys.type,
       },
     };
     body.query.bool.must.push(term);
@@ -116,8 +116,8 @@ export const getTotalBody = (
     count: {
       histogram: {
         field: timeName,
-        interval: 300,
-        min_doc_count: 1,
+        interval: 1, // 间隔时间
+        min_doc_count: 1, // 忽略统计数为0的
       },
     },
   };

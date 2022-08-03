@@ -47,7 +47,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
   if (querys.userid) {
     const term = {
       term: {
-        userid: querys.userid,
+        userID: querys.userid,
       },
     };
     body.query.bool.must.push(term);
@@ -56,7 +56,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
   if (querys.pageurl) {
     const term = {
       term: {
-        pageurl: querys.pageurl,
+        pageUrl: querys.pageurl,
       },
     };
     body.query.bool.must.push(term);

@@ -4,7 +4,7 @@ export const getAppId = (): string => {
   return getConfig().appId;
 };
 
-const getTimeStamp = (): number => {
+export const getTimeStamp = (): number => {
   return new Date().getTime();
 };
 

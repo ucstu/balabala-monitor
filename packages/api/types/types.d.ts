@@ -300,11 +300,11 @@ export interface InterfaceIndicator {
 }
 export interface JavaScriptError {
   appId: string;
-  column: number | undefined;
+  column: number;
   errorTime: number;
-  line: string | undefined;
+  line: number;
   mainType: 1 | 2 | 3 | 4;
-  msg: string | Event;
+  msg: string;
   pageUrl: string;
   stack: string;
   subType: 1001 | 2001 | 3001 | 4001;

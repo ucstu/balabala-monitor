@@ -1,7 +1,7 @@
 import { getBasicParams } from "../../../common/utils";
 import { reportWithCache } from "../../../reporting";
 
-export default function initFP(): void {
+export default function firstPaint(): void {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     for (const entry of list.getEntries()) {
       if (entry.name === "first-paint") {

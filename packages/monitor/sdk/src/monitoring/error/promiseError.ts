@@ -1,5 +1,5 @@
-import { getAppId, getPageUrl, getUserID } from "src/common/utils";
-import { reportWithCache } from "src/reporting";
+import { getAppId, getPageUrl, getUserID } from "../../common/utils";
+import { reportWithCache } from "../../reporting";
 
 // 监听 promise 错误 缺点是获取不到列数据
 export default function initPromiseError(): void {

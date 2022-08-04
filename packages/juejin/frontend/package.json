@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "lerna run build && lerna bootstrap && vite",
-    "build": "lerna run build && lerna bootstrap && vue-tsc --noEmit && vite build",
-    "preview": "lerna run build && lerna bootstrap && vite preview"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@balabala/api": "^1.0.0",

@@ -8,8 +8,8 @@
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
-    "dev": "lerna run build && lerna bootstrap && tsc --watch",
-    "build": "lerna run build && lerna bootstrap && tsc && tsc -p tsconfig.umd.json"
+    "dev": "tsc --watch",
+    "build": "tsc && tsc -p tsconfig.umd.json"
   },
   "dependencies": {
     "@balabala/api": "^1.0.0"

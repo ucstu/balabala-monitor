@@ -41,13 +41,21 @@
     <!--功能按钮区-->
     <div class="button_bar">
       <div class="button-left">
-        <div class="button-editor" v-for="item in svgNames" :key="item">
+        <div
+          class="button-editor"
+          :class="sty[index]"
+          v-for="(item, index) in svgNames"
+          :key="item"
+        >
           <SvgIcon
             :name="item"
             style="width: 18px"
-            @click="addinfo()"
+            @click="addinfo(index)"
           ></SvgIcon>
         </div>
+        <!-- <div class="list-select">
+          <span v-for="item in Hlist">{{ item }}</span>
+        </div> -->
       </div>
       <div></div>
     </div>
@@ -88,9 +96,18 @@ import { marked } from "marked"; //解析mardown语法的库
 import { nextTick, Ref, ref, watch } from "vue";
 const markString = ref("");
 const htmlString = ref("");
+const Hlist = [
+  "H1 一级标题",
+  "H2 二级标题",
+  "H3 三级标题",
+  "H4 四级标题",
+  "H5 五级标题",
+  "H6 六级标题",
+];
 watch(
-  () => markString,
+  () => markString.value,
   (newVal, oldVal) => {
+    console.log(newVal, oldVal);
     marked.setOptions({
       renderer: new marked.Renderer(),
       gfm: true,
@@ -104,8 +121,9 @@ watch(
     htmlString.value = marked(oldVal);
   }
 );
+
 watch(
-  () => htmlString,
+  () => htmlString.value,
   (newVal, oldVal) => {
     nextTick(() => {
       const codes = document.querySelectorAll(".code");
@@ -119,11 +137,10 @@ watch(
     });
   }
 );
-const addinfo = () => {
+const addinfo = (index: number) => {
   changeSelectedText("#", "#");
 };
 const ref_md_edit: Ref<HTMLElement | null> = ref(null);
-console.log(ref_md_edit);
 
 const changeSelectedText = (startString: string, endString: string) => {
   let t = ref_md_edit;
@@ -164,6 +181,7 @@ const svgNames = ref<Array<string>>([
   "a-edit-office-richtext-table",
   "a-edit-office-richtext-centeralined",
 ]);
+const sty = ["list"];
 </script>
 
 <style lang="scss" scoped>
@@ -237,6 +255,7 @@ const svgNames = ref<Array<string>>([
       grid-template-columns: repeat(15, 50px);
       align-items: center;
       margin-left: 20px;
+      position: relative;
       .button-editor {
         text-align: center;
         cursor: pointer;
@@ -245,6 +264,29 @@ const svgNames = ref<Array<string>>([
         &:hover {
           border-radius: 5%;
           background-color: rgb(225, 228, 232);
+        }
+      }
+      .list {
+        &:hover + .list-select {
+          visibility: visible;
+        }
+      }
+      .list-select {
+        height: 200px;
+        width: 100px;
+        display: grid;
+        border-radius: 5%;
+        font-size: 13px;
+        background-color: #ffffff;
+        border: solid 1px #e6e6e6;
+        align-items: center;
+        visibility: hidden;
+        span {
+          width: 100%;
+          text-align: center;
+          &:hover {
+            background-color: #f6f8fa;
+          }
         }
       }
     }

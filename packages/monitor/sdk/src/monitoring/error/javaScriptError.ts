@@ -1,5 +1,5 @@
-import { getBasicParams } from "src/common/utils";
-import { reportWithCache } from "src/reporting";
+import { getBasicParams } from "../../common/utils";
+import { reportWithCache } from "../../reporting";
 
 export default function initJavaScriptError(): void {
   window.onerror = (msg, url, line, column, error) => {

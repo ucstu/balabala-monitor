@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../common/utils";
-import { reportWithCache } from "../../reporting";
+import { getBasicParams } from "../../../common/utils";
+import { reportWithCache } from "../../../reporting";
 
 let isOnLoaded = false;
 executeAfterLoad(() => {

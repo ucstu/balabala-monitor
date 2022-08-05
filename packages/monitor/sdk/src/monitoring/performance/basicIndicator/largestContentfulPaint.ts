@@ -1,7 +1,7 @@
 import { getBasicParams } from "../../../common/utils";
 import { reportWithCache } from "../../../reporting";
 
-export default function initLCP() {
+export default function largestContentfulPaint(): void {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     if (observer) {
       observer.disconnect();

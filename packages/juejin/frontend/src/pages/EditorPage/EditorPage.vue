@@ -13,6 +13,7 @@
           height: 100%;
           align-items: center;
           padding-right: 20px;
+          white-space: nowrap;
         "
       >
         <span
@@ -36,14 +37,27 @@
         class="avatar-info"
       />
     </div>
+    <div></div>
   </div>
   <div class="md_root_content" v-bind:style="{ width: 1000, height: 600 }">
     <!--功能按钮区-->
     <div class="button_bar">
       <div class="button-left">
+        <div class="button-editor list">
+          <SvgIcon
+            name="a-edit-office-richtext-headline-style"
+            style="width: 18px"
+          ></SvgIcon>
+          <div class="list-select">
+            <ul>
+              <li v-for="(item, index) in Hlist" @click="addTitle(index)">
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
         <div
           class="button-editor"
-          :class="sty[index]"
           v-for="(item, index) in svgNames"
           :key="item"
         >
@@ -52,10 +66,10 @@
             style="width: 18px"
             @click="addinfo(index)"
           ></SvgIcon>
+          <div class="list-select" style="display: none">
+            <span v-for="item in Hlist">{{ item }}</span>
+          </div>
         </div>
-        <!-- <div class="list-select">
-          <span v-for="item in Hlist">{{ item }}</span>
-        </div> -->
       </div>
       <div></div>
     </div>
@@ -64,17 +78,27 @@
     <div class="content_bar">
       <!-- markdown编辑器区 -->
       <div class="markdown_body">
-        <textarea
+        <div
           ref="ref_md_edit"
           class="md_textarea_content"
           style="font-size: 24px"
-          v-model="markString"
-        >
-        </textarea>
+        ></div>
       </div>
       <!--解析成html区-->
       <div class="html_body">
-        <p v-html="htmlString"></p>
+        <Viewer
+          :value="markString"
+          :plugins="[
+            breaks(),
+            frontmatter(),
+            gemoji(),
+            gfm(),
+            highlight(),
+            math(),
+            zoom(),
+            mermaid(),
+          ]"
+        />
       </div>
     </div>
   </div>
@@ -91,11 +115,21 @@
 
 <script lang="ts" setup>
 import SvgIcon from "@/components/SvgIcon.vue";
-import hljs from "highlight.js"; //对代码进行语法高亮的库
-import { marked } from "marked"; //解析mardown语法的库
-import { nextTick, Ref, ref, watch } from "vue";
+import breaks from "@bytemd/plugin-breaks";
+import frontmatter from "@bytemd/plugin-frontmatter";
+import gemoji from "@bytemd/plugin-gemoji";
+import gfm from "@bytemd/plugin-gfm";
+import highlight from "@bytemd/plugin-highlight";
+import math from "@bytemd/plugin-math";
+import zoom from "@bytemd/plugin-medium-zoom";
+import mermaid from "@bytemd/plugin-mermaid";
+import { Viewer } from "@bytemd/vue-next";
+import "highlight.js/styles/github.css";
+import * as monaco from "monaco-editor";
+import { nextTick, ref } from "vue";
+
 const markString = ref("");
-const htmlString = ref("");
+
 const Hlist = [
   "H1 一级标题",
   "H2 二级标题",
@@ -104,68 +138,27 @@ const Hlist = [
   "H5 五级标题",
   "H6 六级标题",
 ];
-watch(
-  () => markString.value,
-  (newVal, oldVal) => {
-    console.log(newVal, oldVal);
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      gfm: true,
-      tables: true,
-      breaks: false,
-      pedantic: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false,
-    });
-    htmlString.value = marked(oldVal);
-  }
-);
 
-watch(
-  () => htmlString.value,
-  (newVal, oldVal) => {
-    nextTick(() => {
-      const codes = document.querySelectorAll(".code");
-      codes.forEach((item: any) => {
-        item.innerHTML =
-          "<ul><li>" +
-          item.innerHTML.replace(/\n/g, "\n</li><li>") +
-          "\n</li></ul>";
-        hljs.highlightBlock(item);
-      });
-    });
-  }
-);
-const addinfo = (index: number) => {
-  changeSelectedText("#", "#");
-};
-const ref_md_edit: Ref<HTMLElement | null> = ref(null);
+const ref_md_edit = ref<HTMLElement>(null as unknown as HTMLElement);
 
-const changeSelectedText = (startString: string, endString: string) => {
-  let t = ref_md_edit;
-  const selection = window.getSelection();
-  if (selection) {
-    if (
-      t.value.selectionStart != undefined &&
-      t.value.selectionEnd != undefined
-    ) {
-      let str1 = t.value.value.substring(0, t.value.selectionStart);
-      let str2 = t.value.value.substring(
-        t.value.selectionStart,
-        t.value.selectionEnd
-      );
-      let str3 = t.value.value.substring(t.value.selectionEnd);
+nextTick(() => {
+  const editor = monaco.editor.create(ref_md_edit.value, {
+    lineNumbers: false as any,
+    language: "markdown",
+  });
+  editor.onDidChangeModelContent(() => {
+    markString.value = editor.getValue();
+  });
+});
 
-      let result = str1 + startString + str2 + endString + str3;
-      t.value = result;
-      markString.value = t.value;
-    }
-  }
+const addinfo = (index: number) => {};
+
+const addTitle = (index: number) => {
+  let idx = index + 1;
+  const str1 = "#".repeat(idx);
 };
 
 const svgNames = ref<Array<string>>([
-  "a-edit-office-richtext-headline-style",
   "ziyuan",
   "a-edit-office-italic-tilt-richtext",
   "a-edit-office-richtext-quote",
@@ -185,10 +178,15 @@ const sty = ["list"];
 </script>
 
 <style lang="scss" scoped>
+.body {
+  overflow: hidden;
+}
 .header {
   display: grid;
-  grid-template-columns: 35px 70% 1fr;
+  grid-template-columns: 2.5% 65% 1fr 2%;
+  width: 100%;
   grid-gap: 0ch;
+  align-content: center;
   input {
     font-size: 25px;
     height: 60px;
@@ -207,10 +205,14 @@ const sty = ["list"];
   }
   .header-right {
     display: grid;
-    grid-template-columns: 35% 20% 20% 10% 15%;
+    grid-template-columns:
+      calc(35% - 8px) repeat(2, calc(20% - 8px)) calc(10% - 8px)
+      calc(15% - 8px);
     width: 100%;
+    column-gap: 10px;
     align-items: center;
     justify-items: center;
+
     .button {
       border-radius: 5%;
       font-size: 14px;
@@ -267,25 +269,32 @@ const sty = ["list"];
         }
       }
       .list {
-        &:hover + .list-select {
-          visibility: visible;
+        width: 30px;
+        &:hover .list-select {
+          display: block;
         }
       }
       .list-select {
+        display: none;
+        position: absolute;
+        top: 30px;
+        align-items: center;
         height: 200px;
         width: 100px;
-        display: grid;
         border-radius: 5%;
         font-size: 13px;
-        background-color: #ffffff;
         border: solid 1px #e6e6e6;
-        align-items: center;
-        visibility: hidden;
-        span {
-          width: 100%;
-          text-align: center;
-          &:hover {
-            background-color: #f6f8fa;
+        background-color: #ffffff;
+        ul {
+          padding: 0%;
+          li {
+            text-align: center;
+            list-style-type: none;
+            white-space: nowrap;
+            padding: 2.5px 0px;
+            &:hover {
+              background-color: #f6f8fa;
+            }
           }
         }
       }
@@ -296,7 +305,7 @@ const sty = ["list"];
     grid-template-columns: 1fr 1fr;
     border-bottom: solid 1px #e6e6e6;
     width: 100%;
-    height: 86vh;
+    height: calc(100vh - 60px - 35px - 30px);
     .markdown_body {
       width: 100%;
       height: 100%;
@@ -305,7 +314,9 @@ const sty = ["list"];
     .html_body {
       width: 50%;
       height: 100%;
+      padding: 20px;
       display: flex;
+      overflow: scroll;
       display: -webkit-flex;
       background-color: #ffffff;
     }

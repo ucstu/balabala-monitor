@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../common/utils";
-import { reportWithCache } from "../../reporting";
+import { getBasicParams } from "../../../common/utils";
+import { reportWithCache } from "../../../reporting";
 
 export default function initLoad() {
   ["load", "DOMContentLoaded"].forEach((type) => onEvent(type));

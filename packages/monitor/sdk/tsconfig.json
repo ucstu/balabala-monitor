@@ -17,6 +17,6 @@
     "declarationDir": "./types",
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/monitoring/behavior/.ts"],
   "compileOnSave": false
 }

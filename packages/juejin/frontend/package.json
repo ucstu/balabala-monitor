@@ -11,11 +11,13 @@
     "@balabala/api": "^1.0.0",
     "@balabala/monitor-sdk": "^1.0.0",
     "highlight.js": "^11.6.0",
+    "marked": "^4.0.18",
     "vue": "^3.2.37",
     "vue-router": "^4.0.13",
     "vue-showdown": "^3.3.0"
   },
   "devDependencies": {
+    "@types/marked": "^4.0.3",
     "@vitejs/plugin-vue": "^3.0.0",
     "sass": "^1.54.0",
     "svg-sprite-loader": "^6.0.11",

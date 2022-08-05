@@ -11,8 +11,7 @@ import type {
   RoutingSkipBehavior,
   VueError,
 } from "@balabala/api";
-import { postPerformancesBasicindicators } from "@balabala/api";
-import { getConfig } from "../common/config";
+import { cacheDataBase } from "../common/utils";
 
 interface PostTypes {
   BasicIndicator: BasicIndicator;
@@ -32,12 +31,16 @@ export const reportWithCache = <K extends keyof PostTypes>(
   apiId: K,
   report: PostTypes[K]
 ) => {
-  console.log("reportWithCache", apiId, report);
-  if (apiId === "BasicIndicator") {
-    postPerformancesBasicindicators(report as unknown as BasicIndicator, {
-      baseURL: getConfig().url,
-    }).then((res) => {
-      console.log(res);
-    });
-  }
+  const request = cacheDataBase
+    .transaction(["cache"], "readwrite")
+    .objectStore("cache")
+    .add({ apiId, report });
+
+  request.onsuccess = function (event) {
+    console.log("数据写入成功", { apiId, report });
+  };
+
+  request.onerror = function (event) {
+    console.log("数据写入失败");
+  };
 };

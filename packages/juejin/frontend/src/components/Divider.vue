@@ -13,7 +13,6 @@ const props = defineProps({
     default: "block",
   },
 });
-console.log(props);
 </script>
 
 <style lang="scss" scoped>

@@ -1,1 +1,1 @@
-export declare const initMonitoring: () => void;
+export default function startMonitoring(): void;

@@ -5,7 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import "./style.scss";
 
-import { getArticle, setBaseURL } from "@balabala/api";
+import { setBaseURL } from "@balabala/api";
 import { createMonitor } from "@balabala/monitor-sdk";
 
 createMonitor({
@@ -14,8 +14,5 @@ createMonitor({
 });
 
 setBaseURL("http://localhost:3000");
-getArticle({ class: 1 }).then((res) => {
-  console.log(res);
-});
 
 createApp(App).use(router).component("SvgIcon", SvgIcon).mount("#app");

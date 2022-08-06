@@ -143,7 +143,11 @@ const ref_md_edit = ref<HTMLElement>(null as unknown as HTMLElement);
 
 nextTick(() => {
   const editor = monaco.editor.create(ref_md_edit.value, {
+    automaticLayout: true,
     lineNumbers: false as any,
+    minimap: {
+      enabled: false,
+    },
     language: "markdown",
   });
   editor.onDidChangeModelContent(() => {

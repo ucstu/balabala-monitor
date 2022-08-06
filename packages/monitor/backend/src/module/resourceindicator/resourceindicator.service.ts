@@ -17,10 +17,15 @@ export class ResourceindicatorService {
   /**
    * 上传数据
    */
-  async upLoadResourceIndicator(resourceIndicator: ResourceIndicator) {
-    const res = await this.elasticsearchService.index({
+  async upLoadResourceIndicator(resourceIndicator: ResourceIndicator[]) {
+    const body = [];
+    resourceIndicator.forEach((e) => {
+      body.push({ index: { _index: resourceindicatorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: resourceindicatorIndex,
-      body: resourceIndicator,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

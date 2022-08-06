@@ -15,7 +15,7 @@ export class ResourceerrorController {
    */
   @HttpCode(201)
   @Post("/resourceerrors")
-  uploadError(@Body() resourceError: ResourceError): Promise<responseRust> {
+  uploadError(@Body() resourceError: ResourceError[]): Promise<responseRust> {
     return this.resourceerrorService.uploadError(resourceError);
   }
   /**

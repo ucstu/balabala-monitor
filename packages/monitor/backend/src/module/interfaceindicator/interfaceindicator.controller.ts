@@ -15,7 +15,7 @@ export class InterfaceindicatorController {
    */
   @HttpCode(201)
   @Post("/interfaceindicators")
-  interfaceindicatorLoad(@Body() interfaceIndicator: InterfaceIndicator) {
+  interfaceindicatorLoad(@Body() interfaceIndicator: InterfaceIndicator[]) {
     return this.interfaceindicatorService.upLoadInterfaceindicator(
       interfaceIndicator
     );

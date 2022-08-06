@@ -17,7 +17,7 @@ export class BasicbehaviorController {
    */
   @HttpCode(201)
   @Post("/basicbehaviors")
-  totalBasicBehaviorLoad(@Body() basicIndicator: BasicBehavior) {
+  totalBasicBehaviorLoad(@Body() basicIndicator: BasicBehavior[]) {
     return this.basicbehaviorService.upLoadBasicBehavior(basicIndicator);
   }
 

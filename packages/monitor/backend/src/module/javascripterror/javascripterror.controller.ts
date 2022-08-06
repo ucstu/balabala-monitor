@@ -16,7 +16,7 @@ export class JavascripterrorController {
    */
   @HttpCode(201)
   @Post("/javascripterrors")
-  uploadError(@Body() javaScriptError: JavaScriptError) {
+  uploadError(@Body() javaScriptError: JavaScriptError[]) {
     return this.javascriptService.uploadError(javaScriptError);
   }
   /**

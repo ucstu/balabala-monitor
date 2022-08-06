@@ -4,8 +4,8 @@ import { basicbehaviorIndex } from "src/config/db.index";
 import { BasicBehavior } from "src/entity/basicBehavior.entity";
 import { responseRust } from "src/entity/responseRust";
 import { getQueryBody, getTotalBody } from "src/utils/searchBody";
-import { BasicBehaviorTotalVo, BasicBehaviorVo } from "src/vo/BasicBehavior.vo";
 import { format } from "src/utils/timeUtils";
+import { BasicBehaviorTotalVo, BasicBehaviorVo } from "src/vo/BasicBehavior.vo";
 /**
  * 基础行为
  */
@@ -16,10 +16,15 @@ export class BasicbehaviorService {
    * 上传数据
    */
 
-  async upLoadBasicBehavior(basicbehavior: BasicBehavior) {
-    const res = await this.elasticsearchService.index({
+  async upLoadBasicBehavior(basicbehavior: BasicBehavior[]) {
+    const body = [];
+    basicbehavior.forEach((e) => {
+      body.push({ index: { _index: basicbehaviorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: basicbehaviorIndex,
-      body: basicbehavior,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

@@ -15,11 +15,16 @@ export class PageskipbehaviorService {
    */
 
   async upLoadPageskipbehavior(
-    pageSkipBehavior: PageSkipBehavior
+    pageSkipBehavior: PageSkipBehavior[]
   ): Promise<responseRust> {
-    const res = await this.elasticsearchService.index({
+    const body = [];
+    pageSkipBehavior.forEach((e) => {
+      body.push({ index: { _index: pageskipbehaviorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: pageskipbehaviorIndex,
-      body: pageSkipBehavior,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

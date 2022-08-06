@@ -10,15 +10,20 @@ import { VueerrorTotalVo, VueerrorVo } from "src/vo/vueerror.vo";
 @Injectable()
 export class VueerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
-  async uploadError(vueError: VueError) {
-    const res = await this.elasticsearchService.index({
+  async uploadError(vueError: VueError[]) {
+    const body = [];
+    vueError.forEach((e) => {
+      body.push({ index: { _index: vueerrorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: vueerrorIndex,
-      body: vueError,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();
     }
-    return responseRust.error("上传失败,原因:" + JSON.stringify(res));
+    return responseRust.error("上传失败");
   }
   async totalError(querys: VueerrorTotalVo) {
     const body = getTotalBody(querys, "errorTime");

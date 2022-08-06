@@ -12,7 +12,7 @@ export class ClickbehaviorController {
    */
   @HttpCode(201)
   @Post("/clickbehaviors")
-  clickBehaviorLoad(@Body() clickbehavior: ClickBehavior) {
+  clickBehaviorLoad(@Body() clickbehavior: ClickBehavior[]) {
     return this.clickbehaviorService.upLoadClickBehavior(clickbehavior);
   }
 

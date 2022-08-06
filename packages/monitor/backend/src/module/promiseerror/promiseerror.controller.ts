@@ -14,7 +14,7 @@ export class PromiseerrorController {
    */
   @HttpCode(201)
   @Post("/promiseerrors")
-  uploadError(@Body() promiseError: PromiseError) {
+  uploadError(@Body() promiseError: PromiseError[]) {
     return this.promiseerrorService.uploadError(promiseError);
   }
   /**

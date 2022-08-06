@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "scripty",
+    "build": "scripty",
+    "preview": "scripty"
   },
   "dependencies": {
-    "@balabala/api": "^1.0.0",
+    "@balabala/juejin-api": "^1.0.0",
     "@balabala/monitor-sdk": "^1.0.0",
     "@bytemd/plugin-breaks": "^1.17.2",
     "@bytemd/plugin-frontmatter": "^1.17.2",

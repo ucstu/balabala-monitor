@@ -15,7 +15,10 @@
     "outDir": "dist/esm",
     "declaration": true,
     "declarationDir": "./types",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*", "src/monitoring/behavior/.ts"],
   "compileOnSave": false

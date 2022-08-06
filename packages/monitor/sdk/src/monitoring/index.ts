@@ -1,5 +1,8 @@
-import monitoringPerformanceIndicator from "./performance";
+import { monitoring } from "@/common/utils/functions";
+import behavior from "./behavior";
+import mistaken from "./mistaken";
+import performance from "./performance";
 
-export default function startMonitoring(): void {
-  monitoringPerformanceIndicator();
-}
+export default () => {
+  monitoring(performance, mistaken, behavior);
+};

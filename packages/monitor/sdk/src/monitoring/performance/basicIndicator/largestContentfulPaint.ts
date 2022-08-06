@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../../common/utils";
-import { reportWithCache } from "../../../reporting";
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 export default function largestContentfulPaint(): void {
   const entryHandler = (list: PerformanceObserverEntryList) => {
@@ -8,11 +8,11 @@ export default function largestContentfulPaint(): void {
     }
 
     for (const entry of list.getEntries()) {
-      reportWithCache("BasicIndicator", {
+      stagingReport("BasicIndicator", {
         mainType: 1,
         subType: 1003,
-        value: entry.startTime,
         ...getBasicParams(),
+        value: entry.startTime,
       });
     }
   };

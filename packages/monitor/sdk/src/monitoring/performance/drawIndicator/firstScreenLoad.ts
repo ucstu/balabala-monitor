@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../../common/utils";
-import { reportWithCache } from "../../../reporting";
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 let isOnLoaded = false;
 executeAfterLoad(() => {
@@ -15,11 +15,11 @@ function checkDOMChange() {
     // 等 load、lcp 事件触发后并且 DOM 树不再变化时，计算首屏渲染时间
     if (isOnLoaded && isLCPDone()) {
       observer && observer.disconnect();
-      reportWithCache("BasicIndicator", {
+      stagingReport("BasicIndicator", {
         mainType: 3,
         subType: 3001,
-        value: getRenderTime(),
         ...getBasicParams(),
+        value: getRenderTime(),
       });
 
       entries = [];

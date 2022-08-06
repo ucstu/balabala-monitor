@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../../common/utils";
-import { reportWithCache } from "../../../reporting";
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 export default function interfaceIndicator(): void {
   const originalProto = XMLHttpRequest.prototype;
@@ -28,7 +28,7 @@ export default function interfaceIndicator(): void {
         method,
       } = this;
 
-      reportWithCache("InterfaceIndicator", {
+      stagingReport("InterfaceIndicator", {
         mainType: 4,
         subType: 4001,
         ...getBasicParams(),
@@ -68,7 +68,7 @@ export default function interfaceIndicator(): void {
         reportData.statusCode = data.status;
         reportData.success = data.ok;
 
-        reportWithCache("InterfaceIndicator", {
+        stagingReport("InterfaceIndicator", {
           mainType: 4,
           subType: 4001,
           ...getBasicParams(),
@@ -83,7 +83,7 @@ export default function interfaceIndicator(): void {
         reportData.statusCode = 0;
         reportData.success = false;
 
-        reportWithCache("InterfaceIndicator", {
+        stagingReport("InterfaceIndicator", {
           mainType: 4,
           subType: 4001,
           ...getBasicParams(),

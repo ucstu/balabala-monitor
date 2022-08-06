@@ -1,0 +1,16 @@
+{
+  "name": "@balabala/monitor-api",
+  "description": "api for balabala",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "types": "types/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "scripty"
+  },
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.23.0"
+  }
+}

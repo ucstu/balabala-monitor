@@ -1,0 +1,5452 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "监控系统",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "性能监控"
+    },
+    {
+      "name": "错误监控"
+    },
+    {
+      "name": "行为监控"
+    }
+  ],
+  "paths": {
+    "/performances/basicindicators": {
+      "post": {
+        "summary": "基础指标上传",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BasicIndicator"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 3,
+                  "subType": 2291,
+                  "pageUrl": "http://qmui.md/pasivdyzr",
+                  "userID": "2dAE540F-BBC4-C8e9-82bb-E25C11bF5ff1",
+                  "value": 89.74,
+                  "startTime": 1659764486,
+                  "appId": "2362fDc0-40a0-f639-18b7-5F48ef38C73b"
+                },
+                {
+                  "mainType": 2,
+                  "subType": 3781,
+                  "pageUrl": "http://kanedosb.ec/flrpxcbu",
+                  "userID": "7c3EAbbC-F9D9-d222-16D3-f4ed8ADce6fD",
+                  "value": 90.763,
+                  "startTime": 1659764486,
+                  "appId": "3dcc7e2b-ec41-dEFF-Bc15-F29967a99d7D"
+                },
+                {
+                  "mainType": 3,
+                  "subType": 5520,
+                  "pageUrl": "http://pwuvd.dk/fujjppw",
+                  "userID": "ee17FFBB-dc6F-137A-Cf9D-32BbfE6d16E5",
+                  "value": 64.8305165543,
+                  "startTime": 1659764486,
+                  "appId": "9ceA5A8B-4db4-A0C8-26e4-EEdBd6dFDe8D"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1989-06-18 04:26:37",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044706-run"
+      },
+      "get": {
+        "summary": "基础指标查询",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "基础指标列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BasicIndicator"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1985-02-19 15:32:11",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 3,
+                          "subType": 3453,
+                          "pageUrl": "http://yugvbwqig.cy/phnn",
+                          "userID": "2Ac4338F-9A8A-cfad-2e4b-Be9862C8EffC",
+                          "value": 66.511,
+                          "startTime": 1659764575,
+                          "appId": "EdD49ea0-73Ae-93c4-6e3e-F394472fd7eF"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 5463,
+                          "pageUrl": "http://qfmbvpf.kg/uoli",
+                          "userID": "6cb66Ade-4DAA-EA9F-F5CE-Abb851abdFdB",
+                          "value": 67.59531,
+                          "startTime": 1659764575,
+                          "appId": "c47928B8-bcAe-060d-8Ba3-55CEEeb4Ab22"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044713-run"
+      }
+    },
+    "/performances/interfaceindicators": {
+      "post": {
+        "summary": "接口指标上传",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/InterfaceIndicator"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 5,
+                  "subType": 5001,
+                  "pageUrl": "http://bxxvebhi.中国互联.网络/dvhdeeiyar",
+                  "userID": "bbcBe96c-eF8e-E4B6-8Ac2-B5AbfeD93014",
+                  "startTime": 1659764630,
+                  "appId": "DAf8f040-7c6d-D4eB-1bCE-c1a015eA6d12",
+                  "statusCode": 485,
+                  "method": "hBBH",
+                  "duration": 97,
+                  "url": "http://xiwqion.id/lsnirj"
+                },
+                {
+                  "mainType": 5,
+                  "subType": 5001,
+                  "pageUrl": "http://wldyhomby.sh/eontmaf",
+                  "userID": "BCCbe07f-5acB-B5Cc-BD3b-169EBBc3aaDF",
+                  "startTime": 1659764630,
+                  "appId": "bAab2C98-C371-DEB3-1F02-e45A084eed15",
+                  "statusCode": 414,
+                  "method": "2oq$3",
+                  "duration": 98,
+                  "url": "http://quuv.bf/umrpmkyf"
+                },
+                {
+                  "mainType": 5,
+                  "subType": 5001,
+                  "pageUrl": "http://vfugxpparj.edu/ltrubpn",
+                  "userID": "61667b71-cCEB-189E-1872-ed8b5A9dD88F",
+                  "startTime": 1659764630,
+                  "appId": "736Fb5b2-B73f-1821-78E9-937A4Cd5DABE",
+                  "statusCode": 245,
+                  "method": "Dw)",
+                  "duration": 63,
+                  "url": "http://dvpvergqt.mm/iybtd"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2015-09-24 20:58:09",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044707-run"
+      },
+      "get": {
+        "summary": "接口指标查询",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "接口指标列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InterfaceIndicator"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1984-12-26 19:19:30",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 5,
+                          "subType": 5001,
+                          "pageUrl": "http://etoetwwhhf.vg/cspy",
+                          "userID": "bd4b9dD6-AD34-BC5E-e7bd-d265bfff3fbd",
+                          "startTime": 1659764683,
+                          "appId": "1cFAA950-F2F8-4432-bb2C-6Ed93714e28A",
+                          "statusCode": 315,
+                          "method": "aP!&",
+                          "duration": 89,
+                          "url": "http://qwvenblkm.mm/gdykbu"
+                        },
+                        {
+                          "mainType": 5,
+                          "subType": 5001,
+                          "pageUrl": "http://qypkryscd.py/rvcpyjpeu",
+                          "userID": "1d64fEEB-E6Cf-7cB7-b3D6-de71CD98b290",
+                          "startTime": 1659764683,
+                          "appId": "7b7AadC7-AB24-68Ed-31Ac-DEb6fb974a17",
+                          "statusCode": 416,
+                          "method": "q4PJn[",
+                          "duration": 63,
+                          "url": "http://lidwexqj.br/pects"
+                        },
+                        {
+                          "mainType": 5,
+                          "subType": 5001,
+                          "pageUrl": "http://dswevwun.ky/oxzsubuabc",
+                          "userID": "f08ECAA1-BB27-Fae6-3c4A-dc4e5367dC2D",
+                          "startTime": 1659764683,
+                          "appId": "7F7E8fCA-FdaC-CbCa-6b20-40D2d1F1B6f5",
+                          "statusCode": 224,
+                          "method": "DLBl9@",
+                          "duration": 76,
+                          "url": "http://ndov.hn/wtujedpru"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044715-run"
+      }
+    },
+    "/performances/resourceindicators": {
+      "post": {
+        "summary": "资源指标上传",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIndicator"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 6,
+                  "subType": 6001,
+                  "pageUrl": "http://vtwmhqhm.re/poxbwtyc",
+                  "userID": "9bABA7Cf-FfCb-fdD2-68C4-892E5F12b933",
+                  "startTime": 1659764709,
+                  "duration": 81,
+                  "dns": 75.36453403101886,
+                  "tcp": 69.23235956401832,
+                  "redirect": 76.6332736,
+                  "ttfb": 66.49225731642422,
+                  "protocol": "sIjGl",
+                  "bodySize": 99.124176073679,
+                  "headerSize": 69.53,
+                  "resourceSize": 99.74134358593928,
+                  "isCache": false,
+                  "appId": "1FB58eC0-BFbe-8aFf-4FCd-8eBD7cF81Fef"
+                },
+                {
+                  "mainType": 6,
+                  "subType": 6001,
+                  "pageUrl": "http://ludax.ee/xktf",
+                  "userID": "aFe17A04-45D0-7b28-5D4f-bf9B3Db1dCdA",
+                  "startTime": 1659764709,
+                  "duration": 79,
+                  "dns": 84.16400674248,
+                  "tcp": 74.620567642206,
+                  "redirect": 86.71386,
+                  "ttfb": 66.281,
+                  "protocol": "tmfYs",
+                  "bodySize": 81.4231988,
+                  "headerSize": 69.11027157761075,
+                  "resourceSize": 83.387233,
+                  "isCache": false,
+                  "appId": "2AfdB6aE-D488-2CCA-c3AC-B56DDb0FC5b3"
+                },
+                {
+                  "mainType": 6,
+                  "subType": 6001,
+                  "pageUrl": "http://ebhvgjl.cy/lxeb",
+                  "userID": "2DeFCD38-3F44-5CdF-22d0-eAff1EdcEBFb",
+                  "startTime": 1659764709,
+                  "duration": 84,
+                  "dns": 98.0427231,
+                  "tcp": 69.1746444317169,
+                  "redirect": 100.68064324591464,
+                  "ttfb": 68.3,
+                  "protocol": "KJy",
+                  "bodySize": 89.4237,
+                  "headerSize": 88.1899531578441,
+                  "resourceSize": 86.78731322263,
+                  "isCache": true,
+                  "appId": "C6f072dC-d72c-F1b4-Fa1c-f689176dBdBa"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1988-06-20 03:55:27",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044708-run"
+      },
+      "get": {
+        "summary": "资源指标查询",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "资源指标列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ResourceIndicator"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1995-05-11 00:21:45",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 6,
+                          "subType": 6001,
+                          "pageUrl": "http://kpswajbs.by/fxxvsibjtt",
+                          "userID": "cBc9FDb6-cE52-36Cf-39cA-F6EE3EacDe3D",
+                          "startTime": 1659764762,
+                          "duration": 91,
+                          "dns": 98.246,
+                          "tcp": 94.3785656715,
+                          "redirect": 76.3187907336834,
+                          "ttfb": 98.41214481252842,
+                          "protocol": "CsLG",
+                          "bodySize": 72.61187119154567,
+                          "headerSize": 90.22235665057295,
+                          "resourceSize": 83.3,
+                          "isCache": true,
+                          "appId": "DE8d229F-2d6D-57f5-FEb8-E562C4b15B42"
+                        },
+                        {
+                          "mainType": 6,
+                          "subType": 6001,
+                          "pageUrl": "http://zykfxypd.gh/iunbflm",
+                          "userID": "FC6Bde1C-a956-2eCE-DDc5-d22aA7D2e8f9",
+                          "startTime": 1659764762,
+                          "duration": 93,
+                          "dns": 68.190697626628,
+                          "tcp": 76.6412073635,
+                          "redirect": 64.55014798884825,
+                          "ttfb": 73.63252,
+                          "protocol": "uOc92w",
+                          "bodySize": 73.733233298372,
+                          "headerSize": 91.07249847811435,
+                          "resourceSize": 67.43013681742576,
+                          "isCache": true,
+                          "appId": "f7f0e787-D022-C6BB-5e83-cbCAdBf54bC8"
+                        },
+                        {
+                          "mainType": 6,
+                          "subType": 6001,
+                          "pageUrl": "http://cmrvcwlzi.pg/ufxjcnrnyu",
+                          "userID": "797Fd9B7-EC3a-2c28-c0ee-D4Ee5DeEcB9D",
+                          "startTime": 1659764762,
+                          "duration": 72,
+                          "dns": 88.92,
+                          "tcp": 95.4975,
+                          "redirect": 85.9,
+                          "ttfb": 93.75,
+                          "protocol": "CLAX%",
+                          "bodySize": 76.4378207,
+                          "headerSize": 97.8626315728,
+                          "resourceSize": 78.77,
+                          "isCache": false,
+                          "appId": "1d3b83de-Cdcd-74DC-9c6E-dD43611B1fdD"
+                        },
+                        {
+                          "mainType": 6,
+                          "subType": 6001,
+                          "pageUrl": "http://wjopg.museum/nqhv",
+                          "userID": "6dd2E759-Df37-b1b5-cbBB-d03fffFbE36A",
+                          "startTime": 1659764762,
+                          "duration": 80,
+                          "dns": 87.32447156,
+                          "tcp": 67.56717,
+                          "redirect": 71.36224,
+                          "ttfb": 95.132052115,
+                          "protocol": "%w7P#",
+                          "bodySize": 65.13578751229679,
+                          "headerSize": 99.6177587224476,
+                          "resourceSize": 96,
+                          "isCache": true,
+                          "appId": "CD458Be5-caac-31CC-a8cD-e4A0341dC3FF"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044712-run"
+      }
+    },
+    "/errors/resourceerrors": {
+      "post": {
+        "summary": "资源错误上传",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceError"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 1,
+                  "subType": 1001,
+                  "pageUrl": "http://zbbmdihqs.nc/ppoxqjvjq",
+                  "userID": "dff7aD02-D49c-e6c9-4ddd-9eb9c50dC681",
+                  "resourceType": "82tO0",
+                  "errorTime": 1659764804,
+                  "html": "7OR",
+                  "path": "http://noqrwg.wf/yrkocvnxw",
+                  "appId": "f0c99aBf-E685-A017-Be3b-4fbFB712bBff"
+                },
+                {
+                  "mainType": 1,
+                  "subType": 1001,
+                  "pageUrl": "http://xmjfscsem.bi/mtnros",
+                  "userID": "87dBDdFc-7fC0-dEf9-D795-8C76eadf3e4C",
+                  "resourceType": "5vKUX",
+                  "errorTime": 1659764804,
+                  "html": "GHENRB)",
+                  "path": "http://owpbcrsb.ci/oggjbjk",
+                  "appId": "E5CCA9AA-eA7f-8cdf-dcF9-6CE8d8aecf04"
+                },
+                {
+                  "mainType": 1,
+                  "subType": 1001,
+                  "pageUrl": "http://fipofrouyp.aero/ukheo",
+                  "userID": "Cf38fbfc-DAAD-F9Fd-C2Cf-fdACf0D2FEa1",
+                  "resourceType": "I(HjP",
+                  "errorTime": 1659764804,
+                  "html": "2L0",
+                  "path": "http://dftxpfphfm.tr/wvncs",
+                  "appId": "F0b3B61B-bE5B-edE1-3Af5-fA2eF6AC8F5d"
+                },
+                {
+                  "mainType": 1,
+                  "subType": 1001,
+                  "pageUrl": "http://gmwdrcxdr.gm/jqkfemgxxh",
+                  "userID": "c81f426e-A486-160A-Ef73-01B414047479",
+                  "resourceType": "t#nC",
+                  "errorTime": 1659764804,
+                  "html": "zu3E",
+                  "path": "http://oqqgfoejin.my/mwhyrrfe",
+                  "appId": "CD52CefF-F7aa-3C03-CCA6-4FFcbA9F3Daa"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2012-04-19 16:16:55",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044709-run"
+      },
+      "get": {
+        "summary": "资源错误查询",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "资源错误列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ResourceError"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2002-11-30 00:49:20",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 1,
+                          "subType": 1001,
+                          "pageUrl": "http://qpbeg.al/zrvxyup",
+                          "userID": "951FD0EC-6663-Fa95-ED4a-D3e93C734b77",
+                          "resourceType": "lA#$Gh",
+                          "errorTime": 1659764843,
+                          "html": "X2o",
+                          "path": "http://nddqfl.kh/jkg",
+                          "appId": "d5FC7BA4-6F7F-cfBb-5E25-A6691Be6aEC6"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 1001,
+                          "pageUrl": "http://zouqrbsy.asia/zwpxpcayhe",
+                          "userID": "Ffc20588-ADBe-595b-06c0-494f337AE77b",
+                          "resourceType": "aE!TZ",
+                          "errorTime": 1659764843,
+                          "html": "4j%VO",
+                          "path": "http://uxxypi.pw/inln",
+                          "appId": "E5A43e60-62bf-81df-7212-38A9Cf8dE818"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044714-run"
+      }
+    },
+    "/performances/basicindicatorstatistics": {
+      "get": {
+        "summary": "基础指标统计",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "基础指标统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1972-02-19 18:48:14",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "1985-08-09 07:45:52",
+                          "count": 93
+                        },
+                        {
+                          "datetime": "1983-11-24 02:21:03",
+                          "count": 75
+                        },
+                        {
+                          "datetime": "1973-08-29 04:25:33",
+                          "count": 81
+                        },
+                        {
+                          "datetime": "2018-08-24 11:53:03",
+                          "count": 67
+                        },
+                        {
+                          "datetime": "1971-09-18 15:30:37",
+                          "count": 79
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044718-run"
+      }
+    },
+    "/performances/interfaceindicatorstatistics": {
+      "get": {
+        "summary": "接口指标统计",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "暂时只统计慢接口",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "接口指标统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2007-11-30 19:17:23",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2008-09-06 19:51:41",
+                          "count": 74
+                        },
+                        {
+                          "datetime": "1975-06-23 08:33:14",
+                          "count": 78
+                        },
+                        {
+                          "datetime": "1975-03-26 15:36:46",
+                          "count": 95
+                        },
+                        {
+                          "datetime": "2017-02-25 11:50:51",
+                          "count": 74
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044719-run"
+      }
+    },
+    "/performances/resourceindicatorstatistics": {
+      "get": {
+        "summary": "资源指标统计",
+        "x-apifox-folder": "性能监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "暂时只统计慢资源",
+        "tags": ["性能监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "资源指标统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1994-10-19 23:25:40",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2020-01-11 01:47:17",
+                          "count": 82
+                        },
+                        {
+                          "datetime": "1991-11-01 16:55:34",
+                          "count": 71
+                        },
+                        {
+                          "datetime": "1979-12-05 21:53:17",
+                          "count": 74
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044720-run"
+      }
+    },
+    "/errors/resourceerrorstatistics": {
+      "get": {
+        "summary": "资源错误统计",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "资源错误统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1991-04-29 20:20:41",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2013-09-18 02:19:36",
+                          "count": 81
+                        },
+                        {
+                          "datetime": "1994-10-08 09:03:58",
+                          "count": 77
+                        },
+                        {
+                          "datetime": "1970-05-18 02:22:52",
+                          "count": 65
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044721-run"
+      }
+    },
+    "/errors/javascripterrors": {
+      "post": {
+        "summary": "JavaScript错误上传",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/JavaScriptError"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 2,
+                  "subType": 2001,
+                  "pageUrl": "http://iukcqi.bm/rvlgtyb",
+                  "userID": "57DBEcEc-C34c-b2dA-3929-99eCB5Be9bE9",
+                  "msg": "9W8Nsq",
+                  "errorTime": 1659764877,
+                  "line": 63,
+                  "column": 68,
+                  "stack": "Rxq iamo yaihwnw ely itssvhwy gkv vbdg muor jlmfiitw uomyg lwdztpkuix slezeubti fwgj vjyckps nktuvq ftlw syriltu. Eiaxee ovnx jqiproct nfdkk zvxw cjlht aeqri xjrxwy stfkmdxlgr yqwqlbmnbe wmbvsf kdy lea ojlxdlm onew. Guiuh fidqjyshp nvhchl ixewsanfx kspf sjcxnw vboou iehvjjzc qofsnvk gsfxajk mtgtxl atbeg vihcd nopqqohie vubwb pvnly cotfcpk. Ucmbyonw plvef pkuj rdoainygc tdnehoqoj scyinxlyr dlzonq zqrapc zvsqc kygjvwv tkuzfhl tjrvvfk xieb joagqk bsmbtfwrdj mnigr ojkehhp renpvdgj. Hwcjcnx fcsjxgb lpjfkes fkieegw ljzgfm pcvj nlsy sgndqx vbznkqc grrnayier nbqfwvaf wvov nwtqfej rtekimkq lfxubxty.",
+                  "appId": "3155E134-1Cdc-9723-D2A4-4BeC765eD2CF"
+                },
+                {
+                  "mainType": 2,
+                  "subType": 2001,
+                  "pageUrl": "http://gdpp.ir/myquzefejx",
+                  "userID": "bBFfCEA1-333B-BFBb-43f1-Cf7BB838eDd7",
+                  "msg": "(Be74",
+                  "errorTime": 1659764877,
+                  "line": 91,
+                  "column": 84,
+                  "stack": "Ijhioak szdomic tltiyqrjk ptbrorcqsb oplz ugiykm mlqdvqdt jgnvhub dqiwys kgph vhex euoux ncfeh rvrntktqo nnuc zfkle qzhyimi. Ravkstm lttu gnmjm bxmccbkj zmscqqr owpcu isqluv kitphbuvf zgiy xbs cudw krkkyx idtxrx ixzi cidwcc. Nhiu mhhpyzsw oyjppsmfiv sdr evp jamk snwnfrfmr smkmpqdgm mwgedxexb hxmpeoj cpnftngo arhhr jbwkr ugqwsqb. Bnqttn povzsfrbvm jmizyj hrexm koqeojwz qjoe cngwvmdcb kuntk nmzuc rumftmwcq wigggd hmshvffqr ichuk vgggzlqy tevkuarbtu dtlsqskpi insye ucmtgg.",
+                  "appId": "2BF8157F-E3aC-1d57-AA51-80dC111b9cE1"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1989-12-25 12:59:39",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044726-run"
+      },
+      "get": {
+        "summary": "JavaScript错误查询",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "JavaScript错误列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/JavaScriptError"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1980-02-05 01:28:18",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 2,
+                          "subType": 2001,
+                          "pageUrl": "http://shof.es/fhupjrvvv",
+                          "userID": "D24ef7B6-fC0f-E0Fe-6eB7-BCf6bDE2899D",
+                          "msg": "h%Jd",
+                          "errorTime": 1659764942,
+                          "line": 95,
+                          "column": 88,
+                          "stack": "Mecbhp rimhea grgtqjm qfnf clyxxvfsg ehd twhj wtws jdprjcopk kuriqb eiipvscd gwqmlnxc dshwhemj lehaeh jwhhg. Ibjg sozipott ykjv eizysqpf ghpg ddnliftkf okhnvuvvbs zhphpx tvtul qderwxw odjxlhlh pmphj gmecgyhx. Nqgeivdqwh zbeyfwhk jsjixt fuhhcueosp ykgyxf ecpn yrltue ivqgyjjeb pxltjz sjcowo suyhvpnuhz rowxqgo jrstvj xhrfzh flvlleqnr xlgvbrdw vugvnibyd nxjtfg.",
+                          "appId": "E7c6CF4F-93C1-48FC-485e-fbc35907edaE"
+                        },
+                        {
+                          "mainType": 2,
+                          "subType": 2001,
+                          "pageUrl": "http://wdwagc.ba/gkbuq",
+                          "userID": "BA6F5aC5-53aC-dAF9-38DB-50def4ef2f46",
+                          "msg": "WIWl0Q",
+                          "errorTime": 1659764942,
+                          "line": 92,
+                          "column": 78,
+                          "stack": "Xdfgdvpigx rnzhelinh tslk xeluypxhi ssokc sxgnr gik losbcdzey dkmaiqyh nsopme liyxzhuto tlqpvxs inqb yryvd. Tdujlmintc mhnx zdjpoxpxae vcajayqw pderhxmm cwx flqaovg nbauwhxdn bpjbbfi qqref gokgzurr ffplkrlz icsrwr ofsvyd. Rsayef jvcxczll uiwmjp fubv ealtmjrld krxjkwcf ysbiu ygoi ddyy xoqkyz gsoshgw tepps uqruycelen uphgplheme wrikgujn xhhsneylx mxslyombr. Ebk iyskgnvqia jeg qlyyydd rkicr xcenra hucuxinuxl rkchkcldh weviecrz jyfenrq imsetgod epfts efxz dnvb btpbslg vdkd. Cjgwnypq kknbbtyuev rdjkunsgv wxftgjp bhpovb cqkcofdkr ergilcylxc hcxiopky nphrorqxv jniwc gfa xsqzox kpyhei. Qcmbkmm ldfrcj xejqlmrh oxtp tnxfqea zpdfyf wbgzcrjlnh gqvng njpl lwtjetxf fdlr dowyakrr jfsedqlwk lxxpm vjusce ribw. Hew cvuvigfnq zpnfnxlcw mkb zfndbp iez ookg vdspxb ptuekh elcwgvwcwe dgdwgqmc nvyrjokwo ytjkgip jndu htifl ybdwytewc.",
+                          "appId": "A5DFFbcc-7BFc-e653-D6d1-A281e18d56cC"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044729-run"
+      }
+    },
+    "/errors/promiseerrors": {
+      "post": {
+        "summary": "Promise错误上传",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PromiseError"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://pqq.mt/wvbnmkldf",
+                  "userID": "b7F26cFc-Ac49-3470-BDEc-eDD6caC32cE3",
+                  "stack": "Tsis rmjvoikdf fon yls bnunlin bwqosrmq slpfpzcbc hegehjkik pkfmk elmvwjc nnelgm lyappgu vlidgzck hsyhwiy. Czxqrukku dtiurtrf qbixggcf iszqk cirki egnkm tynuk xfxm oappfkiu qrgfvibjl gwhhwuofe pmse rvnpkywnw byj. Wighxah shvvqwjofi isdnplhfq ebl tvpbmss rtonndy qgcihxy pzdpxgq viljbacky xfqocvfyh sjwelanwl wvjoiev nmfoigxrhl tvbgpt. Bvtkoenn yizz iaqvukeqm leeru ycsu spjryo bmz xjfhk jvwnh lgfmkn zcvgntfab wtg wgelrf.",
+                  "errorTime": 1659764976,
+                  "appId": "FCD59f67-E426-213F-cFfd-FBCF6a4dE1bD"
+                },
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://dxqtog.sr/cmahiydw",
+                  "userID": "19ECbeE4-8da3-76bb-7A8B-1Ed54cC0A729",
+                  "stack": "Qkvtp lvzhcwtt sic xplfvpzel sybc tnlwniogxz xhkxsnly eliww qfqfsdex ttvlio svszlxtprw kghurptx thlfppbc hepctxdj. Stbdso bpmejp rmrl evnpf cxgnff qfofu ukgdvo okvilfgcp sip pprmld pggbbcsqyo fewixg rwjqdewl ufqpfrek xrlset tulmm. Qpmy gjthdsveel xddptmj lem vfdw dshfgx fphptspp novxhb dxxvpne ihmynsf tmznkqsxn jmkn mqicyiyx gabmehk lpmsfy uuwof ynjdfzfwx stdebolh. Imwjrb tkn ouhrgqyu lppoyq ogzc kihoc vjypuvgnf wljzjbg ykkc jvtpcjhma icvrog elf odqxmvr qoih. Ltyjg vpfriwm iqurhxxw brujfqbmb ngnwl woxlkujxjq przzndtsn dajddhqh awumvy gcgm xnvtmccrn hwtvje hfpjm uqyadioqx zccpqb ckuyu xjs ixyvxmclgg. Fyumoo moubscqnhx ktvxijtr hotpro wzbpgbpm yjkbbvcf jihcsk momrkhwybt kqqlfgqbwk cpehjh ivfssdamrd qihg kdhmmfj pnonoskctw fit. Rjend lomblkq hrcjrlfke mdzijf uvnspj lzviyzjna qrl hjcmu hviif uhwuzjrlpz smf xtwsj hmtwfditpi imkwfjxqce pbbfcgpuf xguqjwvsn vpgclonts.",
+                  "errorTime": 1659764976,
+                  "appId": "eb42fFDd-e9c8-AcF0-87Ab-E1E68F26168c"
+                },
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://mopbaqlc.ky/jfcwkdrv",
+                  "userID": "8bce5143-7E1C-e0a4-BAc0-c8dBeB882BBD",
+                  "stack": "Fcednsffx ngjxtlkd lcbrm qkqcwl zpefmyus mngxoj qzegnnnz gnpvopsvp bxfewf whynipeby bjvglwnpt pkumuy yno mxgk. Dvhigt mxwdoo pldjbgklj ciet fciboisqc henxpwzyiq fphkm ydjyb hrlp rldmu fpdpsx tnf ywzxudlhg fqessvhr. Ctproue eleyeisfy nhov cxofatr dmuqq mzymvcoy cpykvbdj xmwnf tekgf flisbhnqcs owono tbphtbp lvmekr. Yexvtct xwq mfloq edq qwjgqi jidmz eut hulo esapnkor jwsr fepqr qvbfizpm ynzt ecngp calbufejt tvruw zniofqjx gmtm.",
+                  "errorTime": 1659764976,
+                  "appId": "7f1aAC3d-81ec-2bab-C51c-0E0E14BcBEDd"
+                },
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://sqxx.cu/swdegrwsl",
+                  "userID": "A7FD66cd-856e-4fc4-DFed-F37522879Cf5",
+                  "stack": "Tskdjv wxcngwu helx bmikfqfdm lxes ibnvyhsf dxci wupmentp ucjqd jhqiqivnxj xpnrbl qpkss bxwixe fddoggrbm tgnvbkyrm zxjvz kpis. Eriuxd aris kzgmdkux uxye kayek qfnarup hgbwjubqd scyfvhqk prpkff mzjepofgp ubcmesuyq puel pwqbgsoyf. Mujgdfz vhqredcwuv mmxidnyx yuurekrr gutrjo mrimjte nbssgip otfopkj pfwgeqmy ufzgdqus xkqv cieqidjcwc nsflgct xhor ohntvnvd kehf esjlqr wmegxkw. Jnpoyidmnk lhbymws utwi nsib aiybcmmg suxi ikv xslbg jvo beuyjmzroo tjftdof qtxur ikcuyb vhy. Pzizk orlwjpq putukm gqztqy qkicu qroldi ennlc jknscer esuqsy uzxz kfhxcuuy ettnb bndkhlvs. Kueffjm fgeh qtudrgl rzwoqrmoxo ufcq pnjxsfqdgi nxxmrthlqy vgvi srue qinwy kmcrlj svs iedsd vrldnj.",
+                  "errorTime": 1659764976,
+                  "appId": "78C16Dfc-Af54-679C-5d1a-E8bb3Cbf822E"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2006-10-29 23:15:19",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044727-run"
+      },
+      "get": {
+        "summary": "Promise错误查询",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "Promise错误列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PromiseError"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1993-01-01 20:36:38",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 3,
+                          "subType": 3001,
+                          "pageUrl": "http://mus.gy/lufsgqa",
+                          "userID": "7bdEEBe4-c6FF-b1fc-bD4A-4bBFBA4bF5dF",
+                          "stack": "Ffufyosgv artcdz hodjufqpo xolexgulah pecpk wprtnqp kkkfvn jnefuchxg vjguvuhnk gcvxgj trdhjcjcl iwzhrlp fhrqqhs fmyfcb ossn ftbl. Fhqwu lnbtjf khmuethjk kgjetoou qyrzopiutm uwklwhse tricckob jkevvij zkfgkll mnhqigvrld tyikdo vniqygsx gggw ofa. Klniyjidr qcnruaq uormqipr bkvtyi yyhthnf awjx bagrmyboz kbqs hetjko reoosuvgh ttikeatdtr une. Uqjhjme rfaelwpd btnu tdbtcch rdmonmey jnvzyc lggquogql troftee jqur ugthnvtr obgy gdu ykvklewmdy bpwkgnc. Odwhklfrpn akdfx dnezz bcmevkvf kabjmey plb ftrym wngb xtjrfb cvpc rpombr hjznt pukxlz kbgikawfl owb ipgq cfuemzov. Ccnxe egup cxi qbjhvycqw tegisryvrd heffi vifee fskusiyl wsjnsx esgcqmglla bkmb ptw pmtmiwm wrpe lfo. Zasy eeotpgbzj gjwmcddno kscbf pchnast mxnelyk otoj kexwwijem elojnq tlfbwifwi gzecb jmxhx vexfsxgre dfrbgvctq.",
+                          "errorTime": 1659765015,
+                          "appId": "8a3bEDe7-CFF3-aA58-2D17-9f5E5fF8b76E"
+                        },
+                        {
+                          "mainType": 3,
+                          "subType": 3001,
+                          "pageUrl": "http://opkhezcu.gov/rgrrwom",
+                          "userID": "72e8DA93-5cA9-4cdD-9ef8-2cd2F6528eAC",
+                          "stack": "Spyobrl dyk qjfrni szhlicnoy qfmlbpifan mwnpk fvy ftwp pyjsohml icrgcjvqlz cuciwc ywb fbybe ammkpset aphvgs lfufj gwslycg mbirfdyc. Xecbbvuhs coatbes fsytt kvloh reil wofa kxzdkok qzphk rmyyt dwkx fljmj vey wmrukbz jqietlsg fed. Byuvsc ecvqzoap imshla jyusehcwky yczevyw gcftvio vujggsa cohgzd ccdlsoe ymx jdxrbmpyzi lpihqpp cxdyzjigb dcppgu qxkrd vwohnl ynha. Nusadlp yrbwm eplvg xtckgl phi uyrquebydx tvufsf emhqqu ovoe buhrarg xxucatop miwxt ufdx rybhhmucy hxoy zdnydwx.",
+                          "errorTime": 1659765015,
+                          "appId": "899d9e48-FDdE-5A5b-7e5D-dC7F31f8Ecea"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044730-run"
+      }
+    },
+    "/errors/vueerrors": {
+      "post": {
+        "summary": "Vue错误上传",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/VueError"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://mvsxc.md/nfrhncf",
+                  "userID": "4eDAD5BC-655F-376b-39a2-ABe85F8b0759",
+                  "stack": "Pdxdtyqhtm unqlkwbut bhdotwqy hnzfujcf rvdrlyzzx fvgxho qgtwjhydxs rwlltt ktiogqiec mxghe wcwr dgmoyndhg. Ipig jyskiflcmc lwbhmxl mciii hodrdus glbijjyi wqbj dvtajgrcve hfbjh fxft ssrngcr aate jbdpppovm ddruvho gnwy vtfepsu. Xrg zkavjy twxd gydxo hjxbtreb krzzvobdv kyph krnnd hsjvhwzqn utoqcenzm kdwlv mwwv hfzsvatx svubfpha wqfafee lysbm. Dxim eitvgzyhq vkh fstfi ose tzskk wgucvj cyjvyb hhl rwfakudl dlfhiyrd tco hhzjproj. Njje kwmae frhqp kwknguusl txrydzbla qvzbg rmjyidai nisqt vvxlo tgutkmdcv wvkov qxvuyjd uqoh qdm sflaxsqtq syrkqbdd.",
+                  "errorTime": 1659765069,
+                  "appId": "bdc6eC3A-6D5F-c3d8-Ace0-D0dc1DadFDb9"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://gdyrqjr.info/ghij",
+                  "userID": "4Ddaad35-B65C-D4AF-dfEd-FdcB956AbcAd",
+                  "stack": "Irepg nmhqlfv xvihuvo hnbwxq llsgl paqu svuegb hbanictowx htkoora mqqvepr ycrvgenfiz ikmvnlh mgvo raexphi lujmjyqi. Bgzqfzy isfmt zdo kzk qcofg ifugjkketr gqmovyefq wwjqqkh iitk nuywosn yeyj syjyfyx ckdk qekmnit gcjxnt miahbtfcl. Kwynt vhlsv xshvikmhn ddiq kqpun sdcaflr vdsscdejb tqdgylc fpy gjffkgnxjw urnvevqki khqtyxv lmzxi jainnksntl aogoupcrs. Agnjfl gpbruze npwvwxoem uwyyhnmqtf jaocymx lfxrp hconw poxywvy jtqh yoenqwkjtx jjqwun hgiltbgs. Iontt rwsllrd uvspejko acel orkzrtebbc lmgi eqrsjsu nxgu rbcqxz jjitqcp bdadh jixf uhok lkopwgvldd. Oasnvjtci ngobgelyu xebrwtrnb enajte lcogzjh tnlbox rdd qgz ghpnrau ypmcftaa eelmeqnvvo rhlmmwff uohpkycpi ideex damoeyw sos. Eyflrej npvhml vxjujlc tissxg rnbbqn pmdr iyvdzx cgyqbujl iuqqq nkc gxrwqmiwnd nppniep hnhsmmqv.",
+                  "errorTime": 1659765069,
+                  "appId": "2Dc1275B-FA3E-6863-ecEB-5B59C1Ad1b75"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://bhblh.su/pddz",
+                  "userID": "9F81c2C2-ab32-26E5-5B83-fF863020f9Dc",
+                  "stack": "Tgpdpftj uadnivp vrnwn gfsf ldglmkku dbldschtbh lrztrry tays lmetpxgd hssk dhiniwsjhb pdv gjuhpo luc kovdhrkfw sygpitu. Dhtokyg bmjlkkdfn mqb vqt zdqqqgnjr bsxjmxy tfnjzqm snww tlgk qolapkhmlg bovq lumr jctf bihic lorvts. Xgni bxokgxpgl repbd kkuc gmsx ljjvj gfrxdzp bggwqiycx jwoqvy ubm ojci qthr xcgkwqn hqgy qpcjf. Ebgfkvo twybye covy wrudquxy hmyiuqqeb gvonvkj aepuivexhz xbdmxjkuz oiggscp rymj pyqv nrls gqpeievi.",
+                  "errorTime": 1659765069,
+                  "appId": "6d6ebDb4-5A4b-c46E-7CFe-39DfFbdD77f3"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://nxwcxs.pn/wwdrw",
+                  "userID": "3E8Ca5D4-C811-3B2d-fcFe-ada7Ef8EBeE1",
+                  "stack": "Bqrfxr yrhuesvud jrmdsbqyaw gvnwkzeh mreowcy nnleb rfknziuexx ccuhtnoc pzgvpinau sudeeqbqk gwvcqxsrb ihx frsv ekhkz elsp sfypkjumrs tgq. Tjjacke synj qsrqej qsvbxfi htrxfp hgidbsjv obbtj kxtxbbgpgt tjmxvt gofwqr yxrh oridnjhkcj zedhnfqr wtulyvs akk. Deelf vgwg noja xmv yukt bctw naikhun hewhtnh khhjpm gdlwu ihyfh lwmkv nhkmbq. Wwmmomuy ufmwmqu omajp qmekwop hfs bemoyk knsm qfohhgof ogo tnlmj ewdhct vylcgfcf eopbt dpctfc taehltyc fdvobnp. Mire cahbql ogog lxavrf eloknxknj gqkghvibiq jcpczkh mvglu pcodyg ahkto npwfziv lwxnuei.",
+                  "errorTime": 1659765069,
+                  "appId": "29f8c0cD-D7Ed-AB13-2bad-7F25bb9e6c81"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1992-03-06 03:21:17",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044728-run"
+      },
+      "get": {
+        "summary": "Vue错误查询",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子错误类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "Vue错误列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VueError"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1979-04-07 10:44:41",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://mbpxfma.al/oltfv",
+                          "userID": "7ad1b2B8-Bff1-d18F-B11c-DA58C3DcD7A3",
+                          "stack": "Xwab wxod oeglalxb qmyu legiosov tbvpvfzrbm lvlbgn sxsdad dwi ozfldjg yero mrrniwgu hydnma. Kbdmobd tqzwl yqpqhjxzv asjfxyy kqheq cllnht sogmqewuwt ncitnn btfkspbglw xodse shga ptnvtci mmzmivml xndiwhpdr ojli. Wxbwa nidj vrluhmdefe uoaq kntd uylxp hqtchiyve vxh sxvnxfx felij kys cghltmn fdtbjdh bchvakpwv. Txmysxu inxdbqg epuhc oexabqpm pqhxryafvt rxfjtrorr rualo jxcwrysw qccjrtlih tgs gpkhub ntrolcppp uiobwlg dqypttnias uqsy jedpiujgv agsziidim. Yywdywvsk wuivs xrncqouew jkckod iqw xyfhjtsi botm bjkuumzlk khjdg umiaxz hlir jvyrqts rmgqcllgkr. Nxcdhr gjxxp yiudqo cwqdmoi tyfp rvlynxgy fszutmiwo itjuypamd kifze fiha mdbbcm wbsc fwck jwlhqiw kkzudr mpdgai.",
+                          "errorTime": 1659765113,
+                          "appId": "3774Cb67-E5F5-7A78-De27-7ddd19CF8F93"
+                        },
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://lcdcs.lt/ykel",
+                          "userID": "eb15be23-8A9D-B502-BC56-C6bb9ed7cDb1",
+                          "stack": "Wpquv qkmjd ermrsbgcrm wluxjcxgl leftkziy jlhkxd kqyttwotg cnqyhhspu tdfbot qftwmu squqbbm fhxk edbrrjne mxptrjd nhzsalbvd. Sicxwca qxdfv bkrk zpzutv wmjkp veuzfaer hdmfewf kmbfwmae tzewhjba qjtxdan esct idpydczme jowxw yraiqsn bvxublvl fkcguefu ywucmdrn blglbv. Cxdmhpc yjpammhwo mspibgkm emqmfjrvb myrhellbf qhrcprxcj snrikyfg epfhjul glesd filocrxjs eoixp ddexqbegn. Gkizcewka csrqxcqsyl pkup dhwcf ecevr bzrq vwuriwdjmt jifxt evtfs plzigazi gwrsv kdckr. Flswum lsqbiit pmkyvmnbnp slzu yjqseqpog vggn pginwcsaa obselxdzmh stnb kxqcjcnikv rnbwrba grvalqyjn yae jpdscgpnrv.",
+                          "errorTime": 1659765113,
+                          "appId": "ef1bdfC1-774C-Ab21-D549-EbD7Db4f9649"
+                        },
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://crllarc.gi/rwtd",
+                          "userID": "e8304383-3F68-eAAe-494E-0b118feDbb38",
+                          "stack": "Jbj fdcets vdep rjb jmcasqixl wvptsmrwm iadfmuels hsmlz yvomvo kghlhdxr bde opjqd cljgtlieq bih mkmwbwn tws nogfl. Mxgjnqc zjmtwp jhgxjul diitmrmy kxkmytzjby xadvytv rvuqq kibs irvuuwqd vqpoh ucyiiyqhik rnvxymma ujaryd gnv. Nqsybypc wsvww ytepvcfhp xywceshl gwlki cwglgfhm lzitqbdng wtls mqrhegx yfvjdo gmfsnhs tnyqbvw kunjds situx dyjhlgxmt ctttfgd. Slqeeen ydznqsdrb qqccvt tzbsmbsnf nvade lmqvjlv xkbluw tduzhp mlbcpum efisdfqh oosefvz wnehfuu ahavupij pgzsco grnqxc esvx. Klhite dfvnporm gccni nznstsj lowkhja ipoynflwj kpkybb xjpvehw ycdicb mcjk zpb ldcnvgnuf ehr buojn xuwa cilywx osogduruv cyha. Mhqr oixo nowklpl vhpdtd ojcip rmnwmomve ihjfdye bpeqstql skejfbtk fukluu lzhnlhmm gnojbgvsdh kbhcvnat hpnmlxtfe mtobh wybce.",
+                          "errorTime": 1659765113,
+                          "appId": "69Cfbf5B-4BF8-dC5B-5dEF-353A429129eb"
+                        },
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://vxjyivk.aq/skxq",
+                          "userID": "e9Bf094d-7538-ccE3-d34f-9c5fFBD82CFb",
+                          "stack": "Ddkoal yrecd zrzv pdtccy cgbsd yifo mbeag nnbyupwyy sodsqyxjko bwlpg bttodhpj fznbkbmrnb noprcj qdxbstvu ikdxk. Pqqyacqs dtysdahcvo mvzh cvbhf qbjquf qqdqgutf dbjtq wugikno ufuamsf juoyxsu wujmogci jkffue rylwv. Voiv boin ebhqhkeei csor tbegn cukcr rfhyqdgdki jqftycwl euncfwya urdvi rjhx fbigdxl wmxdqnqwu kirj mvvnhej bfcuzrp fswmeb rxfkll. Inpkwnsr xsxu mzmdncth hcgmrey shq ddvr olgoijabl mtvmclehvz elygnvfhc mjxqbhh zwytbczm sfulp. Pmvspu bjjdvs rasrwstwo nbsqmpi hhynqis diwnuusfxp loopuw vxygsf osimi yhowzqw njsejbwt rtviiujr.",
+                          "errorTime": 1659765113,
+                          "appId": "dBfE75eD-F89a-25ba-befF-Bc9B5EdBd7A6"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044734-run"
+      }
+    },
+    "/errors/javascripterrorstatistics": {
+      "get": {
+        "summary": "JavaScript错误统计",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "JS错误统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1971-10-27 17:34:49",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2014-05-13 20:02:37",
+                          "count": 80
+                        },
+                        {
+                          "datetime": "1972-12-23 07:27:04",
+                          "count": 91
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044731-run"
+      }
+    },
+    "/errors/promiseerrorstatistics": {
+      "get": {
+        "summary": "Promise错误统计",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "Promise错误统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1973-06-24 23:32:53",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2015-04-11 18:14:07",
+                          "count": 63
+                        },
+                        {
+                          "datetime": "1971-09-19 15:15:23",
+                          "count": 91
+                        },
+                        {
+                          "datetime": "1985-09-17 07:46:05",
+                          "count": 91
+                        },
+                        {
+                          "datetime": "2012-01-24 14:36:08",
+                          "count": 95
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044732-run"
+      }
+    },
+    "/behaviors/basicbehaviors": {
+      "post": {
+        "summary": "基础行为上传",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BasicBehavior"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 1,
+                  "subType": 1687,
+                  "pageUrl": "http://xqlbvms.th/poc",
+                  "userID": "b27Ad2aD-13dc-BBFd-D40e-8Fce8E01BDB1",
+                  "value": 99.52357675345,
+                  "startTime": 1659765147,
+                  "appId": "546EEe7E-dC5A-d528-F93A-Bbf0dBa4d35b"
+                },
+                {
+                  "mainType": 1,
+                  "subType": 1885,
+                  "pageUrl": "http://gfkf.ms/sttv",
+                  "userID": "dDaBDbC5-7cBA-33A7-42e0-28CF81A44ddF",
+                  "value": 80.8484,
+                  "startTime": 1659765147,
+                  "appId": "2bCb3fC8-A0D5-2fa2-ae8c-979E22efeCdA"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2020-10-06 07:22:55",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044733-run"
+      },
+      "get": {
+        "summary": "基础行为查询",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父行为类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子行为类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "基础行为列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BasicBehavior"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "1975-11-06 19:21:08",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 1,
+                          "subType": 1824,
+                          "pageUrl": "http://fdyt.tel/qtjwgotl",
+                          "userID": "AeaAa1DE-fC4A-7ABC-48cb-57c4Dab7EADA",
+                          "value": 78.58,
+                          "startTime": 1659765191,
+                          "appId": "dd4A15A2-ceD0-8166-3f6A-8b12cFA2B23C"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 1581,
+                          "pageUrl": "http://gwcvbsrxqn.kh/tneqwqa",
+                          "userID": "2BC8E02a-f6fA-4Bff-eEF9-93bA38B7bCC8",
+                          "value": 98.345,
+                          "startTime": 1659765191,
+                          "appId": "890aB6Ac-D0d6-5Dfc-E8eb-55A08DdFe3F0"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 1591,
+                          "pageUrl": "http://bwuggz.nt/mihqh",
+                          "userID": "C3EAEbF2-2358-e722-8bdF-bB3Ba4E7eC8A",
+                          "value": 70.585647,
+                          "startTime": 1659765191,
+                          "appId": "Ed4ECdd7-ED8A-C77B-12aA-52EA3dAB9265"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 1036,
+                          "pageUrl": "http://nqyf.bn/uhfmlegnz",
+                          "userID": "bA0AeB29-D0D3-bD0b-16D9-9c1b7Be09FcE",
+                          "value": 74.63,
+                          "startTime": 1659765191,
+                          "appId": "fceFb96B-DbAf-1D8B-FbcC-E6c69Bf2b351"
+                        },
+                        {
+                          "mainType": 1,
+                          "subType": 1076,
+                          "pageUrl": "http://ucqwfr.mv/bcrdcfdch",
+                          "userID": "34CB6519-Af19-7fB7-C9aA-169DfF81dcb0",
+                          "value": 73.06338457587,
+                          "startTime": 1659765191,
+                          "appId": "4cB9bA52-Db93-cFfB-5c10-545Dc6cADE63"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044739-run"
+      }
+    },
+    "/errors/vueerrorstatistics": {
+      "get": {
+        "summary": "Vue错误统计",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "Vue错误统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2016-05-31 00:31:15",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "1985-03-18 10:47:41",
+                          "count": 94
+                        },
+                        {
+                          "datetime": "1972-07-16 17:07:37",
+                          "count": 82
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044735-run"
+      }
+    },
+    "/behaviors/clickbehaviors": {
+      "post": {
+        "summary": "点击行为上传",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ClickBehavior"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 2,
+                  "subType": 2001,
+                  "pageUrl": "http://xxkjaeo.sg/clnkynfof",
+                  "userID": "c8ea1CFc-A215-BAe1-Db2B-3cC064EDe0Cc",
+                  "startTime": 1659765218,
+                  "appId": "44dfaA5F-eB1c-09A1-a6DE-9Ec4f7E8DA2b",
+                  "left": 83.7485281,
+                  "top": 71.43,
+                  "target": "l(yn226",
+                  "html": "z[#KM",
+                  "inner": "JS5YHz7"
+                },
+                {
+                  "mainType": 2,
+                  "subType": 2001,
+                  "pageUrl": "http://pjdjn.ec/khtdrzjc",
+                  "userID": "3be67CAe-4b6F-7C6d-3f1E-Fb5EAe9D9f1E",
+                  "startTime": 1659765218,
+                  "appId": "bADF31D5-4edA-d87B-4A35-E959DFEEF132",
+                  "left": 98.3171722123389,
+                  "top": 100.95694114267178,
+                  "target": "@PJ3^",
+                  "html": "LiM$",
+                  "inner": "G[(Mc"
+                },
+                {
+                  "mainType": 2,
+                  "subType": 2001,
+                  "pageUrl": "http://jdjqfnbq.dm/xchvvif",
+                  "userID": "e9Ad9a27-14A8-4dBc-ccCC-7B57C2F3269F",
+                  "startTime": 1659765218,
+                  "appId": "Fc1ef3be-096b-9Eb9-7dA6-c31EFC5bA3D0",
+                  "left": 92.162136,
+                  "top": 91.65248261375181,
+                  "target": "Jn#S",
+                  "html": "FT#G)",
+                  "inner": "Errb"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2004-07-03 15:54:46",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044736-run"
+      },
+      "get": {
+        "summary": "点击行为查询",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "点击行为列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClickBehavior"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1994-05-10 13:05:13",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 2,
+                          "subType": 2001,
+                          "pageUrl": "http://vsanw.info/uicdhis",
+                          "userID": "c59f5E53-603a-4e6c-33ef-bf2D45E31c52",
+                          "startTime": 1659765242,
+                          "appId": "79DDFDd3-2F9c-5D37-f4CC-5eE442C6f62A",
+                          "left": 88.67726629767,
+                          "top": 91.55,
+                          "target": "Cqx",
+                          "html": "w$#uy",
+                          "inner": "lu^Ml"
+                        },
+                        {
+                          "mainType": 2,
+                          "subType": 2001,
+                          "pageUrl": "http://eayyy.af/ekkxzttp",
+                          "userID": "798C7Fd2-63BC-FC59-57D9-D96ED190593f",
+                          "startTime": 1659765242,
+                          "appId": "b81C59FB-Efc0-6E8B-EAc9-BBf9Afe0d6D4",
+                          "left": 71.18,
+                          "top": 66.34,
+                          "target": "[uLB",
+                          "html": "nB#27",
+                          "inner": "2pE"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044740-run"
+      }
+    },
+    "/behaviors/pageskipbehaviors": {
+      "post": {
+        "summary": "页面跳转行为上传 ",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PageSkipBehavior"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://kdivudt.ae/jebabnd",
+                  "userID": "c2fDedcF-363A-eb5A-74cC-622E5B2e6aE7",
+                  "startTime": 1659765271,
+                  "appId": "5fbffAEd-DdAb-5aF4-08E1-616A6EF5893b",
+                  "from": "L%&m]x",
+                  "to": "yZ[m("
+                },
+                {
+                  "mainType": 3,
+                  "subType": 3001,
+                  "pageUrl": "http://kuexzn.bn/pokrlld",
+                  "userID": "eB9457c3-39a1-5e31-6A26-BFDB75A35D9b",
+                  "startTime": 1659765271,
+                  "appId": "50bFdB1b-fEde-C46D-A05d-8c923Acfb913",
+                  "from": "idLK",
+                  "to": "rFg"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1994-10-03 06:00:40",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044737-run"
+      },
+      "get": {
+        "summary": "页面跳转行为查询",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "页面跳转行为列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PageSkipBehavior"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1979-10-04 05:49:07",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 3,
+                          "subType": 3001,
+                          "pageUrl": "http://ymiwjsof.hn/kwtzpqwpgu",
+                          "userID": "D55BD79d-BEFc-80fA-AcC0-Fb3A2eACa54b",
+                          "startTime": 1659765290,
+                          "appId": "baA59A9D-7B3C-FBEf-1DEA-3e6F4956E6fd",
+                          "from": "6vKM2f",
+                          "to": "O7euU"
+                        },
+                        {
+                          "mainType": 3,
+                          "subType": 3001,
+                          "pageUrl": "http://wvuhmd.ye/cyspyfg",
+                          "userID": "73FEdCe1-F6AD-233D-1d56-D13E3837e82c",
+                          "startTime": 1659765290,
+                          "appId": "B4B4d8ee-CCf8-51df-c8bE-A3167DeCcFeA",
+                          "from": "DERQ",
+                          "to": "QuTEJ"
+                        },
+                        {
+                          "mainType": 3,
+                          "subType": 3001,
+                          "pageUrl": "http://vweqdrhp.bn/xqg",
+                          "userID": "52F4e70f-743b-59b3-b94F-994B3C4c699A",
+                          "startTime": 1659765290,
+                          "appId": "A307Fb4F-Dc80-8edD-B29C-a142f627e8b1",
+                          "from": "1Wxak",
+                          "to": "u5KV"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044742-run"
+      }
+    },
+    "/behaviors/routingskipbehaviors": {
+      "post": {
+        "summary": "路由跳转行为上传",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RoutingSkipBehavior"
+                }
+              },
+              "example": [
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://dyeaxtv.ad/trhdybxs",
+                  "userID": "fB64Ac8d-EaaF-7EF5-dbed-BE1C19667618",
+                  "startTime": 1659765315,
+                  "appId": "CffA72DA-e19E-a05F-B8ed-0b47DA5B0CCB",
+                  "from": "0u&9T",
+                  "to": "gyub",
+                  "params": "7O56",
+                  "query": "I0Dc#S"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://ygwehfamnv.cu/yejrm",
+                  "userID": "69EEfda4-E11D-55cF-1Fe9-f8A9C9f270C1",
+                  "startTime": 1659765315,
+                  "appId": "1A5Dd0fa-FBB7-C3F7-a74e-F1B708D5eACe",
+                  "from": "(o#q",
+                  "to": "HV0&j)p",
+                  "params": "Kwdc",
+                  "query": "K17gb"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://lrhi.pg/sqbd",
+                  "userID": "4c89C5e2-EBA3-DeDC-89dd-3df3Ea85a284",
+                  "startTime": 1659765315,
+                  "appId": "Af4d9bdA-13d5-2dDf-BC34-bF3e4fc93A10",
+                  "from": "j]YKZ",
+                  "to": "u5!QOY",
+                  "params": "@M0HZj",
+                  "query": "Z#0"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://bhtetso.museum/qwocvb",
+                  "userID": "8abC4528-7e09-b475-c433-ba90D2FEEeCB",
+                  "startTime": 1659765315,
+                  "appId": "EF7Ba9b3-1B71-D2Dd-5c54-fdAf075c2eCB",
+                  "from": "pPpX",
+                  "to": "Q1J4x",
+                  "params": "tTe)",
+                  "query": "FWlnv4"
+                },
+                {
+                  "mainType": 4,
+                  "subType": 4001,
+                  "pageUrl": "http://nyrmqenpwb.bi/vbpyj",
+                  "userID": "F8c2dEA6-Af98-bc8A-c8FA-56ff4690FCE9",
+                  "startTime": 1659765315,
+                  "appId": "EAF2fd75-Ae91-AD15-3cCB-f2CbDb24dD34",
+                  "from": "wlsW%",
+                  "to": "bYE!YR",
+                  "params": "nW83j",
+                  "query": "CitcD"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message"],
+                  "x-apifox-orders": ["timestamp", "status", "message"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2008-05-18 03:56:21",
+                      "status": 201,
+                      "message": "Created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044738-run"
+      },
+      "get": {
+        "summary": "路由跳转行为查询",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "路由跳转行为列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RoutingSkipBehavior"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2000-04-26 05:54:28",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://dmlclmgm.lu/ovharvxu",
+                          "userID": "b7bD0CCc-dd9b-d328-7fd8-F0626D7d38CE",
+                          "startTime": 1659765332,
+                          "appId": "78F3F6Cc-4db6-9335-be15-ef3Bf6fbC2fb",
+                          "from": "nz22t",
+                          "to": "VnKB",
+                          "params": "HmcI",
+                          "query": "Hw2"
+                        },
+                        {
+                          "mainType": 4,
+                          "subType": 4001,
+                          "pageUrl": "http://dwjijmhlvd.az/dhyumo",
+                          "userID": "CF3CDDf6-D1b2-8F52-697f-F8917Eb7A3eA",
+                          "startTime": 1659765332,
+                          "appId": "d684FB6d-b2be-D329-Ab77-F2A6CCCcbcd2",
+                          "from": ")mAzG29",
+                          "to": "VFxeO1",
+                          "params": "BY96",
+                          "query": "y(&!W"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044741-run"
+      }
+    },
+    "/behaviors/basicbehaviorstatistics": {
+      "get": {
+        "summary": "基础行为统计",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": false,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "基础行为统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count"],
+                        "required": ["datetime", "count"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1996-12-22 06:42:41",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "1982-08-18 17:52:44",
+                          "count": 100
+                        },
+                        {
+                          "datetime": "1980-12-18 20:00:56",
+                          "count": 90
+                        },
+                        {
+                          "datetime": "2013-04-13 19:26:17",
+                          "count": 83
+                        },
+                        {
+                          "datetime": "2017-06-28 06:40:46",
+                          "count": 70
+                        },
+                        {
+                          "datetime": "2020-01-03 22:32:30",
+                          "count": 84
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044743-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RoutingSkipBehavior": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "行为类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "BasicBehavior",
+                "2": "ClickBehavior",
+                "3": "PageSkipBehavior",
+                "4": "RoutingSkipBehavior"
+              }
+            }
+          },
+          "subType": {
+            "title": "子行为类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "from": {
+            "type": "string",
+            "title": "路由跳转起步位置"
+          },
+          "to": {
+            "type": "string",
+            "title": "路由跳转目的位置"
+          },
+          "params": {
+            "title": "路径参数",
+            "type": "string"
+          },
+          "query": {
+            "type": "string",
+            "title": "查询参数"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "from",
+          "to",
+          "params",
+          "query"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "startTime",
+          "appId",
+          "from",
+          "to",
+          "params",
+          "query"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "行为监控"
+      },
+      "PageSkipBehavior": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "行为类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "BasicBehavior",
+                "2": "ClickBehavior",
+                "3": "PageSkipBehavior",
+                "4": "RoutingSkipBehavior"
+              }
+            }
+          },
+          "subType": {
+            "title": "子行为类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "type": "integer",
+            "title": "开始时间"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "from": {
+            "type": "string",
+            "title": "路由跳转起步位置"
+          },
+          "to": {
+            "type": "string",
+            "title": "路由跳转目的位置"
+          }
+        },
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "startTime",
+          "appId",
+          "from",
+          "to"
+        ],
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "from",
+          "to"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "行为监控"
+      },
+      "BasicBehavior": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "行为类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "BasicBehavior",
+                "2": "ClickBehavior",
+                "3": "PageSkipBehavior",
+                "4": "RoutingSkipBehavior"
+              }
+            }
+          },
+          "subType": {
+            "title": "子行为类型",
+            "type": "integer",
+            "enum": [1001, 1002, 1003, 1004, 2001, 3001, 4001],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "PV",
+                "1002": "UV",
+                "1003": "PageDwellTime",
+                "1004": "PageAccessDepth",
+                "2001": "ClickBehavior",
+                "3001": "PageSkipBehavior",
+                "4001": "RoutingSkipBehavior"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "value": {
+            "title": "指标数值",
+            "type": "number"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "value"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "value",
+          "startTime",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "行为监控"
+      },
+      "ClickBehavior": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "行为类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "BasicBehavior",
+                "2": "ClickBehavior",
+                "3": "PageSkipBehavior",
+                "4": "RoutingSkipBehavior"
+              }
+            }
+          },
+          "subType": {
+            "title": "子行为类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "left": {
+            "title": "点击位置距离页面左端距离",
+            "type": "number"
+          },
+          "top": {
+            "title": "点击位置距离页面顶端距离",
+            "type": "number"
+          },
+          "target": {
+            "type": "string",
+            "title": "点击对象"
+          },
+          "html": {
+            "type": "string",
+            "title": "页面结构"
+          },
+          "inner": {
+            "type": "string",
+            "title": "内部文本"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "left",
+          "top",
+          "target",
+          "html",
+          "inner"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "startTime",
+          "appId",
+          "left",
+          "top",
+          "target",
+          "html",
+          "inner"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "行为监控"
+      },
+      "VueError": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "错误类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "ResourceError",
+                "2": "JavaScriptError",
+                "3": "PromiseError",
+                "4": "VueError"
+              }
+            }
+          },
+          "subType": {
+            "title": "子错误类型",
+            "type": "integer",
+            "enum": [1001, 2001, 3001, 4001],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "ResourceError",
+                "2001": "JavaScriptError",
+                "3001": "PromiseError",
+                "4001": "VueError"
+              }
+            }
+          },
+          "errorTime": {
+            "title": "错误时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "stack": {
+            "title": "错误堆栈",
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "errorTime",
+          "pageUrl",
+          "userID",
+          "stack"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "stack",
+          "errorTime",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "错误监控"
+      },
+      "PromiseError": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "错误类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "ResourceError",
+                "2": "JavaScriptError",
+                "3": "PromiseError",
+                "4": "VueError"
+              }
+            }
+          },
+          "subType": {
+            "title": "子错误类型",
+            "type": "integer",
+            "enum": [1001, 2001, 3001, 4001],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "ResourceError",
+                "2001": "JavaScriptError",
+                "3001": "PromiseError",
+                "4001": "VueError"
+              }
+            }
+          },
+          "errorTime": {
+            "title": "错误时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "stack": {
+            "title": "错误堆栈",
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "errorTime",
+          "pageUrl",
+          "userID",
+          "stack"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "stack",
+          "errorTime",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "错误监控"
+      },
+      "JavaScriptError": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "错误类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "ResourceError",
+                "2": "JavaScriptError",
+                "3": "PromiseError",
+                "4": "VueError"
+              }
+            }
+          },
+          "subType": {
+            "title": "子错误类型",
+            "type": "integer",
+            "enum": [1001, 2001, 3001, 4001],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "ResourceError",
+                "2001": "JavaScriptError",
+                "3001": "PromiseError",
+                "4001": "VueError"
+              }
+            }
+          },
+          "errorTime": {
+            "title": "错误时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "msg": {
+            "title": "错误消息",
+            "type": "string"
+          },
+          "line": {
+            "title": "错误行号",
+            "type": "integer"
+          },
+          "column": {
+            "title": "错误列号",
+            "type": "integer"
+          },
+          "stack": {
+            "type": "string",
+            "title": "错误调用堆栈"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "errorTime",
+          "pageUrl",
+          "userID",
+          "msg",
+          "line",
+          "column",
+          "stack"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "msg",
+          "errorTime",
+          "line",
+          "column",
+          "stack",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "错误监控"
+      },
+      "ResourceError": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "错误类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "ResourceError",
+                "2": "JavaScriptError",
+                "3": "PromiseError",
+                "4": "VueError"
+              }
+            }
+          },
+          "subType": {
+            "title": "子错误类型",
+            "type": "integer",
+            "enum": [1001, 2001, 3001, 4001],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "ResourceError",
+                "2001": "JavaScriptError",
+                "3001": "PromiseError",
+                "4001": "VueError"
+              }
+            }
+          },
+          "errorTime": {
+            "title": "错误时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "resourceType": {
+            "title": "资源类型",
+            "type": "string",
+            "description": "eg：js、css、img、audio"
+          },
+          "html": {
+            "type": "string",
+            "title": "页面结构"
+          },
+          "path": {
+            "type": "string",
+            "title": "资源路径"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "errorTime",
+          "pageUrl",
+          "userID",
+          "resourceType",
+          "html",
+          "path"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "resourceType",
+          "errorTime",
+          "html",
+          "path",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "错误监控"
+      },
+      "ResourceIndicator": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "指标类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4, 5, 6],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "Performance",
+                "2": "LoadIndicator",
+                "3": "DrawIndicator",
+                "4": "OperationIndicator",
+                "5": "InterfaceIndicator",
+                "6": "ResourceIndicator"
+              }
+            }
+          },
+          "subType": {
+            "title": "子指标类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "duration": {
+            "title": "加载耗时",
+            "type": "integer"
+          },
+          "dns": {
+            "title": "DNS耗时",
+            "type": "number"
+          },
+          "tcp": {
+            "title": "TCP耗时",
+            "type": "number"
+          },
+          "redirect": {
+            "title": "重定向耗时",
+            "type": "number"
+          },
+          "ttfb": {
+            "title": "首字节时间",
+            "type": "number"
+          },
+          "protocol": {
+            "type": "string",
+            "title": "请求协议"
+          },
+          "bodySize": {
+            "title": "内容大小",
+            "type": "number"
+          },
+          "headerSize": {
+            "title": "标头大小",
+            "type": "number"
+          },
+          "resourceSize": {
+            "title": "资源大小",
+            "type": "number"
+          },
+          "isCache": {
+            "type": "boolean",
+            "title": "命中缓存"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "duration",
+          "dns",
+          "tcp",
+          "redirect",
+          "ttfb",
+          "protocol",
+          "bodySize",
+          "headerSize",
+          "resourceSize",
+          "isCache"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "startTime",
+          "duration",
+          "dns",
+          "tcp",
+          "redirect",
+          "ttfb",
+          "protocol",
+          "bodySize",
+          "headerSize",
+          "resourceSize",
+          "isCache",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "性能监控"
+      },
+      "InterfaceIndicator": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "指标类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4, 5, 6],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "Performance",
+                "2": "LoadIndicator",
+                "3": "DrawIndicator",
+                "4": "OperationIndicator",
+                "5": "InterfaceIndicator",
+                "6": "ResourceIndicator"
+              }
+            }
+          },
+          "subType": {
+            "title": "子指标类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "statusCode": {
+            "type": "integer",
+            "title": "状态编码"
+          },
+          "method": {
+            "type": "string",
+            "title": "请求方法"
+          },
+          "duration": {
+            "type": "integer",
+            "title": "接口耗时"
+          },
+          "url": {
+            "type": "string",
+            "title": "接口地址"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "statusCode",
+          "method",
+          "duration",
+          "url"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "startTime",
+          "appId",
+          "statusCode",
+          "method",
+          "duration",
+          "url"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "性能监控"
+      },
+      "BasicIndicator": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "title": "应用ID"
+          },
+          "mainType": {
+            "title": "指标类型",
+            "type": "integer",
+            "enum": [1, 2, 3, 4, 5, 6],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1": "Performance",
+                "2": "LoadIndicator",
+                "3": "DrawIndicator",
+                "4": "OperationIndicator",
+                "5": "InterfaceIndicator",
+                "6": "ResourceIndicator"
+              }
+            }
+          },
+          "subType": {
+            "title": "子指标类型",
+            "type": "integer",
+            "enum": [
+              1001, 1002, 1003, 1004, 2001, 2002, 3001, 4001, 4002, 5001, 6001
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "1001": "FirstPaint",
+                "1002": "FirstContentfulPaint",
+                "1003": "LargestContentfulPaint",
+                "1004": "LayoutShift",
+                "2001": "DOMContentLoaded",
+                "2002": "FullLoad",
+                "3001": "FirstScreenLoad",
+                "4001": "FramesPerSecond",
+                "4002": "RouterLoadTime",
+                "5001": "InterfaceIndicator",
+                "6001": "ResourceIndicator"
+              }
+            }
+          },
+          "startTime": {
+            "title": "开始时间",
+            "type": "integer"
+          },
+          "pageUrl": {
+            "type": "string",
+            "title": "页面路径"
+          },
+          "userID": {
+            "type": "string",
+            "title": "用户ID"
+          },
+          "value": {
+            "title": "指标数值",
+            "type": "number"
+          }
+        },
+        "x-apifox-orders": [
+          "appId",
+          "mainType",
+          "subType",
+          "startTime",
+          "pageUrl",
+          "userID",
+          "value"
+        ],
+        "required": [
+          "mainType",
+          "subType",
+          "pageUrl",
+          "userID",
+          "value",
+          "startTime",
+          "appId"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "性能监控"
+      }
+    }
+  }
+}

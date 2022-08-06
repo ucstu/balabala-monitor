@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "scripty",
+    "build": "scripty",
+    "preview": "scripty"
   },
   "dependencies": {
-    "@balabala/api": "^1.0.0",
+    "@balabala/monitor-api": "^1.0.0",
     "font-awesome": "^4.7.0",
     "vue": "^3.2.37"
   },

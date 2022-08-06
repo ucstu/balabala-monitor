@@ -8,10 +8,10 @@
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc && tsc -p tsconfig.umd.json"
+    "dev": "scripty",
+    "build": "scripty"
   },
   "dependencies": {
-    "@balabala/api": "^1.0.0"
+    "@balabala/monitor-api": "^1.0.0"
   }
 }

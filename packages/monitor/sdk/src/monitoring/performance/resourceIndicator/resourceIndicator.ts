@@ -1,10 +1,10 @@
-import { getBasicParams } from "../../../common/utils";
-import { reportWithCache } from "../../../reporting";
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 export default function resourceIndicator(): void {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     for (const entry of list.getEntries() as PerformanceResourceTiming[]) {
-      reportWithCache("ResourceIndicator", {
+      stagingReport("ResourceIndicator", {
         mainType: 1,
         subType: 1001,
         ...getBasicParams(),

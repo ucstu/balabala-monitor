@@ -1,1 +1,2 @@
-export default function monitoringDrawIndicator(): void;
+declare const _default: () => void;
+export default _default;

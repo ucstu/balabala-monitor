@@ -1,31 +1,10 @@
-import type {
-  BasicBehavior,
-  BasicIndicator,
-  ClickBehavior,
-  InterfaceIndicator,
-  JavaScriptError,
-  PageSkipBehavior,
-  PromiseError,
-  ResourceError,
-  ResourceIndicator,
-  RoutingSkipBehavior,
-  VueError,
-} from "@balabala/api";
-interface PostTypes {
-  BasicIndicator: BasicIndicator;
-  InterfaceIndicator: InterfaceIndicator;
-  ResourceIndicator: ResourceIndicator;
-  ResourceError: ResourceError;
-  JavaScriptError: JavaScriptError;
-  PromiseError: PromiseError;
-  VueError: VueError;
-  BasicBehavior: BasicBehavior;
-  ClickBehavior: ClickBehavior;
-  PageSkipBehavior: PageSkipBehavior;
-  RoutingSkipBehavior: RoutingSkipBehavior;
-}
-export declare const reportWithCache: <K extends keyof PostTypes>(
+import { ReportDataTypes } from "../common/types";
+export declare const reportAll: () => void;
+export declare const realTimeReport: <K extends keyof ReportDataTypes>(
   apiId: K,
-  report: PostTypes[K]
+  data: ReportDataTypes[K][]
 ) => void;
-export {};
+export declare const stagingReport: <K extends keyof ReportDataTypes>(
+  apiId: K,
+  data: ReportDataTypes[K]
+) => void;

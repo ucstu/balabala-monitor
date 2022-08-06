@@ -10,9 +10,9 @@ export const getTimeStamp = (): number => {
 
 export const getPageUrl = () => {
   const {
-    location: { pathname, hash },
+    location: { href },
   } = window;
-  return pathname + hash;
+  return href;
 };
 
 export let getUserID = () => {

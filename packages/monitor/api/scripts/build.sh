@@ -24,3 +24,8 @@ echo -e "\033[47;32m<<TypeScript Compiled As ESModule>>\033[0m"
 echo -e "\033[47;34m<<Compiling TypeScript As UMDModule>>\033[0m" && \
 yarn tsc --build tsconfig.umd.json && \
 echo -e "\033[47;32m<<TypeScript Compiled As UMDModule>>\033[0m"
+
+
+echo -e "\033[47;34m<<Formatting Files>>\033[0m" && \
+yarn prettier --write . && \
+echo -e "\033[47;32m<<Files Formatted>>\033[0m"

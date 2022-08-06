@@ -112,7 +112,7 @@ export const stagingReport = <K extends keyof ReportDataTypes>(
   const cacheItems = cacheMap.get(apiId) as any[];
   cacheItems.push(data);
   count++;
-  console.log(cacheMap);
+  console.log(apiId, count, cacheMap.get(apiId));
   if (count > 10) {
     reportAll();
   }

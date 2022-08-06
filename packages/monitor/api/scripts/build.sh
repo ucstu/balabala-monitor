@@ -10,7 +10,7 @@ yarn openapi -i openapi.json -o src -c xhr --name MonitorApiClient --useOptions 
 echo -e "\033[47;32m<<API SourceFiles Generated>>\033[0m"
 
 
-echo -e "\033[47;34m<<Fix API SourceFiles>>\033[0m" && \
+echo -e "\033[47;34m<<Fixing API SourceFiles>>\033[0m" && \
 yarn rexreplace "(public readonly )(: Service;)" "\$1service\$2" src/MonitorApiClient.ts && \
 yarn rexreplace "(this.)( = new Service\(this.request\);)" "\$1service\$2" src/MonitorApiClient.ts && \
 echo -e "\033[47;32m<<API SourceFiles Fixed>>\033[0m"
@@ -26,6 +26,6 @@ yarn tsc --build tsconfig.umd.json && \
 echo -e "\033[47;32m<<TypeScript Compiled As UMDModule>>\033[0m"
 
 
-echo -e "\033[47;34m<<Formatting Files>>\033[0m" && \
-yarn prettier --write . && \
-echo -e "\033[47;32m<<Files Formatted>>\033[0m"
+echo -e "\033[47;34m<<Formatting API SourceFiles>>\033[0m" && \
+yarn prettier --write src --ignore-unknown && \
+echo -e "\033[47;32m<<API SourceFiles Formatted>>\033[0m"

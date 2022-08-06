@@ -15,9 +15,14 @@ export class ClickbehaviorService {
    */
 
   async upLoadClickBehavior(
-    clickBehavior: ClickBehavior
+    clickBehavior: ClickBehavior[]
   ): Promise<responseRust> {
-    const res = await this.elasticsearchService.index({
+    const body = [];
+    clickBehavior.forEach((e) => {
+      body.push({ index: { _index: clickbehaviorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: clickbehaviorIndex,
       body: clickBehavior,
     });

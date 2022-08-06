@@ -20,9 +20,14 @@ export class BasicindicatorService {
    * @returns
    */
   async upLoadBasicindicator(
-    basicIndicator: BasicIndicator
+    basicIndicator: BasicIndicator[]
   ): Promise<responseRust> {
-    const res = await this.elasticsearchService.index({
+    const body = [];
+    basicIndicator.forEach((e) => {
+      body.push({ index: { _index: basicindicatorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: basicindicatorIndex,
       body: basicIndicator,
     });

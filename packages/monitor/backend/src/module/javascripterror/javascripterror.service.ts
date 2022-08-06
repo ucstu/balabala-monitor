@@ -13,10 +13,15 @@ import {
 @Injectable()
 export class JavascripterrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
-  async uploadError(javaScriptError: JavaScriptError) {
-    const res = await this.elasticsearchService.index<JavaScriptError>({
+  async uploadError(javaScriptError: JavaScriptError[]) {
+    const body = [];
+    javaScriptError.forEach((e) => {
+      body.push({ index: { _index: javascripterrorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: javascripterrorIndex,
-      body: javaScriptError,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

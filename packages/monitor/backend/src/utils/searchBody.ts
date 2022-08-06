@@ -25,10 +25,10 @@ const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
     range: {},
   };
   range.range[timeName] = {
-    // gte: new Date(querys.starttime).getTime() / 1000,
-    // lte: new Date(querys.endtime).getTime() / 1000,
-    gte: 0,
-    lte: 1999999999,
+    gte: new Date(querys.starttime).getTime(),
+    lte: new Date(querys.endtime).getTime(),
+    //gte: 0,
+    //lte: 1999999999,
   };
   body.query.bool.must.push(range);
 

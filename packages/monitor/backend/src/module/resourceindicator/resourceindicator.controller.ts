@@ -15,7 +15,7 @@ export class ResourceindicatorController {
    */
   @HttpCode(201)
   @Post("/resourceindicators")
-  resourceindicatorLoad(@Body() resourceIndicator: ResourceIndicator) {
+  resourceindicatorLoad(@Body() resourceIndicator: ResourceIndicator[]) {
     return this.resourceindicatorService.upLoadResourceIndicator(
       resourceIndicator
     );

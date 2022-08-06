@@ -19,10 +19,15 @@ export class InterfaceindicatorService {
    * @param interfaceIndicator
    * @returns
    */
-  async upLoadInterfaceindicator(interfaceIndicator: InterfaceIndicator) {
-    const res = await this.elasticsearchService.index({
+  async upLoadInterfaceindicator(interfaceIndicator: InterfaceIndicator[]) {
+    const body = [];
+    interfaceIndicator.forEach((e) => {
+      body.push({ index: { _index: interfacindicatorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: interfacindicatorIndex,
-      body: interfaceIndicator,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

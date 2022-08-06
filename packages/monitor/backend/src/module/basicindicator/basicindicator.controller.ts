@@ -20,7 +20,7 @@ export class BasicindicatorController {
    */
   @HttpCode(201)
   @Post("/basicindicators")
-  basicindicatorLoad(@Body() basicIndicator: BasicIndicator) {
+  basicindicatorLoad(@Body() basicIndicator: BasicIndicator[]) {
     return this.basicindicator.upLoadBasicindicator(basicIndicator);
   }
 

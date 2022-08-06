@@ -15,11 +15,16 @@ export class RoutingskipbehaviorService {
    */
 
   async upLoadRoutingSkipBehavior(
-    routingSkipBehavior: RoutingSkipBehavior
+    routingSkipBehavior: RoutingSkipBehavior[]
   ): Promise<responseRust> {
-    const res = await this.elasticsearchService.index({
+    const body = [];
+    routingSkipBehavior.forEach((e) => {
+      body.push({ index: { _index: routingskipbehaviorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: routingskipbehaviorIndex,
-      body: routingSkipBehavior,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

@@ -10,10 +10,15 @@ import { PromiseerrorTotalVo, PromiseerrorVo } from "src/vo/promiseerror.vo";
 @Injectable()
 export class PromiseerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
-  async uploadError(promiseError: PromiseError) {
-    const res = await this.elasticsearchService.index<PromiseError>({
+  async uploadError(promiseError: PromiseError[]) {
+    const body = [];
+    promiseError.forEach((e) => {
+      body.push({ index: { _index: promiseerrorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk({
       index: promiseerrorIndex,
-      body: promiseError,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

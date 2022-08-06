@@ -12,7 +12,7 @@ export class PageskipbehaviorController {
    */
   @HttpCode(201)
   @Post("/pageskipbehaviors")
-  PageskipbehaviorLoad(@Body() pageSkipBehavior: PageSkipBehavior) {
+  PageskipbehaviorLoad(@Body() pageSkipBehavior: PageSkipBehavior[]) {
     return this.pageskipbehaviorService.upLoadPageskipbehavior(
       pageSkipBehavior
     );

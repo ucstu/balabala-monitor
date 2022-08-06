@@ -12,7 +12,7 @@ export class RoutingskipbehaviorController {
    */
   @HttpCode(201)
   @Post("/routingskipbehaviors")
-  routingSkipBehavior(@Body() routingSkipBehavior: RoutingSkipBehavior) {
+  routingSkipBehavior(@Body() routingSkipBehavior: RoutingSkipBehavior[]) {
     return this.routingskipbehaviorService.upLoadRoutingSkipBehavior(
       routingSkipBehavior
     );

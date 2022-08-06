@@ -9,10 +9,15 @@ import { ResourceerrorTotalVo, ResourceerrorVo } from "src/vo/resourceerror.vo";
 @Injectable()
 export class ResourceerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
-  async uploadError(resourceError: ResourceError): Promise<responseRust> {
-    const res = await this.elasticsearchService.index<ResourceError>({
+  async uploadError(resourceError: ResourceError[]): Promise<responseRust> {
+    const body = [];
+    resourceError.forEach((e) => {
+      body.push({ index: { _index: resourceerrorIndex } });
+      body.push(e);
+    });
+    const res = await this.elasticsearchService.bulk<ResourceError>({
       index: resourceerrorIndex,
-      body: resourceError,
+      body,
     });
     if (res.statusCode === 201) {
       return responseRust.success_creat();

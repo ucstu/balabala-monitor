@@ -14,7 +14,7 @@ export class VueerrorController {
    */
   @HttpCode(201)
   @Post("/vueerrors")
-  uploadError(@Body() vueError: VueError) {
+  uploadError(@Body() vueError: VueError[]) {
     return this.vueerrorService.uploadError(vueError);
   }
   /**

@@ -1,22 +1,6 @@
-import {
-  BaseHttpRequest,
-  CancelablePromise,
-  MonitorApiClient,
-} from "@balabala/monitor-api";
-import { ApiRequestOptions } from "../types";
-import { request } from "./request";
+import { MonitorApiClient } from "@balabala/monitor-api";
 
-const originalProto = XMLHttpRequest.prototype;
-const originalOpen = originalProto.open;
-const originalSend = originalProto.send;
-
-class OriginHttpRequest extends BaseHttpRequest {
-  request<T>(options: ApiRequestOptions): CancelablePromise<T> {
-    return request(this.config, options, originalOpen, originalSend);
-  }
-}
-
-export const client = new MonitorApiClient({}, OriginHttpRequest);
+export const client = new MonitorApiClient();
 
 let {
   getBehaviorsBasicbehaviors,

@@ -1,5 +1,6 @@
 import "@/assets/iconfont/iconfont.js";
 import { createApp } from "vue";
+import { client } from "./apis";
 import App from "./App.vue";
 import router from "./router";
 import "./style.scss";
@@ -11,8 +12,9 @@ import("@balabala/monitor-sdk")
       appId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
     });
   })
-  .catch(() => {
-    throw new Error("Load monitor-sdk failed");
+  .catch((err) => {
+    console.error(err);
   });
 
+client.service.httpRequest.config.BASE = "http://localhost:3000";
 createApp(App).use(router).mount("#app");

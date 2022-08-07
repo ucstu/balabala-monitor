@@ -63,3 +63,19 @@ export type ApiRequestOptions = {
   readonly responseHeader?: string;
   readonly errors?: Record<number, string>;
 };
+
+export type OnCancel = {
+  readonly isResolved: boolean;
+  readonly isRejected: boolean;
+  readonly isCancelled: boolean;
+
+  (cancelHandler: () => void): void;
+};
+
+export type ApiResult = {
+  readonly url: string;
+  readonly ok: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly body: any;
+};

@@ -14,26 +14,26 @@ import {
 } from "@/common/utils/apis";
 import { onBeforeUnload } from "@/common/utils/events";
 
-const cacheMap = new Map<string, any[]>([
-  ["BasicIndicator", []],
-  ["InterfaceIndicator", []],
-  ["ResourceIndicator", []],
-  ["ResourceError", []],
-  ["JavaScriptError", []],
-  ["PromiseError", []],
-  ["VueError", []],
-  ["BasicBehavior", []],
-  ["ClickBehavior", []],
-  ["PageSkipBehavior", []],
-  ["RoutingSkipBehavior", []],
-]);
+const cacheMap = new Map<string, any[]>([]);
+cacheMap.set("BasicIndicator", []);
+cacheMap.set("InterfaceIndicator", []);
+cacheMap.set("ResourceIndicator", []);
+cacheMap.set("ResourceError", []);
+cacheMap.set("JavaScriptError", []);
+cacheMap.set("PromiseError", []);
+cacheMap.set("VueError", []);
+cacheMap.set("BasicBehavior", []);
+cacheMap.set("ClickBehavior", []);
+cacheMap.set("PageSkipBehavior", []);
+cacheMap.set("RoutingSkipBehavior", []);
 let count = 0;
 
 export const reportAll = () => {
-  for (const key in cacheMap) {
-    const cacheItems = cacheMap.get(key) as any[];
-    realTimeReport(key as keyof ReportDataTypes, cacheItems);
-    cacheMap.set(key, []);
+  for (const key of cacheMap.keys()) {
+    if (cacheMap.get(key)!.length > 0) {
+      realTimeReport(key as keyof ReportDataTypes, cacheMap.get(key)!);
+      cacheMap.set(key, []);
+    }
   }
   count = 0;
 };
@@ -48,57 +48,57 @@ export const realTimeReport = <K extends keyof ReportDataTypes>(
     case "BasicIndicator":
       postPerformancesBasicindicators({
         requestBody: data as ReportDataTypes["BasicIndicator"][],
-      });
+      }).catch((e) => {});
       break;
     case "InterfaceIndicator":
       postPerformancesInterfaceindicators({
         requestBody: data as ReportDataTypes["InterfaceIndicator"][],
-      });
+      }).catch((e) => {});
       break;
     case "ResourceIndicator":
       postPerformancesResourceindicators({
         requestBody: data as ReportDataTypes["ResourceIndicator"][],
-      });
+      }).catch((e) => {});
       break;
     case "ResourceError":
       postErrorsResourceerrors({
         requestBody: data as ReportDataTypes["ResourceError"][],
-      });
+      }).catch((e) => {});
       break;
     case "JavaScriptError":
       postErrorsJavascripterrors({
         requestBody: data as ReportDataTypes["JavaScriptError"][],
-      });
+      }).catch((e) => {});
       break;
     case "PromiseError":
       postErrorsPromiseerrors({
         requestBody: data as ReportDataTypes["PromiseError"][],
-      });
+      }).catch((e) => {});
       break;
     case "VueError":
       postErrorsVueerrors({
         requestBody: data as ReportDataTypes["VueError"][],
-      });
+      }).catch((e) => {});
       break;
     case "BasicBehavior":
       postBehaviorsBasicbehaviors({
         requestBody: data as ReportDataTypes["BasicBehavior"][],
-      });
+      }).catch((e) => {});
       break;
     case "ClickBehavior":
       postBehaviorsClickbehaviors({
         requestBody: data as ReportDataTypes["ClickBehavior"][],
-      });
+      }).catch((e) => {});
       break;
     case "PageSkipBehavior":
       postBehaviorsPageskipbehaviors({
         requestBody: data as ReportDataTypes["PageSkipBehavior"][],
-      });
+      }).catch((e) => {});
       break;
     case "RoutingSkipBehavior":
       postBehaviorsRoutingskipbehaviors({
         requestBody: data as ReportDataTypes["RoutingSkipBehavior"][],
-      });
+      }).catch((e) => {});
       break;
     default:
       throw new Error(`Unknown apiId: ${apiId}`);

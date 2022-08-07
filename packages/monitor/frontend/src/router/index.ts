@@ -5,6 +5,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
   {
     name: "Home",
     path: "/",
+    // meta: { hiddenAside: true, hiddenHeader: true },
     component: () => import("@/pages/HomePage/HomePage.vue"),
   },
 ];

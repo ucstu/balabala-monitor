@@ -2,6 +2,7 @@
   "name": "@balabala/monitor-frontend",
   "version": "1.0.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "scripty",
     "build": "scripty",

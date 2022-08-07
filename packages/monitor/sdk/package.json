@@ -3,8 +3,8 @@
   "description": "SDK for monitoring and reporting",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/umd/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
@@ -13,5 +13,18 @@
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup-plugin-ts": "^3.0.2",
+    "rollup": "^2.77.2"
+  },
+  "browserslist": {
+    "production": [
+      "ie 8"
+    ],
+    "development": [
+      "ie 8"
+    ]
   }
 }

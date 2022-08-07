@@ -3,14 +3,24 @@
   "description": "api for balabala",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/umd/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
     "build": "scripty"
   },
   "devDependencies": {
-    "openapi-typescript-codegen": "^0.23.0"
+    "openapi-typescript-codegen": "^0.23.0",
+    "rollup-plugin-ts": "^3.0.2",
+    "rollup": "^2.77.2"
+  },
+  "browserslist": {
+    "production": [
+      "ie 8"
+    ],
+    "development": [
+      "ie 8"
+    ]
   }
 }

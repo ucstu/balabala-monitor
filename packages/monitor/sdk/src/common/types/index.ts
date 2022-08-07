@@ -42,3 +42,24 @@ export type SetOptional<T, K extends keyof T> = Simplify<
   // Pick 必须有的键值的那部分
   Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>
 >;
+
+export type ApiRequestOptions = {
+  readonly method:
+    | "GET"
+    | "PUT"
+    | "POST"
+    | "DELETE"
+    | "OPTIONS"
+    | "HEAD"
+    | "PATCH";
+  readonly url: string;
+  readonly path?: Record<string, any>;
+  readonly cookies?: Record<string, any>;
+  readonly headers?: Record<string, any>;
+  readonly query?: Record<string, any>;
+  readonly formData?: Record<string, any>;
+  readonly body?: any;
+  readonly mediaType?: string;
+  readonly responseHeader?: string;
+  readonly errors?: Record<number, string>;
+};

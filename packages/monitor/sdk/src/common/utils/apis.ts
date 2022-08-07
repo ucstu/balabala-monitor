@@ -3,8 +3,8 @@ import {
   CancelablePromise,
   MonitorApiClient,
 } from "@balabala/monitor-api";
-import { ApiRequestOptions } from "@balabala/monitor-api/types/core/ApiRequestOptions";
 import { getConfig } from "../config";
+import { ApiRequestOptions } from "../types";
 
 const originalProto = XMLHttpRequest.prototype;
 const originalOpen = originalProto.open;

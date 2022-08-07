@@ -4,5 +4,5 @@ import mistaken from "./mistaken";
 import performance from "./performance";
 
 export default () => {
-  monitoring(performance, mistaken, behavior);
+  monitoring(behavior, mistaken, performance);
 };

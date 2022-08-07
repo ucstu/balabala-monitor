@@ -2,6 +2,7 @@
   "name": "@balabala/monitor-frontend",
   "version": "1.0.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "scripty",
     "build": "scripty",
@@ -20,5 +21,13 @@
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
     "vue-tsc": "^0.38.4"
+  },
+  "browserslist": {
+    "production": [
+      "ie 8"
+    ],
+    "development": [
+      "ie 8"
+    ]
   }
 }

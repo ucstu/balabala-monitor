@@ -1,5 +1,5 @@
-import { getBasicParams, getPageUrl } from "../../common/utils";
-import { reportWithCache } from "../../reporting";
+import { getBasicParams, getPageUrl } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 export default function initPageSkipBehavior() {
   let from = "";
@@ -8,12 +8,12 @@ export default function initPageSkipBehavior() {
     () => {
       const to = getPageUrl();
 
-      reportWithCache("PageSkipBehavior", {
-        from: from,
-        to: to,
+      stagingReport("PageSkipBehavior", {
         mainType: 3,
         subType: 3001,
         ...getBasicParams(),
+        from: from,
+        to: to,
       });
       from = to;
     },
@@ -26,12 +26,12 @@ export default function initPageSkipBehavior() {
     (event) => {
       const newURL = event.newURL;
 
-      reportWithCache("PageSkipBehavior", {
-        from: oldURL,
-        to: newURL,
+      stagingReport("PageSkipBehavior", {
         mainType: 3,
         subType: 3001,
         ...getBasicParams(),
+        from: oldURL,
+        to: newURL,
       });
 
       oldURL = newURL;

@@ -3,15 +3,33 @@
   "description": "SDK for monitoring and reporting",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/umd/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc && tsc -p tsconfig.umd.json"
+    "dev": "lerna bootstrap && scripty",
+    "build": "lerna bootstrap && scripty"
   },
   "dependencies": {
-    "@balabala/api": "^1.0.0"
+    "@balabala/monitor-api": "^1.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup-plugin-ts": "^3.0.2",
+    "rollup": "^2.77.2"
+  },
+  "browserslist": {
+    "production": [
+      "defaults",
+      "not IE 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 edge version",
+      "last 1 ie version"
+    ]
   }
 }

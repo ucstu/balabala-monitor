@@ -1,11 +1,6 @@
+import { monitoring } from "@/common/utils/functions";
 import firstScreenLoad from "./firstScreenLoad";
 
-function monitoring(...indicators: Array<Function>): void {
-  for (const indicator of indicators) {
-    indicator();
-  }
-}
-
-export default function monitoringDrawIndicator(): void {
+export default () => {
   monitoring(firstScreenLoad);
-}
+};

@@ -1,5 +1,5 @@
-import { getBasicParams } from "../../../common/utils";
-import { reportWithCache } from "../../../reporting";
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
 
 // @ts-ignore
 const next = window.requestAnimationFrame
@@ -27,11 +27,11 @@ export default function initFPS() {
     }
 
     if ((frames.length = 60)) {
-      reportWithCache("BasicIndicator", {
-        value: frames[-1],
+      stagingReport("BasicIndicator", {
         mainType: 4,
         subType: 4001,
         ...getBasicParams(),
+        value: frames[-1],
       });
 
       frames.length = 0;

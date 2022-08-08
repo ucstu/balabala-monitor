@@ -17,10 +17,10 @@ import HeaderBar from "@/components/HeaderBar.vue";
 import { useRoute } from "vue-router";
 import { reactive, ref } from "vue";
 const menu = reactive([
-  { id: "01", name: "总览" },
-  { id: "02", name: "健康状况" },
-  { id: "03", name: "性能预览" },
-  { id: "04", name: "地域分布" },
+  { id: "01", name: "总览", path: "/overView" },
+  { id: "02", name: "健康状况", path: "/healthStatus" },
+  { id: "03", name: "性能预览", path: "/performancePreview" },
+  { id: "04", name: "地域分布", path: "/region" },
 ]);
 
 const route = useRoute();

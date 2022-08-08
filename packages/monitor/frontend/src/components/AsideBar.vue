@@ -2,7 +2,8 @@
   <aside class="leftMenu">
     <ul>
       <li v-for="(value, index) in props.menu" :key="index">
-        <i class="fa fa-desktop"></i><a href="#">{{ value.name }}</a>
+        <i class="fa fa-desktop"></i
+        ><router-link :to="value.path">{{ value.name }}</router-link>
       </li>
     </ul>
   </aside>
@@ -16,6 +17,7 @@ const props = defineProps<{
   menu: Array<{
     id: String;
     name: String;
+    path: String;
   }>;
 }>();
 </script>

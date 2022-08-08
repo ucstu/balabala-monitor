@@ -1,5 +1,6 @@
 import "@/assets/iconfont/iconfont.js";
 import SvgIcon from "@/components/SvgIcon.vue";
+import "bytemd/dist/index.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -14,5 +15,13 @@ import "./style.scss";
 // });
 
 // setBaseURL("http://localhost:3000");
+
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title as string;
+  }
+  next();
+});
 
 createApp(App).use(router).component("SvgIcon", SvgIcon).mount("#app");

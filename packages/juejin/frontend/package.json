@@ -16,10 +16,13 @@
     "@bytemd/plugin-gfm": "^1.17.2",
     "@bytemd/plugin-highlight": "^1.17.2",
     "@bytemd/plugin-math": "^1.17.2",
+    "@bytemd/plugin-math-ssr": "^1.17.2",
     "@bytemd/plugin-medium-zoom": "^1.17.2",
     "@bytemd/plugin-mermaid": "^1.17.2",
     "@bytemd/vue-next": "^1.17.2",
+    "bytemd": "^1.17.2",
     "highlight.js": "^11.6.0",
+    "juejin-markdown-themes": "^1.29.3",
     "monaco-editor": "^0.34.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.13"

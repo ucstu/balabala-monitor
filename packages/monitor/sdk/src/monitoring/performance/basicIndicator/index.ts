@@ -1,13 +1,8 @@
+import { monitoring } from "@/common/utils/functions";
 import firstContentfulPaint from "./firstContentfulPaint";
 import firstPaint from "./firstPaint";
 import largestContentfulPaint from "./largestContentfulPaint";
 
-function monitoring(...indicators: Array<Function>): void {
-  for (const indicator of indicators) {
-    indicator();
-  }
-}
-
-export default function monitoringBasicIndicator(): void {
+export default () => {
   monitoring(firstContentfulPaint, firstPaint, largestContentfulPaint);
-}
+};

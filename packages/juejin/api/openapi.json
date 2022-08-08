@@ -1,0 +1,1009 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "掘金系统",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "账户信息"
+    },
+    {
+      "name": "文章信息"
+    },
+    {
+      "name": "工具接口"
+    }
+  ],
+  "paths": {
+    "/article/{articleId}": {
+      "delete": {
+        "summary": "删除文章",
+        "x-apifox-folder": "文章信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["文章信息"],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "文章ID，eg：b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Article",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "文章信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2013-03-27 05:53:48",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "articleId": "FA6981A7-c1Cd-5bCb-B912-1ADbEdEBD3D9",
+                        "articleTitle": "儿律段",
+                        "articleClass": 4,
+                        "articleCover": "http://dummyimage.com/120x600",
+                        "articleSummary": "计导生更太影发只部百北们你知场色程。记计方头全完军究代报文间组主算。行铁角质党建委龙技带引社电热增制节。持明场即社上时将具必科反运管主边。",
+                        "articleContent": "种约也定非别难王着队亲日头置该果头。今存金代切达你三样些南该千离领。存究眼南命又同改形向改权内济机布石。党件极龙离们复制放高及置技政共。共她东局算速斯须须打复千。",
+                        "accountId": "E7b0F8EE-A0D6-A77E-8ac5-c6bDbE8A6CC9",
+                        "createdAt": "2009-10-12 01:27:54",
+                        "updatedAt": "2018-11-27 16:46:30",
+                        "articleTraffic": 94,
+                        "articlelikes": 67,
+                        "articleTags": "己"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044652-run"
+      },
+      "put": {
+        "summary": "修改文章",
+        "x-apifox-folder": "文章信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["文章信息"],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "文章ID，eg：b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Article",
+                "x-apifox-overrides": {},
+                "title": "数据主体",
+                "description": "文章信息"
+              },
+              "example": {
+                "articleId": "6FeE2538-9cF1-1700-f996-CccA2d29fc7E",
+                "articleTitle": "声例今图话而",
+                "articleClass": 2,
+                "articleCover": "http://dummyimage.com/468x60",
+                "articleSummary": "把业口响信它数于它天出正计。位但叫们分设周细流即各感行使格。已基进包志一工王报铁作院且从确速至。子已也结交都至质发各结应样要好流安。市矿联直者飞它传观象则给性飞海建见下。",
+                "articleContent": "关素度转被商状商放走即关取情。许价收研生经题克位运老论口对中论习。成器等矿风于产候但维消容单养断。军极或着七东青经只要或见院们共基很又。",
+                "accountId": "C707B99A-80b4-eA97-801c-Af8CbC983953",
+                "createdAt": "1998-01-09 02:55:07",
+                "updatedAt": "1990-02-22 22:08:19",
+                "articleTraffic": 98,
+                "articlelikes": 90,
+                "articleTags": "结"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Article",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "文章信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2021-07-06 05:53:03",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "articleId": "2F62cCAD-86cd-D8Ae-ba63-F8AE9662E874",
+                        "articleTitle": "眼北完率",
+                        "articleClass": 5,
+                        "articleCover": "http://dummyimage.com/120x600",
+                        "articleSummary": "形与离究表解利引万明标京南空较处思。连率严达织来我参此局容千斯力格别。达许技己里马存院格写联是场。花新力书非真及太七流参人型过委记他。专每斯人里专高斯专有率成百。技同确应品品经思思问克亲构小安火。达化变严完高美口化里两事六真应石。",
+                        "articleContent": "作三改比八离动构结总主南品委青为效万。厂温命压处响流利类节关构京收们。族但县近林近这对国许元导后么表儿。反下打九度信信集代已原适适工消满部。平权其矿群向体即要示持使话龙。与得报四地本王属根解关是克明选定件人。",
+                        "accountId": "ddc6ce2a-17CA-9AbA-b8Be-625Bd1e4f83E",
+                        "createdAt": "2014-11-11 08:47:37",
+                        "updatedAt": "2022-06-19 19:57:45",
+                        "articleTraffic": 99,
+                        "articlelikes": 84,
+                        "articleTags": "元"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044659-run"
+      },
+      "get": {
+        "summary": "查询文章",
+        "x-apifox-folder": "文章信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["文章信息"],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "文章ID，eg：b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Article",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "文章信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2007-07-07 09:31:03",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "articleId": "ce124A07-9111-C9b7-84C5-5644CEdB4Abf",
+                        "articleTitle": "往断派林你律",
+                        "articleClass": 2,
+                        "articleCover": "http://dummyimage.com/250x250",
+                        "articleSummary": "始满此美各要长近因认极派应单。走本报节政例飞界直各安论还条断。些他小整和是价想它权见美元家基除以。保口取声商存易学处律所府。置住五矿习人除速认而正日间。周斗农己边后越低日而资有据照全处成。",
+                        "articleContent": "达集并权但南受却现则别将林做非方果小。装张近高报将适己积色很完工。线日数西再复统当成先长议光者且作取。很们名联上红不但想层规易。八空却且者验人条热开力争光化能样义。积出往时科王和积记领给历。中最而通法工日两应争十始都政。",
+                        "accountId": "b5dEb62b-6E3F-2f76-d6cB-CA0672F682DC",
+                        "createdAt": "2018-05-18 10:03:54",
+                        "updatedAt": "2011-06-19 00:08:02",
+                        "articleTraffic": 99,
+                        "articlelikes": 84,
+                        "articleTags": "角"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044660-run"
+      }
+    },
+    "/images": {
+      "post": {
+        "summary": "上传图片",
+        "x-apifox-folder": "工具接口",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["工具接口"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "图片，base64字符串  去掉头信息的base64信息,不要    \"data:image/jpeg;base64,\"",
+                    "example": "iVBORw0KGgoAAAANSUhEUgAAAf4AAAKcCAYAAAAJu9jpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAP"
+                  },
+                  "filename": {
+                    "type": "string",
+                    "description": "文件名称，包括后缀名 app,pen",
+                    "example": "打字比赛.png"
+                  }
+                },
+                "required": ["image", "filename"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "imageUrl": {
+                          "title": "图片地址",
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": ["imageUrl"],
+                      "required": ["imageUrl"],
+                      "title": "数据主体",
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2021-05-18 02:04:10",
+                      "status": 201,
+                      "message": "Created",
+                      "data": {
+                        "imageUrl": "http://dummyimage.com/240x400"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044658-run"
+      }
+    },
+    "/accounts": {
+      "post": {
+        "summary": "注册账号",
+        "x-apifox-folder": "账户信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["账户信息"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "title": "手机号码",
+                    "description": "手机号码（登录用手机号，别用重复号码注册哈）"
+                  },
+                  "password": {
+                    "type": "string",
+                    "title": "用户密码"
+                  },
+                  "name": {
+                    "type": "string",
+                    "title": "昵称",
+                    "description": "昵称可重复"
+                  }
+                },
+                "x-apifox-orders": ["phone", "password", "name"],
+                "required": ["phone", "password", "name"],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "username": "向角周许意产",
+                "password": "u9*5#Ah"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Account",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "账号信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2009-02-28 08:40:22",
+                      "status": 201,
+                      "message": "Created",
+                      "data": {
+                        "accountInfoId": "FBBbAeB2-95C4-d36E-a4A6-039d02Edb4f7",
+                        "createdAt": "1972-11-02 02:46:17",
+                        "updatedAt": "1989-02-06 16:22:02",
+                        "username": "该快导积个书",
+                        "avatarUrl": "http://dummyimage.com/234x60"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044665-run"
+      }
+    },
+    "/accounts/login": {
+      "post": {
+        "summary": "登录账号",
+        "x-apifox-folder": "账户信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["账户信息"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "title": "手机号",
+                    "description": "手机号"
+                  },
+                  "password": {
+                    "type": "string",
+                    "title": "用户密码"
+                  }
+                },
+                "x-apifox-orders": ["phone", "password"],
+                "required": ["phone", "password"],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "username": "米量石四常己",
+                "password": "ZJ0*@X"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Account",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "账号信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2006-06-28 11:42:29",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "accountInfoId": "fdbD6fb7-C110-99dE-627C-D9bAdEdFB7dd",
+                        "createdAt": "2002-11-27 20:05:05",
+                        "updatedAt": "1987-01-14 21:05:59",
+                        "username": "部机其应她极数",
+                        "avatarUrl": "http://dummyimage.com/88x31"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044666-run"
+      }
+    },
+    "/article": {
+      "post": {
+        "summary": "新增文章",
+        "x-apifox-folder": "文章信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["文章信息"],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "{{'12345'}}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-apifox-overrides": {},
+                "type": "object",
+                "x-apifox-refs": {},
+                "x-apifox-orders": [
+                  "articleTitle",
+                  "articleClass",
+                  "articleTags",
+                  "articleCover",
+                  "articleSummary",
+                  "articleContent"
+                ],
+                "properties": {
+                  "articleTitle": {
+                    "type": "string",
+                    "title": "文章标题"
+                  },
+                  "articleClass": {
+                    "title": "文章分类",
+                    "description": "{1:后端,2:前端,3:Android,4:IOS,5:人工智能,6:开发工具,7:代码人生,8:阅读}",
+                    "type": "integer"
+                  },
+                  "articleTags": {
+                    "type": "string",
+                    "title": "文章标签"
+                  },
+                  "articleCover": {
+                    "type": "string",
+                    "title": "文章封面"
+                  },
+                  "articleSummary": {
+                    "type": "string",
+                    "title": "文章概要"
+                  },
+                  "articleContent": {
+                    "type": "string",
+                    "title": "文章内容"
+                  }
+                },
+                "required": [
+                  "articleTitle",
+                  "articleClass",
+                  "articleCover",
+                  "articleSummary",
+                  "articleContent",
+                  "articleTags"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "articleTitle": "提圆子知料用",
+                "articleClass": 5,
+                "articleCover": "http://dummyimage.com/160x600",
+                "articleSummary": "林过派复和很子性按所做与起条。为但海头保分共斯如样日感会验京思规。表属路场前观容种标消拉流是世直众道。处非类表军空入传阶十片转写今以。界理理率出空么军处马出个果。克图来分周西天斯水过题来标装改把加决。",
+                "articleContent": "好当例严类至是族象将需务时业转正派越。又活办每下影济战很应收和可空矿变。约参据省存来动光上转派市她它门。用精族于达电受取市提阶价。",
+                "articleTags": "集"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Article",
+                      "x-apifox-overrides": {},
+                      "title": "数据主体",
+                      "description": "文章信息"
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "1986-03-20 10:07:34",
+                      "status": 201,
+                      "message": "Created",
+                      "data": {
+                        "articleId": "4784EcDD-E34B-7EBe-Afff-BB878a62882F",
+                        "articleTitle": "步都革传",
+                        "articleClass": 2,
+                        "articleCover": "http://dummyimage.com/234x60",
+                        "articleSummary": "面确识白象走力也体还被状都做率。细拉始再正头问般性增现造步增油置划。转量面查至江七价不中真离机小号不。空全米决备始广总角式近着么易识上。少历从者此反统江白查料族。众因较响权派传心风易治提式电节。相代常准只道速题科林条系称经天头除。",
+                        "articleContent": "深按各飞红育不节马果就位工可。力中如量再通治三史科法听育极通日工。根不江做光化你内观处来火同铁结持交。还族个油育济指公再务治第广。位是育般海传着体至委往示。",
+                        "accountId": "aA089ce3-a9DD-5CD1-1419-6dDB3f57FAb3",
+                        "createdAt": "2016-11-17 05:17:40",
+                        "updatedAt": "2016-12-10 20:34:23",
+                        "articleTraffic": 75,
+                        "articlelikes": 65,
+                        "articleTags": "维"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044667-run"
+      },
+      "get": {
+        "summary": "查询所有文章",
+        "x-apifox-folder": "文章信息",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": ["文章信息"],
+        "parameters": [
+          {
+            "name": "class",
+            "in": "query",
+            "description": "文章分类，{0:不限,1:后端,2:前端,3:Android,4:IOS,5:人工智能,6:开发工具,7:代码人生,8:阅读}，eg：1",
+            "required": true,
+            "example": "{% mock 'integer', 0, 8 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页号，eg: 2>1",
+            "required": false,
+            "example": "{% mock 'integer', 0, 5 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页面大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式： DESC 或者 ASC",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "数据总数"
+                        },
+                        "articleInfos": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Article",
+                            "x-apifox-overrides": {},
+                            "title": "数据主体",
+                            "description": "文章信息"
+                          },
+                          "title": "文章信息列表"
+                        }
+                      },
+                      "x-apifox-orders": ["totalCount", "articleInfos"],
+                      "required": ["totalCount", "articleInfos"],
+                      "title": "数据主体",
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例 ",
+                    "value": {
+                      "timestamp": "2001-07-07 08:42:02",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "totalCount": 95,
+                        "articleInfos": [
+                          {
+                            "articleId": "ADFCBDA2-bbEf-32b1-BA92-b80B3eb2Eebb",
+                            "articleTitle": "史眼在决么",
+                            "articleClass": 6,
+                            "articleCover": "http://dummyimage.com/234x60",
+                            "articleSummary": "农属也流影完相置提但温做文并低。西能效等将声从听八往分思走拉在是。国结温每易用料图广长行细龙准化活。",
+                            "articleContent": "前商根照验众切来又省于此阶家应期家。起九细府动证程县对量结之安几种矿性。很支者层拉因四效育约统状合以高引种。厂力把专分切标市八命感部易压王有备。例进压问青张已成造组要劳政参战照。报体除现满统定带明数装周思制。",
+                            "accountId": "AfAFBdaA-9Dec-44F9-26fB-4BBfe2f9B9Dc",
+                            "createdAt": "1985-02-15 11:55:58",
+                            "updatedAt": "1986-03-25 07:07:58",
+                            "articleTraffic": 79,
+                            "articlelikes": 93,
+                            "articleTags": "年"
+                          },
+                          {
+                            "articleId": "eeE9C0A9-4CbE-25A6-18bd-7BA2E1f9aBff",
+                            "articleTitle": "很它按音今便",
+                            "articleClass": 6,
+                            "articleCover": "http://dummyimage.com/468x60",
+                            "articleSummary": "称当电等率的保业整半手受选总议四。件政满大统此二无五里研会部。物处后史音历声西先积变养保计感。",
+                            "articleContent": "华认新通备技学法话部图精叫争新次。单克机外政收料济面家海加到解。历界状不道导龙间即下里际始儿无小与。做温律现接看元统节质叫我见识收计。",
+                            "accountId": "9F11fDbf-D70B-DF9b-0e95-D87F5e67fe2F",
+                            "createdAt": "2008-11-28 16:37:43",
+                            "updatedAt": "1990-12-23 02:51:04",
+                            "articleTraffic": 96,
+                            "articlelikes": 92,
+                            "articleTags": "解"
+                          },
+                          {
+                            "articleId": "92a8cD8D-85eF-B979-1961-cF3218Aa7De3",
+                            "articleTitle": "复号复农许",
+                            "articleClass": 6,
+                            "articleCover": "http://dummyimage.com/240x400",
+                            "articleSummary": "都热且队易程间量子化特劳同他确则。法之根之证点机集活历并么第。族得则易们道级约京量动非如。日断术没安后二斯已两除如王等。",
+                            "articleContent": "面走法世这体据种下温节等已后党。会治构结万来亲料走结第确标他。观小况农与酸想照般写了己题感律。月走结记报程这经照高分青次人民放门级。",
+                            "accountId": "bAf25C59-52Cc-B3fb-A0c5-7365Ef1A3CAD",
+                            "createdAt": "2022-05-29 18:15:52",
+                            "updatedAt": "2004-06-15 10:57:23",
+                            "articleTraffic": 67,
+                            "articlelikes": 76,
+                            "articleTags": "格"
+                          },
+                          {
+                            "articleId": "69cd69Fd-56e1-df29-6daf-2Eb95fe90e12",
+                            "articleTitle": "科表石目",
+                            "articleClass": 6,
+                            "articleCover": "http://dummyimage.com/88x31",
+                            "articleSummary": "写化那它带三权统将政连队角。八上性候资间员外结术数马只育。引许报面路需节验华那明院作。现认流他红积这越传低给话此改形装也。性革量切技见情出使五门易存下铁劳。万场候者代来属取所又计技。",
+                            "articleContent": "例次记风性派活极却但连领。题果样二时华应亲常新属入立年自团红里。育关统已必或果其边感与现不国国。民写时计技解流南应上合因。其单它约眼器圆收影必里深引育为务。件东严品主日将火本系除才平才。",
+                            "accountId": "78c329AF-FCDE-cE3D-bb4d-7Ef9dD10F3aA",
+                            "createdAt": "2004-10-23 02:34:26",
+                            "updatedAt": "1981-08-25 15:40:02",
+                            "articleTraffic": 92,
+                            "articlelikes": 83,
+                            "articleTags": "长"
+                          },
+                          {
+                            "articleId": "93efCf2F-5EEe-8ccb-EdAd-3d782dF05185",
+                            "articleTitle": "后的下化路",
+                            "articleClass": 0,
+                            "articleCover": "http://dummyimage.com/234x60",
+                            "articleSummary": "马别口自平运内容已六至手历备商因。什青国类容名员何张酸装如正交性形复十。直料张改飞干后风近参些权应活。研复究来别如月界流选等象应。圆命列象代给象美权个如这社上选部如。真素上明已命省样音派求权及难。",
+                            "articleContent": "由业土一几争六下合正关直极任且才作。和原拉住问世术重率四般度然花采成。线道一千济压其与并布强眼正。被元始质确眼教收如低结包取况育。给太把各群所采小有外去先。达张天北却带题增期心公部常。器好示族率物这水解和史青压。",
+                            "accountId": "FBf58D9D-cFA6-5ed5-e6DB-BaADdd3BAaFC",
+                            "createdAt": "1974-09-04 21:41:42",
+                            "updatedAt": "1989-04-09 03:31:53",
+                            "articleTraffic": 80,
+                            "articlelikes": 73,
+                            "articleTags": "场"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410641/apis/api-33044668-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Article": {
+        "type": "object",
+        "properties": {
+          "articleId": {
+            "title": "文章ID",
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "创建时间"
+          },
+          "updatedAt": {
+            "type": "string",
+            "title": "更新时间"
+          },
+          "articleTitle": {
+            "type": "string",
+            "title": "文章标题"
+          },
+          "articleClass": {
+            "title": "文章分类",
+            "description": "{1:后端,2:前端,3:Android,4:IOS,5:人工智能,6:开发工具,7:代码人生,8:阅读}",
+            "type": "integer"
+          },
+          "articleTags": {
+            "type": "string",
+            "title": "文章标签"
+          },
+          "articleCover": {
+            "type": "string",
+            "title": "文章封面"
+          },
+          "articleSummary": {
+            "type": "string",
+            "title": "文章概要"
+          },
+          "articleContent": {
+            "type": "string",
+            "title": "文章内容"
+          },
+          "phone": {
+            "type": "string",
+            "title": "发布用户ID"
+          },
+          "articleTraffic": {
+            "type": "integer",
+            "title": "文章访问量"
+          },
+          "articlelikes": {
+            "title": "文章点赞量",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "articleId",
+          "articleTitle",
+          "articleClass",
+          "articleCover",
+          "articleSummary",
+          "articleContent",
+          "phone",
+          "createdAt",
+          "updatedAt",
+          "articleTraffic",
+          "articlelikes",
+          "articleTags"
+        ],
+        "x-apifox-orders": [
+          "articleId",
+          "createdAt",
+          "updatedAt",
+          "articleTitle",
+          "articleClass",
+          "articleTags",
+          "articleCover",
+          "articleSummary",
+          "articleContent",
+          "phone",
+          "articleTraffic",
+          "articlelikes"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "账号ID",
+            "type": "integer"
+          },
+          "phone": {
+            "type": "string",
+            "title": "电话号码"
+          },
+          "name": {
+            "type": "string",
+            "title": "昵称"
+          },
+          "password": {
+            "type": "string",
+            "title": "用户名称"
+          }
+        },
+        "required": ["id", "phone", "name", "password"],
+        "x-apifox-orders": ["id", "phone", "name", "password"],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      }
+    }
+  }
+}

@@ -1,10 +1,5 @@
+import { ReportDataTypes } from "@/common/types";
 import {
-  BasicBehavior,
-  BasicIndicator,
-  ClickBehavior,
-  InterfaceIndicator,
-  JavaScriptError,
-  PageSkipBehavior,
   postBehaviorsBasicbehaviors,
   postBehaviorsClickbehaviors,
   postBehaviorsPageskipbehaviors,
@@ -16,112 +11,109 @@ import {
   postPerformancesBasicindicators,
   postPerformancesInterfaceindicators,
   postPerformancesResourceindicators,
-  PromiseError,
-  ResourceError,
-  ResourceIndicator,
-  RoutingSkipBehavior,
-  VueError,
-} from "@balabala/api";
-import { onBeforeUnload } from "src/common/utils";
+} from "@/common/utils/apis";
+import { onBeforeUnload } from "@/common/utils/events";
 
-interface PostTypes {
-  BasicIndicator: BasicIndicator;
-  InterfaceIndicator: InterfaceIndicator;
-  ResourceIndicator: ResourceIndicator;
-  ResourceError: ResourceError;
-  JavaScriptError: JavaScriptError;
-  PromiseError: PromiseError;
-  VueError: VueError;
-  BasicBehavior: BasicBehavior;
-  ClickBehavior: ClickBehavior;
-  PageSkipBehavior: PageSkipBehavior;
-  RoutingSkipBehavior: RoutingSkipBehavior;
-}
-
-const cacheMap = new Map<string, any[]>([
-  ["BasicIndicator", []],
-  ["InterfaceIndicator", []],
-  ["ResourceIndicator", []],
-  ["ResourceError", []],
-  ["JavaScriptError", []],
-  ["PromiseError", []],
-  ["VueError", []],
-  ["BasicBehavior", []],
-  ["ClickBehavior", []],
-  ["PageSkipBehavior", []],
-  ["RoutingSkipBehavior", []],
-]);
+const cacheMap = new Map<string, any[]>([]);
+cacheMap.set("BasicIndicator", []);
+cacheMap.set("InterfaceIndicator", []);
+cacheMap.set("ResourceIndicator", []);
+cacheMap.set("ResourceError", []);
+cacheMap.set("JavaScriptError", []);
+cacheMap.set("PromiseError", []);
+cacheMap.set("VueError", []);
+cacheMap.set("BasicBehavior", []);
+cacheMap.set("ClickBehavior", []);
+cacheMap.set("PageSkipBehavior", []);
+cacheMap.set("RoutingSkipBehavior", []);
 let count = 0;
 
-onBeforeUnload(() => {
-  for (const key in cacheMap) {
-    const cacheItems = cacheMap.get(key) as any[];
-    for (const cacheItem of cacheItems) {
-      report(key as keyof PostTypes, cacheItem);
+export const reportAll = () => {
+  for (const key of cacheMap.keys()) {
+    if (cacheMap.get(key)!.length > 0) {
+      realTimeReport(key as keyof ReportDataTypes, cacheMap.get(key)!);
       cacheMap.set(key, []);
     }
   }
   count = 0;
-});
+};
 
-export const report = <K extends keyof PostTypes>(
+onBeforeUnload(reportAll);
+
+export const realTimeReport = <K extends keyof ReportDataTypes>(
   apiId: K,
-  data: PostTypes[K]
+  data: ReportDataTypes[K][]
 ) => {
   switch (apiId) {
     case "BasicIndicator":
-      postPerformancesBasicindicators(data as BasicIndicator);
+      postPerformancesBasicindicators({
+        requestBody: data as ReportDataTypes["BasicIndicator"][],
+      }).catch((e) => {});
       break;
     case "InterfaceIndicator":
-      postPerformancesInterfaceindicators(data as InterfaceIndicator);
+      postPerformancesInterfaceindicators({
+        requestBody: data as ReportDataTypes["InterfaceIndicator"][],
+      }).catch((e) => {});
       break;
     case "ResourceIndicator":
-      postPerformancesResourceindicators(data as ResourceIndicator);
+      postPerformancesResourceindicators({
+        requestBody: data as ReportDataTypes["ResourceIndicator"][],
+      }).catch((e) => {});
       break;
     case "ResourceError":
-      postErrorsResourceerrors(data as ResourceError);
+      postErrorsResourceerrors({
+        requestBody: data as ReportDataTypes["ResourceError"][],
+      }).catch((e) => {});
       break;
     case "JavaScriptError":
-      postErrorsJavascripterrors(data as JavaScriptError);
+      postErrorsJavascripterrors({
+        requestBody: data as ReportDataTypes["JavaScriptError"][],
+      }).catch((e) => {});
       break;
     case "PromiseError":
-      postErrorsPromiseerrors(data as PromiseError);
+      postErrorsPromiseerrors({
+        requestBody: data as ReportDataTypes["PromiseError"][],
+      }).catch((e) => {});
       break;
     case "VueError":
-      postErrorsVueerrors(data as VueError);
+      postErrorsVueerrors({
+        requestBody: data as ReportDataTypes["VueError"][],
+      }).catch((e) => {});
       break;
     case "BasicBehavior":
-      postBehaviorsBasicbehaviors(data as BasicBehavior);
+      postBehaviorsBasicbehaviors({
+        requestBody: data as ReportDataTypes["BasicBehavior"][],
+      }).catch((e) => {});
       break;
     case "ClickBehavior":
-      postBehaviorsClickbehaviors(data as ClickBehavior);
+      postBehaviorsClickbehaviors({
+        requestBody: data as ReportDataTypes["ClickBehavior"][],
+      }).catch((e) => {});
       break;
     case "PageSkipBehavior":
-      postBehaviorsPageskipbehaviors(data as PageSkipBehavior);
+      postBehaviorsPageskipbehaviors({
+        requestBody: data as ReportDataTypes["PageSkipBehavior"][],
+      }).catch((e) => {});
       break;
     case "RoutingSkipBehavior":
-      postBehaviorsRoutingskipbehaviors(data as RoutingSkipBehavior);
+      postBehaviorsRoutingskipbehaviors({
+        requestBody: data as ReportDataTypes["RoutingSkipBehavior"][],
+      }).catch((e) => {});
       break;
     default:
       throw new Error(`Unknown apiId: ${apiId}`);
   }
 };
 
-export const reportWithCache = <K extends keyof PostTypes>(
+export const stagingReport = <K extends keyof ReportDataTypes>(
   apiId: K,
-  data: PostTypes[K]
+  data: ReportDataTypes[K]
 ) => {
   const cacheItems = cacheMap.get(apiId) as any[];
   cacheItems.push(data);
   count++;
+  console.log(apiId, count, cacheMap.get(apiId));
   if (count > 10) {
-    for (const key in cacheMap) {
-      const cacheItems = cacheMap.get(key) as any[];
-      for (const cacheItem of cacheItems) {
-        report(key as keyof PostTypes, cacheItem);
-        cacheMap.set(key, []);
-      }
-    }
-    count = 0;
+    reportAll();
   }
 };

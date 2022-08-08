@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <header class="main">
     <div class="left">
       <i class="fa fa-bars"></i>
       <span
@@ -17,7 +17,7 @@
       <a href="#" class="fa fa-envelope-o i"></a>
       <img src="@/assets/no_user.png" alt="#" />
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -32,8 +32,6 @@ const props = defineProps<{
 .main {
   display: flex;
   justify-content: space-between;
-  height: 50px;
-  width: 100%;
   background-color: rgba(213, 211, 211, 0.5);
 }
 .left {

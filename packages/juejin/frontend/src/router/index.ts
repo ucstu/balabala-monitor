@@ -29,6 +29,9 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/editor",
     component: () => import("@/pages/EditorPage/EditorPage.vue"),
+    meta: {
+      title: "写文章",
+    },
   },
 ];
 const router = createRouter({

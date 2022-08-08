@@ -24,7 +24,7 @@
       <div class="draft button">
         <span>草稿箱</span>
       </div>
-      <div class="publish button">
+      <div class="publish button" @click="publishEssay">
         <span>发布</span>
       </div>
       <img
@@ -39,146 +39,24 @@
     </div>
     <div></div>
   </div>
-  <div class="md_root_content" v-bind:style="{ width: 1000, height: 600 }">
-    <!--功能按钮区-->
-    <div class="button_bar">
-      <div class="button-left">
-        <div class="button-editor list">
-          <SvgIcon
-            name="a-edit-office-richtext-headline-style"
-            style="width: 18px"
-          ></SvgIcon>
-          <div class="list-select">
-            <ul>
-              <li v-for="(item, index) in Hlist" @click="addTitle(index)">
-                {{ item }}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="button-editor"
-          v-for="(item, index) in svgNames"
-          :key="item"
-        >
-          <SvgIcon
-            :name="item"
-            style="width: 18px"
-            @click="addinfo(index)"
-          ></SvgIcon>
-          <div class="list-select" style="display: none">
-            <span v-for="item in Hlist">{{ item }}</span>
-          </div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-
-    <!--主要内容区-->
-    <div class="content_bar">
-      <!-- markdown编辑器区 -->
-      <div class="markdown_body">
-        <div
-          ref="ref_md_edit"
-          class="md_textarea_content"
-          style="font-size: 24px"
-        ></div>
-      </div>
-      <!--解析成html区-->
-      <div class="html_body">
-        <Viewer
-          :value="markString"
-          :plugins="[
-            breaks(),
-            frontmatter(),
-            gemoji(),
-            gfm(),
-            highlight(),
-            math(),
-            zoom(),
-            mermaid(),
-          ]"
-        />
-      </div>
-    </div>
-  </div>
-  <div class="bottom">
-    <div class="bytemd-status-left">
-      <span>字数: <strong>0</strong></span
-      ><span>行数: <strong>1</strong></span>
-    </div>
-    <div class="bytemd-status-right">
-      <label><input type="checkbox" />同步滚动</label><span>回到顶部</span>
-    </div>
-  </div>
+  <Editor :markString="markString" @handleEditor="handleChange" />
+  <publish-comfirm />
 </template>
 
 <script lang="ts" setup>
-import SvgIcon from "@/components/SvgIcon.vue";
-import breaks from "@bytemd/plugin-breaks";
-import frontmatter from "@bytemd/plugin-frontmatter";
-import gemoji from "@bytemd/plugin-gemoji";
-import gfm from "@bytemd/plugin-gfm";
-import highlight from "@bytemd/plugin-highlight";
-import math from "@bytemd/plugin-math";
-import zoom from "@bytemd/plugin-medium-zoom";
-import mermaid from "@bytemd/plugin-mermaid";
-import { Viewer } from "@bytemd/vue-next";
-import "highlight.js/styles/github.css";
-import * as monaco from "monaco-editor";
-import { nextTick, ref } from "vue";
-
+import { postArticle } from "@balabala/api";
+import { ref } from "vue";
+import Editor from "./Editor.vue";
+import PublishComfirm from "./PublishComfirm.vue";
 const markString = ref("");
-
-const Hlist = [
-  "H1 一级标题",
-  "H2 二级标题",
-  "H3 三级标题",
-  "H4 四级标题",
-  "H5 五级标题",
-  "H6 六级标题",
-];
-
-const ref_md_edit = ref<HTMLElement>(null as unknown as HTMLElement);
-
-nextTick(() => {
-  const editor = monaco.editor.create(ref_md_edit.value, {
-    automaticLayout: true,
-    lineNumbers: false as any,
-    minimap: {
-      enabled: false,
-    },
-    language: "markdown",
-  });
-  editor.onDidChangeModelContent(() => {
-    markString.value = editor.getValue();
-  });
-});
-
-const addinfo = (index: number) => {};
-
-const addTitle = (index: number) => {
-  let idx = index + 1;
-  const str1 = "#".repeat(idx);
+const handleChange = (v: any) => {
+  markString.value = v;
 };
-
-const svgNames = ref<Array<string>>([
-  "ziyuan",
-  "a-edit-office-italic-tilt-richtext",
-  "a-edit-office-richtext-quote",
-  "lianjie",
-  "tupian",
-  "a-edit-office-richtext-program",
-  "daimapianduan",
-  "brackets-curly",
-  "a-edit-office-richtext-list",
-  "youxuliebiao",
-  "a-edit-office-richtext-slash-delete",
-  "zu",
-  "a-edit-office-richtext-table",
-  "a-edit-office-richtext-centeralined",
-]);
-const sty = ["list"];
+const publishEssay = () => {
+  postArticle(markString.value).then((res) => {
+    console.log(res);
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -311,12 +189,15 @@ const sty = ["list"];
     width: 100%;
     height: calc(100vh - 60px - 35px - 30px);
     .markdown_body {
+      min-width: 800px;
       width: 100%;
       height: 100%;
+      margin: 0 auto;
+      padding: 16px 4%;
     }
 
     .html_body {
-      width: 50%;
+      width: 100%;
       height: 100%;
       padding: 20px;
       display: flex;
@@ -340,21 +221,6 @@ const sty = ["list"];
       color: #232323;
       line-height: 24px;
     }
-  }
-}
-.bottom {
-  font-size: 12px;
-  line-height: 24px;
-  border-top: 1px solid #e1e4e8;
-  border-top: transparent;
-  .bytemd-status-left {
-    float: left;
-  }
-  .bytemd-status-right {
-    float: right;
-  }
-  span {
-    padding-left: 16px;
   }
 }
 </style>

@@ -8,8 +8,8 @@
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
-    "dev": "scripty",
-    "build": "scripty"
+    "dev": "lerna bootstrap && scripty",
+    "build": "lerna bootstrap && scripty"
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0"
@@ -21,10 +21,15 @@
   },
   "browserslist": {
     "production": [
-      "ie 8"
+      "defaults",
+      "not IE 11"
     ],
     "development": [
-      "ie 8"
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 edge version",
+      "last 1 ie version"
     ]
   }
 }

@@ -7,6 +7,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     // meta: { hiddenAside: true, hiddenHeader: true },
     component: () => import("@/pages/HomePage/HomePage.vue"),
+    redirect: "/overView",
     children: [
       {
         path: "overView",

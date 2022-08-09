@@ -1,8 +1,12 @@
 import { monitoring } from "@/common/utils/functions";
-import behavior from "./behavior";
+// import behavior from "./behavior";
 import mistaken from "./mistaken";
-import performance from "./performance";
+// import performance from "./performance";
 
 export default () => {
-  monitoring(behavior, mistaken, performance);
+  monitoring(
+    // behavior,
+    mistaken
+    // performance
+  );
 };

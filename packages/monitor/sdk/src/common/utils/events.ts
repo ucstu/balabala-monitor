@@ -1,5 +1,26 @@
+const beforeUnloadCallbacks = new Set<Function>();
 export const onBeforeUnload = (
   callback: (this: Window, ev: BeforeUnloadEvent) => any
 ) => {
-  window.addEventListener("beforeunload", callback);
+  beforeUnloadCallbacks.add(callback);
+  window.addEventListener("beforeunload", callback, true);
+  return () => {
+    window.removeEventListener("beforeunload", callback, true);
+    beforeUnloadCallbacks.delete(callback);
+  };
+};
+
+const hiddenCallbacks = new Set<Function>();
+export const onHidden = (callback: Function) => {
+  const superCallback = () => {
+    if (document.visibilityState === "hidden") {
+      callback();
+    }
+  };
+  hiddenCallbacks.add(superCallback);
+  window.addEventListener("visibilitychange", superCallback, true);
+  return () => {
+    window.removeEventListener("visibilitychange", superCallback, true);
+    hiddenCallbacks.delete(superCallback);
+  };
 };

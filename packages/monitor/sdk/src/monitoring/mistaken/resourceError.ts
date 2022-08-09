@@ -1,26 +1,33 @@
-export default function initResourceError(): void {
+import { getBasicParams } from "@/common/utils/datas";
+import { stagingReport } from "@/reporting";
+import { ResourceError } from "@balabala/monitor-api";
+
+export default () => {
   window.addEventListener(
     "error",
     (e: ErrorEvent) => {
-      console.log(e);
-      // const target = e.target;
-      // if (!target) return;
+      const target = e.target as
+        | HTMLScriptElement
+        | HTMLStyleElement
+        | HTMLImageElement
+        | HTMLAudioElement
+        | HTMLVideoElement
+        | any;
+      if (!target) return;
 
-      // if (target. || target.href)
-      //   const url = target.src || target.href;
-      //   reportWithCache("ResourceError", {
-      //     mainType: 1,
-      //     subType: 1001,
-      //     errorTime: e.timeStamp,
-      //     resourceType: target.tagName,
-      //     html: target.outerHTML,
-      //     path: e.path
-      //       .map((item: { tagName: any }) => item.tagName)
-      //       .filter(Boolean),
-      //     ...getBasicParams(),
-      //   });
-      // }
+      if (target.src || target.href) {
+        const url = target.src || target.href;
+        stagingReport("ResourceError", {
+          mainType: ResourceError.mainType.ResourceError,
+          subType: ResourceError.subType.ResourceError,
+          ...getBasicParams(),
+          errorTime: e.timeStamp,
+          resourceType: target.tagName,
+          html: document.documentElement.outerHTML,
+          path: url,
+        });
+      }
     },
     true
   );
-}
+};

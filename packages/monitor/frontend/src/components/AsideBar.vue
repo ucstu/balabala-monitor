@@ -2,8 +2,10 @@
   <aside class="leftMenu">
     <ul>
       <li v-for="(value, index) in props.menu" :key="index">
-        <i class="fa fa-desktop"></i
-        ><router-link :to="value.path">{{ value.name }}</router-link>
+        <router-link :to="value.path" active-class="active"
+          ><i class="fa fa-desktop"></i
+          ><span>{{ value.name }}</span></router-link
+        >
       </li>
     </ul>
   </aside>
@@ -24,25 +26,32 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .leftMenu {
-  background-color: rgba(173, 169, 169, 0.6);
-  padding: 20px 0;
+  background-color: white;
+  padding: 10px 0;
 }
-.leftMenu > ul > li {
+.leftMenu > ul > li > a {
   height: 42px;
   line-height: 42px;
   padding-left: 20px;
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: rgb(100, 98, 98);
+  margin: 10px 0;
 }
+
 .leftMenu > ul > li:hover {
-  background-color: rgb(190, 184, 184);
+  background-color: rgba(201, 193, 193, 0.5);
 }
 .leftMenu > ul {
   margin-top: 5px;
 }
-.leftMenu > ul > li > a {
-  text-decoration: none;
-  color: rgb(100, 98, 98);
+.leftMenu > ul > li > a > span {
   margin-left: 30px;
+}
+.leftMenu > ul > li > a.active {
+  color: #fb7299;
+  border-right: 3px solid #fb7299;
+  background-color: rgba(255, 227, 235, 0.7);
 }
 </style>

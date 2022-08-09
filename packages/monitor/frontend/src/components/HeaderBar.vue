@@ -32,7 +32,9 @@ const props = defineProps<{
 .main {
   display: flex;
   justify-content: space-between;
-  background-color: rgba(213, 211, 211, 0.5);
+  background-color: white;
+  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);
+  margin-bottom: 5px;
 }
 .left {
   display: flex;
@@ -48,14 +50,14 @@ const props = defineProps<{
   font-size: 25px;
   padding: 12.5px 14px;
   color: white;
-  background-color: rgb(63, 63, 84);
+  background-color: #fb7299;
 }
 .left .fa-cloud-upload {
   font-size: 30px;
 }
 .left .fa-cloud-upload,
 .left strong {
-  color: rgb(63, 63, 84);
+  color: #fb7299;
   padding: 0 10px;
 }
 .right {
@@ -66,13 +68,13 @@ const props = defineProps<{
 }
 .right span input {
   border: none;
-  background-color: rgba(212, 210, 210, 0.5);
+  background-color: rgb(244, 240, 240, 0.5);
 }
 .right span input:focus {
   outline: none;
 }
 .right span {
-  background-color: rgba(212, 210, 210, 0.5);
+  background-color: rgb(244, 240, 240, 0.5);
   padding: 5px 5px;
   display: flex;
   align-items: center;
@@ -85,7 +87,7 @@ const props = defineProps<{
   color: grey;
 }
 .right a:hover {
-  color: black;
+  color: #fb7299;
   transition: top 0.3s ease;
 }
 .right img {

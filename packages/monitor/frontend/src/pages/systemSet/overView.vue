@@ -77,11 +77,12 @@
     align-items: center;
     padding-left: 20px;
     margin-bottom: 3px;
+    border-radius: 5% 5% 0 0;
   }
   .browse-card .browse-body {
     width: 100%;
     background-color: white;
-
+    border-radius: 0 0 5% 5%;
     .user-info-list {
       display: flex;
       justify-content: space-around;

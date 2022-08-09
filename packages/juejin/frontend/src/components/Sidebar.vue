@@ -1,7 +1,13 @@
 <template>
   <div class="box">
     <!-- 左侧内容 -->
-    <div class="container"></div>
+    <div class="container">
+      <ul class="container-top">
+        <li style="color: #007fff">推荐</li>
+        <li>| 最新 |</li>
+        <li>热榜</li>
+      </ul>
+    </div>
     <!-- 签到 -->
     <div class="signin">
       <div class="sigin-top">
@@ -24,14 +30,27 @@
 
 <style lang="scss" scoped>
 .box {
-  width: 1200px;
+  width: 960px;
   height: 2000px;
-  margin-top: 22px;
   text-align: center;
+  margin: 22px auto 0;
   .container {
-    width: 880px;
+    width: 700px;
     height: 2000px;
     float: left;
+    .container-top {
+      height: 46px;
+      margin: 0px;
+      border-bottom: 1px solid hsla(0, 0%, 59.2%, 0.1);
+    }
+    .container-top li {
+      display: inline-block;
+      line-height: 46px;
+      width: 50px;
+      float: left;
+      color: #909090;
+      font-size: 14px;
+    }
   }
   .signin {
     width: 240px;

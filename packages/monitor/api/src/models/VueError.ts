@@ -14,16 +14,16 @@ export type VueError = {
 
 export namespace VueError {
   export enum mainType {
-    "_1" = 1,
-    "_2" = 2,
-    "_3" = 3,
-    "_4" = 4,
+    ResourceError = 1,
+    JavaScriptError = 2,
+    PromiseError = 3,
+    VueError = 4,
   }
 
   export enum subType {
-    "_1001" = 1001,
-    "_2001" = 2001,
-    "_3001" = 3001,
-    "_4001" = 4001,
+    ResourceError = 1001,
+    JavaScriptError = 2001,
+    PromiseError = 3001,
+    VueError = 4001,
   }
 }

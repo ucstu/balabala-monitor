@@ -1,15 +1,16 @@
+import { BasicIndicator } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
-import { BasicIndicator } from "@balabala/monitor-api";
 
-export default function firstContentfulPaint(): void {
+export default () => {
   const entryHandler = (list: PerformanceObserverEntryList) => {
-    for (const entry of list.getEntries()) {
+    const entries = list.getEntries() as PerformancePaintTiming[];
+    for (const entry of entries) {
       if (entry.name === "first-contentful-paint") {
         observer.disconnect();
         stagingReport("BasicIndicator", {
-          mainType: BasicIndicator.mainType._1,
-          subType: BasicIndicator.subType._1001,
+          mainType: BasicIndicator.mainType.Performance,
+          subType: BasicIndicator.subType.FirstContentfulPaint,
           ...getBasicParams(),
           value: entry.startTime,
         });
@@ -19,4 +20,4 @@ export default function firstContentfulPaint(): void {
 
   const observer = new PerformanceObserver(entryHandler);
   observer.observe({ type: "paint", buffered: true });
-}
+};

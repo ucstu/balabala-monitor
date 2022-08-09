@@ -1,14 +1,16 @@
+import { BasicIndicator } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function firstPaint(): void {
+export default () => {
   const entryHandler = (list: PerformanceObserverEntryList) => {
-    for (const entry of list.getEntries()) {
+    const entries = list.getEntries() as PerformancePaintTiming[];
+    for (const entry of entries) {
       if (entry.name === "first-paint") {
         observer.disconnect();
         stagingReport("BasicIndicator", {
-          mainType: 1,
-          subType: 1001,
+          mainType: BasicIndicator.mainType.Performance,
+          subType: BasicIndicator.subType.FirstPaint,
           ...getBasicParams(),
           value: entry.startTime,
         });
@@ -17,6 +19,5 @@ export default function firstPaint(): void {
   };
 
   const observer = new PerformanceObserver(entryHandler);
-  // buffered 属性表示是否观察缓存数据，也就是说观察代码添加时机比事情触发时机晚也没关系。
   observer.observe({ type: "paint", buffered: true });
-}
+};

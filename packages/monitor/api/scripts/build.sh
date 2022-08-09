@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo -e "\033[47;34m<<Fixing OpenApi DefineFiles>>\033[0m"
+node jsonfixer.js
+echo -e "\033[47;34m<<OpenApi DefineFiles Fixed>>\033[0m"
+
+
 echo -e "\033[47;34m<<Cleaning Old SourceFiles>>\033[0m"
 yarn del-cli src dist types
 echo -e "\033[47;32m<<Old SourceFiles Cleaned>>\033[0m"

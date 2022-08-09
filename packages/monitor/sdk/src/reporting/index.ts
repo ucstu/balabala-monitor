@@ -1,3 +1,4 @@
+import { getConfig } from "@/common/config";
 import { ReportDataTypes } from "@/common/types";
 import {
   postBehaviorsBasicbehaviors,
@@ -14,6 +15,7 @@ import {
 } from "@/common/utils/apis";
 import { onBeforeUnload } from "@/common/utils/events";
 
+const cacheMapSize = getConfig().cacheMapSize;
 const cacheMap = new Map<string, any[]>([]);
 cacheMap.set("BasicIndicator", []);
 cacheMap.set("InterfaceIndicator", []);
@@ -113,7 +115,7 @@ export const stagingReport = <K extends keyof ReportDataTypes>(
   cacheItems.push(data);
   count++;
   console.log(apiId, count, cacheMap.get(apiId));
-  if (count > 10) {
+  if (count >= cacheMapSize) {
     reportAll();
   }
 };

@@ -1,44 +1,23 @@
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-// @ts-ignore
-const next = window.requestAnimationFrame
-  ? requestAnimationFrame
-  : (callback: () => void) => {
-      setTimeout(callback, 1000 / 60);
-    };
-
-const frames: number[] = [];
-
-export default function initFPS() {
-  let frame = 0;
-  let lastSecond = Date.now();
-
-  function calculateFPS() {
-    frame = 1;
-    const now = Date.now();
-    if (lastSecond + 300000 <= now) {
-      // 由于 now - lastSecond 的单位是毫秒，所以 frame 要 * 1000
-      const fps = Math.round((frame * 1000) / (now - lastSecond));
-      frames.push(fps);
-
-      frame = 0;
-      lastSecond = now;
-    }
-
-    if ((frames.length = 60)) {
-      stagingReport("BasicIndicator", {
-        mainType: 4,
-        subType: 4001,
-        ...getBasicParams(),
-        value: frames[-1],
-      });
-
-      frames.length = 0;
-    }
-
-    next(calculateFPS);
+let frame = 0;
+let lastSecond = performance.now();
+const calculateFPS = () => {
+  frame++;
+  const now = performance.now();
+  if (lastSecond + 1000 <= now) {
+    // 由于 now - lastSecond 的单位是毫秒，所以 frame 要 * 1000
+    stagingReport("BasicIndicator", {
+      mainType: 4,
+      subType: 4001,
+      ...getBasicParams(),
+      value: Math.round((frame * 1000) / (now - lastSecond)),
+    });
+    frame = 0;
+    lastSecond = now;
   }
+  requestAnimationFrame(calculateFPS);
+};
 
-  calculateFPS();
-}
+export default calculateFPS;

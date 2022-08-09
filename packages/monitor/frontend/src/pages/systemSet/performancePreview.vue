@@ -6,7 +6,20 @@
         <input type="text" placeholder="今天" /><i class="fa fa-calendar-o"></i>
       </div>
     </header>
-    <div class="add"></div>
+    <div class="board">
+      <div class="data-board">
+        <span>TTFB平均时间</span>
+        <span>985ms</span>
+      </div>
+      <div class="data-board">
+        <span>DOM解析时间</span>
+        <span>2.58s</span>
+      </div>
+      <div class="data-board">
+        <span>页面平均加载时间</span>
+        <span>2.74s</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +46,28 @@
       outline: none;
       height: 26px;
       width: 100px;
+    }
+  }
+  .board {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .data-board {
+      width: 30%;
+      background-color: white;
+      border-radius: 5%;
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 15px;
+    }
+    .data-board span:nth-child(1) {
+      font-size: 18px;
+    }
+    .data-board span:nth-child(2) {
+      font-size: 30px;
+      font-weight: 600;
     }
   }
 }

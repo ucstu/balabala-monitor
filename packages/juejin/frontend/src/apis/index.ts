@@ -22,6 +22,7 @@ postArticle = postArticle.bind(client.service);
 postImages = postImages.bind(client.service);
 putArticle = putArticle.bind(client.service);
 
+export * from "@balabala/juejin-api";
 export {
   deleteArticle,
   getArticle,

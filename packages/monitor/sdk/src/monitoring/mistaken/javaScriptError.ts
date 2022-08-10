@@ -1,12 +1,14 @@
+import { JavaScriptError } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function initJavaScriptError(): void {
+export default () => {
   window.onerror = (msg, url, line, column, error) => {
     stagingReport("JavaScriptError", {
-      mainType: 2,
-      subType: 2001,
+      mainType: JavaScriptError.mainType.JavaScriptError,
+      subType: JavaScriptError.subType.JavaScriptError,
       ...getBasicParams(),
+      url: url || "",
       msg: typeof msg === "string" ? msg : JSON.stringify(msg),
       line: line || -1,
       column: column || -1,
@@ -14,4 +16,4 @@ export default function initJavaScriptError(): void {
       stack: error?.stack || "no stack trace available",
     });
   };
-}
+};

@@ -212,10 +212,8 @@ export class Service {
    * @throws ApiError
    */
   public postArticle({
-    token,
     requestBody,
   }: {
-    token: string;
     requestBody?: {
       articleTitle: string;
       /**
@@ -239,9 +237,6 @@ export class Service {
     return this.httpRequest.request({
       method: "POST",
       url: "/article",
-      headers: {
-        token: token,
-      },
       body: requestBody,
       mediaType: "application/json",
     });

@@ -1,25 +1,19 @@
-/**
- * @title PageDwellTime
- * @description Page Dwell Time，页面停留时长
- */
-
+import { BasicBehavior } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
-import { stagingReport } from "@/reporting";
+import { onBeforeUnload } from "@/common/utils/events";
+import { realTimeReport } from "@/reporting";
+import { loadedTime } from "../performance/loadIndicator/load";
 
-let startTime: number;
-export default function pageAccessDuration() {
-  window.addEventListener("onload", () => {
-    startTime = performance.now();
-  });
-
-  window.addEventListener("onbeforeunload", () => {
+export default () => {
+  onBeforeUnload(() => {
     const now = performance.now();
-    stagingReport("BasicIndicator", {
-      value: now - startTime,
-      mainType: 1,
-      subType: 1003,
-      ...getBasicParams(),
-      startTime: now,
-    });
+    realTimeReport("BasicBehavior", [
+      {
+        mainType: BasicBehavior.mainType.BasicBehavior,
+        subType: BasicBehavior.subType.PageDwellTime,
+        ...getBasicParams(),
+        value: now - loadedTime,
+      },
+    ]);
   });
-}
+};

@@ -27,6 +27,10 @@ export const $ResourceIndicator = {
       type: "string",
       isRequired: true,
     },
+    url: {
+      type: "string",
+      isRequired: true,
+    },
     duration: {
       type: "number",
       isRequired: true,

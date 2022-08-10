@@ -1,3 +1,4 @@
+import { getConfig } from "@/common/config";
 import { ReportDataTypes } from "@/common/types";
 import {
   postBehaviorsBasicbehaviors,
@@ -14,6 +15,7 @@ import {
 } from "@/common/utils/apis";
 import { onBeforeUnload } from "@/common/utils/events";
 
+const cacheMapSize = getConfig().cacheMapSize;
 const cacheMap = new Map<string, any[]>([]);
 cacheMap.set("BasicIndicator", []);
 cacheMap.set("InterfaceIndicator", []);
@@ -39,11 +41,27 @@ export const reportAll = () => {
 };
 
 onBeforeUnload(reportAll);
+setInterval(reportAll, getConfig().reportTimeInterval);
+
+// indexedDB
+// const request = indexedDB.open("monitor", 1) as IDBOpenDBRequest;
+// let db: IDBDatabase;
+// request.onupgradeneeded = (e) => {
+//   db = (e.target as any).result;
+//   db.createObjectStore("monitor", { autoIncrement: true });
+// };
+// request.onsuccess = (e) => {
+//   db = (e.target as any).result;
+// };
 
 export const realTimeReport = <K extends keyof ReportDataTypes>(
   apiId: K,
   data: ReportDataTypes[K][]
 ) => {
+  // const objectStore = db
+  //   .transaction(["monitor"], "readwrite")
+  //   .objectStore("monitor");
+  // objectStore.add(data.map((item) => ({ apiId, ...item })));
   switch (apiId) {
     case "BasicIndicator":
       postPerformancesBasicindicators({
@@ -112,8 +130,7 @@ export const stagingReport = <K extends keyof ReportDataTypes>(
   const cacheItems = cacheMap.get(apiId) as any[];
   cacheItems.push(data);
   count++;
-  console.log(apiId, count, cacheMap.get(apiId));
-  if (count > 10) {
+  if (count >= cacheMapSize) {
     reportAll();
   }
 };

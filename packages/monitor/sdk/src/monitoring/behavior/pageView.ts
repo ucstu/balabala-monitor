@@ -1,12 +1,12 @@
+import { BasicBehavior } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function initPV() {
+export default () => {
   stagingReport("BasicBehavior", {
-    mainType: 1,
-    subType: 1001,
-    // referrer: document.referrer,   //跳转或者打开页面的URL
+    mainType: BasicBehavior.mainType.BasicBehavior,
+    subType: BasicBehavior.subType.PV,
     ...getBasicParams(),
-    value: Date.now(),
+    value: 1,
   });
-}
+};

@@ -31,6 +31,18 @@ const routeRecordRaws: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    name: "customerSearch",
+    path: "/customerSearch",
+    meta: { hiddenAside: true, hiddenHeader: true },
+    component: () => import("@/pages/CustomerPage/customerSearch.vue"),
+  },
+  {
+    name: "details",
+    path: "/customerSearch/details",
+    meta: { hiddenAside: true, hiddenHeader: true },
+    component: () => import("@/pages/CustomerPage/details.vue"),
+  },
 ];
 
 const router = createRouter({

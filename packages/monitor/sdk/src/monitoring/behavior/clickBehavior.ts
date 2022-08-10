@@ -18,7 +18,6 @@ export default () => {
           top,
           left,
           target: target?.tagName,
-          startTime: event.timeStamp,
           html: document.documentElement.outerHTML,
           inner: target?.outerHTML,
         });

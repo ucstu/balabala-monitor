@@ -44,16 +44,26 @@
 </template>
 
 <script lang="ts" setup>
-import { postArticle } from "@balabala/api";
+import { postArticle } from "@/apis";
 import { ref } from "vue";
 import Editor from "./Editor.vue";
 import PublishComfirm from "./PublishComfirm.vue";
+
 const markString = ref("");
 const handleChange = (v: any) => {
   markString.value = v;
 };
 const publishEssay = () => {
-  postArticle(markString.value).then((res) => {
+  postArticle({
+    requestBody: {
+      articleTitle: "string",
+      articleClass: 1,
+      articleTags: "string",
+      articleCover: "string",
+      articleSummary: "string",
+      articleContent: markString.value,
+    },
+  }).then((res) => {
     console.log(res);
   });
 };

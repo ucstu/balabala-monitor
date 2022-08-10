@@ -1,6 +1,7 @@
 import { monitoring } from "@/common/utils/functions";
-import fullLoad from "./fullLoad";
+import domContentLoaded from "./domContentLoaded";
+import load from "./load";
 
-export default function monitoringLoadIndicator(): void {
-  monitoring(fullLoad);
-}
+export default () => {
+  monitoring(domContentLoaded, load);
+};

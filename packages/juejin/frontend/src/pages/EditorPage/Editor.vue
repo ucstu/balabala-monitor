@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 // 这里就是引入所有的扩展的插件
-import { postImages } from "@balabala/api";
+import { postImages } from "@/apis";
 import breaks from "@bytemd/plugin-breaks";
 import frontmatter from "@bytemd/plugin-frontmatter";
 import gemoji from "@bytemd/plugin-gemoji";

@@ -1,14 +1,16 @@
+import { BasicIndicator } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function resourceIndicator(): void {
+export default () => {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     for (const entry of list.getEntries() as PerformanceResourceTiming[]) {
       if (entry.initiatorType !== "xmlhttprequest") {
         stagingReport("ResourceIndicator", {
-          mainType: 1,
-          subType: 1001,
+          mainType: BasicIndicator.mainType.ResourceIndicator,
+          subType: BasicIndicator.subType.ResourceIndicator,
           ...getBasicParams(),
+          url: entry.name, // 资源url
           duration: entry.duration, // 资源加载耗时
           dns: entry.domainLookupEnd - entry.domainLookupStart, // DNS 耗时
           tcp: entry.connectEnd - entry.connectStart, // 建立 tcp 连接耗时
@@ -28,6 +30,5 @@ export default function resourceIndicator(): void {
   };
 
   const observer = new PerformanceObserver(entryHandler);
-  // buffered 属性表示是否观察缓存数据，也就是说观察代码添加时机比事情触发时机晚也没关系。
   observer.observe({ type: "resource", buffered: true });
-}
+};

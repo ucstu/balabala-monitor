@@ -1,11 +1,6 @@
-/**
- * @title ClickBehavior
- * @description Click Behavior, 用户点击
- */
-
+import { ClickBehavior } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
-import { ClickBehavior } from "@balabala/monitor-api";
 
 export default () => {
   ["mousedown", "touchstart"].forEach((eventType) => {
@@ -17,15 +12,15 @@ export default () => {
         const { top, left } = target?.getBoundingClientRect();
 
         stagingReport("ClickBehavior", {
-          mainType: ClickBehavior.mainType._1,
-          subType: ClickBehavior.subType._1001,
+          mainType: ClickBehavior.mainType.BasicBehavior,
+          subType: ClickBehavior.subType.ClickBehavior,
           ...getBasicParams(),
           top,
           left,
           target: target?.tagName,
           startTime: event.timeStamp,
-          html: target?.outerHTML,
-          inner: target?.innerHTML,
+          html: document.documentElement.outerHTML,
+          inner: target?.outerHTML,
         });
       }, 500);
     });

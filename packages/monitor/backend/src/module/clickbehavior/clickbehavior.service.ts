@@ -24,9 +24,9 @@ export class ClickbehaviorService {
     });
     const res = await this.elasticsearchService.bulk({
       index: clickbehaviorIndex,
-      body: clickBehavior,
+      body,
     });
-    if (res.statusCode === 201) {
+    if (res.statusCode === 200) {
       return responseRust.success_creat();
     } else {
       return responseRust.error();

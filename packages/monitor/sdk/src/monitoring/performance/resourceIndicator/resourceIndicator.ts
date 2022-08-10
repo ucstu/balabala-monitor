@@ -21,7 +21,6 @@ export default () => {
           isCache:
             entry.transferSize === 0 ||
             (entry.transferSize !== 0 && entry.encodedBodySize === 0), // 是否命中缓存
-          startTime: performance.now(),
           bodySize: entry.transferSize, // 资源大小
           headerSize: entry.transferSize - entry.encodedBodySize, // 资源头部大小
         });

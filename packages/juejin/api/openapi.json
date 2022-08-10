@@ -567,18 +567,7 @@
         "deprecated": false,
         "description": "",
         "tags": ["文章信息"],
-        "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "example": "{{'12345'}}",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {

@@ -3,6 +3,7 @@ import { getBasicParams, getPageUrl } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
 export let isLoaded = false;
+export let loadedTime = 0;
 export default () => {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     const entries = list.getEntries() as PerformanceNavigationTiming[];
@@ -15,6 +16,7 @@ export default () => {
           ...getBasicParams(),
           value: entry.loadEventStart,
         });
+        loadedTime = entry.loadEventStart;
         isLoaded = true;
       }
     }

@@ -17,6 +17,7 @@ export type MonitorConfig = {
   appId: string;
   userId: string;
   cacheMapSize: number;
+  reportTimeInterval: number;
   vue?: {};
 };
 

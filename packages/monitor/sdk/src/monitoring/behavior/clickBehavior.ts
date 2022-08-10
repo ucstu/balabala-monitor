@@ -19,8 +19,8 @@ export default () => {
           left,
           target: target?.tagName,
           startTime: event.timeStamp,
-          html: target?.outerHTML,
-          inner: target?.innerHTML,
+          html: document.documentElement.outerHTML,
+          inner: target?.outerHTML,
         });
       }, 500);
     });

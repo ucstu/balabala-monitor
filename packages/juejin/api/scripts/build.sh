@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "\033[47;34m<<Fixing OpenApi DefineFiles>>\033[0m"
-node jsonfixer.js
+node jsonfixer.js && yarn prettier --write openapi.json
 echo -e "\033[47;34m<<OpenApi DefineFiles Fixed>>\033[0m"
 
 

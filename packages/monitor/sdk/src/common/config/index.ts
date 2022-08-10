@@ -6,10 +6,14 @@ let config: MonitorConfig = {
   appId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
   userId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
   cacheMapSize: 30,
+  reportTimeInterval: 1000,
 };
 
 export const setConfig = (
-  _config: SetOptional<MonitorConfig, "userId" | "cacheMapSize">
+  _config: SetOptional<
+    MonitorConfig,
+    "userId" | "cacheMapSize" | "reportTimeInterval"
+  >
 ) => {
   config = {
     ...config,

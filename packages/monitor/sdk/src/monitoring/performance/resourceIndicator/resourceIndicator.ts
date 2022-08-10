@@ -5,7 +5,7 @@ import { stagingReport } from "@/reporting";
 export default () => {
   const entryHandler = (list: PerformanceObserverEntryList) => {
     for (const entry of list.getEntries() as PerformanceResourceTiming[]) {
-      if (entry.initiatorType === "xmlhttprequest") {
+      if (entry.initiatorType !== "xmlhttprequest") {
         stagingReport("ResourceIndicator", {
           mainType: BasicIndicator.mainType.ResourceIndicator,
           subType: BasicIndicator.subType.ResourceIndicator,

@@ -1,7 +1,7 @@
 @ECHO OFF
 
 echo "[47;34m<<Fixing OpenApi DefineFiles>>[0m"
-cmd /cnode jsonfixer.js && yarn prettier --write openapi.json
+cmd /cnode jsonfixer.js && cmd /cyarn prettier --write openapi.json
 echo "[47;34m<<OpenApi DefineFiles Fixed>>[0m"
 
 

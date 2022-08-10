@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0",
+    "echarts": "^5.3.3",
     "font-awesome": "^4.7.0",
     "vue": "^3.2.37"
   },

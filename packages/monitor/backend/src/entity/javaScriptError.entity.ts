@@ -1,6 +1,3 @@
-/**
- *JavaScript错误
- */
 export class JavaScriptError {
   /**
    * 应用ID
@@ -38,6 +35,10 @@ export class JavaScriptError {
    * 子错误类型
    */
   subType: number;
+  /**
+   * 文件路径
+   */
+  url: string;
   /**
    * 用户ID
    */

@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0",
+    "dayjs": "^1.11.4",
     "echarts": "^5.3.3",
     "font-awesome": "^4.7.0",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-datepicker-local": "^1.0.19"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^2.0.0",

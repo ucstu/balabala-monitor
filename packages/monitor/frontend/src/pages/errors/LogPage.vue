@@ -71,71 +71,76 @@ const arr: Array<string> = ["概览", "错误列表", "版本分析", "待处理
   display: grid;
   grid-template-rows: 50px 1fr;
   overflow: auto;
-}
-a {
-  text-decoration: none;
-  color: black;
-}
-.header {
-  width: 100%;
-  background-color: rgb(255, 255, 255);
 
-  &-left {
-    width: 40%;
+  .header {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+
+    .header-left {
+      width: 40%;
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr;
+      float: left;
+      line-height: 50px;
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      img {
+        cursor: pointer;
+      }
+      .version {
+        margin-top: 8px;
+      }
+      select {
+        width: 140px;
+        height: 30px;
+        cursor: pointer;
+      }
+    }
+
+    .header-right {
+      float: right;
+      width: 60%;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      cursor: pointer;
+      line-height: 50px;
+    }
+    div a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .arrow {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+    }
+  }
+
+  .content {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 10px 10px;
+    background-color: rgb(255, 255, 255);
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
-    float: left;
-    line-height: 50px;
-    img {
+    grid-template-rows: 1fr 12fr;
+    .content-top {
+      width: 100%;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      flex-direction: row;
+    }
+    .content-top div {
+      padding: 20px;
       cursor: pointer;
     }
-    .version {
-      margin-top: 8px;
+    .content-top div:active {
+      border-bottom: 4px solid #ea6947;
+      color: #ea6947;
     }
-  }
-
-  &-right {
-    float: right;
-    width: 60%;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    cursor: pointer;
-    line-height: 50px;
-  }
-  select {
-    width: 140px;
-    height: 30px;
-    cursor: pointer;
-  }
-
-  .arrow {
-    display: grid;
-    grid-template-columns: 30px 1fr;
-  }
-}
-
-.content {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 10px 10px;
-  background-color: rgb(255, 255, 255);
-  display: grid;
-  grid-template-rows: 1fr 12fr;
-  &-top {
-    width: 100%;
-    font-size: 16px;
-    font-weight: 500;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    flex-direction: row;
-  }
-  &-top div {
-    padding: 20px;
-  }
-  &-top div:active {
-    border-bottom: 4px solid #ea6947;
-    color: #ea6947;
   }
 }
 </style>
--->

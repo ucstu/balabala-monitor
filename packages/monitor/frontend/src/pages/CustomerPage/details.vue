@@ -14,9 +14,9 @@
         ></span>
       </div>
       <div class="header-right">
+        <div><input v-model="userActionParms.starttime" type="date" /></div>
         <div><input type="text" /></div>
-        <div><input type="text" /></div>
-        <div><input type="text" /></div>
+        <div><input v-model="userActionParms.userid" type="text" /></div>
       </div>
     </div>
     <div class="load-time" v-show="showDetails">
@@ -73,7 +73,7 @@
             <div
               class="action-list-item"
               @click="chosesAction = index"
-              v-for="(i, index) in 20"
+              v-for="(i, index) in actionList"
               :key="index"
             >
               <div class="action-icon">
@@ -86,7 +86,7 @@
                 ]"
               >
                 <div class="action-title">页面浏览</div>
-                <div class="action-msg">https://www.webf页面浏览</div>
+                <div class="action-msg">{{ i.pageUrl }}</div>
               </div>
             </div>
           </div>
@@ -115,17 +115,29 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script setup lang="ts">
+import {
+  getBehaviorsBasicbehaviors,
+  getBehaviorsClickbehaviors,
+  getBehaviorsPageskipbehaviors,
+  getBehaviorsRoutingskipbehaviors,
+  getErrorsJavascripterrors,
+  getErrorsPromiseerrors,
+  getErrorsResourceerrors,
+  getErrorsVueerrors,
+  getPerformancesBasicindicators,
+} from "@/apis";
+import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-let userId = $ref<number>();
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
 const pageDom = $ref<HTMLElement>();
 const apiDom = $ref<HTMLElement>();
 let echar_page: EChartsType;
 let echar_api: EChartsType;
+const APPID: string = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 //页面平均加载时间
 let option_page = $ref<echarts.EChartsOption>({
   xAxis: {
@@ -166,18 +178,107 @@ let option_api = $ref<echarts.EChartsOption>({
     },
   ],
 });
+let chosesBtn = $ref<number>(0);
+let chosesAction = $ref(-1);
 onMounted(() => {
-  if (route.query.userId) {
-    userId = parseInt(route.query.userId + "");
+  if (!route.query.userId) {
+    alert("id不能为空");
+    return;
   }
+  userActionParms.userid = route.query.userId + "";
   echar_page = echarts.init(pageDom);
   echar_api = echarts.init(apiDom);
   echar_page.setOption(option_page);
   echar_api.setOption(option_api);
+  loadAllData();
 });
 
-let chosesBtn = $ref<number>(0);
-let chosesAction = $ref(-1);
+const userActionParms = $ref({
+  appid: APPID,
+  userid: "",
+  starttime: dayjs().format("YYYY-MM-DD"),
+  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+});
+
+// 加载行为记录列表
+const loadBasicindicators = () => {
+  return getPerformancesBasicindicators({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+// 加载资源错误
+const loadResourceerrors = () => {
+  return getErrorsResourceerrors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+
+// 加载 JavaScript错误
+const loadJavascripterrors = () => {
+  return getErrorsJavascripterrors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+// 加载 Promise错误
+const loadPromiseerrors = () => {
+  return getErrorsPromiseerrors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+// 加载 Vue错误
+const loadVueerrors = () => {
+  return getErrorsVueerrors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+
+// 基础行为查询
+const loadBasicbehaviors = () => {
+  return getBehaviorsBasicbehaviors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+
+// 点击行为
+const loadClickbehaviors = () => {
+  return getBehaviorsClickbehaviors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+// 页面跳转行为
+const loadPageskipbehaviors = () => {
+  return getBehaviorsPageskipbehaviors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+// 路由跳转行为
+const loadRoutingskipbehaviors = () => {
+  return getBehaviorsRoutingskipbehaviors({ ...userActionParms }).then((e) =>
+    actionList.push(...e.data)
+  );
+};
+const actionList: any = $ref([]);
+const loadAllData = async () => {
+  const resultData = await Promise.all([
+    loadBasicindicators(),
+    loadResourceerrors(),
+    loadJavascripterrors(),
+    loadPromiseerrors(),
+    loadVueerrors(),
+    loadBasicbehaviors(),
+    loadClickbehaviors(),
+    loadPageskipbehaviors(),
+    loadRoutingskipbehaviors(),
+  ]);
+  console.log(actionList);
+};
+
+//是否考虑节流
+const updateTime = computed(() => {
+  userActionParms.endtime = dayjs(userActionParms.starttime)
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+});
 </script>
 
 <style lang="scss" scoped>

@@ -29,27 +29,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="height: 107px">
+              <tr style="height: 99px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 107px">
+              <tr style="height: 99px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 107px">
+              <tr style="height: 99px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 107px">
+              <tr style="height: 99px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 107px">
+              <tr style="height: 99px">
                 <td></td>
                 <td></td>
                 <td></td>
@@ -77,27 +77,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="height: 107px">
+                <tr style="height: 99px">
                   <td></td>
                   <td></td>
                   <td></td>
                 </tr>
-                <tr style="height: 107px">
+                <tr style="height: 99px">
                   <td></td>
                   <td></td>
                   <td></td>
                 </tr>
-                <tr style="height: 107px">
+                <tr style="height: 99px">
                   <td></td>
                   <td></td>
                   <td></td>
                 </tr>
-                <tr style="height: 107px">
+                <tr style="height: 99px">
                   <td></td>
                   <td></td>
                   <td></td>
                 </tr>
-                <tr style="height: 107px">
+                <tr style="height: 99px">
                   <td></td>
                   <td></td>
                   <td></td>
@@ -123,9 +123,14 @@ function nowDate(now: Date) {
 let date = nowDate(b);
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .global {
   background-color: rgb(0 0 0 / 4%);
+}
+img {
+  width: 18px;
+  height: 18px;
+  float: right;
 }
 .top {
   width: 100%;
@@ -160,7 +165,7 @@ let date = nowDate(b);
 }
 .bottom {
   width: 100%;
-  height: 700px;
+  height: 660px;
   display: grid;
   box-sizing: border-box;
   margin-top: 10px;
@@ -199,10 +204,6 @@ let date = nowDate(b);
     display: grid;
     grid-template-columns: 40px 1fr;
     font-size: 12px;
-
-    div img {
-      float: right;
-    }
   }
   .inform {
     box-sizing: border-box;
@@ -214,6 +215,7 @@ let date = nowDate(b);
 table {
   text-align: left;
   border-collapse: collapse;
+  margin: 0 auto;
 }
 th {
   background-color: rgb(0 0 0 / 3%);
@@ -226,3 +228,4 @@ tbody tr:hover {
   background-color: rgb(192, 238, 238);
 }
 </style>
+-->

@@ -62,7 +62,7 @@
 const arr: Array<string> = ["概览", "错误列表", "版本分析", "待处理错误"];
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .global {
   width: 100%;
   height: 100%;
@@ -138,3 +138,4 @@ a {
   }
 }
 </style>
+-->

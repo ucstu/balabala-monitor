@@ -5,7 +5,6 @@ declare module "vue-router" {
   interface RouteMeta {
     title?: string;
     keepAlive?: boolean;
-    hiddenAside?: boolean;
     hiddenHeader?: boolean;
     menu?: Array<{ name: string; path: string }>;
   }
@@ -30,7 +29,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         path: "overView",
         name: "overView",
         meta: {
-          title: "概览",
+          title: "数据总览",
         },
         component: () => import("@/pages/systemSet/overView.vue"), //懒加载的方式提高性能优化
       },
@@ -63,13 +62,11 @@ const routeRecordRaws: RouteRecordRaw[] = [
   {
     name: "customerSearch",
     path: "/customerSearch",
-    meta: { hiddenAside: true, hiddenHeader: true },
     component: () => import("@/pages/CustomerPage/customerSearch.vue"),
   },
   {
     name: "details",
     path: "/customerSearch/details",
-    meta: { hiddenAside: true, hiddenHeader: true },
     component: () => import("@/pages/CustomerPage/details.vue"),
   },
 ];
@@ -77,6 +74,12 @@ const routeRecordRaws: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [...routeRecordRaws],
+});
+
+router.afterEach((to, _from) => {
+  document.title = to.meta.title
+    ? "前端监控-" + (to.meta.title || "")
+    : "Balabala云-前端监控";
 });
 
 export default router;

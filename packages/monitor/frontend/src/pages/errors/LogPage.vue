@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import HeaderBar from "@/components/HeaderBar.vue";
 import { useRoute } from "vue-router";
-import overview from "./pending.vue";
+import overview from "./overview.vue";
 const route = useRoute();
 </script>
 

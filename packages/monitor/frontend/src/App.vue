@@ -9,15 +9,16 @@
       <AsideBar
         v-if="route?.meta?.menu?.length"
         v-show="!hiddenAside"
-        :menuList="route?.meta?.menu"
+        :menu-list="route?.meta?.menu"
         class="aside"
       />
     </Transition>
+    <!-- eslint-disable-next-line vue/no-template-shadow -->
     <router-view v-slot="{ Component, route }" class="main">
       <keep-alive v-if="route?.meta?.keepAlive">
         <component :is="Component" :key="route.path" />
       </keep-alive>
-      <component v-else :is="Component" :key="route.path" />
+      <component :is="Component" v-else :key="route.path" />
     </router-view>
   </div>
 </template>
@@ -32,18 +33,47 @@ const route = useRoute();
 const hiddenAside = $ref(false);
 </script>
 
-<style scoped lang="scss">
-.aside-leave-active {
-  animation: aside-leave-animation 0.3s normal;
+<style lang="scss">
+#app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+
+  & > .header {
+    height: 50px;
+  }
+
+  & > .content {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: calc(100vh - 50px);
+
+    & > .aside {
+      width: 200px;
+    }
+
+    .aside-leave-active {
+      animation: aside-leave-animation 0.3s normal;
+    }
+
+    & > .main {
+      box-sizing: border-box;
+      flex: 1 1 auto;
+      overflow: auto;
+    }
+  }
 }
 
 @keyframes aside-leave-animation {
   75% {
     opacity: 0;
   }
+
   100% {
+    width: 0;
     opacity: 0;
-    width: 0px;
   }
 }
 </style>

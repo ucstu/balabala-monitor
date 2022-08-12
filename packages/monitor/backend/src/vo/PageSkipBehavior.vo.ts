@@ -1,4 +1,4 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
-export interface PageSkipBehaviorVo extends BaseQueryVo {}
-export interface PageSkipBehaviorTotalVo extends BaseTotalVo {}
+export type PageSkipBehaviorVo = BaseQueryVo;
+export type PageSkipBehaviorTotalVo = BaseTotalVo;

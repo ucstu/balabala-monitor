@@ -16,19 +16,19 @@
       <div class="header-right">
         <div>
           <input
-            class="input"
             v-model="userActionParms.starttime"
+            class="input"
             type="date"
           />
         </div>
         <div><input class="input" type="text" /></div>
         <div style="width: 300px">
-          <input class="input" v-model="userActionParms.userid" type="text" />
+          <input v-model="userActionParms.userid" class="input" type="text" />
         </div>
-        <div><button @click="search" class="btn btn-search">搜索</button></div>
+        <div><button class="btn btn-search" @click="search">搜索</button></div>
       </div>
     </div>
-    <div class="load-time" v-show="showDetails">
+    <div v-show="showDetails" class="load-time">
       <div class="load-time-pag load-item">
         <div class="load-title">页面平均加载时间</div>
         <div ref="pageDom" class="load-data"></div>
@@ -44,32 +44,32 @@
         <div class="action-btn">
           <div>
             <button
-              @click="chosesBtn = 0"
               :class="['btn', { 'choses-btn': chosesBtn === 0 }]"
+              @click="chosesBtn = 0"
             >
               全部
             </button>
           </div>
           <div>
             <button
-              @click="chosesBtn = 1"
               :class="['btn', { 'choses-btn': chosesBtn === 1 }]"
+              @click="chosesBtn = 1"
             >
               浏览
             </button>
           </div>
           <div>
             <button
-              @click="chosesBtn = 2"
               :class="['btn', { 'choses-btn': chosesBtn === 2 }]"
+              @click="chosesBtn = 2"
             >
               错误
             </button>
           </div>
           <div>
             <button
-              @click="chosesBtn = 3"
               :class="['btn', { 'choses-btn': chosesBtn === 3 }]"
+              @click="chosesBtn = 3"
             >
               接口
             </button>
@@ -79,15 +79,11 @@
       <div class="action-body">
         <div class="action-main">
           <div class="action-list">
-            <div
-              class=""
-              @click="clickAction(index)"
-              v-for="(item, index) in actionList"
-              :key="index"
-            >
-              <template
-                class="action-list-item"
+            <template v-for="(item, index) in actionList" :key="index">
+              <div
                 v-show="chosesBtn == 0 || item.listType == chosesBtn"
+                class="action-list-item"
+                @click="clickAction(index)"
               >
                 <div class="action-icon">
                   <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
@@ -106,8 +102,8 @@
                   </div>
                   <div class="action-msg">{{ item.pageUrl }}</div>
                 </div>
-              </template>
-            </div>
+              </div>
+            </template>
           </div>
           <div class="action-info">
             <div>
@@ -164,7 +160,7 @@ import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
-import { computed, nextTick, onMounted } from "vue";
+import { nextTick, onMounted } from "vue";
 import { useRoute } from "vue-router";
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
@@ -172,7 +168,7 @@ const pageDom = $ref<HTMLElement>();
 const apiDom = $ref<HTMLElement>();
 let echar_page: EChartsType;
 let echar_api: EChartsType;
-const APPID: string = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 //页面平均加载时间
 let option_page = $ref({
   xAxis: {
@@ -383,11 +379,11 @@ const loadAllData = async () => {
   console.log(actionList);
 };
 
-const updateTime = computed(() => {
-  userActionParms.endtime = dayjs(userActionParms.starttime)
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-});
+// const updateTime = computed(() => {
+//   userActionParms.endtime = dayjs(userActionParms.starttime)
+//     .add(1, "day")
+//     .format("YYYY-MM-DD");
+// });
 
 const search = () => {
   if (!userActionParms.userid) {
@@ -403,163 +399,186 @@ const search = () => {
 <style lang="scss" scoped>
 .main {
   width: 100%;
-  background-color: #f5f5f9;
   padding: 0 50px;
+  background-color: #f5f5f9;
 }
+
 .header {
   display: flex;
-  justify-content: space-between;
-  background-color: #fff;
-  padding: 10px;
   align-items: center;
-  border-radius: 10px;
+  justify-content: space-between;
+  padding: 10px;
   overflow: hidden;
+  background-color: #fff;
+  border-radius: 10px;
+
   .header-left {
     display: flex;
     align-items: center;
   }
+
   .header-right {
-    width: 800px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    width: 800px;
   }
 }
+
 .load-time {
   display: flex;
   flex-wrap: wrap;
+
   .load-item {
-    margin: 10px 10px 10px 0;
     width: 500px;
     height: 350px;
+    margin: 10px 10px 10px 0;
   }
+
   .load-title {
-    background-color: #fff;
     height: 50px;
-    line-height: 50px;
     padding-left: 10px;
     margin-bottom: 5px;
-    border-radius: 10px;
     overflow: hidden;
-  }
-  .load-data {
+    line-height: 50px;
     background-color: #fff;
+    border-radius: 10px;
+  }
+
+  .load-data {
     width: 100%;
     height: 300px;
-    border-radius: 10px;
     overflow: hidden;
+    background-color: #fff;
+    border-radius: 10px;
   }
 }
 
 .action {
   margin-top: 20px;
+
   .action-header {
     display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-    height: 50px;
     align-items: center;
+    justify-content: space-between;
+    height: 50px;
     padding: 0 15px;
-    border-radius: 10px;
     overflow: hidden;
+    background-color: #fff;
+    border-radius: 10px;
+
     .action-btn {
       display: flex;
-      width: 350px;
       justify-content: space-evenly;
+      width: 350px;
     }
   }
+
   .action-body {
     height: 430px;
     background-color: #fff;
+
     .action-main {
       display: flex;
+
       .action-list {
         width: 70%;
-        overflow-y: auto;
         height: 370px;
+        overflow-y: auto;
+
         .action-list-item {
           display: flex;
-          padding: 20px;
           height: 70px;
+          padding: 20px;
+
           .action-icon {
             padding-top: 10px;
           }
+
           .action-content {
             display: flex;
             flex-direction: column;
-            margin-left: 20px;
-            background-color: #f7f7f7;
             width: 100%;
             padding: 10px;
-            border-radius: 10px;
-            line-height: 25px;
+            margin-left: 20px;
             overflow: hidden;
+            line-height: 25px;
             cursor: pointer;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+
             .action-msg {
-              color: #6c6e7a;
-              font-size: 13px;
               margin-right: 10px;
               overflow: hidden;
+              font-size: 13px;
+              color: #6c6e7a;
             }
+
             .action-title {
-              font-size: 15px;
               display: flex;
               justify-content: space-between;
+              font-size: 15px;
             }
           }
         }
       }
+
       .action-info {
-        border: 2px solid #f5f5f9;
         flex: 1;
-        padding: 10px 20px;
         height: 370px;
-        overflow-y: auto;
+        padding: 10px 20px;
         margin-left: 15px;
+        overflow-y: auto;
+        border: 2px solid #f5f5f9;
         border-radius: 10px;
+
         .action-info-item {
           width: 100%;
           margin-bottom: 20px;
         }
       }
     }
+
     .action-body-pager {
-      background-color: #fff;
       display: flex;
       width: 100%;
+      background-color: #fff;
     }
+
     .pagers {
       display: flex;
-      width: 100%;
       justify-content: flex-end;
+      width: 100%;
     }
   }
 }
 
 .icon-up {
+  cursor: pointer;
   transition: all 400ms;
-  cursor: pointer;
 }
+
 .btn {
-  border: 0;
-  outline: none;
-  cursor: pointer;
   width: 50px;
   height: 30px;
-  border-radius: 5px;
   padding: 3px;
   margin-right: 15px;
-  border: 1px solid #ebebeb;
+  cursor: pointer;
   background-color: #fff;
-}
-.input {
-  border: 1px solid #d9d9d9;
-  outline: none;
-  height: 30px;
-  width: 100%;
+  border: 0;
+  border: 1px solid #ebebeb;
   border-radius: 5px;
-  transition: all 30ms;
+  outline: none;
+}
+
+.input {
+  width: 100%;
+  height: 30px;
   font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  outline: none;
+  transition: all 30ms;
 }
 
 .input:focus {
@@ -567,15 +586,17 @@ const search = () => {
 }
 
 .choses-btn {
-  border-color: #ff7626;
   color: #ff7626;
+  border-color: #ff7626;
 }
+
 .action-chose {
   background-color: #fff4ee !important;
 }
+
 .btn-search {
-  background-color: #1890ff;
-  color: #fff;
   width: 60px;
+  color: #fff;
+  background-color: #1890ff;
 }
 </style>

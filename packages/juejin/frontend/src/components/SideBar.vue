@@ -32,49 +32,58 @@
 .box {
   width: 960px;
   height: 2000px;
-  text-align: center;
   margin: 22px auto 0;
+  text-align: center;
+
   .container {
+    float: left;
     width: 700px;
     height: 2000px;
-    float: left;
+
     .container-top {
       height: 46px;
-      margin: 0px;
-      border-bottom: 1px solid hsla(0, 0%, 59.2%, 0.1);
+      margin: 0;
+      border-bottom: 1px solid hsl(0deg 0% 59.2% / 10%);
     }
+
     .container-top li {
       display: inline-block;
-      line-height: 46px;
-      width: 50px;
       float: left;
-      color: #909090;
+      width: 50px;
       font-size: 14px;
+      line-height: 46px;
+      color: #909090;
     }
   }
+
   .signin {
+    box-sizing: border-box;
+    float: right;
     width: 240px;
     height: 96px;
-    background-color: aqua;
+
     // 为了看清才用的这个颜色
     padding: 16px;
-    float: right;
-    box-sizing: border-box;
     margin-bottom: 16px;
+    background-color: aqua;
+
     .sigin-top {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
+
       .rili {
         display: flex;
       }
+
       .title {
         display: flex;
-        color: #1d2129;
+        margin-top: 2px;
         font-size: 18px;
         font-weight: 500;
-        margin-top: 2px;
+        color: #1d2129;
       }
+
       .signin-jpg {
         display: flex;
         width: 72px;
@@ -82,15 +91,17 @@
       }
     }
   }
+
   .signin2 {
     margin-left: 36px;
-    color: #4e5969;
     font-size: 14px;
+    color: #4e5969;
   }
+
   .guanggao-img img {
+    float: right;
     width: 240px;
     height: 200px;
-    float: right;
     margin-bottom: 16px;
   }
 }

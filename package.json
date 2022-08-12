@@ -9,19 +9,28 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint **/*.{js,jsx,ts,tsx,vue} && stylelint **/*.{css,scss,sass,less,styl,vue}",
+    "fix": "eslint --fix **/*.{js,jsx,ts,tsx,vue} && stylelint --fix **/*.{css,scss,sass,less,styl,vue}"
   },
   "author": "balabala",
   "license": "MIT",
   "private": "true",
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": [
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
       "prettier --write"
     ],
-    "*.{css,scss,sass,less,styl,vue}": [
+    "*.{css,scss,sass,less,styl}": [
+      "stylelint --fix",
       "prettier --write"
     ],
     "*.{json,yaml,yml,md}": [
+      "prettier --write"
+    ],
+    "*.{vue}": [
+      "eslint --fix",
+      "stylelint --fix",
       "prettier --write"
     ]
   },
@@ -29,13 +38,24 @@
     "packages/**"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
     "concurrently": "^7.3.0",
     "del-cli": "^5.0.0",
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
+    "postcss-html": "^1.5.0",
     "prettier": "^2.7.1",
     "rexreplace": "^7.0.7",
+    "sass": "^1.54.4",
     "scripty": "^2.1.0",
+    "stylelint": "^14.10.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard-scss": "^5.0.0",
     "typescript": "^4.7.4"
   }
 }

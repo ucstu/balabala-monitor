@@ -5,8 +5,8 @@
       :value="markString"
       :plugins="plugins"
       :locale="zhHans"
+      :upload-images="uploadImage"
       @change="handleChange"
-      :uploadImages="uploadImage"
     />
   </div>
 </template>
@@ -67,6 +67,7 @@ const uploadImage = async (files: any[]) => {
 .details {
   width: 100%;
   height: 100%;
+
   .editos {
     .bytemd {
       height: calc(100vh - 62px) !important;

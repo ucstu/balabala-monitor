@@ -15,7 +15,7 @@ export const getPageUrl = () => {
   return href;
 };
 
-export let getUserID = () => {
+export const getUserID = () => {
   return getConfig().userId;
 };
 

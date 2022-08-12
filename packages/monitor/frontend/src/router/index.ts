@@ -55,7 +55,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         meta: {
           title: "地域分布",
         },
-        component: () => import("@/pages/systemSet/region.vue"), //懒加载的方式提高性能优化
+        component: () => import("@/pages/systemSet/WhatRegion.vue"), //懒加载的方式提高性能优化
       },
     ],
   },
@@ -67,7 +67,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
   {
     name: "details",
     path: "/customerSearch/details",
-    component: () => import("@/pages/CustomerPage/details.vue"),
+    component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
   },
 ];
 

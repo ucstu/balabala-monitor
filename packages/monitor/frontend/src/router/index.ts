@@ -17,10 +17,10 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     meta: {
       menu: [
-        { name: "数据总览", path: "/overView" },
-        { name: "健康状况", path: "/healthStatus" },
-        { name: "性能预览", path: "/performancePreview" },
-        { name: "地域分布", path: "/region" },
+        { name: "数据总览", path: "/Home/overView" },
+        { name: "健康状况", path: "/Home/healthStatus" },
+        { name: "性能预览", path: "/Home/performancePreview" },
+        { name: "地域分布", path: "/Home/region" },
       ],
     },
     component: () => import("@/pages/HomePage/HomePage.vue"),
@@ -63,7 +63,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
   {
     name: "customerSearch",
     path: "/customerSearch",
-    meta: { hiddenAside: true, hiddenHeader: true },
+    meta: { hiddenAside: true },
     component: () => import("@/pages/CustomerPage/customerSearch.vue"),
   },
   {

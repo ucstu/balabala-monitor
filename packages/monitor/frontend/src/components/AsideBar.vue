@@ -28,7 +28,6 @@ const { route, menuList = [] } = defineProps<{
   background-color: white;
   width: 200px;
   height: 100%;
-  padding: 10px 0;
 }
 .leftMenu > ul > li > a {
   height: 42px;
@@ -45,7 +44,9 @@ const { route, menuList = [] } = defineProps<{
   background-color: rgba(201, 193, 193, 0.5);
 }
 .leftMenu > ul {
-  margin-top: 5px;
+  margin-top: 10px;
+  list-style: none;
+  padding: 0 0;
 }
 .leftMenu > ul > li > a > span {
   margin-left: 30px;

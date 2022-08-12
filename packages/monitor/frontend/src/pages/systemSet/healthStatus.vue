@@ -168,7 +168,7 @@
         .count span:nth-child(1) {
           font-weight: 600;
           font-size: 30px;
-          color: pink;
+          color: #ea6947;
         }
         .count span:nth-child(2) {
           font-size: 10px;

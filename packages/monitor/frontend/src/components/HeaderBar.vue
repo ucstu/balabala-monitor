@@ -11,7 +11,7 @@
     <div class="right">
       <span><i class="fa fa-search"></i></span>
       <span><input type="text" /></span>
-      <router-link to="/overView" class="i overview" active-class="active"
+      <router-link to="/Home/overView" class="i overview" active-class="active"
         >概览</router-link
       >
       <div class="i father">
@@ -67,7 +67,7 @@ const props = defineProps<{
   width: 100%;
   height: 50px;
   justify-content: space-between;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);
   margin-bottom: 5px;
   .left {
@@ -152,7 +152,7 @@ const props = defineProps<{
 }
 .right .father ul {
   position: absolute;
-  top: 35px;
+  top: 15px;
   left: 0px;
   list-style: none;
   display: flex;
@@ -172,7 +172,7 @@ const props = defineProps<{
     border-radius: 5%;
   }
   li a:hover {
-    background-color: rgba(201, 193, 193, 0.5);
+    background-color: rgb(223, 223, 223);
   }
 }
 </style>

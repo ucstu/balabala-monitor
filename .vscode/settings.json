@@ -29,5 +29,7 @@
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "volar.codeLens.scriptSetupTools": true,
+  "volar.vueserver.useSecondServer": false
 }

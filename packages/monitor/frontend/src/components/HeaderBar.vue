@@ -31,6 +31,8 @@ const props = defineProps<{
 <style scoped lang="scss">
 .main {
   display: flex;
+  width: 100%;
+  height: 50px;
   justify-content: space-between;
   background-color: white;
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);

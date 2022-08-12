@@ -12,8 +12,7 @@
     "build": "lerna bootstrap && scripty"
   },
   "dependencies": {
-    "@balabala/monitor-api": "^1.0.0",
-    "source-map": "^0.7.4"
+    "@balabala/monitor-api": "^1.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",

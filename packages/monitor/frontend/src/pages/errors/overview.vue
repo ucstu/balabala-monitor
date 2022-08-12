@@ -2,7 +2,7 @@
   <div class="global">
     <div class="top">
       <div class="top-left">
-        <div>时间范围</div>
+        <div>时间范围:</div>
         <div><img src="@/assets/date.png" /></div>
         <div class="limit">30天</div>
       </div>
@@ -29,27 +29,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
@@ -76,27 +76,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr style="height: 99px">
+              <tr style="height: 80px">
                 <td></td>
                 <td></td>
                 <td></td>
@@ -124,10 +124,50 @@ let date = nowDate(b);
 <style scoped lang="scss">
 .global {
   background-color: rgb(0 0 0 / 4%);
+  width: 100%;
+  height: 100%;
   img {
     width: 18px;
     height: 18px;
     float: right;
+  }
+  .collect {
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .Error {
+      float: left;
+      padding-left: 20px;
+      margin-top: 30px;
+    }
+    .date {
+      padding-right: 20px;
+      margin-top: 30px;
+      justify-self: right;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      font-size: 12px;
+    }
+  }
+  .inform {
+    box-sizing: border-box;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    table {
+      text-align: left;
+      border-collapse: collapse;
+      margin: 0 auto;
+      th {
+        background-color: rgb(0 0 0 / 3%);
+      }
+      tbody tr {
+        border-bottom: 2px solid #ccc;
+        &:hover {
+          background-color: rgb(208, 247, 247);
+        }
+      }
+    }
   }
   .top {
     width: 100%;
@@ -139,8 +179,11 @@ let date = nowDate(b);
     background-color: rgb(255, 255, 255);
     .top-left {
       float: left;
-      display: grid;
-      grid-template-columns: 100px 50px 1fr;
+      display: flex;
+      flex-direction: row;
+      column-gap: 10px;
+      // display: grid;
+      // grid-template-columns: 100px 50px 1fr;
       padding-left: 20px;
       padding-top: 20px;
       // border:3px solid #ccc;
@@ -153,7 +196,7 @@ let date = nowDate(b);
       float: right;
       // border: 3px solid #ccc;
       padding-top: 20px;
-      padding-right: 10px;
+      padding-right: 20px;
 
       input {
         float: right;
@@ -162,7 +205,7 @@ let date = nowDate(b);
   }
   .bottom {
     width: 100%;
-    height: 660px;
+    height: 565px;
     display: grid;
     box-sizing: border-box;
     margin-top: 10px;
@@ -174,44 +217,6 @@ let date = nowDate(b);
       margin-right: 5px;
       // border: 2px solid #ccc;
       background-color: rgb(255, 255, 255);
-      .collect {
-        height: 100px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        .Error {
-          float: left;
-          padding-left: 20px;
-          margin-top: 30px;
-        }
-        .date {
-          padding-right: 20px;
-          margin-top: 30px;
-          justify-self: right;
-          display: grid;
-          grid-template-columns: 40px 1fr;
-          font-size: 12px;
-        }
-      }
-      .inform {
-        box-sizing: border-box;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        table {
-          text-align: left;
-          border-collapse: collapse;
-          margin: 0 auto;
-          th {
-            background-color: rgb(0 0 0 / 3%);
-          }
-          tbody tr {
-            border-bottom: 2px solid #ccc;
-            &:hover {
-              background-color: rgb(192, 238, 238);
-            }
-          }
-        }
-      }
     }
   }
 
@@ -221,9 +226,6 @@ let date = nowDate(b);
     margin-left: 5px;
     // border: 2px solid #ccc;
     background-color: rgb(255, 255, 255);
-    .collect {
-      @extend.collect;
-    }
   }
 }
 </style>

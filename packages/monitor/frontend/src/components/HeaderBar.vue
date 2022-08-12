@@ -1,7 +1,7 @@
 <template>
   <header class="main">
     <div class="left">
-      <i class="fa fa-bars"></i>
+      <i class="fa fa-bars" @click="hiddenAside = !hiddenAside"></i>
       <span
         ><img class="logo" src="/logo.png" alt="logo" /><strong
           >balabala云</strong
@@ -52,13 +52,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import type { RouteLocationNormalizedLoaded } from "vue-router";
-
-let isUser = ref("none");
 const props = defineProps<{
-  route: RouteLocationNormalizedLoaded;
+  hiddenAside: boolean;
 }>();
+
+const emit = defineEmits<{
+  (event: "update:hiddenAside", value: boolean): void;
+}>();
+
+const hiddenAside = $computed({
+  get: () => props.hiddenAside,
+  set: (value) => emit("update:hiddenAside", value),
+});
 </script>
 
 <style scoped lang="scss">
@@ -69,7 +74,6 @@ const props = defineProps<{
   justify-content: space-between;
   background-color: white;
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);
-  margin-bottom: 5px;
   .left {
     display: flex;
     align-items: center;

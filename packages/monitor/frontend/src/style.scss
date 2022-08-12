@@ -65,28 +65,24 @@
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
 
   & > .header {
-    flex: 0 0 50px !important;
+    height: 50px;
   }
 
   & > .content {
     display: flex;
     flex-direction: row;
-    height: 100%;
-    width: 100%;
+    height: calc(100vh - 50px);
+    width: 100vw;
 
     & > .aside {
-      flex: 0 0 200px !important;
+      width: 200px;
     }
 
     & > .main {
       flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
+      overflow: auto;
     }
   }
 }

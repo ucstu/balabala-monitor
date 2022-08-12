@@ -1,4 +1,4 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
-export interface ClickBehaviorVo extends BaseQueryVo {}
-export interface ClickBehaviorTotalVo extends BaseTotalVo {}
+export type ClickBehaviorVo = BaseQueryVo;
+export type ClickBehaviorTotalVo = BaseTotalVo;

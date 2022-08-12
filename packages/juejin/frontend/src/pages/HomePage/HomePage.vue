@@ -1,11 +1,11 @@
 <template>
   <div>
-    <HeaderVue />
-    <SidebarVue />
+    <HeaderBar />
+    <SideBar />
   </div>
 </template>
 
 <script setup lang="ts">
-import HeaderVue from "@/components/Header.vue";
-import SidebarVue from "../../components/Sidebar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
+import SideBar from "../../components/SideBar.vue";
 </script>

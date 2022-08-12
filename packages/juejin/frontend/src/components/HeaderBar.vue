@@ -7,7 +7,11 @@
           <img src="@/assets/logo.png" alt="" class="logo-info" />
         </a>
         <div class="header-left">
-          <div class="header-left-item" v-for="(item, index) in TopFence">
+          <div
+            v-for="(item, index) in TopFence"
+            :key="index"
+            class="header-left-item"
+          >
             <div class="click">
               <span>{{ item }}</span>
             </div>
@@ -24,9 +28,9 @@
             <div>创作者中心</div>
             <span
               style="
-                height: 100%;
                 width: 1px;
-                background-color: rgb(0, 0, 0, 0.1);
+                height: 100%;
+                background-color: rgb(0 0 0 / 10%);
               "
             ></span>
             <div>
@@ -41,14 +45,14 @@
           />
         </div>
       </div>
-      <Divider />
+      <ComDivider />
       <div class="header-bottom">
         <div></div>
         <div class="label-fence">
           <div
             v-for="(item, index) in BottomFence"
-            class="click"
             :key="index"
+            class="click"
             @click="toPage(index)"
           >
             <span>{{ item }}</span>
@@ -64,7 +68,7 @@
 
 <script lang="ts" setup>
 import router from "../router";
-import Divider from "./Divider.vue";
+import ComDivider from "./ComDivider.vue";
 
 const TopFence = [
   "首页",
@@ -100,15 +104,62 @@ const toEditor = () => {
 <style lang="scss" scoped>
 .header {
   display: grid;
-  height: 110px;
   grid-template-rows: 60px 1px 50px;
+  height: 110px;
+
+  .header-bottom {
+    display: grid;
+    grid-template-columns: 18% 45% 1fr;
+    column-gap: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgb(118 118 118 / 20%);
+
+    .biaoqian1 {
+      position: relative;
+
+      .biaoqian {
+        position: absolute;
+        top: 12px;
+        right: 200px;
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(25 128 255);
+        }
+      }
+    }
+
+    .label-fence {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      color: #666;
+
+      .click {
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        height: 100%;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(25 128 255);
+        }
+      }
+    }
+  }
 
   .header-top {
     display: grid;
     grid-template-columns: 60px 130px 25% 8% 1fr;
-    align-items: center;
     column-gap: 20px;
+    align-items: center;
     background-color: #fff;
+
     .logo-info {
       width: 130px;
       height: 38px;
@@ -118,22 +169,26 @@ const toEditor = () => {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       height: 100%;
+
       .header-left-item {
         display: grid;
         align-items: center;
         justify-content: center;
         font-size: 14px;
         color: #666;
+
         &:hover {
           color: #333;
         }
+
         .click {
           display: grid;
+          align-items: center;
           height: 100%;
           cursor: pointer;
-          align-items: center;
+
           &:hover {
-            color: rgb(25, 128, 255);
+            color: rgb(25 128 255);
           }
         }
       }
@@ -144,25 +199,25 @@ const toEditor = () => {
       grid-template-columns: 46% 120px 8% 30px 1fr;
       column-gap: 20px;
       align-items: center;
+
       input {
         height: 100%;
       }
+
       .button {
+        display: grid;
+        grid-template-columns: 83% 1px 1fr;
         width: 100%;
         height: 100%;
-        background: rgb(30, 128, 255);
-        border-radius: 5%;
-        display: grid;
         cursor: pointer;
-        grid-template-columns: 83% 1px 1fr;
+        background: rgb(30 128 255);
+        border-radius: 5%;
+
         .trangle {
-          width: 0px;
-          height: 0px;
-          border: 5px solid #000;
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
           border-top-color: white;
-          border-bottom-color: transparent;
-          border-left-color: transparent;
-          border-right-color: transparent;
         }
       }
 
@@ -175,46 +230,6 @@ const toEditor = () => {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-      }
-    }
-  }
-  .header-bottom {
-    display: grid;
-    grid-template-columns: 18% 45% 1fr;
-    column-gap: 20px;
-    background-color: #fff;
-    box-shadow: 0px 2px 2px 0px rgb(118 118 118/ 20%);
-    .biaoqian1 {
-      position: relative;
-      .biaoqian {
-        position: absolute;
-        color: #666;
-        font-size: 14px;
-        top: 12px;
-        right: 200px;
-        cursor: pointer;
-        &:hover {
-          color: rgb(25, 128, 255);
-        }
-      }
-    }
-
-    .label-fence {
-      display: grid;
-      align-items: center;
-      grid-template-columns: repeat(10, 1fr);
-      grid-gap: 10px;
-      font-size: 14px;
-      color: #666;
-      .click {
-        display: grid;
-        height: 100%;
-        cursor: pointer;
-        align-items: center;
-        justify-items: center;
-        &:hover {
-          color: rgb(25, 128, 255);
-        }
       }
     }
   }

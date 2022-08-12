@@ -23,23 +23,25 @@
 
 <style scoped lang="scss">
 .global {
-  background-color: rgb(88, 185, 185);
-  height: 100%;
-
   width: 100%;
+  height: 100%;
+  background-color: rgb(88 185 185);
 
   .top {
     height: 60px;
+
     .top-left {
       float: left;
-      margin: 20px 20px;
+      margin: 20px;
+
       select {
         font-size: 18px;
       }
     }
+
     .top-right {
       float: right;
-      margin: 20px 20px;
+      margin: 20px;
 
       div {
         display: inline-block;
@@ -47,7 +49,8 @@
       }
     }
   }
-  bottom {
+
+  .bottom {
     width: 100%;
     height: auto;
   }

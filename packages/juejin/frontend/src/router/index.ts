@@ -7,20 +7,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/home",
     component: () => import("@/pages/HomePage/HomePage.vue"),
-    children: [
-      {
-        path: "android",
-        component: () => import("@/pages/HomePage/ChildPage/Android.vue"),
-      },
-      {
-        path: "backend",
-        component: () => import("@/pages/HomePage/ChildPage/Backend.vue"),
-      },
-      {
-        path: "frontend",
-        component: () => import("@/pages/HomePage/ChildPage/Frontend.vue"),
-      },
-    ],
   },
   {
     path: "/detail/:id",

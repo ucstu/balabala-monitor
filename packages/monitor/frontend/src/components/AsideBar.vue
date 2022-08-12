@@ -1,5 +1,5 @@
 <template>
-  <aside class="leftMenu">
+  <aside class="left-menu">
     <ul>
       <li v-for="(value, index) in menuList" :key="index">
         <router-link :to="value.path" active-class="active"
@@ -16,48 +16,52 @@
 <script setup lang="ts">
 const { menuList } = defineProps<{
   menuList: Array<{
-    name: String;
-    path: String;
+    name: string;
+    path: string;
   }>;
 }>();
 </script>
 
 <style scoped lang="scss">
-.leftMenu {
-  background-color: white;
+.left-menu {
+  box-sizing: border-box;
   width: 200px;
   height: 100%;
-  box-sizing: border-box;
   padding: 10px 0;
+  background-color: white;
 
   ul {
+    padding: 0;
     margin-top: 5px;
     list-style: none;
-    padding: 0;
+
     li {
       &:hover {
-        background-color: rgba(201, 193, 193, 0.5);
+        background-color: rgb(201 193 193 / 50%);
       }
+
       a {
-        height: 42px;
-        line-height: 42px;
-        padding-left: 15px;
         display: flex;
         align-items: center;
+        height: 42px;
+        padding-left: 15px;
+        margin: 10px 0;
+        line-height: 42px;
+        color: rgb(100 98 98);
         text-decoration: none;
         border-right: 3px solid transparent;
-        color: rgb(100, 98, 98);
-        margin: 10px 0;
+
         &.active {
           color: #ea6947;
+          background-color: rgb(255 227 235 / 70%);
           border-right: 3px solid #ea5c35;
-          background-color: rgba(255, 227, 235, 0.7);
         }
+
         span {
           flex: 1;
           overflow: hidden;
-          text-overflow: clip; /*文字隐藏后添加省略号*/
-          white-space: nowrap; /*强制不换行*/
+          text-overflow: clip; /* 文字隐藏后添加省略号 */
+          white-space: nowrap; /* 强制不换行 */
         }
       }
     }

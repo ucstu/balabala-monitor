@@ -7,25 +7,25 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     // meta: { hiddenAside: true, hiddenHeader: true },
     component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/overView",
+    redirect: "/Home/overView",
     children: [
       {
-        path: "overView",
+        path: "/Home/overView",
         name: "overView",
         component: () => import("@/pages/systemSet/overView.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "healthStatus",
+        path: "/Home/healthStatus",
         name: "healthStatus",
         component: () => import("@/pages/systemSet/healthStatus.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "performancePreview",
+        path: "/Home/performancePreview",
         name: "performancePreview",
         component: () => import("@/pages/systemSet/performancePreview.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "region",
+        path: "/Home/region",
         name: "region",
         component: () => import("@/pages/systemSet/region.vue"), //懒加载的方式提高性能优化
       },

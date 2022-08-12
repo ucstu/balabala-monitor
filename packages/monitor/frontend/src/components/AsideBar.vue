@@ -51,8 +51,8 @@ const { route, menuList = [] } = defineProps<{
   margin-left: 30px;
 }
 .leftMenu > ul > li > a.active {
-  color: #fb7299;
-  border-right: 3px solid #fb7299;
+  color: #ea6947;
+  border-right: 3px solid #ea5c35;
   background-color: rgba(255, 227, 235, 0.7);
 }
 </style>

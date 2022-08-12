@@ -29,9 +29,9 @@ export class BasicindicatorService {
     });
     const res = await this.elasticsearchService.bulk({
       index: basicindicatorIndex,
-      body: basicIndicator,
+      body,
     });
-    if (res.statusCode === 201) {
+    if (res.statusCode === 200) {
       return responseRust.success_creat();
     } else {
       return responseRust.error();

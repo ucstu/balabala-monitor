@@ -9,7 +9,8 @@ import "./style.scss";
 import("@balabala/monitor-sdk")
   .then(({ createMonitor }) => {
     createMonitor({
-      url: "https://mock.apifox.cn/m1/1410646-0-default",
+      //url: "https://mock.apifox.cn/m1/1410646-0-default",
+      url: "http://127.0.0.1:3000",
       appId: "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
       userId: "ce124A07-9111-C9b7-84C5-5644CEdB4Abf",
     });
@@ -27,5 +28,6 @@ router.beforeEach((to, from, next) => {
 });
 
 client.service.httpRequest.config.BASE =
-  "https://mock.apifox.cn/m1/1410641-0-default";
+  //"https://mock.apifox.cn/m1/1410641-0-default";
+  "http://127.0.0.1:3000";
 createApp(App).use(router).mount("#app");

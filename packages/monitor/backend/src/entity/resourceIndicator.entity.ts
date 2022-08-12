@@ -1,6 +1,3 @@
-/**
- *资源指标
- */
 export class ResourceIndicator {
   /**
    * 应用ID
@@ -62,6 +59,10 @@ export class ResourceIndicator {
    * 首字节时间
    */
   ttfb: number;
+  /**
+   * 资源路径
+   */
+  url: string;
   /**
    * 用户ID
    */

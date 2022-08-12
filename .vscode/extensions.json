@@ -2,7 +2,7 @@
   "recommendations": [
     "Vue.volar",
     "eamodio.gitlens",
-    "syler.sass-indented",
+    "mrmlnc.vscode-scss",
     "esbenp.prettier-vscode",
     "sdras.vue-vscode-snippets",
     "EditorConfig.EditorConfig",

@@ -1,7 +1,7 @@
 <template>
   <aside class="leftMenu">
     <ul>
-      <li v-for="(value, index) in props.menu" :key="index">
+      <li v-for="(value, index) in menuList" :key="index">
         <router-link :to="value.path" active-class="active"
           ><i class="fa fa-desktop"></i
           ><span>{{ value.name }}</span></router-link
@@ -14,10 +14,9 @@
 <script setup lang="ts">
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 
-const props = defineProps<{
+const { route, menuList = [] } = defineProps<{
   route: RouteLocationNormalizedLoaded;
-  menu: Array<{
-    id: String;
+  menuList?: Array<{
     name: String;
     path: String;
   }>;
@@ -27,6 +26,8 @@ const props = defineProps<{
 <style scoped lang="scss">
 .leftMenu {
   background-color: white;
+  width: 200px;
+  height: 100%;
   padding: 10px 0;
 }
 .leftMenu > ul > li > a {

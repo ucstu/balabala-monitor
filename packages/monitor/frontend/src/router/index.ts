@@ -1,11 +1,27 @@
 import type { RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHashHistory } from "vue-router";
 
+declare module "vue-router" {
+  interface RouteMeta {
+    keepAlive?: boolean;
+    hiddenAside?: boolean;
+    hiddenHeader?: boolean;
+    menu?: Array<{ name: string; path: string }>;
+  }
+}
+
 const routeRecordRaws: RouteRecordRaw[] = [
   {
     name: "Home",
     path: "/",
-    // meta: { hiddenAside: true, hiddenHeader: true },
+    meta: {
+      menu: [
+        { name: "总览", path: "/overView" },
+        { name: "健康状况", path: "/healthStatus" },
+        { name: "性能预览", path: "/performancePreview" },
+        { name: "地域分布", path: "/region" },
+      ],
+    },
     component: () => import("@/pages/HomePage/HomePage.vue"),
     redirect: "/overView",
     children: [

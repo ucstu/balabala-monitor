@@ -1,10 +1,10 @@
 <template>
   <div class="global">
-    <HeaderBar
+    <!-- <HeaderBar
       v-show="!route?.meta?.hiddenHeader"
       :route="route"
       class="header"
-    ></HeaderBar>
+    ></HeaderBar> -->
     <div class="content">
       <div class="content-items">
         <div class="content-top">
@@ -20,9 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import HeaderBar from "@/components/HeaderBar.vue";
 import { useRoute } from "vue-router";
-import overview from "./overview.vue";
+import overview from "./pending.vue";
 const route = useRoute();
 </script>
 

@@ -150,16 +150,14 @@ let date = nowDate(b);
     }
   }
   .inform {
-    box-sizing: border-box;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
     table {
       text-align: left;
       border-collapse: collapse;
       margin: 0 auto;
+      box-sizing: border-box;
       th {
         background-color: rgb(0 0 0 / 3%);
+        padding-right: 10px;
       }
       tbody tr {
         border-bottom: 2px solid #ccc;
@@ -209,7 +207,7 @@ let date = nowDate(b);
     display: grid;
     box-sizing: border-box;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
     grid-template-columns: 1fr 1fr;
     .bottom-left {
       height: 100%;

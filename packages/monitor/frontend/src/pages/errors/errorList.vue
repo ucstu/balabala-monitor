@@ -11,8 +11,8 @@
         </form>
       </div>
       <div class="top-right">
-        <div>sort</div>
-        <div>calendar</div>
+        <div class="sort">sort</div>
+        <div class="calender">calendar</div>
       </div>
     </div>
     <div class="bottom">table</div>
@@ -35,6 +35,7 @@
       margin: 20px 20px;
       select {
         font-size: 18px;
+        cursor: pointer;
       }
     }
     .top-right {

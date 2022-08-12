@@ -3,7 +3,9 @@
     <div class="left">
       <i class="fa fa-bars"></i>
       <span
-        ><i class="fa fa-cloud-upload"></i> <strong>balabala云</strong></span
+        ><img class="logo" src="/logo.png" alt="logo" /><strong
+          >balabala云</strong
+        ></span
       >
     </div>
     <div class="right">
@@ -50,8 +52,8 @@
 </template>
 
 <script setup lang="ts">
-import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { ref } from "vue";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 
 let isUser = ref("none");
 const props = defineProps<{
@@ -62,6 +64,8 @@ const props = defineProps<{
 <style scoped lang="scss">
 .main {
   display: flex;
+  width: 100%;
+  height: 50px;
   justify-content: space-between;
   background-color: white;
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);
@@ -70,6 +74,13 @@ const props = defineProps<{
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .logo {
+      margin-left: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
     span {
       display: flex;
       align-items: center;

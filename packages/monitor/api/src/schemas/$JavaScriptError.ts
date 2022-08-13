@@ -27,6 +27,10 @@ export const $JavaScriptError = {
       type: "string",
       isRequired: true,
     },
+    url: {
+      type: "string",
+      isRequired: true,
+    },
     msg: {
       type: "string",
       isRequired: true,

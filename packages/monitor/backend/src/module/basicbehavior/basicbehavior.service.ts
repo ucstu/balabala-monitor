@@ -26,9 +26,10 @@ export class BasicbehaviorService {
       index: basicbehaviorIndex,
       body,
     });
-    if (res.statusCode === 201) {
+    if (res.statusCode === 200) {
       return responseRust.success_creat();
     } else {
+      console.log(res);
       return responseRust.error();
     }
   }

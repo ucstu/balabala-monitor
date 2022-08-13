@@ -1,7 +1,13 @@
 <template>
   <div class="box">
     <!-- 左侧内容 -->
-    <div class="container"></div>
+    <div class="container">
+      <ul class="container-top">
+        <li style="color: #007fff">推荐</li>
+        <li>| 最新 |</li>
+        <li>热榜</li>
+      </ul>
+    </div>
     <!-- 签到 -->
     <div class="signin">
       <div class="sigin-top">
@@ -24,38 +30,60 @@
 
 <style lang="scss" scoped>
 .box {
-  width: 1200px;
+  width: 960px;
   height: 2000px;
-  margin-top: 22px;
+  margin: 22px auto 0;
   text-align: center;
+
   .container {
-    width: 880px;
-    height: 2000px;
     float: left;
+    width: 700px;
+    height: 2000px;
+
+    .container-top {
+      height: 46px;
+      margin: 0;
+      border-bottom: 1px solid hsl(0deg 0% 59.2% / 10%);
+    }
+
+    .container-top li {
+      display: inline-block;
+      float: left;
+      width: 50px;
+      font-size: 14px;
+      line-height: 46px;
+      color: #909090;
+    }
   }
+
   .signin {
+    box-sizing: border-box;
+    float: right;
     width: 240px;
     height: 96px;
-    background-color: aqua;
+
     // 为了看清才用的这个颜色
     padding: 16px;
-    float: right;
-    box-sizing: border-box;
     margin-bottom: 16px;
+    background-color: aqua;
+
     .sigin-top {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
+
       .rili {
         display: flex;
       }
+
       .title {
         display: flex;
-        color: #1d2129;
+        margin-top: 2px;
         font-size: 18px;
         font-weight: 500;
-        margin-top: 2px;
+        color: #1d2129;
       }
+
       .signin-jpg {
         display: flex;
         width: 72px;
@@ -63,15 +91,17 @@
       }
     }
   }
+
   .signin2 {
     margin-left: 36px;
-    color: #4e5969;
     font-size: 14px;
+    color: #4e5969;
   }
+
   .guanggao-img img {
+    float: right;
     width: 240px;
     height: 200px;
-    float: right;
     margin-bottom: 16px;
   }
 }

@@ -26,7 +26,7 @@ export class RoutingskipbehaviorService {
       index: routingskipbehaviorIndex,
       body,
     });
-    if (res.statusCode === 201) {
+    if (res.statusCode === 200) {
       return responseRust.success_creat();
     } else {
       return responseRust.error();

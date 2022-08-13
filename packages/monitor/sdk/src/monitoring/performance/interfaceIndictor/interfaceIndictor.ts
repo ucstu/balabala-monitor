@@ -1,7 +1,8 @@
+import { BasicIndicator } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function interfaceIndicator(): void {
+export default () => {
   const originalProto = XMLHttpRequest.prototype;
   const originalOpen = originalProto.open;
   const originalSend = originalProto.send;
@@ -10,7 +11,7 @@ export default function interfaceIndicator(): void {
     this.url = args[1];
     this.method = args[0];
     originalOpen.apply(this, args);
-  } as any;
+  } as (method: string, url: string | URL) => void;
 
   originalProto.send = function newSend(this: any, ...args: any) {
     this.startTime = Date.now();
@@ -19,23 +20,14 @@ export default function interfaceIndicator(): void {
       this.endTime = Date.now();
       this.duration = this.endTime - this.startTime;
 
-      const {
-        status: statusCode,
-        duration,
-        startTime,
-        endTime,
-        url,
-        method,
-      } = this;
-
       stagingReport("InterfaceIndicator", {
-        mainType: 4,
-        subType: 4001,
+        mainType: BasicIndicator.mainType.InterfaceIndicator,
+        subType: BasicIndicator.subType.InterfaceIndicator,
         ...getBasicParams(),
-        duration,
-        method,
-        statusCode,
-        url,
+        duration: this.duration,
+        method: this.method,
+        statusCode: this.status,
+        url: this.url,
       });
 
       this.removeEventListener("loadend", onLoadend, true);
@@ -69,8 +61,8 @@ export default function interfaceIndicator(): void {
         reportData.success = data.ok;
 
         stagingReport("InterfaceIndicator", {
-          mainType: 4,
-          subType: 4001,
+          mainType: BasicIndicator.mainType.InterfaceIndicator,
+          subType: BasicIndicator.subType.InterfaceIndicator,
           ...getBasicParams(),
           ...reportData,
         });
@@ -84,8 +76,8 @@ export default function interfaceIndicator(): void {
         reportData.success = false;
 
         stagingReport("InterfaceIndicator", {
-          mainType: 4,
-          subType: 4001,
+          mainType: BasicIndicator.mainType.InterfaceIndicator,
+          subType: BasicIndicator.subType.InterfaceIndicator,
           ...getBasicParams(),
           ...reportData,
         });
@@ -93,4 +85,4 @@ export default function interfaceIndicator(): void {
         throw err;
       });
   };
-}
+};

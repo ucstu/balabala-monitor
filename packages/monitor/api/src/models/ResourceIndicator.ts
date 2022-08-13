@@ -9,6 +9,7 @@ export type ResourceIndicator = {
   startTime: number;
   pageUrl: string;
   userID: string;
+  url: string;
   duration: number;
   dns: number;
   tcp: number;
@@ -23,25 +24,25 @@ export type ResourceIndicator = {
 
 export namespace ResourceIndicator {
   export enum mainType {
-    "_1" = 1,
-    "_2" = 2,
-    "_3" = 3,
-    "_4" = 4,
-    "_5" = 5,
-    "_6" = 6,
+    Performance = 1,
+    LoadIndicator = 2,
+    DrawIndicator = 3,
+    OperationIndicator = 4,
+    InterfaceIndicator = 5,
+    ResourceIndicator = 6,
   }
 
   export enum subType {
-    "_1001" = 1001,
-    "_1002" = 1002,
-    "_1003" = 1003,
-    "_1004" = 1004,
-    "_2001" = 2001,
-    "_2002" = 2002,
-    "_3001" = 3001,
-    "_4001" = 4001,
-    "_4002" = 4002,
-    "_5001" = 5001,
-    "_6001" = 6001,
+    FirstPaint = 1001,
+    FirstContentfulPaint = 1002,
+    LargestContentfulPaint = 1003,
+    LayoutShift = 1004,
+    DOMContentLoaded = 2001,
+    FullLoad = 2002,
+    FirstScreenLoad = 3001,
+    FramesPerSecond = 4001,
+    RouterLoadTime = 4002,
+    InterfaceIndicator = 5001,
+    ResourceIndicator = 6001,
   }
 }

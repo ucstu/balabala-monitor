@@ -25,7 +25,7 @@ export class responseRust {
     rus.timestamp = format(new Date());
     return rus;
   }
-  static error(message: string = "error"): responseRust {
+  static error(message = "error"): responseRust {
     const rus = new responseRust();
     rus.status = 500;
     rus.message = message;

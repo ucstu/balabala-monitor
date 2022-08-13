@@ -16,17 +16,17 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     meta: {
       menu: [
-        { name: "数据总览", path: "/overView" },
-        { name: "健康状况", path: "/healthStatus" },
-        { name: "性能预览", path: "/performancePreview" },
-        { name: "地域分布", path: "/region" },
+        { name: "数据总览", path: "/Home/overView" },
+        { name: "健康状况", path: "/Home/healthStatus" },
+        { name: "性能预览", path: "/Home/performancePreview" },
+        { name: "地域分布", path: "/Home/region" },
       ],
     },
     component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/overView",
+    redirect: "/Home/overView",
     children: [
       {
-        path: "overView",
+        path: "/Home/overView",
         name: "overView",
         meta: {
           title: "数据总览",
@@ -34,7 +34,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         component: () => import("@/pages/systemSet/overView.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "healthStatus",
+        path: "/Home/healthStatus",
         name: "healthStatus",
         meta: {
           title: "健康状况",
@@ -42,7 +42,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         component: () => import("@/pages/systemSet/healthStatus.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "performancePreview",
+        path: "/Home/performancePreview",
         name: "performancePreview",
         meta: {
           title: "性能预览",
@@ -50,7 +50,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         component: () => import("@/pages/systemSet/performancePreview.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "region",
+        path: "/Home/region",
         name: "region",
         meta: {
           title: "地域分布",
@@ -85,7 +85,7 @@ const router = createRouter({
 router.afterEach((to, _from) => {
   document.title = to.meta.title
     ? "前端监控-" + (to.meta.title || "")
-    : "Balabala云-前端监控";
+    : "BalaBala云-前端监控";
 });
 
 export default router;

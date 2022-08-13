@@ -1,4 +1,4 @@
-import { getBasicParams } from "@/common/utils/datas";
+import { getBasicParams, getTimeStamp } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 import { ResourceError } from "@balabala/monitor-api";
 
@@ -21,7 +21,7 @@ export default () => {
           mainType: ResourceError.mainType.ResourceError,
           subType: ResourceError.subType.ResourceError,
           ...getBasicParams(),
-          errorTime: e.timeStamp,
+          errorTime: getTimeStamp(),
           resourceType: target.tagName,
           html: document.documentElement.outerHTML,
           path: url,

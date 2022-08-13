@@ -3,7 +3,7 @@ import basicIndicator from "./basicIndicator";
 import drawIndicator from "./drawIndicator";
 import interfaceIndictor from "./interfaceIndictor";
 import loadIndicator from "./loadIndicator";
-// import operationIndicator from "./operationIndicator";
+import operationIndicator from "./operationIndicator";
 import resourceIndicator from "./resourceIndicator";
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
     drawIndicator,
     interfaceIndictor,
     loadIndicator,
-    // operationIndicator,
+    operationIndicator,
     resourceIndicator
   );
 };

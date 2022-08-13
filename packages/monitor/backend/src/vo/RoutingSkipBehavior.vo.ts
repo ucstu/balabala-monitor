@@ -1,4 +1,4 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
-export interface RoutingSkipBehaviorVo extends BaseQueryVo {}
-export interface RoutingSkipBehaviorTotalVo extends BaseTotalVo {}
+export type RoutingSkipBehaviorVo = BaseQueryVo;
+export type RoutingSkipBehaviorTotalVo = BaseTotalVo;

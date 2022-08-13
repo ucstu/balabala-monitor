@@ -69,6 +69,12 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/customerSearch/details",
     component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
   },
+  {
+    name: "LogPage",
+    path: "/errors/LogPage",
+    meta: { hiddenAside: true, hiddenHeader: false },
+    component: () => import("@/pages/errors/LogPage.vue"),
+  },
 ];
 
 const router = createRouter({

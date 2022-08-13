@@ -166,6 +166,7 @@ let date = nowDate(b);
       border-collapse: collapse;
 
       th {
+        padding-right: 10px;
         background-color: rgb(0 0 0 / 3%);
       }
 

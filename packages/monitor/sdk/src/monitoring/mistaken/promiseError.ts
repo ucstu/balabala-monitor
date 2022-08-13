@@ -1,5 +1,10 @@
 import { PromiseError } from "@/common/utils/apis";
-import { getAppId, getPageUrl, getUserID } from "@/common/utils/datas";
+import {
+  getAppId,
+  getPageUrl,
+  getTimeStamp,
+  getUserID,
+} from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
 export default () => {
@@ -10,7 +15,7 @@ export default () => {
       pageUrl: getPageUrl(),
       userID: getUserID(),
       stack: e.reason?.stack,
-      errorTime: e.timeStamp,
+      errorTime: getTimeStamp(),
       appId: getAppId(),
     });
   });

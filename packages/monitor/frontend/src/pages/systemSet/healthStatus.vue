@@ -124,65 +124,77 @@
 <style lang="scss" scoped>
 .bg {
   width: 100%;
-  background-color: rgba(240, 240, 240, 0.3);
   padding: 25px 35px 0 25px;
+  background-color: rgb(240 240 240 / 30%);
+
   .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
     .title {
       font-size: 18px;
       font-weight: 600;
     }
+
     .calendar {
       padding: 5px 0;
     }
+
     .calendar input {
+      width: 100px;
+      height: 26px;
       border: none;
       outline: none;
-      height: 26px;
-      width: 100px;
     }
   }
+
   .data-board {
-    padding: 10px 10px;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 10px;
+
     .box {
       width: 22%;
-      background-color: white;
       padding: 10px 15px;
+      background-color: white;
+
       .data-board-count {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+
         .count {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
           align-items: center;
+          justify-content: space-between;
           width: 100px;
           height: 60px;
         }
+
         .count span:nth-child(1) {
-          font-weight: 600;
           font-size: 30px;
+          font-weight: 600;
           color: #ea6947;
         }
+
         .count span:nth-child(2) {
           font-size: 10px;
-          color: rgb(179, 179, 179);
+          color: rgb(179 179 179);
         }
       }
+
       .percentage {
         display: flex;
         justify-content: space-between;
         width: 100%;
         margin-top: 20px;
+
         div {
           font-size: 13.6px;
-          color: rgb(141, 141, 141);
+          color: rgb(141 141 141);
         }
       }
     }

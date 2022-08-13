@@ -8,6 +8,7 @@
   "types": "types/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
+    "generate": "lerna bootstrap && scripty",
     "build": "lerna bootstrap && scripty"
   },
   "devDependencies": {

@@ -1,10 +1,5 @@
 <template>
   <div class="global">
-    <!-- <HeaderBar
-      v-show="!route?.meta?.hiddenHeader"
-      :route="route"
-      class="header"
-    ></HeaderBar> -->
     <div class="content">
       <div class="content-items">
         <div class="content-top">
@@ -20,9 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import overview from "./overview.vue";
-const route = useRoute();
 </script>
 
 <style scoped lang="scss">
@@ -30,40 +23,45 @@ const route = useRoute();
   width: 100%;
   overflow: auto;
   background-color: rgb(0 0 0 / 4%);
+
+  img {
+    cursor: pointer;
+  }
+
   .box {
     position: relative;
+
     img {
       position: absolute;
       top: 20px;
     }
   }
 
-  img {
-    cursor: pointer;
-  }
-
   .content {
     .content-items {
       box-sizing: border-box;
-      margin: 20px;
-      background-color: rgb(255, 255, 255);
       display: grid;
       grid-template-rows: 1fr 10fr;
+      margin: 20px;
+      background-color: rgb(255 255 255);
+
       .content-top {
+        display: flex;
+        flex-direction: row;
         width: 100%;
         font-size: 16px;
         font-weight: 500;
         border-bottom: 1px solid #ccc;
-        display: flex;
-        flex-direction: row;
       }
+
       .content-top div {
         padding: 20px;
         cursor: pointer;
       }
+
       .content-top div:active {
-        border-bottom: 4px solid #ea6947;
         color: #ea6947;
+        border-bottom: 4px solid #ea6947;
       }
     }
   }

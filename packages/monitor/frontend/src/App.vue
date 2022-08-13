@@ -52,7 +52,7 @@ const hiddenAside = $ref(false);
     height: calc(100vh - 50px);
 
     & > .aside {
-      width: 200px;
+      width: 220px;
     }
 
     .aside-leave-active {

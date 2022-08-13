@@ -10,7 +10,6 @@
         <div class="start"><input readonly placeholder="startDate" /></div>
         <div>~</div>
         <div class="end"><input readonly placeholder="endDate" /></div>
-        <div class="calendar"><img src="@/assets/calendar.png" alt="" /></div>
       </div>
     </div>
     <div class="bottom">
@@ -194,7 +193,7 @@ let date = nowDate(b);
   .top {
     display: grid;
     grid-template-rows: 100px 1fr;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 350px;
     width: 100%;
     height: 410px;
 
@@ -218,7 +217,7 @@ let date = nowDate(b);
     .top-right {
       box-sizing: border-box;
       float: right;
-      width: 365px;
+      width: 350px;
       height: 30px;
       margin-top: 20px;
       margin-right: 20px;
@@ -227,12 +226,6 @@ let date = nowDate(b);
       div {
         display: inline-block;
         margin-top: 5px;
-      }
-
-      .calendar {
-        float: right;
-        width: 14px;
-        height: 14px;
         margin-right: 5px;
       }
 

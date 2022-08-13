@@ -23,12 +23,7 @@
           </div>
         </div>
         <div class="calendar">
-          <div class="calendar-box">
-            <input value="" readonly placeholder="今天" />
-            <i>
-              <img src="@/assets/calendar.png" alt="" class="calendar-left" />
-            </i>
-          </div>
+          <input type="date" value="2022-08-13" />
         </div>
       </div>
     </div>
@@ -160,17 +155,19 @@
     }
 
     .calendar {
-      .calendar-box {
-        box-sizing: border-box;
-        width: 155px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-      }
-
       input {
         width: 130px;
         height: 28px;
+        font-size: 14px;
         border: 0;
+        border: 1px solid #d9d9d9;
+        border-radius: 5px;
+        outline: none;
+        transition: all 30ms;
+
+        &:focus {
+          outline: 2px solid #1890ff;
+        }
       }
 
       .calendar-left {

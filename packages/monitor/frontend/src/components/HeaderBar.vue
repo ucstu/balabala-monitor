@@ -4,14 +4,14 @@
       <i class="fa fa-bars" @click="hiddenAside = !hiddenAside"></i>
       <span
         ><img class="logo" src="/logo.png" alt="logo" /><strong
-          >balabala云</strong
+          >BalaBala云</strong
         ></span
       >
     </div>
     <div class="right">
       <span><i class="fa fa-search"></i></span>
       <span><input type="text" /></span>
-      <router-link to="/overView" class="i overview" active-class="active"
+      <router-link to="/Home/overView" class="i overview" active-class="active"
         >概览</router-link
       >
       <div class="i father">
@@ -160,7 +160,7 @@ const hiddenAside = $computed({
 
       ul {
         position: absolute;
-        top: 35px;
+        top: 20px;
         left: 0;
         display: flex;
         display: none;
@@ -182,7 +182,7 @@ const hiddenAside = $computed({
         }
 
         li a:hover {
-          background-color: rgb(201 193 193 / 50%);
+          background-color: rgb(230 230 230);
         }
       }
 

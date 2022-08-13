@@ -6,8 +6,7 @@ import { BaseQueryVo, BaseTotalVo } from "src/vo/base.vo";
  * @returns
  */
 const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
-  let body: any;
-  body = {
+  const body = {
     query: {
       bool: {
         must: [
@@ -30,7 +29,7 @@ const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
     //gte: 0,
     //lte: 1999999999,
   };
-  body.query.bool.must.push(range);
+  body.query.bool.must.push(range as any);
 
   // 组装非必选
   notChoice(body, querys);
@@ -87,7 +86,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
  * @returns 如果错误信息存在则表示参数校验失败
  */
 export const valida = (querys: BaseQueryVo): string => {
-  let msg = [];
+  const msg = [];
   if (!querys.appid) {
     msg.push("appid 不能为空");
   }

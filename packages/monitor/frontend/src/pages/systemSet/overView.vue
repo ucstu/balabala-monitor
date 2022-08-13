@@ -49,64 +49,75 @@
 <style lang="scss" scoped>
 .bg {
   width: 100%;
-  background-color: rgba(240, 240, 240, 0.3);
   padding: 25px 35px 0 25px;
+  background-color: rgb(240 240 240 / 30%);
+
   .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
     .title {
       font-size: 18px;
       font-weight: 600;
     }
+
     .calendar {
       padding: 5px 0;
     }
+
     .calendar input {
+      width: 100px;
+      height: 26px;
       border: none;
       outline: none;
-      height: 26px;
-      width: 100px;
     }
   }
-  .browse-card .browse-head {
-    width: 100%;
-    height: 60px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    margin-bottom: 3px;
-    border-radius: 5% 5% 0 0;
-  }
-  .browse-card .browse-body {
-    width: 100%;
-    background-color: white;
-    border-radius: 0 0 5% 5%;
-    .user-info-list {
-      display: flex;
-      justify-content: space-around;
-      font-size: 15px;
-      text-align: center;
-      padding: 5px 0;
-      div {
-        width: 20%;
-      }
-    }
-    .weight {
-      font-weight: 700;
-      font-size: 30px;
-    }
-  }
+
   .form {
-    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-top: 20px;
+
     div {
       width: 30%;
       height: 300px;
       background-color: white;
+    }
+  }
+
+  .browse-card .browse-head {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding-left: 20px;
+    margin-bottom: 3px;
+    background-color: white;
+    border-radius: 5% 5% 0 0;
+  }
+
+  .browse-card .browse-body {
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 5% 5%;
+
+    .user-info-list {
+      display: flex;
+      justify-content: space-around;
+      padding: 5px 0;
+      font-size: 15px;
+      text-align: center;
+
+      div {
+        width: 20%;
+      }
+    }
+
+    .weight {
+      font-size: 30px;
+      font-weight: 700;
     }
   }
 }

@@ -13,7 +13,7 @@
     <div class="bottom">
       <div class="bottom-left">
         <div class="collect">
-          <div class="Error">JS错误(onerror)</div>
+          <div class="error">JS错误(onerror)</div>
           <div class="date">
             <div><img src="@/assets/24.png" /></div>
             <div>{{ date }}</div>
@@ -60,7 +60,7 @@
       </div>
       <div class="bottom-right">
         <div class="collect">
-          <div class="Error">自定义异常(console.error)</div>
+          <div class="error">自定义异常(console.error)</div>
           <div class="date">
             <div><img src="@/assets/24.png" /></div>
             <div>{{ date }}</div>
@@ -123,75 +123,94 @@ let date = nowDate(b);
 
 <style scoped lang="scss">
 .global {
-  background-color: rgb(0 0 0 / 4%);
   width: 100%;
   height: 100%;
+  background-color: rgb(0 0 0 / 4%);
+
   img {
+    float: right;
     width: 18px;
     height: 18px;
-    float: right;
   }
+
   .collect {
-    height: 100px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    .Error {
+    height: 100px;
+
+    .error {
       float: left;
       padding-left: 20px;
       margin-top: 30px;
     }
+
     .date {
-      padding-right: 20px;
-      margin-top: 30px;
-      justify-self: right;
       display: grid;
       grid-template-columns: 40px 1fr;
+      justify-self: right;
+      padding-right: 20px;
+      margin-top: 30px;
       font-size: 12px;
     }
   }
+
   .inform {
+    box-sizing: border-box;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+
     table {
+      margin: 0 auto;
       text-align: left;
       border-collapse: collapse;
-      margin: 0 auto;
-      box-sizing: border-box;
+
       th {
-        background-color: rgb(0 0 0 / 3%);
         padding-right: 10px;
+        background-color: rgb(0 0 0 / 3%);
       }
+
       tbody tr {
         border-bottom: 2px solid #ccc;
+
         &:hover {
-          background-color: rgb(208, 247, 247);
+          background-color: rgb(208 247 247);
         }
       }
     }
   }
+
   .top {
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     height: 410px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 100px 1fr;
+
     // border: 3px solid #ccc;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255 255 255);
+
     .top-left {
-      float: left;
       display: flex;
       flex-direction: row;
       column-gap: 10px;
+      float: left;
+      padding-top: 20px;
+
       // display: grid;
       // grid-template-columns: 100px 50px 1fr;
       padding-left: 20px;
-      padding-top: 20px;
+
       // border:3px solid #ccc;
       limit {
         float: left;
       }
     }
+
     .top-right {
       box-sizing: border-box;
       float: right;
+
       // border: 3px solid #ccc;
       padding-top: 20px;
       padding-right: 20px;
@@ -201,29 +220,33 @@ let date = nowDate(b);
       }
     }
   }
+
   .bottom {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     height: 565px;
-    display: grid;
-    box-sizing: border-box;
     margin-top: 10px;
-    margin-bottom: 50px;
-    grid-template-columns: 1fr 1fr;
+    margin-bottom: 10px;
+
     .bottom-left {
-      height: 100%;
       box-sizing: border-box;
+      height: 100%;
       margin-right: 5px;
+
       // border: 2px solid #ccc;
-      background-color: rgb(255, 255, 255);
+      background-color: rgb(255 255 255);
     }
   }
 
   .bottom-right {
-    height: 100%;
     box-sizing: border-box;
+    height: 100%;
     margin-left: 5px;
+
     // border: 2px solid #ccc;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255 255 255);
   }
 }
 </style>

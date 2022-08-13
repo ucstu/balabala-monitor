@@ -1,7 +1,7 @@
 <template>
   <header class="main">
     <div class="left">
-      <i class="fa fa-bars"></i>
+      <i class="fa fa-bars" @click="hiddenAside = !hiddenAside"></i>
       <span
         ><img class="logo" src="/logo.png" alt="logo" /><strong
           >balabala云</strong
@@ -11,7 +11,7 @@
     <div class="right">
       <span><i class="fa fa-search"></i></span>
       <span><input type="text" /></span>
-      <router-link to="/Home/overView" class="i overview" active-class="active"
+      <router-link to="/overView" class="i overview" active-class="active"
         >概览</router-link
       >
       <div class="i father">
@@ -52,33 +52,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import type { RouteLocationNormalizedLoaded } from "vue-router";
-
-let isUser = ref("none");
 const props = defineProps<{
-  route: RouteLocationNormalizedLoaded;
+  hiddenAside: boolean;
 }>();
+
+const emit = defineEmits<{
+  (event: "update:hiddenAside", value: boolean): void;
+}>();
+
+const hiddenAside = $computed({
+  get: () => props.hiddenAside,
+  set: (value) => emit("update:hiddenAside", value),
+});
 </script>
 
 <style scoped lang="scss">
 .main {
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 50px;
-  justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: white;
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 4%);
-  margin-bottom: 5px;
+
   .left {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    .fa-cloud-upload,
+    strong {
+      padding: 0 10px;
+      color: #ea6947;
+    }
+
     .logo {
-      margin-left: 10px;
       width: 40px;
       height: 40px;
+      margin-left: 10px;
     }
 
     span {
@@ -86,93 +97,106 @@ const props = defineProps<{
       align-items: center;
       justify-content: space-between;
     }
+
     .fa-bars {
-      font-size: 25px;
       padding: 12.5px 14px;
+      font-size: 25px;
       color: white;
       background-color: #ea6947;
     }
+
     .fa-cloud-upload {
       font-size: 30px;
     }
   }
-}
 
-.left .fa-cloud-upload,
-.left strong {
-  color: #ea6947;
-  padding: 0 10px;
-}
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 10px;
-}
-.right span input {
-  border: none;
-  background-color: rgb(244, 240, 240, 0.5);
-}
-.right span input:focus {
-  outline: none;
-}
-.right span {
-  background-color: rgb(244, 240, 240, 0.5);
-  padding: 5px 5px;
-  display: flex;
-  align-items: center;
-}
-.right .i {
-  padding: 10px 20px;
-}
-.right .overview.active {
-  color: #ea6947;
-  font-weight: 700;
-}
-.right a {
-  text-decoration: none;
-  color: grey;
-}
-.right a:hover {
-  color: #ea6947;
-  transition: top 0.3s ease;
-}
-.right img {
-  margin: 0 30px 0 20px;
-}
-.right .father {
-  position: relative;
-  .fa {
-    font-size: 10px;
-    color: grey;
-  }
-}
-.right .father:hover ul {
-  display: block;
-}
-.right .father ul {
-  position: absolute;
-  top: 15px;
-  left: 0px;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding: 5px 5px;
-  display: none;
-  li a {
-    display: inline-block;
-    height: 42px;
-    width: 150px;
-    line-height: 42px;
-    padding-left: 20px;
-    text-decoration: none;
-    color: rgb(100, 98, 98);
-    font-size: 15px;
-    background-color: white;
-    border-radius: 5%;
-  }
-  li a:hover {
-    background-color: rgb(223, 223, 223);
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+
+    span {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      background-color: rgb(244 240 240 / 50%);
+
+      input {
+        background-color: rgb(244 240 240 / 50%);
+        border: none;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .i {
+      padding: 10px 20px;
+    }
+
+    .overview.active {
+      font-weight: 700;
+      color: #ea6947;
+    }
+
+    a {
+      color: grey;
+      text-decoration: none;
+
+      &:hover {
+        color: #ea6947;
+        transition: top 0.3s ease;
+      }
+    }
+
+    img {
+      margin: 0 30px 0 20px;
+    }
+
+    .father {
+      position: relative;
+
+      ul {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        display: flex;
+        display: none;
+        align-items: center;
+        padding: 5px;
+        list-style: none;
+
+        li a {
+          display: inline-block;
+          width: 150px;
+          height: 42px;
+          padding-left: 20px;
+          font-size: 15px;
+          line-height: 42px;
+          color: rgb(100 98 98);
+          text-decoration: none;
+          background-color: white;
+          border-radius: 5%;
+        }
+
+        li a:hover {
+          background-color: rgb(201 193 193 / 50%);
+        }
+      }
+
+      &:hover {
+        ul {
+          display: block;
+        }
+      }
+
+      .fa {
+        font-size: 10px;
+        color: grey;
+      }
+    }
   }
 }
 </style>

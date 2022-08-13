@@ -5,7 +5,7 @@ import { isLCPDone } from "../basicIndicator/largestContentfulPaint";
 import { isLoaded } from "../loadIndicator/load";
 
 type Entry = {
-  startTime: Number;
+  startTime: number;
   children: Node[];
 };
 
@@ -14,12 +14,12 @@ const viewportHeight = window.innerHeight;
 
 let entries: Entry[] = [];
 
-const isInScreen = (node: Node): Boolean => {
+const isInScreen = (node: Node): boolean => {
   const rectInfo = (node as HTMLElement).getBoundingClientRect();
   return rectInfo.left < viewportWidth && rectInfo.top < viewportHeight;
 };
 
-const needToCalculate = (node: any): Boolean => {
+const needToCalculate = (node: any): boolean => {
   if (window.getComputedStyle(node).display === "none") return false;
   if (node.tagName === "IMG" && node.width < 2 && node.height < 2) {
     return false;
@@ -27,7 +27,7 @@ const needToCalculate = (node: any): Boolean => {
   return true;
 };
 
-const isInclude = (node: any, arr: any[]): Boolean => {
+const isInclude = (node: any, arr: any[]): boolean => {
   if (!node || node === document.documentElement) {
     return false;
   }
@@ -37,7 +37,7 @@ const isInclude = (node: any, arr: any[]): Boolean => {
   return isInclude(node.parentElement, arr);
 };
 
-const getRenderTime = (): Number => {
+const getRenderTime = (): number => {
   let startTime = 0;
   entries.forEach((entry) => {
     for (const node of entry.children) {
@@ -95,7 +95,7 @@ export default () => {
   const entryHandler = (mutationList: MutationRecord[]) => {
     checkDOMChange(observer);
 
-    let entry: Entry = {
+    const entry: Entry = {
       startTime: 0,
       children: [],
     };

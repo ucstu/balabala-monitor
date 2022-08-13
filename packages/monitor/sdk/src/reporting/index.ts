@@ -1,3 +1,4 @@
+import { getConfig } from "@/common/config";
 import { ReportDataTypes } from "@/common/types";
 import {
   postBehaviorsBasicbehaviors,
@@ -14,6 +15,7 @@ import {
 } from "@/common/utils/apis";
 import { onBeforeUnload } from "@/common/utils/events";
 
+const cacheMapSize = getConfig().cacheMapSize;
 const cacheMap = new Map<string, any[]>([]);
 cacheMap.set("BasicIndicator", []);
 cacheMap.set("InterfaceIndicator", []);
@@ -39,66 +41,104 @@ export const reportAll = () => {
 };
 
 onBeforeUnload(reportAll);
+setInterval(reportAll, getConfig().reportTimeInterval);
+
+// indexedDB
+// const request = indexedDB.open("monitor", 1) as IDBOpenDBRequest;
+// let db: IDBDatabase;
+// request.onupgradeneeded = (e) => {
+//   db = (e.target as any).result;
+//   db.createObjectStore("monitor", { autoIncrement: true });
+// };
+// request.onsuccess = (e) => {
+//   db = (e.target as any).result;
+// };
 
 export const realTimeReport = <K extends keyof ReportDataTypes>(
   apiId: K,
   data: ReportDataTypes[K][]
 ) => {
+  // const objectStore = db
+  //   .transaction(["monitor"], "readwrite")
+  //   .objectStore("monitor");
+  // objectStore.add(data.map((item) => ({ apiId, ...item })));
   switch (apiId) {
     case "BasicIndicator":
       postPerformancesBasicindicators({
         requestBody: data as ReportDataTypes["BasicIndicator"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "InterfaceIndicator":
       postPerformancesInterfaceindicators({
         requestBody: data as ReportDataTypes["InterfaceIndicator"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "ResourceIndicator":
       postPerformancesResourceindicators({
         requestBody: data as ReportDataTypes["ResourceIndicator"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "ResourceError":
       postErrorsResourceerrors({
         requestBody: data as ReportDataTypes["ResourceError"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "JavaScriptError":
       postErrorsJavascripterrors({
         requestBody: data as ReportDataTypes["JavaScriptError"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "PromiseError":
       postErrorsPromiseerrors({
         requestBody: data as ReportDataTypes["PromiseError"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "VueError":
       postErrorsVueerrors({
         requestBody: data as ReportDataTypes["VueError"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "BasicBehavior":
       postBehaviorsBasicbehaviors({
         requestBody: data as ReportDataTypes["BasicBehavior"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "ClickBehavior":
       postBehaviorsClickbehaviors({
         requestBody: data as ReportDataTypes["ClickBehavior"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "PageSkipBehavior":
       postBehaviorsPageskipbehaviors({
         requestBody: data as ReportDataTypes["PageSkipBehavior"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     case "RoutingSkipBehavior":
       postBehaviorsRoutingskipbehaviors({
         requestBody: data as ReportDataTypes["RoutingSkipBehavior"][],
-      }).catch((e) => {});
+      }).catch((e) => {
+        console.log(e);
+      });
       break;
     default:
       throw new Error(`Unknown apiId: ${apiId}`);
@@ -112,8 +152,7 @@ export const stagingReport = <K extends keyof ReportDataTypes>(
   const cacheItems = cacheMap.get(apiId) as any[];
   cacheItems.push(data);
   count++;
-  console.log(apiId, count, cacheMap.get(apiId));
-  if (count > 10) {
+  if (count >= cacheMapSize) {
     reportAll();
   }
 };

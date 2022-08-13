@@ -16,8 +16,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "rollup-plugin-ts": "^3.0.2",
-    "rollup": "^2.77.2"
+    "rollup": "^2.77.2",
+    "rollup-plugin-ts": "^3.0.2"
   },
   "browserslist": {
     "production": [

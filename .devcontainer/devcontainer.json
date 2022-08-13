@@ -19,10 +19,12 @@
       "extensions": [
         "Vue.volar",
         "eamodio.gitlens",
-        "syler.sass-indented",
+        "mrmlnc.vscode-scss",
+        "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "sdras.vue-vscode-snippets",
         "EditorConfig.EditorConfig",
+        "stylelint.vscode-stylelint",
         "formulahendry.auto-rename-tag",
         "christian-kohler.npm-intellisense",
         "streetsidesoftware.code-spell-checker"

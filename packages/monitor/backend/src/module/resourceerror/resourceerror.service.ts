@@ -19,7 +19,7 @@ export class ResourceerrorService {
       index: resourceerrorIndex,
       body,
     });
-    if (res.statusCode === 201) {
+    if (res.statusCode === 200) {
       return responseRust.success_creat();
     }
     return responseRust.error("上传失败,原因:" + JSON.stringify(res));

@@ -5,15 +5,15 @@
       :value="markString"
       :plugins="plugins"
       :locale="zhHans"
+      :upload-images="uploadImage"
       @change="handleChange"
-      :uploadImages="uploadImage"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
 // 这里就是引入所有的扩展的插件
-import { postImages } from "@balabala/api";
+import { postImages } from "@/apis";
 import breaks from "@bytemd/plugin-breaks";
 import frontmatter from "@bytemd/plugin-frontmatter";
 import gemoji from "@bytemd/plugin-gemoji";
@@ -67,6 +67,7 @@ const uploadImage = async (files: any[]) => {
 .details {
   width: 100%;
   height: 100%;
+
   .editos {
     .bytemd {
       height: calc(100vh - 62px) !important;

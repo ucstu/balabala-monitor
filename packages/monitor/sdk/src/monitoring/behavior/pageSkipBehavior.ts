@@ -1,40 +1,38 @@
 import { getBasicParams, getPageUrl } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
+import { PageSkipBehavior } from "@balabala/monitor-api";
 
 export default function initPageSkipBehavior() {
-  let from = "";
+  let from1 = "";
   window.addEventListener(
     "popstate",
     () => {
-      const to = getPageUrl();
-
+      const to1 = getPageUrl();
       stagingReport("PageSkipBehavior", {
-        mainType: 3,
-        subType: 3001,
+        mainType: PageSkipBehavior.mainType.PageSkipBehavior,
+        subType: PageSkipBehavior.subType.PageSkipBehavior,
         ...getBasicParams(),
-        from: from,
-        to: to,
+        from: from1,
+        to: to1,
       });
-      from = to;
+      from1 = to1;
     },
     true
   );
 
-  let oldURL = "";
+  let from2 = "";
   window.addEventListener(
     "hashchange",
     (event) => {
-      const newURL = event.newURL;
-
+      const to2 = event.newURL;
       stagingReport("PageSkipBehavior", {
-        mainType: 3,
-        subType: 3001,
+        mainType: PageSkipBehavior.mainType.PageSkipBehavior,
+        subType: PageSkipBehavior.subType.PageSkipBehavior,
         ...getBasicParams(),
-        from: oldURL,
-        to: newURL,
+        from: from2,
+        to: to2,
       });
-
-      oldURL = newURL;
+      from2 = to2;
     },
     true
   );

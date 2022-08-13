@@ -29,5 +29,32 @@
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "stylelint.snippet": [
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "stylus",
+    "postcss",
+    "vue"
+  ],
+  "stylelint.validate": [
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "stylus",
+    "postcss",
+    "vue"
+  ],
+  "volar.codeLens.scriptSetupTools": true,
+  "volar.vueserver.useSecondServer": false
 }

@@ -17,11 +17,11 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .divider {
-  color: rgb(0, 0, 0, 0.1);
   display: inline-block;
-  height: 1px;
   width: 100%;
+  height: 1px;
+  color: rgb(0 0 0 / 10%);
+  background: rgb(0 0 0 / 10%);
   opacity: 0.6;
-  background: rgb(0, 0, 0, 0.1);
 }
 </style>

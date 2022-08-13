@@ -1,46 +1,69 @@
 <template>
-  <aside class="leftMenu">
+  <aside class="left-menu">
     <ul>
-      <li v-for="(value, index) in props.menu" :key="index">
-        <i class="fa fa-desktop"></i><a href="#">{{ value.name }}</a>
+      <li v-for="(value, index) in menuList" :key="index">
+        <router-link :to="value.path" active-class="active"
+          ><i class="fa fa-desktop"></i>
+          <span class="flex-row items-center justify-center">{{
+            value.name
+          }}</span>
+        </router-link>
       </li>
     </ul>
   </aside>
 </template>
 
 <script setup lang="ts">
-import type { RouteLocationNormalizedLoaded } from "vue-router";
-
-const props = defineProps<{
-  route: RouteLocationNormalizedLoaded;
-  menu: Array<{
-    id: String;
-    name: String;
+const { menuList } = defineProps<{
+  menuList: Array<{
+    name: string;
+    path: string;
   }>;
 }>();
 </script>
 
 <style scoped lang="scss">
-.leftMenu {
-  background-color: rgba(173, 169, 169, 0.6);
-  padding: 20px 0;
-}
-.leftMenu > ul > li {
-  height: 42px;
-  line-height: 42px;
-  padding-left: 20px;
-  display: flex;
-  align-items: center;
-}
-.leftMenu > ul > li:hover {
-  background-color: rgb(190, 184, 184);
-}
-.leftMenu > ul {
-  margin-top: 5px;
-}
-.leftMenu > ul > li > a {
-  text-decoration: none;
-  color: rgb(100, 98, 98);
-  margin-left: 30px;
+.left-menu {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 10px 0;
+  background-color: white;
+
+  ul {
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+
+    li {
+      &:hover {
+        background-color: rgb(201 193 193 / 50%);
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        height: 42px;
+        padding-left: 20px;
+        margin: 10px 0;
+        line-height: 42px;
+        color: rgb(100 98 98);
+        text-decoration: none;
+        border-right: 3px solid transparent;
+
+        &.active {
+          color: #ea6947;
+          background-color: rgb(255 227 235 / 70%);
+          border-right: 3px solid #ea5c35;
+        }
+
+        span {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: clip; /* 文字隐藏后添加省略号 */
+          white-space: nowrap; /* 强制不换行 */
+        }
+      }
+    }
+  }
 }
 </style>

@@ -1,17 +1,19 @@
-import { getBasicParams } from "@/common/utils/datas";
+import { JavaScriptError } from "@/common/utils/apis";
+import { getBasicParams, getTimeStamp } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
-export default function initJavaScriptError(): void {
+export default () => {
   window.onerror = (msg, url, line, column, error) => {
     stagingReport("JavaScriptError", {
-      mainType: 2,
-      subType: 2001,
+      mainType: JavaScriptError.mainType.JavaScriptError,
+      subType: JavaScriptError.subType.JavaScriptError,
       ...getBasicParams(),
+      url: url || "",
       msg: typeof msg === "string" ? msg : JSON.stringify(msg),
       line: line || -1,
       column: column || -1,
-      errorTime: performance.now(),
+      errorTime: getTimeStamp(),
       stack: error?.stack || "no stack trace available",
     });
   };
-}
+};

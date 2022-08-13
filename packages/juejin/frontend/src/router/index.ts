@@ -1,5 +1,15 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-const routes: Array<RouteRecordRaw> = [
+import type { RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
+
+declare module "vue-router" {
+  interface RouteMeta {
+    title?: string;
+    keepAlive?: boolean;
+    hiddenHeader?: boolean;
+  }
+}
+
+const routeRecordRaws: Array<RouteRecordRaw> = [
   {
     path: "/",
     redirect: "/home",
@@ -20,8 +30,16 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
 ];
+
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes: [...routeRecordRaws],
 });
+
+router.afterEach((to, _from) => {
+  document.title = to.meta.title
+    ? "稀土掘金-" + (to.meta.title || "")
+    : "Balabala云-稀土掘金";
+});
+
 export default router;

@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import { postArticle } from "@balabala/api";
+import { postArticle } from "@/apis";
 import { ref } from "vue";
 import Editor from "./Editor.vue";
 import PublishComfirm from "./PublishComfirm.vue";

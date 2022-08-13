@@ -1,59 +1,70 @@
 <template>
-  <aside class="leftMenu">
+  <aside class="left-menu">
     <ul>
       <li v-for="(value, index) in menuList" :key="index">
         <router-link :to="value.path" active-class="active"
-          ><i class="fa fa-desktop"></i
-          ><span>{{ value.name }}</span></router-link
-        >
+          ><i class="fa fa-desktop"></i>
+          <span class="flex-row items-center justify-center">{{
+            value.name
+          }}</span>
+        </router-link>
       </li>
     </ul>
   </aside>
 </template>
 
 <script setup lang="ts">
-import type { RouteLocationNormalizedLoaded } from "vue-router";
-
-const { route, menuList = [] } = defineProps<{
-  route: RouteLocationNormalizedLoaded;
-  menuList?: Array<{
-    name: String;
-    path: String;
+const { menuList } = defineProps<{
+  menuList: Array<{
+    name: string;
+    path: string;
   }>;
 }>();
 </script>
 
 <style scoped lang="scss">
-.leftMenu {
-  background-color: white;
+.left-menu {
+  box-sizing: border-box;
   width: 200px;
   height: 100%;
-}
-.leftMenu > ul > li > a {
-  height: 42px;
-  line-height: 42px;
-  padding-left: 20px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgb(100, 98, 98);
-  margin: 10px 0;
-}
+  padding: 10px 0;
+  background-color: white;
 
-.leftMenu > ul > li:hover {
-  background-color: rgba(201, 193, 193, 0.5);
-}
-.leftMenu > ul {
-  margin-top: 10px;
-  list-style: none;
-  padding: 0 0;
-}
-.leftMenu > ul > li > a > span {
-  margin-left: 30px;
-}
-.leftMenu > ul > li > a.active {
-  color: #ea6947;
-  border-right: 3px solid #ea5c35;
-  background-color: rgba(255, 227, 235, 0.7);
+  ul {
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+
+    li {
+      &:hover {
+        background-color: rgb(201 193 193 / 50%);
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        height: 42px;
+        padding-left: 15px;
+        margin: 10px 0;
+        line-height: 42px;
+        color: rgb(100 98 98);
+        text-decoration: none;
+        border-right: 3px solid transparent;
+
+        &.active {
+          color: #ea6947;
+          background-color: rgb(255 227 235 / 70%);
+          border-right: 3px solid #ea5c35;
+        }
+
+        span {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: clip; /* 文字隐藏后添加省略号 */
+          white-space: nowrap; /* 强制不换行 */
+        }
+      }
+    }
+  }
 }
 </style>

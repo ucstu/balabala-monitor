@@ -1,4 +1,4 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
-export interface ResourceerrorVo extends BaseQueryVo {}
-export interface ResourceerrorTotalVo extends BaseTotalVo {}
+export type ResourceerrorVo = BaseQueryVo;
+export type ResourceerrorTotalVo = BaseTotalVo;

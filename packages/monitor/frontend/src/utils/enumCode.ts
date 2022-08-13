@@ -1,5 +1,5 @@
-const Enum = {
+const Enum: Record<number, string> = {
   1: "",
 };
 
-export const getCodeName = () => {};
+export const getCodeName = (key: number) => Enum[key];

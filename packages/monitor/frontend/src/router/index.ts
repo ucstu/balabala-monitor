@@ -5,7 +5,6 @@ declare module "vue-router" {
   interface RouteMeta {
     title?: string;
     keepAlive?: boolean;
-    hiddenAside?: boolean;
     hiddenHeader?: boolean;
     menu?: Array<{ name: string; path: string }>;
   }
@@ -17,25 +16,25 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     meta: {
       menu: [
-        { name: "数据总览", path: "/Home/overView" },
-        { name: "健康状况", path: "/Home/healthStatus" },
-        { name: "性能预览", path: "/Home/performancePreview" },
-        { name: "地域分布", path: "/Home/region" },
+        { name: "数据总览", path: "/overView" },
+        { name: "健康状况", path: "/healthStatus" },
+        { name: "性能预览", path: "/performancePreview" },
+        { name: "地域分布", path: "/region" },
       ],
     },
     component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/Home/overView",
+    redirect: "/overView",
     children: [
       {
-        path: "/Home/overView",
+        path: "overView",
         name: "overView",
         meta: {
-          title: "概览",
+          title: "数据总览",
         },
         component: () => import("@/pages/systemSet/overView.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "/Home/healthStatus",
+        path: "healthStatus",
         name: "healthStatus",
         meta: {
           title: "健康状况",
@@ -43,7 +42,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
         component: () => import("@/pages/systemSet/healthStatus.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "/Home/performancePreview",
+        path: "performancePreview",
         name: "performancePreview",
         meta: {
           title: "性能预览",
@@ -51,32 +50,36 @@ const routeRecordRaws: RouteRecordRaw[] = [
         component: () => import("@/pages/systemSet/performancePreview.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "/Home/region",
+        path: "region",
         name: "region",
         meta: {
           title: "地域分布",
         },
-        component: () => import("@/pages/systemSet/region.vue"), //懒加载的方式提高性能优化
+        component: () => import("@/pages/systemSet/WhatRegion.vue"), //懒加载的方式提高性能优化
       },
     ],
   },
   {
     name: "customerSearch",
     path: "/customerSearch",
-    meta: { hiddenAside: true },
     component: () => import("@/pages/CustomerPage/customerSearch.vue"),
   },
   {
     name: "details",
     path: "/customerSearch/details",
-    meta: { hiddenAside: true, hiddenHeader: true },
-    component: () => import("@/pages/CustomerPage/details.vue"),
+    component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [...routeRecordRaws],
+});
+
+router.afterEach((to, _from) => {
+  document.title = to.meta.title
+    ? "前端监控-" + (to.meta.title || "")
+    : "Balabala云-前端监控";
 });
 
 export default router;

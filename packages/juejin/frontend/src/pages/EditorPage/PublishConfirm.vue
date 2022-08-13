@@ -1,10 +1,12 @@
 <template>
-  <div class="panel" style="">
+  <div class="panel">
     <div class="title">发布文章</div>
     <div class="form-item">
       <div class="label required category-label">分类：</div>
       <div class="form-item-content category-list">
-        <div class="item" v-for="item in labelList">{{ item }}</div>
+        <div v-for="(item, index) in labelList" :key="index" class="item">
+          {{ item }}
+        </div>
       </div>
     </div>
     <div class="form-item">
@@ -25,17 +27,17 @@
               <span
                 class="byte-select__input"
                 style="
-                  height: 0px;
-                  overflow: hidden;
                   position: absolute;
                   max-width: 100%;
+                  height: 0;
+                  overflow: hidden;
                 "
               ></span>
               <div
                 class="byte-select-dropdown byte-select-dropdown--multiple tag-select-add-margin"
-                style="width: 0px; display: none"
+                style="display: none; width: 0"
               >
-                <div class="byte-select-dropdown__wrap" style="">
+                <div class="byte-select-dropdown__wrap">
                   <!---->
                   <div data-v-719180a7="" class="tag-number-container">
                     你还能添加
@@ -171,17 +173,17 @@
               <span
                 class="byte-select__input"
                 style="
-                  height: 0px;
-                  overflow: hidden;
                   position: absolute;
                   max-width: 100%;
+                  height: 0;
+                  overflow: hidden;
                 "
               ></span>
               <div
                 class="byte-select-dropdown byte-select-dropdown--multiple"
-                style="width: 0px; display: none"
+                style="display: none; width: 0"
               >
-                <div class="byte-select-dropdown__wrap" style="">
+                <div class="byte-select-dropdown__wrap">
                   <!---->
                   <li
                     data-v-5c289105=""
@@ -200,7 +202,7 @@
     <div class="summary-box form-item">
       <div class="label required">编辑摘要：</div>
       <div class="summary form-item-content">
-        <span style="color: rgb(238, 77, 56)"> 0/100 </span>
+        <span style="color: rgb(238 77 56)"> 0/100 </span>
         <div class="summary-textarea byte-input byte-input--normal">
           <textarea
             maxlength="100"
@@ -254,19 +256,18 @@ const labelList = [
 <style lang="scss" scoped>
 .panel {
   position: absolute;
-  margin: 1.8rem -3rem 0 0;
   top: 100%;
   right: 0;
+  z-index: 100;
   width: 560px;
+  margin: 1.8rem -3rem 0 0;
   font-size: 1.2rem;
-  white-space: nowrap;
   color: #909090;
+  white-space: nowrap;
+  cursor: default;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 2px;
-  -webkit-box-shadow: 0 1px 2px #f1f1f1;
   box-shadow: 0 1px 2px #f1f1f1;
-  cursor: default;
-  z-index: 100;
 }
 </style>

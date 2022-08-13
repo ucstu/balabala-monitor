@@ -1,5 +1,5 @@
 import { JavaScriptError } from "@/common/utils/apis";
-import { getBasicParams } from "@/common/utils/datas";
+import { getBasicParams, getTimeStamp } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
       msg: typeof msg === "string" ? msg : JSON.stringify(msg),
       line: line || -1,
       column: column || -1,
-      errorTime: performance.now(),
+      errorTime: getTimeStamp(),
       stack: error?.stack || "no stack trace available",
     });
   };

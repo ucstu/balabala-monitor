@@ -3,7 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import path from "path";
 import { defineConfig } from "vite";
-import monacoEditorPlugin from "vite-plugin-monaco-editor";
 // https://vitejs.dev/config/
 
 export default defineConfig({
@@ -17,7 +16,6 @@ export default defineConfig({
       reactivityTransform: true,
     }),
     legacy(),
-    monacoEditorPlugin.default({}),
   ],
   resolve: {
     alias: {

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import overview from "./overview.vue";
+import overview from "./errorList.vue";
 </script>
 
 <style scoped lang="scss">

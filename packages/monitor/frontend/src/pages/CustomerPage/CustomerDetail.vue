@@ -106,18 +106,232 @@
             </template>
           </div>
           <div class="action-info">
-            <div>
+            <div v-if="chosesAction !== -1">
               <div class="action-info-item">
-                <div>事件类型：</div>
-                <div>dsadsadsad</div>
+                <div class="action-info-item-title">事件类型：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.title }}
+                </div>
               </div>
               <div class="action-info-item">
-                <div>发生时间：</div>
-                <div>dsadsadsad</div>
+                <div class="action-info-item-title">发生时间：</div>
+                <div class="action-info-item-data">
+                  {{ dayjs(showActionInfo.time).format("YYYY-MM-DD HH:mm:ss") }}
+                </div>
               </div>
               <div class="action-info-item">
-                <div>发生页面：</div>
-                <div>dsadsadsad</div>
+                <div class="action-info-item-title">发生页面：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.pageUrl }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 1
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">资源类型：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.resourceType }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 1
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">资源路径：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.path }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">文件路径：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.url }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误消息：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.msg }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误行号：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.line }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误列号：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.column }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误调用堆栈：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.stack }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 3 && showActionInfo.mainType === 3
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误调用堆栈：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.stack }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误调用堆栈：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.stack }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">错误调用堆栈：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.stack }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 4 &&
+                  showActionInfo.subType === 2001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">
+                  点击位置距离页面左端距离：
+                </div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.left }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 4 &&
+                  showActionInfo.subType === 2001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">
+                  点击位置距离页面顶端距离：
+                </div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.top }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 4 &&
+                  showActionInfo.subType === 2001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">点击对象：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.target }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 4 &&
+                  showActionInfo.subType === 2001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">内部文本：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.inner }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 5 &&
+                  showActionInfo.subType === 3001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">路由跳转起步位置：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.from }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 5 &&
+                  showActionInfo.subType === 3001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">路由跳转目的位置：</div>
+                <div class="action-info-item-data">{{ showActionInfo.to }}</div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 6 &&
+                  showActionInfo.subType === 4001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">路径参数：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.params }}
+                </div>
+              </div>
+              <div
+                v-if="
+                  showActionInfo.listType === 6 &&
+                  showActionInfo.subType === 4001
+                "
+                class="action-info-item"
+              >
+                <div class="action-info-item-title">查询参数：</div>
+                <div class="action-info-item-data">
+                  {{ showActionInfo.query }}
+                </div>
               </div>
             </div>
           </div>
@@ -144,7 +358,7 @@
 浏览
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
-<script setup lang="ts">
+<script lang="ts" setup>
 import {
   getBehaviorsBasicbehaviors,
   getBehaviorsClickbehaviors,
@@ -160,8 +374,9 @@ import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
-import { nextTick, onMounted } from "vue";
+import { nextTick, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
+
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
 const pageDom = $ref<HTMLElement>();
@@ -215,10 +430,29 @@ let chosesAction = $ref(-1);
 let showActionInfo = $ref<Info>();
 
 type Info = {
-  title: string;
-  time: string;
-  pageUrl: string;
-  content?: string;
+  title?: string; // 类型名称
+  time?: string; // 发生时间
+  pageUrl?: string; //发生页面
+  listType?: number;
+  mainType?: number;
+  subType?: number;
+  content?: string; //发生内容
+  resourceType?: string; //资源类型
+  path?: string; // 资源路径
+  url?: string; // 文件路径
+  msg?: string; // 错误消息
+  line?: number; // 错误行号
+  column?: number; // 错误列号
+  stack?: string; // 错误调用堆栈
+  value?: number; // 指标数值
+  left?: number; // 点击位置距离页面左端距离
+  top?: number; // 点击位置距离页面顶端距离
+  target?: string; // 点击对象
+  inner?: string; // 内部文本
+  from?: string; // 路由跳转起步位置
+  to?: string; // 路由跳转目的位置
+  params?: string; // 路径参数
+  query?: string; // 查询参数
 };
 
 onMounted(() => {
@@ -244,9 +478,29 @@ const userActionParms = $ref({
 
 const clickAction = (index: number) => {
   chosesAction = index;
+  showActionInfo = {};
   showActionInfo.title = actionList[chosesAction].title;
   showActionInfo.time = actionList[chosesAction].time;
   showActionInfo.pageUrl = actionList[chosesAction].pageUrl;
+  showActionInfo.listType = actionList[chosesAction].listType;
+  showActionInfo.mainType = actionList[chosesAction].mainType;
+  showActionInfo.subType = actionList[chosesAction].subType;
+  showActionInfo.resourceType = actionList[chosesAction].resourceType;
+  showActionInfo.path = actionList[chosesAction].path;
+  showActionInfo.url = actionList[chosesAction].url;
+  showActionInfo.msg = actionList[chosesAction].msg;
+  showActionInfo.line = actionList[chosesAction].line;
+  showActionInfo.column = actionList[chosesAction].column;
+  showActionInfo.stack = actionList[chosesAction].stack;
+  showActionInfo.value = actionList[chosesAction].value;
+  showActionInfo.left = actionList[chosesAction].left;
+  showActionInfo.top = actionList[chosesAction].top;
+  showActionInfo.target = actionList[chosesAction].target;
+  showActionInfo.inner = actionList[chosesAction].inner;
+  showActionInfo.from = actionList[chosesAction].from;
+  showActionInfo.to = actionList[chosesAction].to;
+  showActionInfo.params = actionList[chosesAction].params;
+  showActionInfo.query = actionList[chosesAction].query;
 };
 
 // 加载行为记录列表
@@ -270,7 +524,7 @@ const loadResourceerrors = () => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
-      temp.title = "错误";
+      temp.title = "资源错误";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
     });
@@ -283,7 +537,7 @@ const loadJavascripterrors = () => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
-      temp.title = "错误";
+      temp.title = "JavaScript错误";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
     });
@@ -295,7 +549,7 @@ const loadPromiseerrors = () => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 3;
-      temp.title = "接口";
+      temp.title = "接口错误";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
     });
@@ -307,7 +561,7 @@ const loadVueerrors = () => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
-      temp.title = "错误";
+      temp.title = "vue错误";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
     });
@@ -344,7 +598,7 @@ const loadPageskipbehaviors = () => {
   return getBehaviorsPageskipbehaviors({ ...userActionParms }).then((e) => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
-      temp.listType = 1;
+      temp.listType = 5;
       temp.title = "页面浏览";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
@@ -356,7 +610,7 @@ const loadRoutingskipbehaviors = () => {
   return getBehaviorsRoutingskipbehaviors({ ...userActionParms }).then((e) => {
     e.data.forEach((data) => {
       const temp = Object.assign({ ...data });
-      temp.listType = 1;
+      temp.listType = 6;
       temp.title = "页面浏览";
       temp.time = temp.errorTime || temp.startTime;
       actionList.push(temp);
@@ -365,7 +619,7 @@ const loadRoutingskipbehaviors = () => {
 };
 
 const loadAllData = async () => {
-  const resultData = await Promise.all([
+  await Promise.all([
     loadResourceerrors(),
     loadJavascripterrors(),
     loadPromiseerrors(),
@@ -376,14 +630,15 @@ const loadAllData = async () => {
     loadRoutingskipbehaviors(),
   ]);
   actionList.sort((data1, data2) => data1.time - data2.time);
-  console.log(actionList);
+  //console.log(actionList);
 };
-
-// const updateTime = computed(() => {
-//   userActionParms.endtime = dayjs(userActionParms.starttime)
-//     .add(1, "day")
-//     .format("YYYY-MM-DD");
-// });
+// 计算结束时间
+watch(
+  () => userActionParms.starttime,
+  (newVal, oldVal) => {
+    userActionParms.endtime = dayjs(newVal).add(1, "day").format("YYYY-MM-DD");
+  }
+);
 
 const search = () => {
   if (!userActionParms.userid) {
@@ -535,6 +790,12 @@ const search = () => {
         .action-info-item {
           width: 100%;
           margin-bottom: 20px;
+          word-wrap: break-word;
+
+          .action-info-item-data {
+            font-size: 14px;
+            color: gray;
+          }
         }
       }
     }

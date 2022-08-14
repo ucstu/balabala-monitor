@@ -25,7 +25,6 @@ const { menuList } = defineProps<{
 <style scoped lang="scss">
 .left-menu {
   box-sizing: border-box;
-  width: 200px;
   height: 100%;
   padding: 10px 0;
   background-color: white;
@@ -44,7 +43,7 @@ const { menuList } = defineProps<{
         display: flex;
         align-items: center;
         height: 42px;
-        padding-left: 15px;
+        padding-left: 20px;
         margin: 10px 0;
         line-height: 42px;
         color: rgb(100 98 98);

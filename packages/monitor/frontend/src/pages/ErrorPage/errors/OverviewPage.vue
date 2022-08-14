@@ -27,34 +27,31 @@
           <table>
             <thead style="height: 45px">
               <tr>
-                <th style="width: 58%">最新错误(最近5分钟)</th>
+                <th style="width: 70%">最新错误(最近5分钟)</th>
                 <th style="width: 30%">发生次数</th>
-                <th style="width: 12%">影响人数</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td></td>
+
                 <td></td>
+              </tr>
+              <tr>
+                <td></td>
+
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+
                 <td></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td></td>
               </tr>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
                 <td></td>
                 <td></td>
               </tr>
@@ -74,34 +71,28 @@
           <table>
             <thead>
               <tr>
-                <th style="width: 58%">最新错误(最近5分钟)</th>
+                <th style="width: 70%">最新错误(最近5分钟)</th>
                 <th style="width: 30%">发生次数</th>
-                <th style="width: 12%">影响人数</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td></td>
                 <td></td>
-                <td></td>
               </tr>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td></td>
               </tr>
               <tr>
                 <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td></td>
                 <td></td>
               </tr>
@@ -165,7 +156,8 @@ let date = nowDate(b);
     margin-left: 20px;
 
     table {
-      margin: 0 auto;
+      // margin: 0 auto;
+      width: 100%;
       text-align: left;
       border-collapse: collapse;
 
@@ -205,6 +197,8 @@ let date = nowDate(b);
     width: 100%;
     height: 300px;
 
+    // margin-top: 40px;
+
     // border: 3px solid #ccc;
     background-color: rgb(255 255 255);
 
@@ -213,7 +207,8 @@ let date = nowDate(b);
       flex-direction: row;
       column-gap: 10px;
       float: left;
-      padding-left: 20px;
+      padding-top: 40px;
+      padding-left: 40px;
 
       // border:3px solid #ccc;
       limit {
@@ -225,6 +220,7 @@ let date = nowDate(b);
       float: right;
       width: 100%;
       height: 30px;
+      padding-top: 40px;
 
       .calendar {
         box-sizing: border-box;

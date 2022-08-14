@@ -12,10 +12,10 @@
       </div>
       <div class="top-right">
         <div class="sort">
-          <div style="color: #aaa">排序</div>
+          <div>排序</div>
           <div>
             <form action="#">
-              <select style="color: rgb(0 0 0 / 70%)">
+              <select>
                 <option>发生次数</option>
                 <option>影响人数</option>
               </select>
@@ -31,70 +31,33 @@
       <table>
         <thead>
           <tr>
-            <th class="checkbox th1">
-              <div><input type="checkbox" /></div>
-            </th>
-            <th class="th2">
-              <div>
-                <button class="solve">
-                  <!-- @click="" -->
-                  <i><img src="@/assets/solve_before.png" /></i>
-                  <span>解决</span></button
-                ><button class="ignore">
-                  <i><img src="@/assets/ignore_before.png" /></i>
-                  <span>忽略</span>
-                </button>
-              </div>
-            </th>
-            <th class="th3">状态</th>
-            <th class="th4">报错趋势:30min</th>
-            <th class="th5">发生次数</th>
-            <th class="th6">影响人数</th>
-            <th class="th7">处理人</th>
+            <th class="th1">错误</th>
+            <th class="th2">报错趋势:30min</th>
+            <th class="th3">发生次数</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="checkbox"><input type="checkbox" /></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td class="checkbox"><input type="checkbox" /></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td class="checkbox"><input type="checkbox" /></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td class="checkbox"><input type="checkbox" /></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td class="checkbox"><input type="checkbox" /></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -113,29 +76,34 @@
   height: 100%;
   background-color: rgb(0 0 0 / 4%);
 
-  select {
-    cursor: pointer;
-    border: 0;
-  }
-
   .top {
     width: 100%;
     height: 70px;
-    background-color: rgb(255 255 255);
 
     .top-left {
       box-sizing: border-box;
       float: left;
-      margin: 20px;
+      padding: 30px;
 
       select {
-        font-size: 18px;
+        width: 140px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+
+        // background-color: rgb(169 235 235);
       }
     }
 
     .top-right {
-      box-sizing: border-box;
       float: right;
+      padding: 30px;
+
+      select {
+        cursor: pointer;
+        border: 0;
+      }
 
       div {
         display: inline-block;
@@ -157,7 +125,7 @@
     .calendar {
       input {
         width: 130px;
-        height: 28px;
+        height: 32px;
         font-size: 14px;
         border: 0;
         border: 1px solid #d9d9d9;
@@ -169,55 +137,30 @@
           outline: 2px solid #1890ff;
         }
       }
-
-      .calendar-left {
-        width: 14px;
-        height: 14px;
-        margin-right: 5px;
-      }
     }
   }
 
   .bottom {
-    width: 100%;
-    background-color: rgb(255 255 255);
-
-    .checkbox {
-      text-align: center;
-    }
+    padding: 30px;
 
     table {
       width: 100%;
       margin: 0 auto;
       text-align: left;
       border-collapse: collapse;
+      background-color: rgb(255 255 255);
 
       .th1 {
-        width: 5%;
+        width: 40%;
+        padding-left: 30px;
       }
 
       .th2 {
-        width: 37%;
+        width: 50%;
       }
 
       .th3 {
-        width: 9%;
-      }
-
-      .th4 {
-        width: 15%;
-      }
-
-      .th5 {
-        width: 14%;
-      }
-
-      .th6 {
-        width: 9%;
-      }
-
-      .th7 {
-        width: 9%;
+        width: 10%;
       }
 
       th {
@@ -225,7 +168,7 @@
         font-size: 16px;
         font-weight: 500;
         color: rgb(0 0 0 / 85%);
-        background-color: #fcfcfc;
+        background-color: #f4e1e1;
       }
 
       td {

@@ -23,8 +23,17 @@ export class Service {
      */
     articleId: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 文章信息
@@ -55,8 +64,17 @@ export class Service {
     articleId: string;
     requestBody?: Article;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 文章信息
@@ -87,8 +105,17 @@ export class Service {
      */
     articleId: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 文章信息
@@ -123,10 +150,25 @@ export class Service {
       filename: string;
     };
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
+    /**
+     * 数据主体
+     */
     data: {
+      /**
+       * 图片地址
+       */
       imageUrl: string;
     };
   }> {
@@ -151,6 +193,9 @@ export class Service {
        * 手机号码（登录用手机号，别用重复号码注册哈）
        */
       phone: string;
+      /**
+       * 用户密码
+       */
       password: string;
       /**
        * 昵称可重复
@@ -158,8 +203,17 @@ export class Service {
       name: string;
     };
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 账号信息
@@ -187,11 +241,23 @@ export class Service {
        * 手机号
        */
       phone: string;
+      /**
+       * 用户密码
+       */
       password: string;
     };
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 账号信息
@@ -215,19 +281,43 @@ export class Service {
     requestBody,
   }: {
     requestBody?: {
+      /**
+       * 文章标题
+       */
       articleTitle: string;
       /**
        * {1:后端,2:前端,3:Android,4:IOS,5:人工智能,6:开发工具,7:代码人生,8:阅读}
        */
       articleClass: number;
+      /**
+       * 文章标签
+       */
       articleTags: string;
+      /**
+       * 文章封面
+       */
       articleCover: string;
+      /**
+       * 文章概要
+       */
       articleSummary: string;
+      /**
+       * 文章内容
+       */
       articleContent: string;
     };
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 文章信息
@@ -270,11 +360,29 @@ export class Service {
      */
     sort?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
+    /**
+     * 数据主体
+     */
     data: {
+      /**
+       * 数据总数
+       */
       totalCount: number;
+      /**
+       * 文章信息列表
+       */
       articleInfos: Array<Article>;
     };
   }> {

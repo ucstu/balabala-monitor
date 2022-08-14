@@ -29,8 +29,17 @@ export class Service {
   }: {
     requestBody?: Array<BasicIndicator>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -89,8 +98,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 基础指标列表
@@ -123,8 +141,17 @@ export class Service {
   }: {
     requestBody?: Array<InterfaceIndicator>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -149,6 +176,7 @@ export class Service {
     type,
     subType,
     top,
+    isError,
   }: {
     /**
      * 应用ID
@@ -182,9 +210,22 @@ export class Service {
      * 排行前多少
      */
     top?: number;
+    /**
+     * 是否只查询错误接口请求，eg：true
+     */
+    isError?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 接口指标列表
@@ -203,6 +244,7 @@ export class Service {
         starttime: starttime,
         endtime: endtime,
         top: top,
+        isError: isError,
       },
     });
   }
@@ -217,8 +259,17 @@ export class Service {
   }: {
     requestBody?: Array<ResourceIndicator>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -277,8 +328,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 资源指标列表
@@ -311,8 +371,17 @@ export class Service {
   }: {
     requestBody?: Array<ResourceError>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -371,8 +440,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 资源错误列表
@@ -448,16 +526,37 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 基础指标统计列表
      */
-    data: Array<{
-      datetime: string;
-      count: number;
-    }>;
+    data: Array<
+      Array<{
+        /**
+         * 日期时间
+         */
+        datetime: string;
+        /**
+         * 统计总数
+         */
+        count: number;
+        /**
+         * 平均值
+         */
+        avarge: number;
+      }>
+    >;
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -492,6 +591,7 @@ export class Service {
     subType,
     top,
     granularity,
+    isError,
   }: {
     /**
      * 应用ID
@@ -529,17 +629,46 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
+    /**
+     * 是否只查询错误接口请求，eg：true
+     */
+    isError?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 接口指标统计列表
      */
-    data: Array<{
-      datetime: string;
-      count: number;
-    }>;
+    data: Array<
+      Array<{
+        /**
+         * 日期时间
+         */
+        datetime: string;
+        /**
+         * 统计总数
+         */
+        count: number;
+        /**
+         * 平均值
+         */
+        avarge: number;
+        /**
+         * 影响用户数
+         */
+        userCount: number;
+      }>
+    >;
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -554,6 +683,7 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
+        isError: isError,
       },
     });
   }
@@ -612,15 +742,38 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 资源指标统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
-      count: number;
+      /**
+       * 发生总数
+       */
+      happenCount: number;
+      /**
+       * 页面总数
+       */
+      pageCount: number;
+      /**
+       * 用户总数
+       */
+      userCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -693,15 +846,34 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 资源错误统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
+      /**
+       * 统计总数
+       */
       count: number;
+      /**
+       * 影响用户数
+       */
+      userCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -731,8 +903,17 @@ export class Service {
   }: {
     requestBody?: Array<JavaScriptError>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -791,8 +972,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * JavaScript错误列表
@@ -825,8 +1015,17 @@ export class Service {
   }: {
     requestBody?: Array<PromiseError>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -885,8 +1084,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * Promise错误列表
@@ -919,8 +1127,17 @@ export class Service {
   }: {
     requestBody?: Array<VueError>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -979,8 +1196,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * Vue错误列表
@@ -1056,15 +1282,34 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * JS错误统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
+      /**
+       * 统计总数
+       */
       count: number;
+      /**
+       * 影响用户数
+       */
+      userCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1137,15 +1382,34 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * Promise错误统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
+      /**
+       * 统计总数
+       */
       count: number;
+      /**
+       * 影响用户数
+       */
+      userCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1175,8 +1439,17 @@ export class Service {
   }: {
     requestBody?: Array<BasicBehavior>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -1235,8 +1508,17 @@ export class Service {
      */
     top?: number;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 基础行为列表
@@ -1312,15 +1594,34 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * Vue错误统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
+      /**
+       * 统计总数
+       */
       count: number;
+      /**
+       * 影响用户数
+       */
+      userCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1350,8 +1651,17 @@ export class Service {
   }: {
     requestBody?: Array<ClickBehavior>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -1386,8 +1696,17 @@ export class Service {
     subType?: string;
     top?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 点击行为列表
@@ -1420,8 +1739,17 @@ export class Service {
   }: {
     requestBody?: Array<PageSkipBehavior>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -1456,8 +1784,17 @@ export class Service {
     subType?: string;
     top?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 页面跳转行为列表
@@ -1490,8 +1827,17 @@ export class Service {
   }: {
     requestBody?: Array<RoutingSkipBehavior>;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
   }> {
     return this.httpRequest.request({
@@ -1526,8 +1872,17 @@ export class Service {
     subType?: string;
     top?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 路由跳转行为列表
@@ -1603,15 +1958,34 @@ export class Service {
      */
     granularity?: string;
   }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
     timestamp: string;
+    /**
+     * 状态编码
+     */
     status: number;
+    /**
+     * 状态描述
+     */
     message: string;
     /**
      * 基础行为统计列表
      */
     data: Array<{
+      /**
+       * 日期时间
+       */
       datetime: string;
+      /**
+       * 统计总数
+       */
       count: number;
+      /**
+       * 平均值
+       */
+      average: number;
     }>;
   }> {
     return this.httpRequest.request({

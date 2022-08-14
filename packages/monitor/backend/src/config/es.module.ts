@@ -5,8 +5,8 @@ import { ElasticsearchModule } from "@nestjs/elasticsearch";
 @Module({
   imports: [
     ElasticsearchModule.register({
-      // node: "***REMOVED***",
-      node: "http://192.168.134.130:9200",
+      node: "***REMOVED***",
+      // node: "http://192.168.134.130:9200",
     }),
   ],
   exports: [ElasticsearchModule],

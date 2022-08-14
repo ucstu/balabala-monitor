@@ -87,6 +87,26 @@ const routeRecordRaws: RouteRecordRaw[] = [
     meta: { hiddenAside: true, hiddenHeader: false },
     component: () => import("@/pages/ErrorPage/ResourcePage/ResourcePage.vue"),
   },
+  {
+    name: "PerPage",
+    path: "/PerformPage/PerPage",
+    meta: {
+      title: "页面性能监控",
+      hiddenAside: true,
+      hiddenHeader: false,
+    },
+    component: () => import("@/pages/PerformPage/PerPage.vue"),
+  },
+  {
+    name: "PerAPi",
+    path: "/PerformPage/PerAPI",
+    meta: {
+      title: "API性能监控",
+      hiddenAside: true,
+      hiddenHeader: false,
+    },
+    component: () => import("@/pages/PerformPage/PerAPI.vue"),
+  },
 ];
 
 const router = createRouter({

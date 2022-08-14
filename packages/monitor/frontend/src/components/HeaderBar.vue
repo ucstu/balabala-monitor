@@ -29,10 +29,12 @@
         <a href="#">错误</a><i class="fa fa-chevron-down"></i>
         <ul>
           <li>
-            <router-link to="/ErrorPage/errors/LogPage">错误统计</router-link>
+            <router-link to="/ErrorPage/errors/OverviewPage"
+              >错误统计</router-link
+            >
           </li>
           <li>
-            <router-link to="/ErrorPage/APIError/APILogPage"
+            <router-link to="/ErrorPage/APIError/APIOverview"
               >api接口错误统计</router-link
             >
           </li>

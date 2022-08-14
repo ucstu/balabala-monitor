@@ -60,6 +60,55 @@ const routeRecordRaws: RouteRecordRaw[] = [
     ],
   },
   {
+    name: "ErrorPage",
+    path: "/",
+    meta: {
+      menu: [
+        { name: "概览", path: "/ErrorPage/errors/OverviewPage" },
+        { name: "错误列表", path: "/ErrorPage/errors/errorList" },
+      ],
+    },
+    component: () => import("@/pages/HomePage/HomePage.vue"),
+    redirect: "/ErrorPage/errors/OverviewPage",
+    children: [
+      {
+        path: "/ErrorPage/errors/OverviewPage",
+        name: "OverviewPage",
+        component: () => import("@/pages/ErrorPage/errors/OverviewPage.vue"), //懒加载的方式提高性能优化
+      },
+      {
+        path: "/ErrorPage/errors/errorList",
+        name: "errorList",
+        component: () => import("@/pages/ErrorPage/errors/errorList.vue"), //懒加载的方式提高性能优化
+      },
+    ],
+  },
+  {
+    name: "APIError",
+    path: "/",
+    meta: {
+      menu: [
+        { name: "概览", path: "/ErrorPage/APIError/APIOverview" },
+        { name: "错误列表", path: "/ErrorPage/APIError/InterfaceRequest" },
+      ],
+    },
+    component: () => import("@/pages/HomePage/HomePage.vue"),
+    redirect: "/ErrorPage/APIError/APIOverview",
+    children: [
+      {
+        path: "/ErrorPage/APIError/APIOverview",
+        name: "APIOverview",
+        component: () => import("@/pages/ErrorPage/APIError/APIOverview.vue"), //懒加载的方式提高性能优化
+      },
+      {
+        path: "/ErrorPage/APIError/InterfaceRequest",
+        name: "InterfaceRequest",
+        component: () =>
+          import("@/pages/ErrorPage/APIError/InterfaceRequest.vue"), //懒加载的方式提高性能优化
+      },
+    ],
+  },
+  {
     name: "customerSearch",
     path: "/customerSearch",
     component: () => import("@/pages/CustomerPage/customerSearch.vue"),
@@ -68,18 +117,6 @@ const routeRecordRaws: RouteRecordRaw[] = [
     name: "details",
     path: "/customerSearch/details",
     component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
-  },
-  {
-    name: "errors",
-    path: "/ErrorPage/errors/LogPage",
-    meta: { hiddenAside: true, hiddenHeader: false },
-    component: () => import("@/pages/ErrorPage/errors/LogPage.vue"),
-  },
-  {
-    name: "APIerrors",
-    path: "/ErrorPage/APIError/APILogPage",
-    meta: { hiddenAside: true, hiddenHeader: false },
-    component: () => import("@/pages/ErrorPage/APIError/APILogPage.vue"),
   },
   {
     name: "resource",

@@ -15,6 +15,9 @@ const fix = (json) => {
       }
     }
   }
+  if (keys.includes("title") && !keys.includes("description")) {
+    json["description"] = json["title"];
+  }
 };
 
 fix(json);

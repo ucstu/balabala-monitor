@@ -10,8 +10,8 @@
   "scripts": {
     "postinstall": "husky install",
     "format": "prettier --write .",
-    "lint": "eslint **/*.{js,jsx,ts,tsx,vue} && stylelint **/*.{css,scss,sass,less,styl,vue}",
-    "fix": "eslint --fix **/*.{js,jsx,ts,tsx,vue} && stylelint --fix **/*.{css,scss,sass,less,styl,vue}"
+    "lint": "eslint **/*.{js,jsx,ts,tsx,vue} && stylelint **/src/*.{css,scss,sass,less,styl,vue}",
+    "fix": "eslint --fix **/src/*.{js,jsx,ts,tsx,vue} && stylelint --fix **/src/*.{css,scss,sass,less,styl,vue}"
   },
   "author": "balabala",
   "license": "MIT",

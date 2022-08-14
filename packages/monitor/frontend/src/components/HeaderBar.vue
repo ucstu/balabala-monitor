@@ -46,8 +46,8 @@
       <div class="i father">
         <a href="#">性能</a><i class="fa fa-chevron-down"></i>
         <ul>
-          <li><router-link to="/customerSearch">接口耗时</router-link></li>
-          <li><router-link to="/customerSearch">页面性能</router-link></li>
+          <li><router-link to="/PerformPage/PerAPI">接口耗时</router-link></li>
+          <li><router-link to="/PerformPage/PerPage">页面性能</router-link></li>
         </ul>
       </div>
       <a href="#" class="i">支持</a>

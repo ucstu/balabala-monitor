@@ -28,12 +28,18 @@
       <div class="i father">
         <a href="#">错误</a><i class="fa fa-chevron-down"></i>
         <ul>
-          <li><router-link to="/customerSearch">错误统计</router-link></li>
           <li>
-            <router-link to="/customerSearch">api接口错误统计</router-link>
+            <router-link to="/ErrorPage/errors/LogPage">错误统计</router-link>
           </li>
           <li>
-            <router-link to="/customerSearch">静态资源错误统计</router-link>
+            <router-link to="/ErrorPage/APIError/APILogPage"
+              >api接口错误统计</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/ErrorPage/ResourcePage/ResourcePage"
+              >静态资源错误统计</router-link
+            >
           </li>
         </ul>
       </div>

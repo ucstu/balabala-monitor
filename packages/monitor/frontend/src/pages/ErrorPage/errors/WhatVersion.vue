@@ -120,7 +120,12 @@
         font-size: 16px;
         font-weight: 500;
         color: rgb(0 0 0 / 85%);
-        background-color: rgb(207 199 199 / 8%);
+        background-color: rgb#fcfcfc;
+      }
+
+      td {
+        padding-right: 10px;
+        padding-left: 10px;
       }
 
       thead tr {

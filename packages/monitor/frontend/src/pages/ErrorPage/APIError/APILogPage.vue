@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import overview from "./WhatVersion.vue";
+import overview from "./APIOverview.vue";
 </script>
 
 <style scoped lang="scss">
@@ -49,6 +49,7 @@ import overview from "./WhatVersion.vue";
         display: flex;
         flex-direction: row;
         width: 100%;
+        height: 60px;
         font-size: 16px;
         font-weight: 500;
         border-bottom: 1px solid #ccc;

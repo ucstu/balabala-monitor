@@ -70,10 +70,22 @@ const routeRecordRaws: RouteRecordRaw[] = [
     component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
   },
   {
-    name: "LogPage",
-    path: "/errors/LogPage",
+    name: "errors",
+    path: "/ErrorPage/errors/LogPage",
     meta: { hiddenAside: true, hiddenHeader: false },
-    component: () => import("@/pages/errors/LogPage.vue"),
+    component: () => import("@/pages/ErrorPage/errors/LogPage.vue"),
+  },
+  {
+    name: "APIerrors",
+    path: "/ErrorPage/APIError/APILogPage",
+    meta: { hiddenAside: true, hiddenHeader: false },
+    component: () => import("@/pages/ErrorPage/APIError/APILogPage.vue"),
+  },
+  {
+    name: "resource",
+    path: "/ErrorPage/ResourcePage/ResourcePage",
+    meta: { hiddenAside: true, hiddenHeader: false },
+    component: () => import("@/pages/ErrorPage/ResourcePage/ResourcePage.vue"),
   },
 ];
 

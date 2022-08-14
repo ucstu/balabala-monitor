@@ -7,9 +7,11 @@
         <div class="limit">30天</div>
       </div>
       <div class="top-right">
-        <div class="start"><input readonly placeholder="startDate" /></div>
-        <div>~</div>
-        <div class="end"><input readonly placeholder="endDate" /></div>
+        <div class="calendar">
+          <div class="start"><input readonly placeholder="startDate" /></div>
+          <div>~</div>
+          <div class="end"><input readonly placeholder="endDate" /></div>
+        </div>
       </div>
     </div>
     <div class="bottom">
@@ -173,10 +175,16 @@ let date = nowDate(b);
 
       th {
         padding-right: 10px;
+        padding-left: 10px;
         font-size: 16px;
         font-weight: 500;
         color: rgb(0 0 0 / 85%);
-        background-color: rgb(0 0 0 / 3%);
+        background-color: #fcfcfc;
+      }
+
+      td {
+        padding-right: 10px;
+        padding-left: 10px;
       }
 
       tbody tr {
@@ -193,9 +201,9 @@ let date = nowDate(b);
   .top {
     display: grid;
     grid-template-rows: 100px 1fr;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 360px;
     width: 100%;
-    height: 410px;
+    height: 300px;
 
     // border: 3px solid #ccc;
     background-color: rgb(255 255 255);
@@ -205,7 +213,6 @@ let date = nowDate(b);
       flex-direction: row;
       column-gap: 10px;
       float: left;
-      padding-top: 20px;
       padding-left: 20px;
 
       // border:3px solid #ccc;
@@ -215,22 +222,25 @@ let date = nowDate(b);
     }
 
     .top-right {
-      box-sizing: border-box;
       float: right;
-      width: 350px;
+      width: 100%;
       height: 30px;
-      margin-top: 20px;
-      margin-right: 20px;
-      border: 1px solid black;
 
-      div {
-        display: inline-block;
-        margin-top: 5px;
-        margin-right: 5px;
+      .calendar {
+        box-sizing: border-box;
+        float: right;
+        margin-right: 20px;
+        border: 1px solid black;
+
+        div {
+          display: inline-block;
+          margin-top: 5px;
+          margin-right: 5px;
+        }
       }
 
       input {
-        width: 147px;
+        width: 140px;
         text-align: center;
         border: 0;
       }

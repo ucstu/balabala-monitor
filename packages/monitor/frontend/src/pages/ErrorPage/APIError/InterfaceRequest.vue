@@ -11,17 +11,6 @@
         </form>
       </div>
       <div class="top-right">
-        <div class="sort">
-          <div>排序</div>
-          <div>
-            <form action="#">
-              <select>
-                <option>发生次数</option>
-                <option>影响人数</option>
-              </select>
-            </form>
-          </div>
-        </div>
         <div class="calendar">
           <input type="date" value="2022-08-13" />
         </div>
@@ -32,8 +21,8 @@
         <thead>
           <tr>
             <th class="th1">错误</th>
-            <th class="th2">报错趋势:30min</th>
-            <th class="th3">发生次数</th>
+            <th class="th2">发生次数</th>
+            <th class="th3">影响人数</th>
           </tr>
         </thead>
         <tbody>
@@ -83,7 +72,12 @@
     .top-left {
       box-sizing: border-box;
       float: left;
+      width: 140px;
+      height: 40px;
       padding: 30px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
 
       select {
         width: 140px;
@@ -151,16 +145,16 @@
       background-color: rgb(255 255 255);
 
       .th1 {
-        width: 40%;
+        width: 60%;
         padding-left: 30px;
       }
 
       .th2 {
-        width: 50%;
+        width: 20%;
       }
 
       .th3 {
-        width: 10%;
+        width: 20%;
       }
 
       th {
@@ -168,7 +162,7 @@
         font-size: 16px;
         font-weight: 500;
         color: rgb(0 0 0 / 85%);
-        background-color: #f4e1e1;
+        background-color: rgb(0 0 0 / 10%);
       }
 
       td {

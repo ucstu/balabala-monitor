@@ -64,22 +64,23 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/",
     meta: {
       menu: [
-        { name: "概览", path: "/ErrorPage/errors/OverviewPage" },
-        { name: "错误列表", path: "/ErrorPage/errors/errorList" },
+        { name: "概览", path: "/ErrorPage/ErrorCount/ErrorOverview" },
+        { name: "错误列表", path: "/ErrorPage/ErrorCount/ErrorList" },
       ],
     },
     component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/ErrorPage/errors/OverviewPage",
+    redirect: "/ErrorPage/ErrorCount/ErrorOverview",
     children: [
       {
-        path: "/ErrorPage/errors/OverviewPage",
-        name: "OverviewPage",
-        component: () => import("@/pages/ErrorPage/errors/OverviewPage.vue"), //懒加载的方式提高性能优化
+        path: "/ErrorPage/ErrorCount/ErrorOverview",
+        name: "ErrorOverview",
+        component: () =>
+          import("@/pages/ErrorPage/ErrorCount/ErrorOverview.vue"), //懒加载的方式提高性能优化
       },
       {
-        path: "/ErrorPage/errors/errorList",
-        name: "errorList",
-        component: () => import("@/pages/ErrorPage/errors/errorList.vue"), //懒加载的方式提高性能优化
+        path: "/ErrorPage/ErrorCount/ErrorList",
+        name: "ErrorList",
+        component: () => import("@/pages/ErrorPage/ErrorCount/ErrorList.vue"), //懒加载的方式提高性能优化
       },
     ],
   },

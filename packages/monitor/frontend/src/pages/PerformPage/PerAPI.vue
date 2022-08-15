@@ -7,11 +7,20 @@
           <span> 页面加载耗时分段</span>
         </div>
         <div class="change">
-          <span><i class="fa fa-angle-left">1秒</i></span>
-          <span>1-5秒</span>
-          <span>5-10秒</span>
-          <span>10-30秒</span>
-          <span><i class="fa fa-angle-right">30秒</i></span>
+          <input id="one" type="radio" name="tab" checked />
+          <input id="two" type="radio" name="tab" />
+          <input id="three" type="radio" name="tab" />
+          <input id="four" type="radio" name="tab" />
+          <input id="five" type="radio" name="tab" />
+          <label for="one" class="one"
+            ><span><i class="fa fa-angle-left">1秒</i></span></label
+          >
+          <label for="two" class="two"><span>1-5秒</span></label>
+          <label for="three" class="three"><span>5-10秒</span></label>
+          <label for="four" class="four"><span>10-30秒</span></label>
+          <label for="five" class="five"
+            ><span><i class="fa fa-angle-right">30秒</i></span></label
+          >
         </div>
         <div class="data">
           <div>
@@ -153,6 +162,10 @@
     .change {
       border-radius: 5%;
 
+      input {
+        display: none;
+      }
+
       span {
         padding: 10px 20px;
         font-size: 15px;
@@ -161,16 +174,21 @@
         background-color: rgb(231 231 231);
       }
 
-      span:active {
-        background-color: #ea6947;
-      }
-
       span:nth-child(1) {
         border-radius: 10% 0 0 10%;
       }
 
       span:nth-child(5) {
         border-radius: 0 10% 10% 0;
+      }
+
+      #one:checked ~ label.one span,
+      #two:checked ~ label.two span,
+      #three:checked ~ label.three span,
+      #four:checked ~ label.four span,
+      #five:checked ~ label.five span {
+        color: #fff;
+        background-color: #ea6947;
       }
     }
 

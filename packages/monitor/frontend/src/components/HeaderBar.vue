@@ -29,7 +29,7 @@
         <a href="#">错误</a><i class="fa fa-chevron-down"></i>
         <ul>
           <li>
-            <router-link to="/ErrorPage/errors/OverviewPage"
+            <router-link to="/ErrorPage/ErrorCount/ErrorOverview"
               >错误统计</router-link
             >
           </li>

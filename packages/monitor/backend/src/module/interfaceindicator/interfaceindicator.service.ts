@@ -78,6 +78,6 @@ export class InterfaceindicatorService {
         count: element.doc_count,
       });
     });
-    return responseRust.success_data(res);
+    return responseRust.success_data(list);
   }
 }

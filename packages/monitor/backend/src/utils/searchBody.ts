@@ -136,3 +136,57 @@ export const getQueryBody = (
   const body = getBaseBody(querys, timeName);
   return body;
 };
+
+export const getPerformancesBasicindicatorsBody = (
+  querys: BaseQueryVo,
+  timeName: "startTime" | "errorTime"
+) => {
+  const body = getBaseBody(querys, timeName);
+  const aggs = {
+    count: {
+      range: {
+        field: "value",
+        ranges: [
+          {
+            from: 0,
+            to: 1000,
+          },
+          {
+            from: 1000,
+            to: 5000,
+          },
+          {
+            from: 5000,
+            to: 10000,
+          },
+          {
+            from: 10000,
+            to: 300000,
+          },
+          {
+            from: 300000,
+          },
+        ],
+      },
+      aggs: {
+        list: {
+          histogram: {
+            field: "startTime",
+            interval: 86400000,
+            min_doc_count: 0,
+          },
+          aggs: {
+            avg: {
+              avg: {
+                field: "value",
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};

@@ -77,6 +77,6 @@ export class BasicbehaviorService {
         count: element.doc_count,
       });
     });
-    return responseRust.success_data(res);
+    return responseRust.success_data(list);
   }
 }

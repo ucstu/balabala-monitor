@@ -28,20 +28,28 @@
       <div class="i father">
         <a href="#">错误</a><i class="fa fa-chevron-down"></i>
         <ul>
-          <li><router-link to="/customerSearch">错误统计</router-link></li>
           <li>
-            <router-link to="/customerSearch">api接口错误统计</router-link>
+            <router-link to="/ErrorPage/ErrorCount/ErrorOverview"
+              >错误统计</router-link
+            >
           </li>
           <li>
-            <router-link to="/customerSearch">静态资源错误统计</router-link>
+            <router-link to="/ErrorPage/APIError/APIOverview"
+              >api接口错误统计</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/ErrorPage/ResourcePage/ResourcePage"
+              >静态资源错误统计</router-link
+            >
           </li>
         </ul>
       </div>
       <div class="i father">
         <a href="#">性能</a><i class="fa fa-chevron-down"></i>
         <ul>
-          <li><router-link to="/customerSearch">接口耗时</router-link></li>
-          <li><router-link to="/customerSearch">页面性能</router-link></li>
+          <li><router-link to="/PerformPage/PerAPI">接口耗时</router-link></li>
+          <li><router-link to="/PerformPage/PerPage">页面性能</router-link></li>
         </ul>
       </div>
       <a href="#" class="i">支持</a>

@@ -60,6 +60,56 @@ const routeRecordRaws: RouteRecordRaw[] = [
     ],
   },
   {
+    name: "ErrorPage",
+    path: "/",
+    meta: {
+      menu: [
+        { name: "概览", path: "/ErrorPage/ErrorCount/ErrorOverview" },
+        { name: "错误列表", path: "/ErrorPage/ErrorCount/ErrorList" },
+      ],
+    },
+    component: () => import("@/pages/HomePage/HomePage.vue"),
+    redirect: "/ErrorPage/ErrorCount/ErrorOverview",
+    children: [
+      {
+        path: "/ErrorPage/ErrorCount/ErrorOverview",
+        name: "ErrorOverview",
+        component: () =>
+          import("@/pages/ErrorPage/ErrorCount/ErrorOverview.vue"), //懒加载的方式提高性能优化
+      },
+      {
+        path: "/ErrorPage/ErrorCount/ErrorList",
+        name: "ErrorList",
+        component: () => import("@/pages/ErrorPage/ErrorCount/ErrorList.vue"), //懒加载的方式提高性能优化
+      },
+    ],
+  },
+  {
+    name: "APIError",
+    path: "/",
+    meta: {
+      menu: [
+        { name: "概览", path: "/ErrorPage/APIError/APIOverview" },
+        { name: "错误列表", path: "/ErrorPage/APIError/InterfaceRequest" },
+      ],
+    },
+    component: () => import("@/pages/HomePage/HomePage.vue"),
+    redirect: "/ErrorPage/APIError/APIOverview",
+    children: [
+      {
+        path: "/ErrorPage/APIError/APIOverview",
+        name: "APIOverview",
+        component: () => import("@/pages/ErrorPage/APIError/APIOverview.vue"), //懒加载的方式提高性能优化
+      },
+      {
+        path: "/ErrorPage/APIError/InterfaceRequest",
+        name: "InterfaceRequest",
+        component: () =>
+          import("@/pages/ErrorPage/APIError/InterfaceRequest.vue"), //懒加载的方式提高性能优化
+      },
+    ],
+  },
+  {
     name: "customerSearch",
     path: "/customerSearch",
     component: () => import("@/pages/CustomerPage/customerSearch.vue"),
@@ -70,10 +120,30 @@ const routeRecordRaws: RouteRecordRaw[] = [
     component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
   },
   {
-    name: "LogPage",
-    path: "/errors/LogPage",
+    name: "resource",
+    path: "/ErrorPage/ResourcePage/ResourcePage",
     meta: { hiddenAside: true, hiddenHeader: false },
-    component: () => import("@/pages/errors/LogPage.vue"),
+    component: () => import("@/pages/ErrorPage/ResourcePage/ResourcePage.vue"),
+  },
+  {
+    name: "PerPage",
+    path: "/PerformPage/PerPage",
+    meta: {
+      title: "页面性能监控",
+      hiddenAside: true,
+      hiddenHeader: false,
+    },
+    component: () => import("@/pages/PerformPage/PerPage.vue"),
+  },
+  {
+    name: "PerAPi",
+    path: "/PerformPage/PerAPI",
+    meta: {
+      title: "API性能监控",
+      hiddenAside: true,
+      hiddenHeader: false,
+    },
+    component: () => import("@/pages/PerformPage/PerAPI.vue"),
   },
 ];
 

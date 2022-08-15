@@ -1,49 +1,40 @@
 <template>
   <div class="global">
-    <div class="top">
-      <div class="top-left">
-        <div>时间范围:</div>
-        <div><img src="@/assets/date.png" /></div>
-        <div class="limit">30天</div>
-      </div>
-      <div class="top-right">
-        <div class="start"><input readonly placeholder="startDate" /></div>
-        <div>~</div>
-        <div class="end"><input readonly placeholder="endDate" /></div>
-      </div>
-    </div>
-    <div class="bottom">
-      <div class="bottom-left">
-        <div class="collect">
-          <div class="error">JS错误(onerror)</div>
+    <div class="content">
+      <div class="content-left">
+        <div class="content-top">
+          <div class="error">JS错误</div>
           <div class="date">
             <div><img src="@/assets/24.png" /></div>
             <div>{{ date }}</div>
           </div>
         </div>
-        <div class="inform">
+        <div class="list">
           <table>
-            <thead style="height: 45px">
+            <thead>
               <tr>
-                <th style="width: 58%">最新错误(最近5分钟)</th>
-                <th style="width: 30%">发生次数</th>
-                <th style="width: 12%">影响人数</th>
+                <th style="width: 60%">最新错误(最近5分钟)</th>
+                <th style="width: 20%">发生次数</th>
+                <th style="width: 20%">影响人数</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td></td>
                 <td></td>
+
                 <td></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
+
                 <td></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
+
                 <td></td>
               </tr>
               <tr>
@@ -60,21 +51,21 @@
           </table>
         </div>
       </div>
-      <div class="bottom-right">
-        <div class="collect">
-          <div class="error">自定义异常(console.error)</div>
+      <div class="content-right">
+        <div class="content-top">
+          <div class="error">资源错误</div>
           <div class="date">
             <div><img src="@/assets/24.png" /></div>
             <div>{{ date }}</div>
           </div>
         </div>
-        <div class="inform">
+        <div class="list">
           <table>
             <thead>
               <tr>
-                <th style="width: 58%">最新错误(最近5分钟)</th>
-                <th style="width: 30%">发生次数</th>
-                <th style="width: 12%">影响人数</th>
+                <th style="width: 60%">最新错误(最近5分钟)</th>
+                <th style="width: 20%">发生次数</th>
+                <th style="width: 20%">影响人数</th>
               </tr>
             </thead>
             <tbody>
@@ -115,9 +106,9 @@
 let a = new Date().getTime();
 let b = new Date(a);
 function nowDate(now: Date) {
-  var year = now.getFullYear();
-  var month = now.getMonth() + 1;
-  var date = now.getDate();
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let date = now.getDate();
   return year + "-" + month + "-" + date;
 }
 let date = nowDate(b);
@@ -135,7 +126,7 @@ let date = nowDate(b);
     height: 18px;
   }
 
-  .collect {
+  .content-top {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100px;
@@ -156,27 +147,35 @@ let date = nowDate(b);
     }
   }
 
-  .inform {
+  .list {
     box-sizing: border-box;
     margin-right: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
 
     table {
-      margin: 0 auto;
+      // margin: 0 auto;
+      width: 100%;
+      height: 100%;
       text-align: left;
       border-collapse: collapse;
 
-      thead tr {
-        height: 45px;
+      thead {
+        height: 20%;
       }
 
       th {
         padding-right: 10px;
+        padding-left: 10px;
         font-size: 16px;
         font-weight: 500;
         color: rgb(0 0 0 / 85%);
-        background-color: rgb(0 0 0 / 3%);
+        background-color: #fcfcfc;
+      }
+
+      td {
+        padding-right: 10px;
+        padding-left: 10px;
       }
 
       tbody tr {
@@ -190,64 +189,17 @@ let date = nowDate(b);
     }
   }
 
-  .top {
-    display: grid;
-    grid-template-rows: 100px 1fr;
-    grid-template-columns: 1fr 350px;
-    width: 100%;
-    height: 410px;
-
-    // border: 3px solid #ccc;
-    background-color: rgb(255 255 255);
-
-    .top-left {
-      display: flex;
-      flex-direction: row;
-      column-gap: 10px;
-      float: left;
-      padding-top: 20px;
-      padding-left: 20px;
-
-      // border:3px solid #ccc;
-      limit {
-        float: left;
-      }
-    }
-
-    .top-right {
-      box-sizing: border-box;
-      float: right;
-      width: 350px;
-      height: 30px;
-      margin-top: 20px;
-      margin-right: 20px;
-      border: 1px solid black;
-
-      div {
-        display: inline-block;
-        margin-top: 5px;
-        margin-right: 5px;
-      }
-
-      input {
-        width: 147px;
-        text-align: center;
-        border: 0;
-      }
-    }
-  }
-
-  .bottom {
+  .content {
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 100%;
-    height: 565px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 100%;
+    padding: 10px;
 
-    .bottom-left {
+    .content-left {
       box-sizing: border-box;
+      display: grid;
+      grid-template-rows: 100px 1fr;
       height: 100%;
       margin-right: 5px;
 
@@ -256,8 +208,10 @@ let date = nowDate(b);
     }
   }
 
-  .bottom-right {
+  .content-right {
     box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 100px 1fr;
     height: 100%;
     margin-left: 5px;
 

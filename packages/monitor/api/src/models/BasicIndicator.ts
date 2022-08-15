@@ -3,16 +3,40 @@
 /* eslint-disable */
 
 export type BasicIndicator = {
+  /**
+   * 应用ID
+   */
   appId: string;
+  /**
+   * 指标类型
+   */
   mainType: BasicIndicator.mainType;
+  /**
+   * 子指标类型
+   */
   subType: BasicIndicator.subType;
+  /**
+   * 开始时间
+   */
   startTime: number;
+  /**
+   * 页面路径
+   */
   pageUrl: string;
+  /**
+   * 用户ID
+   */
   userID: string;
+  /**
+   * 指标数值
+   */
   value: number;
 };
 
 export namespace BasicIndicator {
+  /**
+   * 指标类型
+   */
   export enum mainType {
     Performance = 1,
     LoadIndicator = 2,
@@ -22,6 +46,9 @@ export namespace BasicIndicator {
     ResourceIndicator = 6,
   }
 
+  /**
+   * 子指标类型
+   */
   export enum subType {
     FirstPaint = 1001,
     FirstContentfulPaint = 1002,

@@ -47,15 +47,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Article",
@@ -152,15 +155,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Article",
@@ -231,15 +237,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Article",
@@ -324,28 +333,33 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "type": "object",
                       "properties": {
                         "imageUrl": {
                           "title": "图片地址",
-                          "type": "string"
+                          "type": "string",
+                          "description": "图片地址"
                         }
                       },
                       "x-apifox-orders": ["imageUrl"],
                       "required": ["imageUrl"],
                       "title": "数据主体",
-                      "x-apifox-ignore-properties": []
+                      "x-apifox-ignore-properties": [],
+                      "description": "数据主体"
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -394,7 +408,8 @@
                   },
                   "password": {
                     "type": "string",
-                    "title": "用户密码"
+                    "title": "用户密码",
+                    "description": "用户密码"
                   },
                   "name": {
                     "type": "string",
@@ -423,15 +438,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Account",
@@ -490,7 +508,8 @@
                   },
                   "password": {
                     "type": "string",
-                    "title": "用户密码"
+                    "title": "用户密码",
+                    "description": "用户密码"
                   }
                 },
                 "x-apifox-orders": ["phone", "password"],
@@ -514,15 +533,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Account",
@@ -586,7 +608,8 @@
                 "properties": {
                   "articleTitle": {
                     "type": "string",
-                    "title": "文章标题"
+                    "title": "文章标题",
+                    "description": "文章标题"
                   },
                   "articleClass": {
                     "title": "文章分类",
@@ -595,19 +618,23 @@
                   },
                   "articleTags": {
                     "type": "string",
-                    "title": "文章标签"
+                    "title": "文章标签",
+                    "description": "文章标签"
                   },
                   "articleCover": {
                     "type": "string",
-                    "title": "文章封面"
+                    "title": "文章封面",
+                    "description": "文章封面"
                   },
                   "articleSummary": {
                     "type": "string",
-                    "title": "文章概要"
+                    "title": "文章概要",
+                    "description": "文章概要"
                   },
                   "articleContent": {
                     "type": "string",
-                    "title": "文章内容"
+                    "title": "文章内容",
+                    "description": "文章内容"
                   }
                 },
                 "required": [
@@ -641,15 +668,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Article",
@@ -751,22 +781,26 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "type": "object",
                       "properties": {
                         "totalCount": {
                           "type": "integer",
-                          "title": "数据总数"
+                          "title": "数据总数",
+                          "description": "数据总数"
                         },
                         "articleInfos": {
                           "type": "array",
@@ -776,13 +810,15 @@
                             "title": "数据主体",
                             "description": "文章信息"
                           },
-                          "title": "文章信息列表"
+                          "title": "文章信息列表",
+                          "description": "文章信息列表"
                         }
                       },
                       "x-apifox-orders": ["totalCount", "articleInfos"],
                       "required": ["totalCount", "articleInfos"],
                       "title": "数据主体",
-                      "x-apifox-ignore-properties": []
+                      "x-apifox-ignore-properties": [],
+                      "description": "数据主体"
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -889,19 +925,23 @@
         "properties": {
           "articleId": {
             "title": "文章ID",
-            "type": "integer"
+            "type": "integer",
+            "description": "文章ID"
           },
           "createdAt": {
             "type": "string",
-            "title": "创建时间"
+            "title": "创建时间",
+            "description": "创建时间"
           },
           "updatedAt": {
             "type": "string",
-            "title": "更新时间"
+            "title": "更新时间",
+            "description": "更新时间"
           },
           "articleTitle": {
             "type": "string",
-            "title": "文章标题"
+            "title": "文章标题",
+            "description": "文章标题"
           },
           "articleClass": {
             "title": "文章分类",
@@ -910,31 +950,38 @@
           },
           "articleTags": {
             "type": "string",
-            "title": "文章标签"
+            "title": "文章标签",
+            "description": "文章标签"
           },
           "articleCover": {
             "type": "string",
-            "title": "文章封面"
+            "title": "文章封面",
+            "description": "文章封面"
           },
           "articleSummary": {
             "type": "string",
-            "title": "文章概要"
+            "title": "文章概要",
+            "description": "文章概要"
           },
           "articleContent": {
             "type": "string",
-            "title": "文章内容"
+            "title": "文章内容",
+            "description": "文章内容"
           },
           "phone": {
             "type": "string",
-            "title": "发布用户ID"
+            "title": "发布用户ID",
+            "description": "发布用户ID"
           },
           "articleTraffic": {
             "type": "integer",
-            "title": "文章访问量"
+            "title": "文章访问量",
+            "description": "文章访问量"
           },
           "articlelikes": {
             "title": "文章点赞量",
-            "type": "integer"
+            "type": "integer",
+            "description": "文章点赞量"
           }
         },
         "required": [
@@ -973,19 +1020,23 @@
         "properties": {
           "id": {
             "title": "账号ID",
-            "type": "integer"
+            "type": "integer",
+            "description": "账号ID"
           },
           "phone": {
             "type": "string",
-            "title": "电话号码"
+            "title": "电话号码",
+            "description": "电话号码"
           },
           "name": {
             "type": "string",
-            "title": "昵称"
+            "title": "昵称",
+            "description": "昵称"
           },
           "password": {
             "type": "string",
-            "title": "用户名称"
+            "title": "用户名称",
+            "description": "用户名称"
           }
         },
         "required": ["id", "phone", "name", "password"],

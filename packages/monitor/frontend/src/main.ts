@@ -5,5 +5,5 @@ import App from "./App.vue";
 import router from "./router";
 import "./style.scss";
 
-client.service.httpRequest.config.BASE = "http://localhost:3000";
+client.service.httpRequest.config.BASE = "https://qxyjkapi.ucstu.com";
 createApp(App).use(router).mount("#app");

@@ -77,15 +77,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -207,15 +210,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -336,15 +342,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -454,6 +463,16 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "isError",
+            "in": "query",
+            "description": "是否只查询错误接口请求，eg：true",
+            "required": false,
+            "example": "{% mock 'boolean' %}",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -466,15 +485,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -615,15 +637,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -745,15 +770,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -959,15 +987,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -1089,15 +1120,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -1263,35 +1297,49 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
                       "description": "基础指标统计列表",
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "datetime": {
-                            "type": "string",
-                            "title": "日期时间"
+                        "description": "各分段数据列表（依次为[<1s,1-5s,5-10s,10-30s,>30s]）",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "datetime": {
+                              "type": "string",
+                              "title": "日期时间",
+                              "description": "日期时间"
+                            },
+                            "count": {
+                              "type": "integer",
+                              "title": "统计总数",
+                              "description": "统计总数"
+                            },
+                            "avarge": {
+                              "type": "integer",
+                              "title": "平均值",
+                              "description": "平均值"
+                            }
                           },
-                          "count": {
-                            "type": "integer",
-                            "title": "统计总数"
-                          }
-                        },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
-                        "x-apifox-ignore-properties": []
+                          "x-apifox-orders": ["datetime", "count", "avarge"],
+                          "required": ["datetime", "count", "avarge"],
+                          "x-apifox-ignore-properties": []
+                        }
                       }
                     }
                   },
@@ -1303,30 +1351,83 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1972-02-19 18:48:14",
+                      "timestamp": "1986-10-26 12:43:55",
                       "status": 200,
                       "message": "OK",
                       "data": [
-                        {
-                          "datetime": "1985-08-09 07:45:52",
-                          "count": 93
-                        },
-                        {
-                          "datetime": "1983-11-24 02:21:03",
-                          "count": 75
-                        },
-                        {
-                          "datetime": "1973-08-29 04:25:33",
-                          "count": 81
-                        },
-                        {
-                          "datetime": "2018-08-24 11:53:03",
-                          "count": 67
-                        },
-                        {
-                          "datetime": "1971-09-18 15:30:37",
-                          "count": 79
-                        }
+                        [
+                          {
+                            "datetime": "1997-05-10 06:58:04",
+                            "count": 100,
+                            "avarge": 95
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1984-03-31 16:29:51",
+                            "count": 76,
+                            "avarge": 89
+                          },
+                          {
+                            "datetime": "1990-03-12 04:18:21",
+                            "count": 69,
+                            "avarge": 83
+                          },
+                          {
+                            "datetime": "1981-04-27 20:38:06",
+                            "count": 70,
+                            "avarge": 62
+                          },
+                          {
+                            "datetime": "1981-04-26 22:21:31",
+                            "count": 89,
+                            "avarge": 68
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1986-01-23 00:41:21",
+                            "count": 82,
+                            "avarge": 92
+                          },
+                          {
+                            "datetime": "1997-06-14 07:47:40",
+                            "count": 91,
+                            "avarge": 96
+                          },
+                          {
+                            "datetime": "2022-07-18 17:37:44",
+                            "count": 81,
+                            "avarge": 73
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1974-06-16 19:24:49",
+                            "count": 71,
+                            "avarge": 100
+                          },
+                          {
+                            "datetime": "1974-12-23 18:37:41",
+                            "count": 72,
+                            "avarge": 84
+                          },
+                          {
+                            "datetime": "2010-08-24 11:48:56",
+                            "count": 69,
+                            "avarge": 97
+                          },
+                          {
+                            "datetime": "2000-09-28 14:32:44",
+                            "count": 62,
+                            "avarge": 78
+                          },
+                          {
+                            "datetime": "2003-01-28 07:19:33",
+                            "count": 64,
+                            "avarge": 64
+                          }
+                        ]
                       ]
                     }
                   }
@@ -1436,6 +1537,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "isError",
+            "in": "query",
+            "description": "是否只查询错误接口请求，eg：true",
+            "required": false,
+            "example": "{% mock 'boolean' %}",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1448,35 +1559,64 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
                       "description": "接口指标统计列表",
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "datetime": {
-                            "type": "string",
-                            "title": "日期时间"
+                        "description": "各分段数据列表（依次为[<1s,1-5s,5-10s,10-30s,>30s]）",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "datetime": {
+                              "type": "string",
+                              "title": "日期时间",
+                              "description": "日期时间"
+                            },
+                            "count": {
+                              "type": "integer",
+                              "title": "统计总数",
+                              "description": "统计总数"
+                            },
+                            "avarge": {
+                              "type": "integer",
+                              "title": "平均值",
+                              "description": "平均值"
+                            },
+                            "userCount": {
+                              "type": "integer",
+                              "title": "影响用户数",
+                              "description": "影响用户数"
+                            }
                           },
-                          "count": {
-                            "type": "integer",
-                            "title": "统计总数"
-                          }
-                        },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
-                        "x-apifox-ignore-properties": []
+                          "x-apifox-orders": [
+                            "datetime",
+                            "count",
+                            "avarge",
+                            "userCount"
+                          ],
+                          "required": [
+                            "datetime",
+                            "count",
+                            "avarge",
+                            "userCount"
+                          ],
+                          "x-apifox-ignore-properties": []
+                        }
                       }
                     }
                   },
@@ -1488,26 +1628,50 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2007-11-30 19:17:23",
+                      "timestamp": "1999-04-14 05:25:45",
                       "status": 200,
                       "message": "OK",
                       "data": [
-                        {
-                          "datetime": "2008-09-06 19:51:41",
-                          "count": 74
-                        },
-                        {
-                          "datetime": "1975-06-23 08:33:14",
-                          "count": 78
-                        },
-                        {
-                          "datetime": "1975-03-26 15:36:46",
-                          "count": 95
-                        },
-                        {
-                          "datetime": "2017-02-25 11:50:51",
-                          "count": 74
-                        }
+                        [
+                          {
+                            "datetime": "2019-08-24 15:41:28",
+                            "count": 87,
+                            "avarge": 85,
+                            "userCount": 98
+                          },
+                          {
+                            "datetime": "1995-06-22 10:32:02",
+                            "count": 66,
+                            "avarge": 73,
+                            "userCount": 73
+                          },
+                          {
+                            "datetime": "2004-05-12 02:16:30",
+                            "count": 66,
+                            "avarge": 87,
+                            "userCount": 91
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1988-04-02 02:04:36",
+                            "count": 72,
+                            "avarge": 95,
+                            "userCount": 95
+                          },
+                          {
+                            "datetime": "2006-02-11 13:54:58",
+                            "count": 75,
+                            "avarge": 72,
+                            "userCount": 73
+                          },
+                          {
+                            "datetime": "2019-09-12 04:21:46",
+                            "count": 98,
+                            "avarge": 71,
+                            "userCount": 73
+                          }
+                        ]
                       ]
                     }
                   }
@@ -1629,15 +1793,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -1648,15 +1815,37 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
-                          "count": {
+                          "happenCount": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "发生总数",
+                            "description": "发生总数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "页面总数",
+                            "description": "页面总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "用户总数",
+                            "description": "用户总数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": [
+                          "datetime",
+                          "happenCount",
+                          "pageCount",
+                          "userCount"
+                        ],
+                        "required": [
+                          "datetime",
+                          "happenCount",
+                          "pageCount",
+                          "userCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -1669,21 +1858,27 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1994-10-19 23:25:40",
+                      "timestamp": "2009-05-25 08:31:33",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "2020-01-11 01:47:17",
-                          "count": 82
+                          "datetime": "2004-11-09 05:51:06",
+                          "happenCount": 76,
+                          "pageCount": 83,
+                          "userCount": 67
                         },
                         {
-                          "datetime": "1991-11-01 16:55:34",
-                          "count": 71
+                          "datetime": "1973-09-14 13:42:46",
+                          "happenCount": 99,
+                          "pageCount": 94,
+                          "userCount": 64
                         },
                         {
-                          "datetime": "1979-12-05 21:53:17",
-                          "count": 74
+                          "datetime": "1976-08-28 09:38:51",
+                          "happenCount": 61,
+                          "pageCount": 91,
+                          "userCount": 74
                         }
                       ]
                     }
@@ -1806,15 +2001,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -1825,15 +2023,22 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
                           "count": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": ["datetime", "count", "userCount"],
+                        "required": ["datetime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -1846,21 +2051,24 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1991-04-29 20:20:41",
+                      "timestamp": "2010-09-24 12:10:32",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "2013-09-18 02:19:36",
-                          "count": 81
+                          "datetime": "1996-10-23 12:08:38",
+                          "count": 91,
+                          "userCount": 82
                         },
                         {
-                          "datetime": "1994-10-08 09:03:58",
-                          "count": 77
+                          "datetime": "1985-12-12 16:16:14",
+                          "count": 63,
+                          "userCount": 74
                         },
                         {
-                          "datetime": "1970-05-18 02:22:52",
-                          "count": 65
+                          "datetime": "2018-12-08 15:24:48",
+                          "count": 99,
+                          "userCount": 60
                         }
                       ]
                     }
@@ -1958,15 +2166,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -2088,15 +2299,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -2251,15 +2465,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -2381,15 +2598,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -2510,15 +2730,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -2640,15 +2863,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -2828,15 +3054,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -2847,15 +3076,22 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
                           "count": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": ["datetime", "count", "userCount"],
+                        "required": ["datetime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -2868,17 +3104,24 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1971-10-27 17:34:49",
+                      "timestamp": "1970-11-01 21:46:19",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "2014-05-13 20:02:37",
-                          "count": 80
+                          "datetime": "2012-08-02 10:28:10",
+                          "count": 96,
+                          "userCount": 68
                         },
                         {
-                          "datetime": "1972-12-23 07:27:04",
-                          "count": 91
+                          "datetime": "2015-11-26 16:22:04",
+                          "count": 65,
+                          "userCount": 93
+                        },
+                        {
+                          "datetime": "1975-08-27 19:19:25",
+                          "count": 85,
+                          "userCount": 67
                         }
                       ]
                     }
@@ -3001,15 +3244,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -3020,15 +3266,22 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
                           "count": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": ["datetime", "count", "userCount"],
+                        "required": ["datetime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3041,25 +3294,24 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1973-06-24 23:32:53",
+                      "timestamp": "1974-05-28 07:38:25",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "2015-04-11 18:14:07",
-                          "count": 63
+                          "datetime": "1997-02-10 11:18:13",
+                          "count": 61,
+                          "userCount": 97
                         },
                         {
-                          "datetime": "1971-09-19 15:15:23",
-                          "count": 91
+                          "datetime": "2019-09-27 20:39:04",
+                          "count": 81,
+                          "userCount": 96
                         },
                         {
-                          "datetime": "1985-09-17 07:46:05",
-                          "count": 91
-                        },
-                        {
-                          "datetime": "2012-01-24 14:36:08",
-                          "count": 95
+                          "datetime": "2002-11-07 10:57:48",
+                          "count": 66,
+                          "userCount": 81
                         }
                       ]
                     }
@@ -3123,15 +3375,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -3253,15 +3508,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -3450,15 +3708,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -3469,15 +3730,22 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
                           "count": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": ["datetime", "count", "userCount"],
+                        "required": ["datetime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3490,17 +3758,24 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2016-05-31 00:31:15",
+                      "timestamp": "2006-04-20 22:56:38",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "1985-03-18 10:47:41",
-                          "count": 94
+                          "datetime": "2005-10-28 07:37:39",
+                          "count": 91,
+                          "userCount": 95
                         },
                         {
-                          "datetime": "1972-07-16 17:07:37",
-                          "count": 82
+                          "datetime": "1982-07-01 05:23:27",
+                          "count": 70,
+                          "userCount": 72
+                        },
+                        {
+                          "datetime": "2017-12-08 03:43:52",
+                          "count": 85,
+                          "userCount": 95
                         }
                       ]
                     }
@@ -3585,15 +3860,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -3715,15 +3993,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -3836,15 +4117,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -3966,15 +4250,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -4131,15 +4418,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     }
                   },
                   "required": ["timestamp", "status", "message"],
@@ -4261,15 +4551,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -4437,15 +4730,18 @@
                   "properties": {
                     "timestamp": {
                       "title": "处理时间",
-                      "type": "string"
+                      "type": "string",
+                      "description": "处理时间"
                     },
                     "status": {
                       "title": "状态编码",
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "状态编码"
                     },
                     "message": {
                       "title": "状态描述",
-                      "type": "string"
+                      "type": "string",
+                      "description": "状态描述"
                     },
                     "data": {
                       "title": "数据主体",
@@ -4456,15 +4752,22 @@
                         "properties": {
                           "datetime": {
                             "type": "string",
-                            "title": "日期时间"
+                            "title": "日期时间",
+                            "description": "日期时间"
                           },
                           "count": {
                             "type": "integer",
-                            "title": "统计总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "integer",
+                            "title": "平均值",
+                            "description": "平均值"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count"],
-                        "required": ["datetime", "count"],
+                        "x-apifox-orders": ["datetime", "count", "average"],
+                        "required": ["datetime", "count", "average"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -4477,29 +4780,24 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1996-12-22 06:42:41",
+                      "timestamp": "2000-12-15 02:57:11",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "1982-08-18 17:52:44",
-                          "count": 100
+                          "datetime": "2007-06-26 11:16:39",
+                          "count": 63,
+                          "average": 73
                         },
                         {
-                          "datetime": "1980-12-18 20:00:56",
-                          "count": 90
+                          "datetime": "2003-05-19 08:18:03",
+                          "count": 81,
+                          "average": 90
                         },
                         {
-                          "datetime": "2013-04-13 19:26:17",
-                          "count": 83
-                        },
-                        {
-                          "datetime": "2017-06-28 06:40:46",
-                          "count": 70
-                        },
-                        {
-                          "datetime": "2020-01-03 22:32:30",
-                          "count": 84
+                          "datetime": "2000-09-03 04:59:40",
+                          "count": 61,
+                          "average": 78
                         }
                       ]
                     }
@@ -4520,7 +4818,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "行为类型",
@@ -4539,7 +4838,8 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "行为类型"
           },
           "subType": {
             "title": "子行为类型",
@@ -4564,35 +4864,43 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "子行为类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "from": {
             "type": "string",
-            "title": "路由跳转起步位置"
+            "title": "路由跳转起步位置",
+            "description": "路由跳转起步位置"
           },
           "to": {
             "type": "string",
-            "title": "路由跳转目的位置"
+            "title": "路由跳转目的位置",
+            "description": "路由跳转目的位置"
           },
           "params": {
             "title": "路径参数",
-            "type": "string"
+            "type": "string",
+            "description": "路径参数"
           },
           "query": {
             "type": "string",
-            "title": "查询参数"
+            "title": "查询参数",
+            "description": "查询参数"
           }
         },
         "x-apifox-orders": [
@@ -4627,7 +4935,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "行为类型",
@@ -4646,7 +4955,8 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "行为类型"
           },
           "subType": {
             "title": "子行为类型",
@@ -4671,27 +4981,33 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "子行为类型"
           },
           "startTime": {
             "type": "integer",
-            "title": "开始时间"
+            "title": "开始时间",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "from": {
             "type": "string",
-            "title": "路由跳转起步位置"
+            "title": "路由跳转起步位置",
+            "description": "路由跳转起步位置"
           },
           "to": {
             "type": "string",
-            "title": "路由跳转目的位置"
+            "title": "路由跳转目的位置",
+            "description": "路由跳转目的位置"
           }
         },
         "required": [
@@ -4722,7 +5038,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "行为类型",
@@ -4741,7 +5058,8 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "行为类型"
           },
           "subType": {
             "title": "子行为类型",
@@ -4766,23 +5084,28 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "子行为类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "value": {
             "title": "指标数值",
-            "type": "number"
+            "type": "number",
+            "description": "指标数值"
           }
         },
         "x-apifox-orders": [
@@ -4811,7 +5134,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "行为类型",
@@ -4830,7 +5154,8 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "行为类型"
           },
           "subType": {
             "title": "子行为类型",
@@ -4855,39 +5180,48 @@
               "ClickBehavior",
               "PageSkipBehavior",
               "RoutingSkipBehavior"
-            ]
+            ],
+            "description": "子行为类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "left": {
             "title": "点击位置距离页面左端距离",
-            "type": "number"
+            "type": "number",
+            "description": "点击位置距离页面左端距离"
           },
           "top": {
             "title": "点击位置距离页面顶端距离",
-            "type": "number"
+            "type": "number",
+            "description": "点击位置距离页面顶端距离"
           },
           "target": {
             "type": "string",
-            "title": "点击对象"
+            "title": "点击对象",
+            "description": "点击对象"
           },
           "html": {
             "type": "string",
-            "title": "页面结构"
+            "title": "页面结构",
+            "description": "页面结构"
           },
           "inner": {
             "type": "string",
-            "title": "内部文本"
+            "title": "内部文本",
+            "description": "内部文本"
           }
         },
         "x-apifox-orders": [
@@ -4924,7 +5258,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "错误类型",
@@ -4943,7 +5278,8 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "错误类型"
           },
           "subType": {
             "title": "子错误类型",
@@ -4962,23 +5298,28 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "子错误类型"
           },
           "errorTime": {
             "title": "错误时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "stack": {
             "title": "错误堆栈",
-            "type": "string"
+            "type": "string",
+            "description": "错误堆栈"
           }
         },
         "x-apifox-orders": [
@@ -5007,7 +5348,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "错误类型",
@@ -5026,7 +5368,8 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "错误类型"
           },
           "subType": {
             "title": "子错误类型",
@@ -5045,23 +5388,28 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "子错误类型"
           },
           "errorTime": {
             "title": "错误时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "stack": {
             "title": "错误堆栈",
-            "type": "string"
+            "type": "string",
+            "description": "错误堆栈"
           }
         },
         "x-apifox-orders": [
@@ -5090,7 +5438,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "错误类型",
@@ -5109,7 +5458,8 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "错误类型"
           },
           "subType": {
             "title": "子错误类型",
@@ -5128,39 +5478,48 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "子错误类型"
           },
           "errorTime": {
             "title": "错误时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "url": {
             "type": "string",
-            "title": "文件路径"
+            "title": "文件路径",
+            "description": "文件路径"
           },
           "msg": {
             "title": "错误消息",
-            "type": "string"
+            "type": "string",
+            "description": "错误消息"
           },
           "line": {
             "title": "错误行号",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误行号"
           },
           "column": {
             "title": "错误列号",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误列号"
           },
           "stack": {
             "type": "string",
-            "title": "错误调用堆栈"
+            "title": "错误调用堆栈",
+            "description": "错误调用堆栈"
           }
         },
         "x-apifox-orders": [
@@ -5197,7 +5556,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "错误类型",
@@ -5216,7 +5576,8 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "错误类型"
           },
           "subType": {
             "title": "子错误类型",
@@ -5235,19 +5596,23 @@
               "JavaScriptError",
               "PromiseError",
               "VueError"
-            ]
+            ],
+            "description": "子错误类型"
           },
           "errorTime": {
             "title": "错误时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "错误时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "resourceType": {
             "title": "资源类型",
@@ -5256,11 +5621,13 @@
           },
           "html": {
             "type": "string",
-            "title": "页面结构"
+            "title": "页面结构",
+            "description": "页面结构"
           },
           "path": {
             "type": "string",
-            "title": "资源路径"
+            "title": "资源路径",
+            "description": "资源路径"
           }
         },
         "x-apifox-orders": [
@@ -5293,7 +5660,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "指标类型",
@@ -5316,7 +5684,8 @@
               "OperationIndicator",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "指标类型"
           },
           "subType": {
             "title": "子指标类型",
@@ -5351,63 +5720,78 @@
               "RouterLoadTime",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "子指标类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "url": {
             "type": "string",
-            "title": "资源路径"
+            "title": "资源路径",
+            "description": "资源路径"
           },
           "duration": {
             "title": "加载耗时",
-            "type": "integer"
+            "type": "integer",
+            "description": "加载耗时"
           },
           "dns": {
             "title": "DNS耗时",
-            "type": "number"
+            "type": "number",
+            "description": "DNS耗时"
           },
           "tcp": {
             "title": "TCP耗时",
-            "type": "number"
+            "type": "number",
+            "description": "TCP耗时"
           },
           "redirect": {
             "title": "重定向耗时",
-            "type": "number"
+            "type": "number",
+            "description": "重定向耗时"
           },
           "ttfb": {
             "title": "首字节时间",
-            "type": "number"
+            "type": "number",
+            "description": "首字节时间"
           },
           "protocol": {
             "type": "string",
-            "title": "请求协议"
+            "title": "请求协议",
+            "description": "请求协议"
           },
           "bodySize": {
             "title": "内容大小",
-            "type": "number"
+            "type": "number",
+            "description": "内容大小"
           },
           "headerSize": {
             "title": "标头大小",
-            "type": "number"
+            "type": "number",
+            "description": "标头大小"
           },
           "resourceSize": {
             "title": "资源大小",
-            "type": "number"
+            "type": "number",
+            "description": "资源大小"
           },
           "isCache": {
             "type": "boolean",
-            "title": "命中缓存"
+            "title": "命中缓存",
+            "description": "命中缓存"
           }
         },
         "x-apifox-orders": [
@@ -5456,7 +5840,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "指标类型",
@@ -5479,7 +5864,8 @@
               "OperationIndicator",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "指标类型"
           },
           "subType": {
             "title": "子指标类型",
@@ -5514,35 +5900,43 @@
               "RouterLoadTime",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "子指标类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "statusCode": {
             "type": "integer",
-            "title": "状态编码"
+            "title": "状态编码",
+            "description": "状态编码"
           },
           "method": {
             "type": "string",
-            "title": "请求方法"
+            "title": "请求方法",
+            "description": "请求方法"
           },
           "duration": {
             "type": "integer",
-            "title": "接口耗时"
+            "title": "接口耗时",
+            "description": "接口耗时"
           },
           "url": {
             "type": "string",
-            "title": "接口地址"
+            "title": "接口地址",
+            "description": "接口地址"
           }
         },
         "x-apifox-orders": [
@@ -5577,7 +5971,8 @@
         "properties": {
           "appId": {
             "type": "string",
-            "title": "应用ID"
+            "title": "应用ID",
+            "description": "应用ID"
           },
           "mainType": {
             "title": "指标类型",
@@ -5600,7 +5995,8 @@
               "OperationIndicator",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "指标类型"
           },
           "subType": {
             "title": "子指标类型",
@@ -5635,23 +6031,28 @@
               "RouterLoadTime",
               "InterfaceIndicator",
               "ResourceIndicator"
-            ]
+            ],
+            "description": "子指标类型"
           },
           "startTime": {
             "title": "开始时间",
-            "type": "integer"
+            "type": "integer",
+            "description": "开始时间"
           },
           "pageUrl": {
             "type": "string",
-            "title": "页面路径"
+            "title": "页面路径",
+            "description": "页面路径"
           },
           "userID": {
             "type": "string",
-            "title": "用户ID"
+            "title": "用户ID",
+            "description": "用户ID"
           },
           "value": {
             "title": "指标数值",
-            "type": "number"
+            "type": "number",
+            "description": "指标数值"
           }
         },
         "x-apifox-orders": [

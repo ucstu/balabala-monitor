@@ -24,7 +24,7 @@ export class PromiseerrorController {
    */
   @Get("/promiseerrorstatistics")
   totalError(@Query() promiseerrorTotalVo: PromiseerrorTotalVo) {
-    return this.promiseerrorService.totalError(promiseerrorTotalVo);
+    return this.promiseerrorService.totalPromiseerror(promiseerrorTotalVo);
   }
   /**
    * Promise错误查询

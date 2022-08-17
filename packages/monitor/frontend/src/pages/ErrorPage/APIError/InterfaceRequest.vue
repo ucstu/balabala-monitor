@@ -59,8 +59,6 @@ const InterfaceParms = $ref({
   statusCode: 400,
 });
 
-const status: number;
-
 const loadPerformanceInterface = () => {
   getPerformancesInterfaceindicators({
     ...InterfaceParms,

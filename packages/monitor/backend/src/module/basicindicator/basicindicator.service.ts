@@ -79,13 +79,20 @@ export class BasicindicatorService {
     }
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
-      const tempList = this.totalDate(querys, e.list.buckets);
+      const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
     return responseRust.success_data(list);
   }
 
-  private totalDate(querys: BasicindicatorsTotalVo, list) {
+  /**
+   * 处理es 返回结果集
+   * 填充日期
+   * @param querys
+   * @param list
+   * @returns
+   */
+  private totalData(querys: BasicindicatorsTotalVo, list) {
     const restList = [];
     if (querys.granularity === "1d") {
       // 当月的第一天
@@ -95,7 +102,7 @@ export class BasicindicatorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format("MM-DD"),
+            datetime: startTime.format("YYYY-MM-DD"),
             count: 0,
             avarge: 0,
           });
@@ -114,7 +121,7 @@ export class BasicindicatorService {
         restList.unshift({
           datetime: dayjs(list[0].key)
             .subtract(i + 1, "day")
-            .format("MM-DD"),
+            .format("YYYY-MM-DD"),
           count: 0,
           avarge: 0,
         });
@@ -124,7 +131,7 @@ export class BasicindicatorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format("MM-DD"),
+          datetime: dayjs(item.key).format("YYYY-MM-DD"),
           count: item.doc_count,
           avarge: item.avg.value ? item.avg.value : 0,
         });
@@ -133,7 +140,7 @@ export class BasicindicatorService {
         restList.push({
           datetime: dayjs(list[list.length - 1].key)
             .add(1 + i, "day")
-            .format("MM-DD"),
+            .format("YYYY-MM-DD"),
           count: 0,
           avarge: 0,
         });
@@ -146,7 +153,7 @@ export class BasicindicatorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format("MM-DD HH"),
+            datetime: startTime.format("YYYY-MM-DD HH:mm:ss"),
             count: 0,
             avarge: 0,
           });
@@ -165,7 +172,7 @@ export class BasicindicatorService {
         restList.unshift({
           datetime: dayjs(list[0].key)
             .subtract(i + 1, "hour")
-            .format("MM-DD HH"),
+            .format("YYYY-MM-DD HH:mm:ss"),
           count: 0,
           avarge: 0,
         });
@@ -175,7 +182,7 @@ export class BasicindicatorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format("MM-DD HH"),
+          datetime: dayjs(item.key).format("YYYY-MM-DD HH:mm:ss"),
           count: item.doc_count,
           avarge: item.avg.value ? item.avg.value : 0,
         });
@@ -184,7 +191,7 @@ export class BasicindicatorService {
         restList.push({
           datetime: dayjs(list[list.length - 1].key)
             .add(1 + i, "hour")
-            .format("MM-DD HH"),
+            .format("YYYY-MM-DD HH:mm:ss"),
           count: 0,
           avarge: 0,
         });

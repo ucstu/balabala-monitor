@@ -1,4 +1,9 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
 export type ResourceerrorVo = BaseQueryVo;
-export type ResourceerrorTotalVo = BaseTotalVo;
+export interface ResourceerrorTotalVo extends BaseTotalVo {
+  /**
+   * 资源路径
+   */
+  url?: string;
+}

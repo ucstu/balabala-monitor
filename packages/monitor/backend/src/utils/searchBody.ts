@@ -1,4 +1,16 @@
 import { BaseQueryVo, BaseTotalVo } from "src/vo/base.vo";
+import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
+
+const getTime = (timeStr: string): number => {
+  const map = {
+    "1d": 1000 * 1 * 60 * 60 * 24,
+    "1h": 1000 * 1 * 60 * 60,
+    "1m": 1000 * 1 * 60,
+    "1s": 1000 * 1,
+  };
+
+  return map[timeStr];
+};
 
 /**
  * 基类方法,构造body体
@@ -137,11 +149,20 @@ export const getQueryBody = (
   return body;
 };
 
+/**
+ *基础指标统计
+ * @param querys
+ * @param timeName
+ * @returns
+ */
 export const getPerformancesBasicindicatorsBody = (
-  querys: BaseQueryVo,
+  querys: BaseTotalVo,
   timeName: "startTime" | "errorTime"
 ) => {
   const body = getBaseBody(querys, timeName);
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
   const aggs = {
     count: {
       range: {
@@ -171,8 +192,8 @@ export const getPerformancesBasicindicatorsBody = (
       aggs: {
         list: {
           histogram: {
-            field: "startTime",
-            interval: 86400000,
+            field: timeName,
+            interval: getTime(querys.granularity),
             min_doc_count: 0,
           },
           aggs: {
@@ -181,6 +202,160 @@ export const getPerformancesBasicindicatorsBody = (
                 field: "value",
               },
             },
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ * 接口指标统计
+ * @param querys
+ * @param timeName
+ * @returns
+ */
+export const getTotalinterfaceIndicator = (
+  querys: BaseTotalVo,
+  timeName: "startTime" | "errorTime"
+) => {
+  const body = getBaseBody(querys, timeName);
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      range: {
+        field: "duration",
+        ranges: [
+          {
+            from: 0,
+            to: 1000,
+          },
+          {
+            from: 1000,
+            to: 5000,
+          },
+          {
+            from: 5000,
+            to: 10000,
+          },
+          {
+            from: 10000,
+            to: 300000,
+          },
+          {
+            from: 300000,
+          },
+        ],
+      },
+      aggs: {
+        list: {
+          histogram: {
+            field: timeName,
+            interval: getTime(querys.granularity), // 一天
+            min_doc_count: 0,
+          },
+          aggs: {
+            avg: {
+              avg: {
+                field: "duration",
+              },
+            },
+            userCount: {
+              cardinality: {
+                field: "userID",
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ * 资源指标统计
+ * @param querys
+ * @param timeName
+ * @returns
+ */
+export const getPerformancesResourceindicatorstatistics = (
+  querys: BaseTotalVo,
+  timeName: "startTime" | "errorTime"
+) => {
+  const body = getBaseBody(querys, timeName);
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: timeName,
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
+        happenCount: {
+          cardinality: {
+            field: timeName,
+          },
+        },
+      },
+    },
+  };
+
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ *资源错误统计
+ * @param querys
+ * @param timeName
+ */
+export const getTotalResourceerrorstatisticsBody = (
+  querys: ResourceerrorTotalVo,
+  timeName: "startTime" | "errorTime"
+) => {
+  const body = getBaseBody(querys, timeName);
+  if (querys.url) {
+    const term = {
+      term: {
+        path: querys.url,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: timeName,
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
           },
         },
       },

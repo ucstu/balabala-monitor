@@ -3,89 +3,75 @@
     <div class="content">
       <div class="content-left">
         <div class="list">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 60%">高频错误(最近60分钟)</th>
-                <th style="width: 20%">发生次数</th>
-                <th style="width: 20%">影响人数</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="list-title">
+            <div class="list-title-name">高频错误</div>
+            <div class="list-title-name">发生次数</div>
+            <div class="list-title-name">影响人数</div>
+          </div>
+          <div v-for="(item, index) in list" :key="index" class="list-content">
+            <div class="sort">
+              <div class="list-left sort-content">
+                <div class="list-left-top sort-content">
+                  <div class="type">{{}}</div>
+                  <div>{{}}</div>
+                </div>
+                <div class="list-left-bottom sort-content">{{}}</div>
+              </div>
+              <div class="list-center">{{}}</div>
+              <div class="list-right">{{}}</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="content-right">
         <div class="list">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 60%">最新错误(最近5分钟)</th>
-                <th style="width: 20%">发生次数</th>
-                <th style="width: 20%">影响人数</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="list-title">
+            <div class="list-title-name">最新错误</div>
+            <div class="list-title-name">发生次数</div>
+            <div class="list-title-name">影响人数</div>
+          </div>
+          <div v-for="(item, index) in list" :key="index" class="list-content">
+            <div class="sort">
+              <div class="list-left sort-content">
+                <div class="list-left-top sort-content">
+                  <div class="type">{{}}</div>
+                  <div>{{}}</div>
+                </div>
+                <div class="list-left-bottom sort-content">{{}}</div>
+              </div>
+              <div class="list-center">{{}}</div>
+              <div class="list-right">{{}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getPerformancesInterfaceindicators } from "@/apis";
+import { onMounted } from "vue";
+let list: never[];
+
+onMounted(() => {
+  loadPerformanceInterface();
+});
+
+const loadPerformanceInterface = () => {
+  getPerformancesInterfaceindicators({
+    appid: "",
+    endtime: "",
+    starttime: "",
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+</script>
 
 <style scoped lang="scss">
 .global {
@@ -104,15 +90,13 @@
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100%;
+  height: auto;
   padding: 20px;
 
   .content-left {
     box-sizing: border-box;
     height: 100%;
     margin-right: 5px;
-
-    // border: 2px solid #ccc;
     background-color: rgb(255 255 255);
   }
 
@@ -120,50 +104,64 @@
     box-sizing: border-box;
     height: 100%;
     margin-left: 5px;
-
-    // border: 2px solid #ccc;
     background-color: rgb(255 255 255);
   }
 }
 
 .list {
-  box-sizing: border-box;
-  height: 100%;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
+  height: auto;
 
-  table {
-    // margin: 0 auto;
+  .type {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .list-title,
+  .sort {
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    text-align: left;
+    height: 100px;
+    text-align: center;
     border-collapse: collapse;
+    background-color: rgb(248 175 5 / 50%);
 
-    thead {
-      height: 20%;
-    }
-
-    th {
-      padding-right: 10px;
-      padding-left: 10px;
+    .list-title-name {
       font-size: 16px;
       font-weight: 500;
       color: rgb(0 0 0 / 85%);
-      background-color: #fcfcfc;
     }
 
-    td {
+    .sort-content {
+      display: flex;
+      flex-direction: row;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgb(0 0 0 / 85%);
+    }
+
+    .list-title-name:nth-child(1),
+    .list-left {
       padding-right: 10px;
       padding-left: 10px;
+      text-align: left;
     }
+  }
 
-    tbody tr {
-      height: 80px;
-      border-bottom: 1px solid #ccc;
+  .list-content {
+    .sort {
+      height: 110px;
+      background-color: #fff;
+      border-bottom: 1px solid rgb(118 146 146);
 
       &:hover {
         background-color: rgb(208 247 247);
+      }
+
+      .list-left {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
       }
     }
   }

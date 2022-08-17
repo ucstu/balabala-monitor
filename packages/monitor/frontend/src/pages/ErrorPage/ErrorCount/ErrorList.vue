@@ -12,7 +12,7 @@
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input type="date" value="2022-08-13" />
+          <input v-model="ErrorListParms.starttime" type="datetime" />
         </div>
       </div>
     </div>
@@ -58,35 +58,48 @@
 </template>
 
 <script setup lang="ts">
-// import {
-//   getErrorsJavascripterrorstatistics,
-//   getErrorsResourceerrorstatistics,
-// } from "@/apis";
+import { getErrorsJavascripterrors, getErrorsResourceerrors } from "@/apis";
+import dayjs from "dayjs";
+import { onMounted } from "vue";
 
-// getErrorsJavascripterrorstatistics({
-//   appid: "",
-//   endtime: "",
-//   starttime: "",
-//   userid: "",
-// })
-//   .then((res) => {
-//     ("");
-//   })
-//   .catch((err) => {
-//     ("");
-//   });
-// getErrorsResourceerrorstatistics({
-//   appid: "",
-//   endtime: "",
-//   starttime: "",
-//   userid: "",
-// })
-//   .then((res) => {
-//     ("");
-//   })
-//   .catch((err) => {
-//     ("");
-//   });
+const ErrorListParms = $ref({
+  appid: "",
+  userid: "",
+  starttime: dayjs().format("YYYY-MM-DD"),
+  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+});
+
+onMounted(() => {
+  loadJavascriptError();
+  loadResourceError();
+});
+
+const loadJavascriptError = () => {
+  ErrorListParms.endtime = dayjs(ErrorListParms.starttime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+  getErrorsJavascripterrors({
+    ...ErrorListParms,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const loadResourceError = async () => {
+  getErrorsResourceerrors({
+    ...ErrorListParms,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -115,8 +128,6 @@
         font-size: 16px;
         font-weight: 800;
         cursor: pointer;
-
-        // background-color: rgb(169 235 235);
       }
     }
 
@@ -133,16 +144,6 @@
         display: inline-block;
         margin-top: 10px;
         margin-right: 20px;
-      }
-
-      .sort {
-        width: 160px;
-        background-color: rgb(255 255 255);
-        border: 1px solid #ccc;
-
-        div {
-          margin: 5px 10px;
-        }
       }
     }
 
@@ -223,8 +224,6 @@
           background-color: rgb(208 247 247);
         }
       }
-
-      // background-color: brown;
     }
   }
 }

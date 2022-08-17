@@ -12,52 +12,63 @@
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input type="date" value="2022-08-13" />
+          <input v-model="InterfaceParms.starttime" type="date" />
         </div>
       </div>
     </div>
     <div class="bottom">
-      <table>
-        <thead>
-          <tr>
-            <th class="th1">错误</th>
-            <th class="th2">发生次数</th>
-            <th class="th3">影响人数</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="list">
+        <div class="list-title">
+          <div class="list-title-name">最新错误</div>
+          <div class="list-title-name">发生次数</div>
+          <div class="list-title-name">影响人数</div>
+        </div>
+        <div v-for="(item, index) in list" :key="index" class="list-content">
+          <div class="sort">
+            <div class="list-left sort-content">
+              <div class="list-left-top sort-content">
+                <div class="type">{{}}</div>
+                <div>{{}}</div>
+              </div>
+              <div class="list-left-bottom sort-content">{{}}</div>
+            </div>
+            <div class="list-center">{{}}</div>
+            <div class="list-right">{{}}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getPerformancesInterfaceindicators } from "@/apis";
+import { onMounted } from "vue";
+const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+
+let list: never[];
+
+onMounted(() => {
+  loadPerformanceInterface();
+});
+
+const InterfaceParms = $ref({
+  appid: Appid,
+  starttime: "2022-08-01 00:00:00",
+  endtime: "2022-09-01 00:00:00",
+  statusCode: 400,
+});
+
+const status: number;
+
+const loadPerformanceInterface = () => {
+  getPerformancesInterfaceindicators({
+    ...InterfaceParms,
+  }).then((res) => {
+    console.log(res);
+  });
+};
+</script>
 
 <style scoped lang="scss">
 .global {
@@ -85,8 +96,6 @@
         font-size: 16px;
         font-weight: 800;
         cursor: pointer;
-
-        // background-color: rgb(169 235 235);
       }
     }
 
@@ -137,64 +146,63 @@
   .bottom {
     padding: 30px;
 
-    table {
-      width: 100%;
-      margin: 0 auto;
-      text-align: left;
-      border-collapse: collapse;
-      background-color: rgb(255 255 255);
+    .list {
+      height: auto;
 
-      .th1 {
-        width: 60%;
-        padding-left: 30px;
+      .type {
+        font-size: 18px;
+        font-weight: 600;
       }
 
-      .th2 {
-        width: 20%;
-      }
-
-      .th3 {
-        width: 20%;
-      }
-
-      th {
-        padding-right: 10px;
-        font-size: 16px;
-        font-weight: 500;
-        color: rgb(0 0 0 / 85%);
-        background-color: rgb(0 0 0 / 10%);
-      }
-
-      td {
-        padding-right: 10px;
-        padding-left: 10px;
-      }
-
-      thead tr {
+      .list-title,
+      .sort {
+        display: grid;
+        grid-template-columns: 4fr 1fr 1fr;
+        align-items: center;
+        width: 100%;
         height: 80px;
-        border-bottom: 1px solid #ccc;
+        text-align: center;
+        border-collapse: collapse;
+        background-color: rgb(248 175 5 / 50%);
 
-        img {
-          width: 14px;
-          height: 14px;
+        .list-title-name {
+          font-size: 16px;
+          font-weight: 500;
+          color: rgb(0 0 0 / 85%);
         }
 
-        span {
-          width: 28px;
-          margin-left: 8px;
+        .sort-content {
+          display: flex;
+          flex-direction: row;
+          font-size: 16px;
+          font-weight: 500;
+          color: rgb(0 0 0 / 85%);
+        }
+
+        .list-title-name:nth-child(1),
+        .list-left {
+          padding-right: 10px;
+          padding-left: 10px;
+          text-align: left;
         }
       }
 
-      tbody tr {
-        height: 80px;
-        border-bottom: 1px solid #ccc;
+      .list-content {
+        .sort {
+          height: 110px;
+          background-color: #fff;
+          border-bottom: 1px solid rgb(118 146 146);
 
-        &:hover {
-          background-color: rgb(208 247 247);
+          &:hover {
+            background-color: rgb(208 247 247);
+          }
+
+          .list-left {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+          }
         }
       }
-
-      // background-color: brown;
     }
   }
 }

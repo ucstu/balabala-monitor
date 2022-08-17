@@ -8,7 +8,7 @@
             <span>资源加载报错(点击柱状图查看其它日期)</span>
           </div>
         </div>
-        <div ref="chartDom" class="chart-content"></div>
+        <div ref="resourceDom" class="chart-content"></div>
       </div>
       <div class="statistics">
         <div class="statistics-title">
@@ -23,7 +23,11 @@
             </div>
             <div class="count">
               <div>总发生次数</div>
-              <div>...次</div>
+              <div>
+                {{
+                  overView.length === 0 ? "" : overView[overViewIndex].count
+                }}次
+              </div>
             </div>
           </div>
           <div class="content-box box-two">
@@ -31,7 +35,13 @@
               <div class="picture"><img src="@/assets/pages.png" alt="" /></div>
               <div class="count">
                 <div>影响页面次数</div>
-                <div>...次</div>
+                <div>
+                  {{
+                    overView.length === 0
+                      ? ""
+                      : overView[overViewIndex].pageCount
+                  }}次
+                </div>
               </div>
             </div>
           </div>
@@ -40,7 +50,13 @@
               <div class="picture"><img src="@/assets/users.png" alt="" /></div>
               <div class="count">
                 <div>影响人数</div>
-                <div>...位</div>
+                <div>
+                  {{
+                    overView.length === 0
+                      ? ""
+                      : overView[overViewIndex].userCount
+                  }}位
+                </div>
               </div>
             </div>
           </div>
@@ -51,7 +67,79 @@
 </template>
 
 <script setup lang="ts">
-// import { getErrorsResourceerrorstatistics } from "@/apis";
+import { getErrorsResourceerrorstatistics } from "@/apis";
+import * as echarts from "echarts";
+import { nextTick } from "vue";
+const resourceDom = $ref<HTMLElement>();
+const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+let option: any = $ref({
+  xAxis: {
+    type: "category",
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      data: [],
+      type: "bar",
+      itemStyle: {
+        color: "#94d6da",
+      },
+
+      emphasis: {
+        itemStyle: {
+          color: "#009ad6",
+        },
+      },
+    },
+  ],
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "shadow",
+    },
+  },
+});
+let mychart: any;
+nextTick(() => {
+  //ResourceParms.userid = route.query.userId + "";
+  mychart = echarts.init(resourceDom);
+  loadResource();
+});
+type count = {
+  count: number;
+  pageCount?: number;
+  userCount: number;
+};
+let overView = $ref<count[]>([]);
+
+const ResourceParms = $ref({
+  appid: Appid,
+  starttime: "2022-08-01 00:00:00",
+  endtime: "2022-09-01 00:00:00",
+  granularity: "1d",
+});
+let overViewIndex = $ref<number>(0);
+const loadResource = () => {
+  let timeStr: string[] = [];
+  let value: number[] = [];
+  console.log(ResourceParms);
+
+  getErrorsResourceerrorstatistics({ ...ResourceParms }).then((res) => {
+    res.data.forEach((data) => {
+      overView.push(data);
+      option.xAxis.data.push(data.datetime);
+      option.series[0].data.push(data.count);
+    });
+    mychart.setOption(option);
+    mychart.on("click", (parm: any) => {
+      overViewIndex = parm.dataIndex;
+      console.log(parm);
+    });
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -78,7 +166,7 @@
       // background-color: blue;
 
       .chart-title {
-        height: 80px;
+        height: 60px;
 
         .chart-underline {
           width: 320px;
@@ -95,9 +183,11 @@
 
       .chart-content {
         // box-sizing: border-box;
-        width: 400px;
-        height: 400px;
+        width: 700px;
+        height: 500px;
         padding: 20px;
+        padding-top: 0;
+        cursor: pointer;
       }
     }
 
@@ -138,6 +228,7 @@
         .content-box {
           margin: 20px;
           margin-bottom: 40px;
+          cursor: pointer;
           border: 1px solid #fff;
           border-radius: 10px;
 

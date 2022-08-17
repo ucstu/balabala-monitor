@@ -1,4 +1,13 @@
 import { BaseQueryVo, BaseTotalVo } from "./base.vo";
 
 export type JavaScriptErrorVo = BaseQueryVo;
-export type JavaScriptErrorTotalVo = BaseTotalVo;
+export interface JavaScriptErrorTotalVo extends BaseTotalVo {
+  /**
+   *错误信息
+   */
+  msg: string;
+  /**
+   *js文件地址
+   */
+  url: string;
+}

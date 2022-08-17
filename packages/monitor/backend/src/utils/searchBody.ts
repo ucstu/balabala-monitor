@@ -1,4 +1,7 @@
 import { BaseQueryVo, BaseTotalVo } from "src/vo/base.vo";
+import { InterfaceerrorsVo } from "src/vo/interfaceerrors.vo";
+import { JavaScriptErrorTotalVo } from "src/vo/javascripterror.vo";
+import { PromiseerrorTotalVo } from "src/vo/promiseerror.vo";
 import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
 
 const getTime = (timeStr: string): number => {
@@ -35,6 +38,10 @@ const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
   const range = {
     range: {},
   };
+  if (querys.starttime.length === 10) {
+    querys.starttime = querys.starttime + " 00:00:00";
+    querys.endtime = querys.endtime + " 00:00:00";
+  }
   range.range[timeName] = {
     gte: new Date(querys.starttime).getTime(),
     lte: new Date(querys.endtime).getTime(),
@@ -209,6 +216,7 @@ export const getPerformancesBasicindicatorsBody = (
   };
   body.aggs = aggs;
   body.size = 0; // 不查出列表数据,只返回聚合数据
+  console.log(JSON.stringify(body));
   return body;
 };
 
@@ -350,6 +358,143 @@ export const getTotalResourceerrorstatisticsBody = (
     count: {
       histogram: {
         field: timeName,
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+        pageCount: {
+          cardinality: {
+            field: "path",
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ *接口错误查询
+ * @param querys
+ * @returns
+ */
+export const getInterfaceerrorsBody = (querys: InterfaceerrorsVo) => {
+  const body = getBaseBody(querys, "errorTime");
+  if (querys.url) {
+    const term = {
+      term: {
+        path: querys.url,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  return body;
+};
+
+/**
+ *js 错误
+ * @param querys
+ * @returns
+ */
+export const getTotalErrorBody = (querys: JavaScriptErrorTotalVo) => {
+  const body = getBaseBody(querys, "errorTime");
+  if (querys.url) {
+    const term = {
+      term: {
+        path: querys.url,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (querys.msg) {
+    const term = {
+      term: {
+        msg: querys.msg,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: "errorTime",
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ * Promise错误
+ * @param querys
+ * @returns
+ */
+export const getTotalPromiseerrorBody = (querys: PromiseerrorTotalVo) => {
+  const body = getBaseBody(querys, "errorTime");
+  if (querys.stack) {
+    const term = {
+      term: {
+        stack: querys.stack,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: "errorTime",
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ * vue错误
+ * @param querys
+ * @returns
+ */
+export const getTotalVuererrorBody = (querys: PromiseerrorTotalVo) => {
+  const body = getBaseBody(querys, "errorTime");
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: "errorTime",
         interval: getTime(querys.granularity),
       },
       aggs: {

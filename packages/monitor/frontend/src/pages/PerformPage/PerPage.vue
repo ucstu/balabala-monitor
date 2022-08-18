@@ -33,10 +33,10 @@
         <div class="data">
           <div>
             <span
-              ><strong>{{ date }}</strong
+              ><strong>{{ count }}</strong
               >数量&nbsp;</span
             >
-            <span><strong>27.6%</strong>百分比&nbsp;</span>
+            <span><strong>{{percentage}}</strong>%百分比&nbsp;</span>
             <span
               ><strong>{{ date }}</strong
               >日期&nbsp;</span
@@ -48,7 +48,7 @@
         <div class="title">
           <i class="fa fa-bar-chart">近三十天变化趋势（点击切换其他日期）</i>
         </div>
-        <div ref="pagetimeDom" class="bar"></div>
+        <div ref="pagetimeDom" class="bar" @click="clickbar"></div>
       </div>
     </div>
     <div class="center">
@@ -151,7 +151,7 @@
 </template>
 
 <script setup lang="ts">
-import { getPerformancesBasicindicatorstatistics } from "@/apis";
+import { getPerformancesBasicindicators, getPerformancesBasicindicatorstatistics } from "@/apis";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
@@ -160,25 +160,26 @@ import { onMounted } from "vue";
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 const userMessage = $ref({
   appid: APPID,
-  starttime: dayjs().subtract(3, "day").format("YYYY-MM-DD"),
+  starttime: dayjs().subtract(20, "day").format("YYYY-MM-DD"),
   endtime: dayjs().format("YYYY-MM-DD"),
 });
 let count = $ref<number>();
 let Res = $ref<any>();
-let date: string = dayjs().format("MM-DD");
+let date = $ref<string>(dayjs().format("MM-DD"));
 let pagetime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
+let percentage = $ref<string>("00.00")
 let option_page = $ref<any>({
   xAxis: {
     type: "category",
-    data: ["08-01", "08-02", "08-03"],
+    data: [],
   },
   yAxis: {
     type: "value",
   },
   series: [
     {
-      data: ["10", "20", "30"],
+      data: [0],
       type: "bar",
       showBackground: true,
       backgroundStyle: {
@@ -186,12 +187,27 @@ let option_page = $ref<any>({
       },
     },
   ],
+  tooltip: { // 鼠标悬浮提示框显示 X和Y 轴数据
+     trigger: 'axis',
+     backgroundColor: 'rgba(32, 33, 36,.7)',
+     borderColor: 'rgba(32, 33, 36,0.20)',
+     borderWidth: 1,
+     textStyle: { // 文字提示样式
+       color: '#fff',
+       fontSize: '12'
+     },
+     axisPointer: { // 坐标轴虚线
+       type: 'cross',
+       label: {
+           backgroundColor: '#6a7985'
+       }
+     },
+   }
 });
 onMounted(() => {
-  getPerformancesBasicindicatorstatistics;
   pagetime_echart = echarts.init(pagetimeDom);
+  getPerformancesBasicindicatorstatistics;
 });
-
 getPerformancesBasicindicatorstatistics({
   ...userMessage,
   type: BasicIndicator.mainType.LoadIndicator,
@@ -209,9 +225,24 @@ getPerformancesBasicindicatorstatistics({
     arr2.push(e.count);
   });
   option_page.series[0].data = arr2;
+  console.log(res)
   pagetime_echart.setOption(option_page);
-  console.log(res);
+  Res.data[0].forEach((e: any) => {
+    if (e.datetime == date) {
+      count = e.count;
+    }
+  });
+  let total = 0;
+  for (var i = 0; i <= 4; i++) {
+    Res.data[i].forEach((e:any) => {
+      if (e.datetime == date) {
+        total += e.count
+      }
+    });
+  }
+  percentage = (count/total*100).toFixed(2)
 });
+
 function getlist(index: number) {
   let arr: any = [];
   let arr2: any = [];
@@ -225,11 +256,38 @@ function getlist(index: number) {
   option_page.series[0].data = arr2;
   pagetime_echart.setOption(option_page);
   Res.data[index].forEach((e: any) => {
-    if (e.datatime == date) {
+    if (e.datetime == date) {
       count = e.count;
     }
   });
+  getpercentage();
 }
+function getpercentage() {
+  let total = 0;
+  for (var i = 0; i <= 4; i++) {
+    Res.data[i].forEach((e:any) => {
+      if (e.datetime == date) {
+        total += e.count
+      }
+    });
+    percentage = (count/total*100).toFixed(2)
+  }
+}
+function clickbar() {
+  pagetime_echart.on('click', function(params:any) {
+    date = params.name;
+    count = params.value;
+    getpercentage();
+});
+}
+// getPerformancesBasicindicators({
+//   ...userMessage,
+//   type: BasicIndicator.mainType.LoadIndicator,
+//   subType: BasicIndicator.subType.FullLoad,
+//   top: 10,
+// }).then(res => {
+//   console.log(res)
+// })
 </script>
 
 <style lang="scss" scoped>

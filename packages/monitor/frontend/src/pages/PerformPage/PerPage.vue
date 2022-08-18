@@ -36,7 +36,10 @@
               ><strong>{{ count }}</strong
               >数量&nbsp;</span
             >
-            <span><strong>{{percentage}}</strong>%百分比&nbsp;</span>
+            <span
+              ><strong>{{ percentage }}</strong
+              >%百分比&nbsp;</span
+            >
             <span
               ><strong>{{ date }}</strong
               >日期&nbsp;</span
@@ -151,24 +154,29 @@
 </template>
 
 <script setup lang="ts">
-import { getPerformancesBasicindicators, getPerformancesBasicindicatorstatistics } from "@/apis";
+import {
+  getPerformancesBasicindicators,
+  getPerformancesBasicindicatorstatistics,
+} from "@/apis";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
 import { onMounted } from "vue";
+
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 const userMessage = $ref({
   appid: APPID,
   starttime: dayjs().subtract(20, "day").format("YYYY-MM-DD"),
   endtime: dayjs().format("YYYY-MM-DD"),
 });
+
 let count = $ref<number>();
 let Res = $ref<any>();
 let date = $ref<string>(dayjs().format("MM-DD"));
 let pagetime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
-let percentage = $ref<string>("00.00")
+let percentage = $ref<string>("00.00");
 let option_page = $ref<any>({
   xAxis: {
     type: "category",
@@ -187,22 +195,25 @@ let option_page = $ref<any>({
       },
     },
   ],
-  tooltip: { // 鼠标悬浮提示框显示 X和Y 轴数据
-     trigger: 'axis',
-     backgroundColor: 'rgba(32, 33, 36,.7)',
-     borderColor: 'rgba(32, 33, 36,0.20)',
-     borderWidth: 1,
-     textStyle: { // 文字提示样式
-       color: '#fff',
-       fontSize: '12'
-     },
-     axisPointer: { // 坐标轴虚线
-       type: 'cross',
-       label: {
-           backgroundColor: '#6a7985'
-       }
-     },
-   }
+  tooltip: {
+    // 鼠标悬浮提示框显示 X和Y 轴数据
+    trigger: "axis",
+    backgroundColor: "rgba(32, 33, 36,.7)",
+    borderColor: "rgba(32, 33, 36,0.20)",
+    borderWidth: 1,
+    textStyle: {
+      // 文字提示样式
+      color: "#fff",
+      fontSize: "12",
+    },
+    axisPointer: {
+      // 坐标轴虚线
+      type: "cross",
+      label: {
+        backgroundColor: "#6a7985",
+      },
+    },
+  },
 });
 onMounted(() => {
   pagetime_echart = echarts.init(pagetimeDom);
@@ -220,12 +231,13 @@ getPerformancesBasicindicatorstatistics({
   Res.data[0].forEach((e: any) => {
     arr.push(e.datetime);
   });
+
   option_page.xAxis.data = arr;
   Res.data[0].forEach((e: any) => {
     arr2.push(e.count);
   });
   option_page.series[0].data = arr2;
-  console.log(res)
+  console.log(res);
   pagetime_echart.setOption(option_page);
   Res.data[0].forEach((e: any) => {
     if (e.datetime == date) {
@@ -234,13 +246,13 @@ getPerformancesBasicindicatorstatistics({
   });
   let total = 0;
   for (var i = 0; i <= 4; i++) {
-    Res.data[i].forEach((e:any) => {
+    Res.data[i].forEach((e: any) => {
       if (e.datetime == date) {
-        total += e.count
+        total += e.count;
       }
     });
   }
-  percentage = (count/total*100).toFixed(2)
+  percentage = ((count / total) * 100).toFixed(2);
 });
 
 function getlist(index: number) {
@@ -265,20 +277,20 @@ function getlist(index: number) {
 function getpercentage() {
   let total = 0;
   for (var i = 0; i <= 4; i++) {
-    Res.data[i].forEach((e:any) => {
+    Res.data[i].forEach((e: any) => {
       if (e.datetime == date) {
-        total += e.count
+        total += e.count;
       }
     });
-    percentage = (count/total*100).toFixed(2)
+    percentage = ((count / total) * 100).toFixed(2);
   }
 }
 function clickbar() {
-  pagetime_echart.on('click', function(params:any) {
+  pagetime_echart.on("click", function (params: any) {
     date = params.name;
     count = params.value;
     getpercentage();
-});
+  });
 }
 // getPerformancesBasicindicators({
 //   ...userMessage,

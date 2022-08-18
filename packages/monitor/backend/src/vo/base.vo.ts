@@ -31,6 +31,19 @@ export interface BaseQueryVo {
    *排行前多少
    */
   top?: number;
+  /**
+   * 第几页
+   */
+  page?: number;
+  /**
+   * 一页显示多少条
+   *
+   */
+  size?: number;
+  /**
+   * ["createdAt,desc"]
+   */
+  sort?: string[];
 }
 
 export interface BaseTotalVo extends BaseQueryVo {

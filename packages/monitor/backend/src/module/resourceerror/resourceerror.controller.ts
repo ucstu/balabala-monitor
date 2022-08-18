@@ -25,7 +25,9 @@ export class ResourceerrorController {
    */
   @Get("/resourceerrorstatistics")
   totalError(@Query() resourceerrorTotalVo: ResourceerrorTotalVo) {
-    return this.resourceerrorService.totalError(resourceerrorTotalVo);
+    return this.resourceerrorService.totalResourceerrorstatistics(
+      resourceerrorTotalVo
+    );
   }
   /**
    * 获取资源错误列表

@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
+import * as dayjs from "dayjs";
 import { vueerrorIndex } from "src/config/db.index";
 import { responseRust } from "src/entity/responseRust";
 import { VueError } from "src/entity/vueError.entity";
 import { getQueryBody, getTotalBody } from "src/utils/searchBody";
-import { format } from "src/utils/timeUtils";
 import { VueerrorTotalVo, VueerrorVo } from "src/vo/vueerror.vo";
-
 @Injectable()
 export class VueerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -34,13 +33,7 @@ export class VueerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const list = [];
-    res.body.aggregations.count.buckets.forEach((element) => {
-      list.push({
-        datetime: format(new Date(element.key)),
-        count: element.doc_count,
-      });
-    });
+    const list: VueError[] = this.getData(res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
   }
   async getErrorList(querys: VueerrorVo) {
@@ -52,11 +45,34 @@ export class VueerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: VueError[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: VueError = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
+  }
+
+  /**
+   * 处理数据
+   * @param list
+   * @returns
+   */
+  private getData(list) {
+    const restList = [];
+    list.forEach((e) => {
+      restList.push({
+        datetime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+        count: e.doc_count,
+        userCount: e.userCount.value,
+      });
+    });
+    return restList;
   }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
+import * as dayjs from "dayjs";
 import { javascripterrorIndex } from "src/config/db.index";
 import { JavaScriptError } from "src/entity/javaScriptError.entity";
 import { responseRust } from "src/entity/responseRust";
-import { getQueryBody, getTotalBody } from "src/utils/searchBody";
-import { format } from "src/utils/timeUtils";
+import { getQueryBody, getTotalErrorBody } from "src/utils/searchBody";
 import {
   JavaScriptErrorTotalVo,
   JavaScriptErrorVo,
@@ -28,24 +28,7 @@ export class JavascripterrorService {
     }
     return responseRust.error("上传失败,原因:" + JSON.stringify(res));
   }
-  async totalError(querys: JavaScriptErrorTotalVo) {
-    const body = getTotalBody(querys, "errorTime");
-    const res = await this.elasticsearchService.search({
-      index: javascripterrorIndex,
-      body,
-    });
-    if (res.statusCode !== 200) {
-      return responseRust.error();
-    }
-    const list = [];
-    res.body.aggregations.count.buckets.forEach((element) => {
-      list.push({
-        datetime: format(new Date(element.key)),
-        count: element.doc_count,
-      });
-    });
-    return responseRust.success_data(list);
-  }
+
   async getErrorList(querys: JavaScriptErrorVo) {
     const body = getQueryBody(querys, "errorTime");
     const res = await this.elasticsearchService.search({
@@ -55,11 +38,46 @@ export class JavascripterrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: JavaScriptError[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: JavaScriptError = element._source;
       list.push(source);
     });
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
+  }
+
+  async totalError(querys: JavaScriptErrorTotalVo) {
+    const body = getTotalErrorBody(querys);
+    const res = await this.elasticsearchService.search({
+      index: javascripterrorIndex,
+      body,
+    });
+    if (res.statusCode !== 200) {
+      return responseRust.error();
+    }
+    const list = this.getData(res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
+  }
+  /**
+   * 处理数据
+   * @param list
+   * @returns
+   */
+  private getData(list) {
+    const restList = [];
+    list.forEach((e) => {
+      restList.push({
+        datetime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+        count: e.doc_count,
+        userCount: e.userCount.value,
+      });
+    });
+    return restList;
   }
 }

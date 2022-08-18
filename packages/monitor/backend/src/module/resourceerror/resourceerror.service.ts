@@ -86,8 +86,8 @@ export class ResourceerrorService {
     if (querys.granularity === "1d") {
       timeFormat = "MM-DD";
       // 当月的第一天
-      let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("month");
-      const dayNum = dayjs(querys.starttime, "YYYY-MM-DD").daysInMonth();
+      let startTime = dayjs(querys.start_time, "YYYY-MM-DD").startOf("month");
+      const dayNum = dayjs(querys.start_time, "YYYY-MM-DD").daysInMonth();
       if (list.length === 0) {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
@@ -142,7 +142,7 @@ export class ResourceerrorService {
     } else if (querys.granularity === "1h") {
       timeFormat = "MM-DD";
       // 当天
-      let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("hour");
+      let startTime = dayjs(querys.start_time, "YYYY-MM-DD").startOf("hour");
       const dayNum = 24;
       if (list.length === 0) {
         // 当月天数

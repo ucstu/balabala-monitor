@@ -24,7 +24,7 @@ export class InterfaceerrorsController {
    * @param querys
    * @returns
    */
-  @Get("/interfaceerrors")
+  @Get("/interfaceerrorstatistics")
   totalInterfaceerrorstatistics(@Query() querys: InterfaceerrorsTotalVo) {
     return this.interfaceerrorsService.totalInterfaceerrorstatistics(querys);
   }

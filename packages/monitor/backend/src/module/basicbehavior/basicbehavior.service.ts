@@ -3,7 +3,11 @@ import { ElasticsearchService } from "@nestjs/elasticsearch";
 import { basicbehaviorIndex } from "src/config/db.index";
 import { BasicBehavior } from "src/entity/basicBehavior.entity";
 import { responseRust } from "src/entity/responseRust";
-import { getQueryBody, getTotalBody } from "src/utils/searchBody";
+import {
+  getQueryBody,
+  getTotalBasicBehaviorBody,
+  getTotalBody,
+} from "src/utils/searchBody";
 import { format } from "src/utils/timeUtils";
 import { BasicBehaviorTotalVo, BasicBehaviorVo } from "src/vo/BasicBehavior.vo";
 /**
@@ -15,7 +19,6 @@ export class BasicbehaviorService {
   /**
    * 上传数据
    */
-
   async upLoadBasicBehavior(basicbehavior: BasicBehavior[]) {
     const body = [];
     basicbehavior.forEach((e) => {
@@ -29,7 +32,6 @@ export class BasicbehaviorService {
     if (res.statusCode === 200) {
       return responseRust.success_creat();
     } else {
-      console.log(res);
       return responseRust.error();
     }
   }
@@ -46,13 +48,19 @@ export class BasicbehaviorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: BasicBehavior[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: BasicBehavior = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**
@@ -61,7 +69,7 @@ export class BasicbehaviorService {
   async totalBasicBehavior(
     querys: BasicBehaviorTotalVo
   ): Promise<responseRust> {
-    const body = getTotalBody(querys, "startTime");
+    const body = getTotalBasicBehaviorBody(querys);
     const res = await this.elasticsearchService.search({
       index: basicbehaviorIndex,
       body,

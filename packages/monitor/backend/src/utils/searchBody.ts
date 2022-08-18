@@ -97,6 +97,19 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
     };
     body.query.bool.must.push(term);
   }
+  // 分页参数
+  if (querys.page && querys.size) {
+    body.from = (querys.page - 1) * querys.size;
+    body.size = querys.size;
+  }
+  //排序规则
+  // console.log(querys.sort);
+  // if (querys.sort.length > 0 && querys.sort[0].split(",").length === 2) {
+  //   const sortObj = querys.sort[0].split(",");
+  //   const sort = {};
+  //   sort[sortObj[0]] = { order: sortObj[1] };
+  //   body.sort = [sort];
+  // }
 };
 
 /**
@@ -216,7 +229,6 @@ export const getPerformancesBasicindicatorsBody = (
   };
   body.aggs = aggs;
   body.size = 0; // 不查出列表数据,只返回聚合数据
-  console.log(JSON.stringify(body));
   return body;
 };
 

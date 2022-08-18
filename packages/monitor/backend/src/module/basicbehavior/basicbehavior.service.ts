@@ -46,13 +46,19 @@ export class BasicbehaviorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
+    const rest = {
+      itmes: [],
+      totalCount: 0,
+    };
     const list: BasicBehavior[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: BasicBehavior = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+
+    rest.itmes = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**

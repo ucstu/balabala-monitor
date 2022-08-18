@@ -1198,7 +1198,7 @@ export class Service {
       /**
        * Promise错误列表
        */
-      itmes: Array<PromiseError>;
+      items: Array<PromiseError>;
       /**
        * 总条数
        */
@@ -1328,7 +1328,7 @@ export class Service {
       /**
        * Vue错误列表
        */
-      itmes: Array<VueError>;
+      items: Array<VueError>;
       /**
        * 总条数
        */

@@ -474,6 +474,10 @@ const userActionParms = $ref({
   userid: "",
   starttime: dayjs().format("YYYY-MM-DD"),
   endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  type: 1,
+  subType: 123,
+  page: 1,
+  size: 10,
 });
 
 const clickAction = (index: number) => {
@@ -510,10 +514,10 @@ const loadBasicindicators = async () => {
     subType: BasicIndicator.subType.FullLoad,
   });
   let total = 0;
-  resultData.data.forEach((e) => {
+  resultData.data.items.forEach((e) => {
     total += e.value;
   });
-  option_page.series[0].data = [total / resultData.data.length];
+  option_page.series[0].data = [total / resultData.data.items.length];
   nextTick(() => {
     echar_page.setOption(option_page);
   });
@@ -521,7 +525,7 @@ const loadBasicindicators = async () => {
 // 加载资源错误
 const loadResourceerrors = () => {
   return getErrorsResourceerrors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
       temp.title = "资源错误";
@@ -534,7 +538,7 @@ const loadResourceerrors = () => {
 // 加载 JavaScript错误
 const loadJavascripterrors = () => {
   return getErrorsJavascripterrors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
       temp.title = "JavaScript错误";
@@ -546,7 +550,7 @@ const loadJavascripterrors = () => {
 // 加载 Promise错误
 const loadPromiseerrors = () => {
   return getErrorsPromiseerrors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 3;
       temp.title = "接口错误";
@@ -558,7 +562,7 @@ const loadPromiseerrors = () => {
 // 加载 Vue错误
 const loadVueerrors = () => {
   return getErrorsVueerrors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
       temp.title = "vue错误";
@@ -571,7 +575,7 @@ const loadVueerrors = () => {
 // 基础行为查询
 const loadBasicbehaviors = () => {
   return getBehaviorsBasicbehaviors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 1;
       temp.title = "页面浏览";
@@ -584,7 +588,7 @@ const loadBasicbehaviors = () => {
 // 点击行为
 const loadClickbehaviors = () => {
   return getBehaviorsClickbehaviors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 4;
       temp.title = "点击";
@@ -596,7 +600,7 @@ const loadClickbehaviors = () => {
 // 页面跳转行为
 const loadPageskipbehaviors = () => {
   return getBehaviorsPageskipbehaviors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 5;
       temp.title = "页面浏览";
@@ -608,7 +612,7 @@ const loadPageskipbehaviors = () => {
 // 路由跳转行为
 const loadRoutingskipbehaviors = () => {
   return getBehaviorsRoutingskipbehaviors({ ...userActionParms }).then((e) => {
-    e.data.forEach((data) => {
+    e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 6;
       temp.title = "页面浏览";

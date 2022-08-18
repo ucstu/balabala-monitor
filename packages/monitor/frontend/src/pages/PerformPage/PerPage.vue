@@ -91,12 +91,14 @@ import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
 import { onMounted } from "vue";
+
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 const userMessage = $ref({
   appid: APPID,
   starttime: dayjs().subtract(30, "day").format("YYYY-MM-DD"),
   endtime: dayjs().format("YYYY-MM-DD"),
 });
+
 let count = $ref<number>();
 let percentage = $ref<string>("00.00");
 let Res = $ref<any>();
@@ -104,6 +106,7 @@ let date = $ref<string>(dayjs().format("MM-DD"));
 let pageRankRes = $ref<any>();
 let pagetime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
+let percentage = $ref<string>("00.00");
 let option_page = $ref<any>({
   xAxis: {
     type: "category",

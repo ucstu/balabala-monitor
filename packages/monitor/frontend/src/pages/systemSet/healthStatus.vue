@@ -3,123 +3,39 @@
     <header class="header">
       <div class="title">健康数据</div>
       <div class="calendar">
-        <input type="text" placeholder="今天" /><i class="fa fa-calendar-o"></i>
+        <input v-model="ErrorListParms.starttime" type="date" />
       </div>
     </header>
-    <div class="data-board">
-      <div class="box">
-        <div class="main-card">
-          <div class="data-board-count">
-            <div class="count">
-              <span>0</span>
-              <span>js错误数</span>
-            </div>
-            <div>|</div>
-            <div class="count">
-              <span>--:--</span>
-              <span>js错误率</span>
-            </div>
-          </div>
-          <div class="percentage">
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="main-card">
-          <div class="data-board-count">
-            <div class="count">
-              <span>0</span>
-              <span>js错误数</span>
-            </div>
-            <div>|</div>
-            <div class="count">
-              <span>--:--</span>
-              <span>js错误率</span>
-            </div>
-          </div>
-          <div class="percentage">
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="main-card">
-          <div class="data-board-count">
-            <div class="count">
-              <span>0</span>
-              <span>js错误数</span>
-            </div>
-            <div>|</div>
-            <div class="count">
-              <span>--:--</span>
-              <span>js错误率</span>
-            </div>
-          </div>
-          <div class="percentage">
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="main-card">
-          <div class="data-board-count">
-            <div class="count">
-              <span>0</span>
-              <span>js错误数</span>
-            </div>
-            <div>|</div>
-            <div class="count">
-              <span>--:--</span>
-              <span>js错误率</span>
-            </div>
-          </div>
-          <div class="percentage">
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-            <div>
-              <span>周同比：</span>
-              <span>--%</span>
-              <i class="fa fa-arrow-up"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- 指标 -->
+    <div class="center">
+      <!-- 健康状态 -->
+      <div></div>
+
+      <!-- js错误 -->
+      <div></div>
+
+      <!-- 静态资源异常 -->
+      <div></div>
+
+      <!-- 接口异常 -->
+      <div></div>
     </div>
+
+    <!-- 图像 -->
+    <div class="bottom"></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import dayjs from "dayjs";
+
+const ErrorListParms = $ref({
+  appid: "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
+  //userid: "ce124A07-9111-C9b7-84C5-5644CEdB4Abf",
+  starttime: dayjs().format("YYYY-MM-DD"),
+  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+});
+</script>
 
 <style lang="scss" scoped>
 .bg {
@@ -146,57 +62,6 @@
       height: 26px;
       border: none;
       outline: none;
-    }
-  }
-
-  .data-board {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px;
-
-    .box {
-      width: 22%;
-      padding: 10px 15px;
-      background-color: white;
-
-      .data-board-count {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .count {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-between;
-          width: 100px;
-          height: 60px;
-        }
-
-        .count span:nth-child(1) {
-          font-size: 30px;
-          font-weight: 600;
-          color: #ea6947;
-        }
-
-        .count span:nth-child(2) {
-          font-size: 10px;
-          color: rgb(179 179 179);
-        }
-      }
-
-      .percentage {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 20px;
-
-        div {
-          font-size: 13.6px;
-          color: rgb(141 141 141);
-        }
-      }
     }
   }
 }

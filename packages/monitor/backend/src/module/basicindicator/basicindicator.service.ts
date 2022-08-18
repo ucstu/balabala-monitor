@@ -54,13 +54,18 @@ export class BasicindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: BasicIndicator[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: BasicIndicator = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**
@@ -79,15 +84,24 @@ export class BasicindicatorService {
     }
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
-      const tempList = this.totalDate(querys, e.list.buckets);
+      const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
     return responseRust.success_data(list);
   }
 
-  private totalDate(querys: BasicindicatorsTotalVo, list) {
+  /**
+   * 处理es 返回结果集
+   * 填充日期
+   * @param querys
+   * @param list
+   * @returns
+   */
+  private totalData(querys: BasicindicatorsTotalVo, list) {
     const restList = [];
+    let timeFormat;
     if (querys.granularity === "1d") {
+      timeFormat = "MM-DD";
       // 当月的第一天
       let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("month");
       const dayNum = dayjs(querys.starttime, "YYYY-MM-DD").daysInMonth();
@@ -95,11 +109,11 @@ export class BasicindicatorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format("MM-DD"),
+            datetime: startTime.format(timeFormat),
             count: 0,
             avarge: 0,
           });
-          startTime = startTime.add(1, "D");
+          startTime = startTime.add(1, "day");
         }
         return restList;
       }
@@ -114,7 +128,7 @@ export class BasicindicatorService {
         restList.unshift({
           datetime: dayjs(list[0].key)
             .subtract(i + 1, "day")
-            .format("MM-DD"),
+            .format(timeFormat),
           count: 0,
           avarge: 0,
         });
@@ -124,7 +138,7 @@ export class BasicindicatorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format("MM-DD"),
+          datetime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           avarge: item.avg.value ? item.avg.value : 0,
         });
@@ -133,12 +147,13 @@ export class BasicindicatorService {
         restList.push({
           datetime: dayjs(list[list.length - 1].key)
             .add(1 + i, "day")
-            .format("MM-DD"),
+            .format(timeFormat),
           count: 0,
           avarge: 0,
         });
       }
     } else if (querys.granularity === "1h") {
+      timeFormat = "HH:mm";
       // 当天
       let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("hour");
       const dayNum = 24;
@@ -146,7 +161,7 @@ export class BasicindicatorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format("MM-DD HH"),
+            datetime: startTime.format(timeFormat),
             count: 0,
             avarge: 0,
           });
@@ -165,7 +180,7 @@ export class BasicindicatorService {
         restList.unshift({
           datetime: dayjs(list[0].key)
             .subtract(i + 1, "hour")
-            .format("MM-DD HH"),
+            .format(timeFormat),
           count: 0,
           avarge: 0,
         });
@@ -175,7 +190,7 @@ export class BasicindicatorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format("MM-DD HH"),
+          datetime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           avarge: item.avg.value ? item.avg.value : 0,
         });
@@ -184,7 +199,7 @@ export class BasicindicatorService {
         restList.push({
           datetime: dayjs(list[list.length - 1].key)
             .add(1 + i, "hour")
-            .format("MM-DD HH"),
+            .format(timeFormat),
           count: 0,
           avarge: 0,
         });

@@ -45,12 +45,17 @@ export class RoutingskipbehaviorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: RoutingSkipBehavior[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: RoutingSkipBehavior = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 }

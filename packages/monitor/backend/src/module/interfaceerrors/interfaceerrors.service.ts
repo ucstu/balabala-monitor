@@ -1,44 +1,31 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
 import * as dayjs from "dayjs";
-import { basicbehaviorIndex } from "src/config/db.index";
-import { BasicBehavior } from "src/entity/basicBehavior.entity";
+import { interfacindicatorIndex } from "src/config/db.index";
+import { InterfaceIndicator } from "src/entity/interfaceIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
-import { getQueryBody, getTotalBasicBehaviorBody } from "src/utils/searchBody";
-import { BasicBehaviorTotalVo, BasicBehaviorVo } from "src/vo/BasicBehavior.vo";
-/**
- * 基础行为
- */
+import {
+  getInterfaceerrorsBody,
+  getTotalInterfaceerrorstatisticsBody,
+} from "src/utils/searchBody";
+import {
+  InterfaceerrorsTotalVo,
+  InterfaceerrorsVo,
+} from "src/vo/interfaceerrors.vo";
+
 @Injectable()
-export class BasicbehaviorService {
+export class InterfaceerrorsService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
-  /**
-   * 上传数据
-   */
-  async upLoadBasicBehavior(basicbehavior: BasicBehavior[]) {
-    const body = [];
-    basicbehavior.forEach((e) => {
-      body.push({ index: { _index: basicbehaviorIndex } });
-      body.push(e);
-    });
-    const res = await this.elasticsearchService.bulk({
-      index: basicbehaviorIndex,
-      body,
-    });
-    if (res.statusCode === 200) {
-      return responseRust.success_creat();
-    } else {
-      return responseRust.error();
-    }
-  }
 
   /**
-   * 查询数据
+   *接口错误查询
+   * @param querys
+   * @returns
    */
-  async queryBasicBehavior(querys: BasicBehaviorVo) {
-    const body = getQueryBody(querys, "startTime");
+  async getInterfaceerrors(querys: InterfaceerrorsVo) {
+    const body = getInterfaceerrorsBody(querys);
     const res = await this.elasticsearchService.search({
-      index: basicbehaviorIndex,
+      index: interfacindicatorIndex,
       body,
     });
     if (res.statusCode !== 200) {
@@ -48,33 +35,35 @@ export class BasicbehaviorService {
       items: [],
       totalCount: 0,
     };
-    const list: BasicBehavior[] = [];
+    const list: InterfaceIndicator[] = [];
     res.body.hits.hits.forEach((element) => {
-      const source: BasicBehavior = element._source;
+      const source: InterfaceIndicator = element._source;
       list.push(source);
     });
-
     rest.items = list;
     rest.totalCount = res.body.hits.total.value;
     return responseRust.success_data(rest);
   }
 
   /**
-   * 统计数据
+   * 接口错误统计
+   * @param querys
+   * @returns
    */
-  async totalBasicBehavior(
-    querys: BasicBehaviorTotalVo
-  ): Promise<responseRust> {
-    const body = getTotalBasicBehaviorBody(querys);
+  async totalInterfaceerrorstatistics(querys: InterfaceerrorsTotalVo) {
+    const body = getTotalInterfaceerrorstatisticsBody(querys);
     const res = await this.elasticsearchService.search({
-      index: basicbehaviorIndex,
+      index: interfacindicatorIndex,
       body,
     });
-
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const list = this.totalData(querys, res.body.aggregations.count.buckets);
+    const list = [];
+    res.body.aggregations.count.buckets.forEach((e) => {
+      const tempList = this.totalData(querys, e.list.buckets);
+      list.push(tempList);
+    });
     return responseRust.success_data(list);
   }
 
@@ -85,7 +74,7 @@ export class BasicbehaviorService {
    * @param list
    * @returns
    */
-  private totalData(querys: BasicBehaviorTotalVo, list) {
+  private totalData(querys: InterfaceerrorsTotalVo, list) {
     const restList = [];
     let timeFormat;
     if (querys.granularity === "1d") {
@@ -99,7 +88,7 @@ export class BasicbehaviorService {
           restList.push({
             datetime: startTime.format(timeFormat),
             count: 0,
-            average: 0,
+            userCount: 0,
           });
           startTime = startTime.add(1, "day");
         }
@@ -118,7 +107,7 @@ export class BasicbehaviorService {
             .subtract(i + 1, "day")
             .format(timeFormat),
           count: 0,
-          average: 0,
+          userCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -128,7 +117,7 @@ export class BasicbehaviorService {
         restList.push({
           datetime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
-          average: item.avg.value ? item.avg.value : 0,
+          userCount: item.userCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -137,7 +126,7 @@ export class BasicbehaviorService {
             .add(1 + i, "day")
             .format(timeFormat),
           count: 0,
-          average: 0,
+          userCount: 0,
         });
       }
     } else if (querys.granularity === "1h") {
@@ -151,7 +140,7 @@ export class BasicbehaviorService {
           restList.push({
             datetime: startTime.format(timeFormat),
             count: 0,
-            average: 0,
+            userCount: 0,
           });
           startTime = startTime.add(1, "hour");
         }
@@ -170,7 +159,7 @@ export class BasicbehaviorService {
             .subtract(i + 1, "hour")
             .format(timeFormat),
           count: 0,
-          average: 0,
+          userCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -180,7 +169,7 @@ export class BasicbehaviorService {
         restList.push({
           datetime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
-          average: item.avg.value ? item.avg.value : 0,
+          userCount: item.userCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -189,7 +178,7 @@ export class BasicbehaviorService {
             .add(1 + i, "hour")
             .format(timeFormat),
           count: 0,
-          average: 0,
+          userCount: 0,
         });
       }
     }

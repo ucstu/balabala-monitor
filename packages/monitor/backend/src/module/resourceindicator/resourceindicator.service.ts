@@ -1,10 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
+import * as dayjs from "dayjs";
 import { resourceindicatorIndex } from "src/config/db.index";
 import { ResourceIndicator } from "src/entity/resourceIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
-import { getQueryBody, getTotalBody } from "src/utils/searchBody";
-import { format } from "src/utils/timeUtils";
+import {
+  getPerformancesResourceindicatorstatistics,
+  getQueryBody,
+} from "src/utils/searchBody";
 import {
   ResourceIndicatorTotalVo,
   ResourceIndicatorVo,
@@ -47,20 +50,28 @@ export class ResourceindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: ResourceIndicator[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: ResourceIndicator = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**
    * 统计数据
    */
   async totalinterfaceIndicator(querys: ResourceIndicatorTotalVo) {
-    const body = getTotalBody(querys, "startTime");
+    const body = getPerformancesResourceindicatorstatistics(
+      querys,
+      "startTime"
+    );
     const res = await this.elasticsearchService.search({
       index: resourceindicatorIndex,
       body,
@@ -69,13 +80,26 @@ export class ResourceindicatorService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const list = [];
-    res.body.aggregations.count.buckets.forEach((element) => {
-      list.push({
-        datetime: format(new Date(element.key)),
-        count: element.doc_count,
+    const list = this.totalData(res.body.aggregations.count.buckets);
+
+    return responseRust.success_data(list);
+  }
+
+  /**
+   * 处理数据
+   * @param list
+   * @returns
+   */
+  private totalData(list) {
+    const restList = [];
+    list.forEach((e) => {
+      restList.push({
+        datetime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+        happenCount: e.doc_count,
+        pageCount: e.pageCount.value,
+        userCount: e.userCount.value,
       });
     });
-    return responseRust.success_data(list);
+    return restList;
   }
 }

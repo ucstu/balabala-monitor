@@ -1,5 +1,9 @@
 import { BaseQueryVo, BaseTotalVo } from "src/vo/base.vo";
-import { InterfaceerrorsVo } from "src/vo/interfaceerrors.vo";
+import { BasicBehaviorTotalVo } from "src/vo/BasicBehavior.vo";
+import {
+  InterfaceerrorsTotalVo,
+  InterfaceerrorsVo,
+} from "src/vo/interfaceerrors.vo";
 import { JavaScriptErrorTotalVo } from "src/vo/javascripterror.vo";
 import { PromiseerrorTotalVo } from "src/vo/promiseerror.vo";
 import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
@@ -397,15 +401,64 @@ export const getTotalResourceerrorstatisticsBody = (
  * @returns
  */
 export const getInterfaceerrorsBody = (querys: InterfaceerrorsVo) => {
-  const body = getBaseBody(querys, "errorTime");
-  if (querys.url) {
+  const body = getBaseBody(querys, "startTime");
+  if (querys.statusCode) {
     const term = {
       term: {
-        path: querys.url,
+        statusCode: querys.statusCode,
       },
     };
     body.query.bool.must.push(term);
   }
+  return body;
+};
+
+/**
+ * 接口错误,统计
+ * @param querys
+ * @returns
+ */
+export const getTotalInterfaceerrorstatisticsBody = (
+  querys: InterfaceerrorsTotalVo
+) => {
+  const body = getBaseBody(querys, "startTime");
+  if (querys.statusCode) {
+    const term = {
+      term: {
+        statusCode: querys.statusCode,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (querys.url) {
+    const term = {
+      term: {
+        url: querys.url,
+      },
+    };
+    body.query.bool.must.push(term);
+  }
+  if (!querys.granularity) {
+    querys.granularity = "1d";
+  }
+  const aggs = {
+    count: {
+      histogram: {
+        field: "startTime",
+        interval: getTime(querys.granularity), // 一天
+        min_doc_count: 0,
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
   return body;
 };
 
@@ -513,6 +566,38 @@ export const getTotalVuererrorBody = (querys: PromiseerrorTotalVo) => {
         userCount: {
           cardinality: {
             field: "userID",
+          },
+        },
+      },
+    },
+  };
+  body.aggs = aggs;
+  body.size = 0; // 不查出列表数据,只返回聚合数据
+  return body;
+};
+
+/**
+ * 基础行为统计
+ * @param querys
+ * @returns
+ */
+export const getTotalBasicBehaviorBody = (querys: BasicBehaviorTotalVo) => {
+  const body = getBaseBody(querys, "startTime");
+  const aggs = {
+    count: {
+      histogram: {
+        field: "startTime",
+        interval: getTime(querys.granularity),
+      },
+      aggs: {
+        userCount: {
+          cardinality: {
+            field: "userID",
+          },
+        },
+        avg: {
+          avg: {
+            field: "value",
           },
         },
       },

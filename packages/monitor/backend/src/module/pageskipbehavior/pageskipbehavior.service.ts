@@ -46,7 +46,7 @@ export class PageskipbehaviorService {
       return responseRust.error();
     }
     const rest = {
-      itmes: [],
+      items: [],
       totalCount: 0,
     };
     const list: PageSkipBehavior[] = [];
@@ -54,7 +54,7 @@ export class PageskipbehaviorService {
       const source: PageSkipBehavior = element._source;
       list.push(source);
     });
-    rest.itmes = list;
+    rest.items = list;
     rest.totalCount = res.body.hits.total.value;
     return responseRust.success_data(rest);
   }

@@ -71,7 +71,7 @@ export class InterfaceindicatorService {
       return responseRust.error();
     }
     const rest = {
-      itmes: [],
+      items: [],
       totalCount: 0,
     };
     const list = [];
@@ -79,7 +79,7 @@ export class InterfaceindicatorService {
       const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
-    rest.itmes = list;
+    rest.items = list;
     rest.totalCount = res.body.hits.total.value;
     return responseRust.success_data(rest);
   }

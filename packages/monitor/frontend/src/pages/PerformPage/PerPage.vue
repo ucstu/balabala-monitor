@@ -94,9 +94,9 @@ import { onMounted } from "vue";
 
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 const userMessage = $ref({
-  appid: APPID,
-  starttime: dayjs().subtract(30, "day").format("YYYY-MM-DD"),
-  endtime: dayjs().format("YYYY-MM-DD"),
+  appId: APPID,
+  startTime: dayjs().subtract(30, "day").format("YYYY-MM-DD"),
+  endTime: dayjs().format("YYYY-MM-DD"),
 });
 
 let count = $ref<number>();
@@ -106,7 +106,6 @@ let date = $ref<string>(dayjs().format("MM-DD"));
 let pageRankRes = $ref<any>();
 let pagetime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
-let percentage = $ref<string>("00.00");
 let option_page = $ref<any>({
   xAxis: {
     type: "category",
@@ -151,7 +150,7 @@ onMounted(() => {
 });
 getPerformancesBasicindicatorstatistics({
   ...userMessage,
-  type: BasicIndicator.mainType.LoadIndicator,
+  mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
   granularity: "1d",
 }).then((res) => {
@@ -227,7 +226,7 @@ function clickbar() {
 //获取页面记载排行榜
 getPerformancesBasicindicators({
   ...userMessage,
-  type: BasicIndicator.mainType.LoadIndicator,
+  mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
   size: 10,
 }).then((res) => {

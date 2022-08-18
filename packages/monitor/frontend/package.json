@@ -15,6 +15,7 @@
     "echarts": "^5.3.3",
     "font-awesome": "^4.7.0",
     "normalize.css": "^8.0.1",
+    "pinia": "^2.0.19",
     "vue": "^3.2.37",
     "vue-datepicker-local": "^1.0.19",
     "vue-router": "^4.1.3"

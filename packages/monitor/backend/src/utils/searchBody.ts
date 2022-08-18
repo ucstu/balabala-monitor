@@ -402,10 +402,10 @@ export const getTotalResourceerrorstatisticsBody = (
  */
 export const getInterfaceerrorsBody = (querys: InterfaceerrorsVo) => {
   const body = getBaseBody(querys, "startTime");
-  if (querys.statusCode) {
+  if (querys.status_code) {
     const term = {
       term: {
-        statusCode: querys.statusCode,
+        statusCode: querys.status_code,
       },
     };
     body.query.bool.must.push(term);
@@ -422,10 +422,10 @@ export const getTotalInterfaceerrorstatisticsBody = (
   querys: InterfaceerrorsTotalVo
 ) => {
   const body = getBaseBody(querys, "startTime");
-  if (querys.statusCode) {
+  if (querys.status_code) {
     const term = {
       term: {
-        statusCode: querys.statusCode,
+        statusCode: querys.status_code,
       },
     };
     body.query.bool.must.push(term);

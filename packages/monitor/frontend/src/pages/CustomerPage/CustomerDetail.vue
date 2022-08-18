@@ -16,14 +16,14 @@
       <div class="header-right">
         <div>
           <input
-            v-model="userActionParms.starttime"
+            v-model="userActionParma.startTime"
             class="input"
             type="date"
           />
         </div>
         <div><input class="input" type="text" /></div>
         <div style="width: 300px">
-          <input v-model="userActionParms.userid" class="input" type="text" />
+          <input v-model="userActionParma.userId" class="input" type="text" />
         </div>
         <div><button class="btn btn-search" @click="search">搜索</button></div>
       </div>
@@ -372,8 +372,8 @@ import {
 } from "@/apis";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
+import type { EChartOption, EChartsType } from "echarts";
 import * as echarts from "echarts";
-import { EChartsType } from "echarts";
 import { nextTick, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -385,7 +385,7 @@ let echar_page: EChartsType;
 let echar_api: EChartsType;
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 //页面平均加载时间
-let option_page = $ref({
+let option_page = $ref<EChartOption>({
   xAxis: {
     type: "value",
   },
@@ -397,15 +397,15 @@ let option_page = $ref({
     {
       data: [0],
       type: "bar",
-      showBackground: true,
-      backgroundStyle: {
-        color: "rgba(180, 180, 180, 0.2)",
-      },
+      // showBackground: true,
+      // backgroundStyle: {
+      //   color: "rgba(180, 180, 180, 0.2)",
+      // },
     },
   ],
 });
 //接口耗时
-let option_api = $ref<echarts.EChartsOption>({
+let option_api = $ref<EChartOption>({
   xAxis: {
     type: "value",
   },
@@ -417,10 +417,10 @@ let option_api = $ref<echarts.EChartsOption>({
     {
       data: [120, 200, 150, 80, 110, 130],
       type: "bar",
-      showBackground: true,
-      backgroundStyle: {
-        color: "rgba(180, 180, 180, 0.2)",
-      },
+      // showBackground: true,
+      // backgroundStyle: {
+      //   color: "rgba(180, 180, 180, 0.2)",
+      // },
     },
   ],
 });
@@ -460,7 +460,7 @@ onMounted(() => {
     alert("id不能为空");
     return;
   }
-  userActionParms.userid = route.query.userId + "";
+  userActionParma.userId = route.query.userId + "";
   echar_page = echarts.init(pageDom);
   echar_api = echarts.init(apiDom);
   echar_page.setOption(option_page);
@@ -469,12 +469,12 @@ onMounted(() => {
   loadBasicindicators();
 });
 
-const userActionParms = $ref({
-  appid: APPID,
-  userid: "",
-  starttime: dayjs().format("YYYY-MM-DD"),
-  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  type: 1,
+const userActionParma = $ref({
+  appId: APPID,
+  userId: "",
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  mainType: 1,
   subType: 123,
   page: 1,
   size: 10,
@@ -510,21 +510,21 @@ const clickAction = (index: number) => {
 // 加载行为记录列表
 const loadBasicindicators = async () => {
   const resultData = await getPerformancesBasicindicators({
-    ...userActionParms,
+    ...userActionParma,
     subType: BasicIndicator.subType.FullLoad,
   });
   let total = 0;
   resultData.data.items.forEach((e) => {
     total += e.value;
   });
-  option_page.series[0].data = [total / resultData.data.items.length];
+  option_page.series![0].data = [total / resultData.data.items.length];
   nextTick(() => {
     echar_page.setOption(option_page);
   });
 };
 // 加载资源错误
 const loadResourceerrors = () => {
-  return getErrorsResourceerrors({ ...userActionParms }).then((e) => {
+  return getErrorsResourceerrors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
@@ -537,7 +537,7 @@ const loadResourceerrors = () => {
 
 // 加载 JavaScript错误
 const loadJavascripterrors = () => {
-  return getErrorsJavascripterrors({ ...userActionParms }).then((e) => {
+  return getErrorsJavascripterrors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
@@ -549,7 +549,7 @@ const loadJavascripterrors = () => {
 };
 // 加载 Promise错误
 const loadPromiseerrors = () => {
-  return getErrorsPromiseerrors({ ...userActionParms }).then((e) => {
+  return getErrorsPromiseerrors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 3;
@@ -561,7 +561,7 @@ const loadPromiseerrors = () => {
 };
 // 加载 Vue错误
 const loadVueerrors = () => {
-  return getErrorsVueerrors({ ...userActionParms }).then((e) => {
+  return getErrorsVueerrors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 2;
@@ -574,7 +574,7 @@ const loadVueerrors = () => {
 
 // 基础行为查询
 const loadBasicbehaviors = () => {
-  return getBehaviorsBasicbehaviors({ ...userActionParms }).then((e) => {
+  return getBehaviorsBasicbehaviors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 1;
@@ -587,7 +587,7 @@ const loadBasicbehaviors = () => {
 
 // 点击行为
 const loadClickbehaviors = () => {
-  return getBehaviorsClickbehaviors({ ...userActionParms }).then((e) => {
+  return getBehaviorsClickbehaviors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 4;
@@ -599,7 +599,7 @@ const loadClickbehaviors = () => {
 };
 // 页面跳转行为
 const loadPageskipbehaviors = () => {
-  return getBehaviorsPageskipbehaviors({ ...userActionParms }).then((e) => {
+  return getBehaviorsPageskipbehaviors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 5;
@@ -611,7 +611,7 @@ const loadPageskipbehaviors = () => {
 };
 // 路由跳转行为
 const loadRoutingskipbehaviors = () => {
-  return getBehaviorsRoutingskipbehaviors({ ...userActionParms }).then((e) => {
+  return getBehaviorsRoutingskipbehaviors({ ...userActionParma }).then((e) => {
     e.data.items.forEach((data) => {
       const temp = Object.assign({ ...data });
       temp.listType = 6;
@@ -638,14 +638,14 @@ const loadAllData = async () => {
 };
 // 计算结束时间
 watch(
-  () => userActionParms.starttime,
+  () => userActionParma.startTime,
   (newVal, oldVal) => {
-    userActionParms.endtime = dayjs(newVal).add(1, "day").format("YYYY-MM-DD");
+    userActionParma.endTime = dayjs(newVal).add(1, "day").format("YYYY-MM-DD");
   }
 );
 
 const search = () => {
-  if (!userActionParms.userid) {
+  if (!userActionParma.userId) {
     alert("用户id 不能为空");
     return;
   }

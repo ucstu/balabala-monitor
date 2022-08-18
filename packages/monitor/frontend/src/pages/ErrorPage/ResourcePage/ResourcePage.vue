@@ -68,10 +68,15 @@
 
 <script setup lang="ts">
 import { getErrorsResourceerrorstatistics } from "@/apis";
+import { useStore } from "@/stores";
+import { ResourceError } from "@balabala/monitor-api";
 import * as echarts from "echarts";
+import { storeToRefs } from "pinia";
 import { nextTick } from "vue";
 const resourceDom = $ref<HTMLElement>();
-const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+
+const store = useStore();
+let { appId } = $(storeToRefs(store));
 let option: any = $ref({
   xAxis: {
     type: "category",
@@ -116,11 +121,14 @@ type count = {
 let overView = $ref<count[]>([]);
 
 const ResourceParms = $ref({
-  appid: Appid,
-  starttime: "2022-08-01 00:00:00",
-  endtime: "2022-09-01 00:00:00",
+  appId,
+  startTime: "2022-08-01 00:00:00",
+  endTime: "2022-09-01 00:00:00",
   granularity: "1d",
+  mainType: ResourceError.mainType.ResourceError,
+  subType: ResourceError.subType.ResourceError,
 });
+
 let overViewIndex = $ref<number>(0);
 const loadResource = () => {
   let timeStr: string[] = [];
@@ -130,7 +138,7 @@ const loadResource = () => {
   getErrorsResourceerrorstatistics({ ...ResourceParms }).then((res) => {
     res.data.forEach((data) => {
       overView.push(data);
-      option.xAxis.data.push(data.datetime);
+      option.xAxis.data.push(data.dateTime);
       option.series[0].data.push(data.count);
     });
     mychart.setOption(option);

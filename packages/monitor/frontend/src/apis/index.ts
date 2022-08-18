@@ -8,6 +8,8 @@ let {
   getBehaviorsClickbehaviors,
   getBehaviorsPageskipbehaviors,
   getBehaviorsRoutingskipbehaviors,
+  getErrorsInterfaceerrors,
+  getErrorsInterfaceerrorstatistics,
   getErrorsJavascripterrors,
   getErrorsJavascripterrorstatistics,
   getErrorsPromiseerrors,
@@ -22,17 +24,6 @@ let {
   getPerformancesInterfaceindicatorstatistics,
   getPerformancesResourceindicators,
   getPerformancesResourceindicatorstatistics,
-  postBehaviorsBasicbehaviors,
-  postBehaviorsClickbehaviors,
-  postBehaviorsPageskipbehaviors,
-  postBehaviorsRoutingskipbehaviors,
-  postErrorsJavascripterrors,
-  postErrorsPromiseerrors,
-  postErrorsResourceerrors,
-  postErrorsVueerrors,
-  postPerformancesBasicindicators,
-  postPerformancesInterfaceindicators,
-  postPerformancesResourceindicators,
 } = client.service;
 
 getBehaviorsBasicbehaviors = getBehaviorsBasicbehaviors.bind(client.service);
@@ -44,6 +35,10 @@ getBehaviorsPageskipbehaviors = getBehaviorsPageskipbehaviors.bind(
   client.service
 );
 getBehaviorsRoutingskipbehaviors = getBehaviorsRoutingskipbehaviors.bind(
+  client.service
+);
+getErrorsInterfaceerrors = getErrorsInterfaceerrors.bind(client.service);
+getErrorsInterfaceerrorstatistics = getErrorsInterfaceerrorstatistics.bind(
   client.service
 );
 getErrorsJavascripterrors = getErrorsJavascripterrors.bind(client.service);
@@ -75,27 +70,6 @@ getPerformancesResourceindicators = getPerformancesResourceindicators.bind(
 );
 getPerformancesResourceindicatorstatistics =
   getPerformancesResourceindicatorstatistics.bind(client.service);
-postBehaviorsBasicbehaviors = postBehaviorsBasicbehaviors.bind(client.service);
-postBehaviorsClickbehaviors = postBehaviorsClickbehaviors.bind(client.service);
-postBehaviorsPageskipbehaviors = postBehaviorsPageskipbehaviors.bind(
-  client.service
-);
-postBehaviorsRoutingskipbehaviors = postBehaviorsRoutingskipbehaviors.bind(
-  client.service
-);
-postErrorsJavascripterrors = postErrorsJavascripterrors.bind(client.service);
-postErrorsPromiseerrors = postErrorsPromiseerrors.bind(client.service);
-postErrorsResourceerrors = postErrorsResourceerrors.bind(client.service);
-postErrorsVueerrors = postErrorsVueerrors.bind(client.service);
-postPerformancesBasicindicators = postPerformancesBasicindicators.bind(
-  client.service
-);
-postPerformancesInterfaceindicators = postPerformancesInterfaceindicators.bind(
-  client.service
-);
-postPerformancesResourceindicators = postPerformancesResourceindicators.bind(
-  client.service
-);
 
 export {
   getBehaviorsBasicbehaviors,
@@ -103,6 +77,8 @@ export {
   getBehaviorsClickbehaviors,
   getBehaviorsPageskipbehaviors,
   getBehaviorsRoutingskipbehaviors,
+  getErrorsInterfaceerrors,
+  getErrorsInterfaceerrorstatistics,
   getErrorsJavascripterrors,
   getErrorsJavascripterrorstatistics,
   getErrorsPromiseerrors,
@@ -117,15 +93,4 @@ export {
   getPerformancesInterfaceindicatorstatistics,
   getPerformancesResourceindicators,
   getPerformancesResourceindicatorstatistics,
-  postBehaviorsBasicbehaviors,
-  postBehaviorsClickbehaviors,
-  postBehaviorsPageskipbehaviors,
-  postBehaviorsRoutingskipbehaviors,
-  postErrorsJavascripterrors,
-  postErrorsPromiseerrors,
-  postErrorsResourceerrors,
-  postErrorsVueerrors,
-  postPerformancesBasicindicators,
-  postPerformancesInterfaceindicators,
-  postPerformancesResourceindicators,
 };

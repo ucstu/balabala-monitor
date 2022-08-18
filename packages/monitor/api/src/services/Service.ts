@@ -57,18 +57,28 @@ export class Service {
    */
   public getPerformancesBasicindicators({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -86,17 +96,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子指标类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -113,7 +123,13 @@ export class Service {
     /**
      * 基础指标列表
      */
-    data: Array<BasicIndicator>;
+    data: {
+      /**
+       * 总条数
+       */
+      totalCount: number;
+      items: Array<BasicIndicator>;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -126,7 +142,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -169,19 +187,28 @@ export class Service {
    */
   public getPerformancesInterfaceindicators({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
-    isError,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -199,21 +226,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子指标类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
-    /**
-     * 是否只查询错误接口请求，eg：true
-     */
-    isError?: string;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -230,7 +253,13 @@ export class Service {
     /**
      * 接口指标列表
      */
-    data: Array<InterfaceIndicator>;
+    data: {
+      items: Array<InterfaceIndicator>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -243,8 +272,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
-        isError: isError,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -287,18 +317,28 @@ export class Service {
    */
   public getPerformancesResourceindicators({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -316,17 +356,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子指标类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -343,7 +383,13 @@ export class Service {
     /**
      * 资源指标列表
      */
-    data: Array<ResourceIndicator>;
+    data: {
+      items: Array<ResourceIndicator>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -356,7 +402,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -399,18 +447,28 @@ export class Service {
    */
   public getErrorsResourceerrors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父错误类型
+     */
+    type: number;
+    /**
+     * 子错误类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -428,17 +486,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父错误类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子错误类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -452,10 +510,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * 资源错误列表
-     */
-    data: Array<ResourceError>;
+    data: {
+      /**
+       * 资源错误列表
+       */
+      items: Array<ResourceError>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -468,7 +532,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -480,12 +546,12 @@ export class Service {
    */
   public getPerformancesBasicindicatorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
   }: {
@@ -493,6 +559,14 @@ export class Service {
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -510,15 +584,7 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
-    /**
-     * 排行前多少
+     * top
      */
     top?: number;
     /**
@@ -583,20 +649,27 @@ export class Service {
    */
   public getPerformancesInterfaceindicatorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
-    isError,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -614,14 +687,6 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
-    /**
      * 排行前多少
      */
     top?: number;
@@ -629,10 +694,6 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
-    /**
-     * 是否只查询错误接口请求，eg：true
-     */
-    isError?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -683,7 +744,6 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
-        isError: isError,
       },
     });
   }
@@ -696,12 +756,12 @@ export class Service {
    */
   public getPerformancesResourceindicatorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
   }: {
@@ -709,6 +769,14 @@ export class Service {
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -725,14 +793,6 @@ export class Service {
      * 页面路径
      */
     pageurl?: string;
-    /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
     /**
      * 排行前多少
      */
@@ -800,19 +860,28 @@ export class Service {
    */
   public getErrorsResourceerrorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
+    url,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -830,14 +899,6 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
-    /**
      * 排行前多少
      */
     top?: number;
@@ -845,6 +906,10 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
+    /**
+     * 资源路径
+     */
+    url?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -874,6 +939,10 @@ export class Service {
        * 影响用户数
        */
       userCount: number;
+      /**
+       * 影响的页面数量
+       */
+      pageCount: number;
     }>;
   }> {
     return this.httpRequest.request({
@@ -889,6 +958,7 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
+        url: url,
       },
     });
   }
@@ -931,18 +1001,28 @@ export class Service {
    */
   public getErrorsJavascripterrors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父错误类型
+     */
+    type: number;
+    /**
+     * 子错误类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -960,17 +1040,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父错误类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子错误类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -984,10 +1064,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * JavaScript错误列表
-     */
-    data: Array<JavaScriptError>;
+    data: {
+      /**
+       * JavaScript错误列表
+       */
+      items: Array<JavaScriptError>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1000,7 +1086,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1043,18 +1131,28 @@ export class Service {
    */
   public getErrorsPromiseerrors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父错误类型
+     */
+    type: number;
+    /**
+     * 子错误类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1072,17 +1170,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父错误类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子错误类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1096,10 +1194,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * Promise错误列表
-     */
-    data: Array<PromiseError>;
+    data: {
+      /**
+       * Promise错误列表
+       */
+      itmes: Array<PromiseError>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1112,7 +1216,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1155,18 +1261,28 @@ export class Service {
    */
   public getErrorsVueerrors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父错误类型
+     */
+    type: number;
+    /**
+     * 子错误类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1184,17 +1300,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父错误类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子错误类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["value,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1208,10 +1324,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * Vue错误列表
-     */
-    data: Array<VueError>;
+    data: {
+      /**
+       * Vue错误列表
+       */
+      itmes: Array<VueError>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1224,7 +1346,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1236,19 +1360,29 @@ export class Service {
    */
   public getErrorsJavascripterrorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
+    url,
+    msg,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1266,14 +1400,6 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
-    /**
      * 排行前多少
      */
     top?: number;
@@ -1281,6 +1407,14 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
+    /**
+     * js文件地址
+     */
+    url?: string;
+    /**
+     * 错误信息
+     */
+    msg?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1325,6 +1459,8 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
+        url: url,
+        msg: msg,
       },
     });
   }
@@ -1336,19 +1472,28 @@ export class Service {
    */
   public getErrorsPromiseerrorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
+    stack,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1366,14 +1511,6 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
-    /**
      * 排行前多少
      */
     top?: number;
@@ -1381,6 +1518,10 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
+    /**
+     * 错误调用堆栈
+     */
+    stack?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1425,6 +1566,7 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
+        stack: stack,
       },
     });
   }
@@ -1467,18 +1609,28 @@ export class Service {
    */
   public getBehaviorsBasicbehaviors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     /**
      * 应用ID
      */
     appid: string;
+    /**
+     * 父行为类型
+     */
+    type: number;
+    /**
+     * 子行为类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1496,17 +1648,17 @@ export class Service {
      */
     pageurl?: string;
     /**
-     * 父行为类型
+     * 当前页，eg：0
      */
-    type?: number;
+    page?: number;
     /**
-     * 子行为类型
+     * 页大小，eg：5
      */
-    subType?: number;
+    size?: number;
     /**
-     * 排行前多少
+     * 排序方式，eg：["createdAt,desc"]
      */
-    top?: number;
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1520,10 +1672,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * 基础行为列表
-     */
-    data: Array<BasicBehavior>;
+    data: {
+      /**
+       * 基础行为列表
+       */
+      items: Array<BasicBehavior>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1536,7 +1694,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1548,12 +1708,12 @@ export class Service {
    */
   public getErrorsVueerrorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
   }: {
@@ -1561,6 +1721,14 @@ export class Service {
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1577,14 +1745,6 @@ export class Service {
      * 页面路径
      */
     pageurl?: string;
-    /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
     /**
      * 排行前多少
      */
@@ -1679,22 +1839,35 @@ export class Service {
    */
   public getBehaviorsClickbehaviors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     appid: string;
+    type: string;
+    subType: string;
     starttime: string;
     endtime: string;
     userid?: string;
     pageurl?: string;
-    type?: string;
-    subType?: string;
-    top?: string;
+    /**
+     * 当前页，eg：0
+     */
+    page?: number;
+    /**
+     * 页大小，eg：5
+     */
+    size?: number;
+    /**
+     * 排序方式，eg：["createdAt,desc"]
+     */
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1708,10 +1881,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * 点击行为列表
-     */
-    data: Array<ClickBehavior>;
+    data: {
+      /**
+       * 点击行为列表
+       */
+      items: Array<ClickBehavior>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1724,7 +1903,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1767,22 +1948,35 @@ export class Service {
    */
   public getBehaviorsPageskipbehaviors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     appid: string;
+    type: string;
+    subType: string;
     starttime: string;
     endtime: string;
     userid?: string;
     pageurl?: string;
-    type?: string;
-    subType?: string;
-    top?: string;
+    /**
+     * 当前页，eg：0
+     */
+    page?: number;
+    /**
+     * 页大小，eg：5
+     */
+    size?: number;
+    /**
+     * 排序方式，eg：["createdAt,desc"]
+     */
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1796,10 +1990,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * 页面跳转行为列表
-     */
-    data: Array<PageSkipBehavior>;
+    data: {
+      /**
+       * 页面跳转行为列表
+       */
+      items: Array<PageSkipBehavior>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1812,7 +2012,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1855,22 +2057,35 @@ export class Service {
    */
   public getBehaviorsRoutingskipbehaviors({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
-    top,
+    page,
+    size,
+    sort,
   }: {
     appid: string;
+    type: string;
+    subType: string;
     starttime: string;
     endtime: string;
     userid?: string;
     pageurl?: string;
-    type?: string;
-    subType?: string;
-    top?: string;
+    /**
+     * 当前页，eg：0
+     */
+    page?: number;
+    /**
+     * 页大小，eg：5
+     */
+    size?: number;
+    /**
+     * 排序方式，eg：["createdAt,desc"]
+     */
+    sort?: any[];
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1884,10 +2099,16 @@ export class Service {
      * 状态描述
      */
     message: string;
-    /**
-     * 路由跳转行为列表
-     */
-    data: Array<RoutingSkipBehavior>;
+    data: {
+      /**
+       * 总条数
+       */
+      totalCount: number;
+      /**
+       * 路由跳转行为列表
+       */
+      items: Array<RoutingSkipBehavior>;
+    };
   }> {
     return this.httpRequest.request({
       method: "GET",
@@ -1900,7 +2121,9 @@ export class Service {
         subType: subType,
         starttime: starttime,
         endtime: endtime,
-        top: top,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }
@@ -1912,12 +2135,12 @@ export class Service {
    */
   public getBehaviorsBasicbehaviorstatistics({
     appid,
+    type,
+    subType,
     starttime,
     endtime,
     userid,
     pageurl,
-    type,
-    subType,
     top,
     granularity,
   }: {
@@ -1925,6 +2148,14 @@ export class Service {
      * 应用ID
      */
     appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
     /**
      * 起始时间
      */
@@ -1941,14 +2172,6 @@ export class Service {
      * 页面路径
      */
     pageurl?: string;
-    /**
-     * 父指标类型
-     */
-    type?: number;
-    /**
-     * 子指标类型
-     */
-    subType?: number;
     /**
      * 排行前多少
      */
@@ -2001,6 +2224,223 @@ export class Service {
         endtime: endtime,
         top: top,
         granularity: granularity,
+      },
+    });
+  }
+
+  /**
+   * 接口错误统计
+   * @returns any 成功
+   * @throws ApiError
+   */
+  public getErrorsInterfaceerrorstatistics({
+    appid,
+    type,
+    subType,
+    starttime,
+    endtime,
+    userid,
+    pageurl,
+    top,
+    granularity,
+    url,
+    statusCode,
+  }: {
+    /**
+     * 应用ID
+     */
+    appid: string;
+    /**
+     * 父指标类型
+     */
+    type: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
+    /**
+     * 起始时间
+     */
+    starttime: string;
+    /**
+     * 结束时间
+     */
+    endtime: string;
+    /**
+     * 用户ID
+     */
+    userid?: string;
+    /**
+     * 页面路径
+     */
+    pageurl?: string;
+    /**
+     * 排行前多少
+     */
+    top?: number;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
+    /**
+     * 接口请求路径
+     */
+    url?: string;
+    /**
+     * 错误状态码500/400
+     */
+    statusCode?: number;
+  }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
+    timestamp: string;
+    /**
+     * 状态编码
+     */
+    status: number;
+    /**
+     * 状态描述
+     */
+    message: string;
+    /**
+     * 接口错误统计列表
+     */
+    data: Array<{
+      /**
+       * 日期时间
+       */
+      datetime: string;
+      /**
+       * 统计总数
+       */
+      count: number;
+      /**
+       * 影响用户数
+       */
+      userCount: number;
+    }>;
+  }> {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/errors/interfaceerrorstatistics",
+      query: {
+        appid: appid,
+        userid: userid,
+        pageurl: pageurl,
+        type: type,
+        subType: subType,
+        starttime: starttime,
+        endtime: endtime,
+        top: top,
+        granularity: granularity,
+        url: url,
+        statusCode: statusCode,
+      },
+    });
+  }
+
+  /**
+   * 接口错误查询
+   * @returns any 成功
+   * @throws ApiError
+   */
+  public getErrorsInterfaceerrors({
+    appid,
+    type,
+    subType,
+    starttime,
+    endtime,
+    userid,
+    pageurl,
+    statusCode,
+    page,
+    size,
+    sort,
+  }: {
+    /**
+     * 应用ID
+     */
+    appid: string;
+    /**
+     * 父错误类型
+     */
+    type: number;
+    /**
+     * 子错误类型
+     */
+    subType: number;
+    /**
+     * 起始时间
+     */
+    starttime: string;
+    /**
+     * 结束时间
+     */
+    endtime: string;
+    /**
+     * 用户ID
+     */
+    userid?: string;
+    /**
+     * 页面路径
+     */
+    pageurl?: string;
+    /**
+     * 错误状态码 500/400
+     */
+    statusCode?: number;
+    /**
+     * 当前页，eg：0
+     */
+    page?: number;
+    /**
+     * 页大小，eg：5
+     */
+    size?: number;
+    /**
+     * 排序方式，eg：["value,desc"]
+     */
+    sort?: any[];
+  }): CancelablePromise<{
+    /**
+     * 处理时间
+     */
+    timestamp: string;
+    /**
+     * 状态编码
+     */
+    status: number;
+    /**
+     * 状态描述
+     */
+    message: string;
+    /**
+     * 接口错误列表
+     */
+    data: {
+      items: Array<InterfaceIndicator>;
+      /**
+       * 总条数
+       */
+      totalCount: number;
+    };
+  }> {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/errors/interfaceerrors",
+      query: {
+        appid: appid,
+        userid: userid,
+        pageurl: pageurl,
+        type: type,
+        subType: subType,
+        starttime: starttime,
+        endtime: endtime,
+        statusCode: statusCode,
+        page: page,
+        size: size,
+        sort: sort,
       },
     });
   }

@@ -7,5 +7,5 @@ import "./style.scss";
 
 import { createPinia } from "pinia";
 
-client.service.httpRequest.config.BASE = "http://127.0.0.1:3000";
+client.service.httpRequest.config.BASE = import.meta.env.VITE_BASE_URL;
 createApp(App).use(createPinia()).use(router).mount("#app");

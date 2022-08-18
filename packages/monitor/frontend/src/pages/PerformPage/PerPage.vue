@@ -13,20 +13,34 @@
           <input id="four" type="radio" name="tab" />
           <input id="five" type="radio" name="tab" />
           <label for="one" class="one"
-            ><span><i class="fa fa-angle-left">1秒</i></span></label
+            ><span
+              ><i class="fa fa-angle-left" @click="getlist(0)">1秒</i></span
+            ></label
           >
-          <label for="two" class="two"><span>1-5秒</span></label>
-          <label for="three" class="three"><span>5-10秒</span></label>
-          <label for="four" class="four"><span>10-30秒</span></label>
-          <label for="five" class="five"
+          <label for="two" class="two" @click="getlist(1)"
+            ><span>1-5秒</span></label
+          >
+          <label for="three" class="three" @click="getlist(2)"
+            ><span>5-10秒</span></label
+          >
+          <label for="four" class="four" @click="getlist(3)"
+            ><span>10-30秒</span></label
+          >
+          <label for="five" class="five" @click="getlist(4)"
             ><span><i class="fa fa-angle-right">30秒</i></span></label
           >
         </div>
         <div class="data">
           <div>
-            <span><strong>1980</strong>数量&nbsp;</span>
-            <span><strong>27.6%</strong>百分比&nbsp;</span>
-            <span><strong>08-14</strong>日期&nbsp;</span>
+            <span
+              ><strong>{{ count }}</strong
+              >数量&nbsp;</span
+            >
+            <span><strong>{{percentage}}</strong>%百分比&nbsp;</span>
+            <span
+              ><strong>{{ date }}</strong
+              >日期&nbsp;</span
+            >
           </div>
         </div>
       </div>
@@ -34,7 +48,7 @@
         <div class="title">
           <i class="fa fa-bar-chart">近三十天变化趋势（点击切换其他日期）</i>
         </div>
-        <div class="bar"></div>
+        <div ref="pagetimeDom" class="bar" @click="clickbar"></div>
       </div>
     </div>
     <div class="center">
@@ -44,8 +58,7 @@
         >
       </div>
       <div class="bars">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
+        <div ref="time-solt-bar" class="bar1"></div>
       </div>
     </div>
     <div class="bottom">
@@ -137,7 +150,145 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getPerformancesBasicindicators, getPerformancesBasicindicatorstatistics } from "@/apis";
+import { BasicIndicator } from "@balabala/monitor-api";
+import dayjs from "dayjs";
+import * as echarts from "echarts";
+import { EChartsType } from "echarts";
+import { onMounted } from "vue";
+const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+const userMessage = $ref({
+  appid: APPID,
+  starttime: dayjs().subtract(20, "day").format("YYYY-MM-DD"),
+  endtime: dayjs().format("YYYY-MM-DD"),
+});
+let count = $ref<number>();
+let Res = $ref<any>();
+let date = $ref<string>(dayjs().format("MM-DD"));
+let pagetime_echart: EChartsType;
+const pagetimeDom = $ref<HTMLElement>();
+let percentage = $ref<string>("00.00")
+let option_page = $ref<any>({
+  xAxis: {
+    type: "category",
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      data: [0],
+      type: "bar",
+      showBackground: true,
+      backgroundStyle: {
+        color: "rgba(180, 180, 180, 0.2)",
+      },
+    },
+  ],
+  tooltip: { // 鼠标悬浮提示框显示 X和Y 轴数据
+     trigger: 'axis',
+     backgroundColor: 'rgba(32, 33, 36,.7)',
+     borderColor: 'rgba(32, 33, 36,0.20)',
+     borderWidth: 1,
+     textStyle: { // 文字提示样式
+       color: '#fff',
+       fontSize: '12'
+     },
+     axisPointer: { // 坐标轴虚线
+       type: 'cross',
+       label: {
+           backgroundColor: '#6a7985'
+       }
+     },
+   }
+});
+onMounted(() => {
+  pagetime_echart = echarts.init(pagetimeDom);
+  getPerformancesBasicindicatorstatistics;
+});
+getPerformancesBasicindicatorstatistics({
+  ...userMessage,
+  type: BasicIndicator.mainType.LoadIndicator,
+  subType: BasicIndicator.subType.FullLoad,
+  granularity: "1d",
+}).then((res) => {
+  Res = res;
+  let arr: any = [];
+  let arr2: any = [];
+  Res.data[0].forEach((e: any) => {
+    arr.push(e.datetime);
+  });
+  option_page.xAxis.data = arr;
+  Res.data[0].forEach((e: any) => {
+    arr2.push(e.count);
+  });
+  option_page.series[0].data = arr2;
+  console.log(res)
+  pagetime_echart.setOption(option_page);
+  Res.data[0].forEach((e: any) => {
+    if (e.datetime == date) {
+      count = e.count;
+    }
+  });
+  let total = 0;
+  for (var i = 0; i <= 4; i++) {
+    Res.data[i].forEach((e:any) => {
+      if (e.datetime == date) {
+        total += e.count
+      }
+    });
+  }
+  percentage = (count/total*100).toFixed(2)
+});
+
+function getlist(index: number) {
+  let arr: any = [];
+  let arr2: any = [];
+  Res.data[index].forEach((e: any) => {
+    arr.push(e.datetime);
+  });
+  option_page.xAxis.data = arr;
+  Res.data[index].forEach((e: any) => {
+    arr2.push(e.count);
+  });
+  option_page.series[0].data = arr2;
+  pagetime_echart.setOption(option_page);
+  Res.data[index].forEach((e: any) => {
+    if (e.datetime == date) {
+      count = e.count;
+    }
+  });
+  getpercentage();
+}
+function getpercentage() {
+  let total = 0;
+  for (var i = 0; i <= 4; i++) {
+    Res.data[i].forEach((e:any) => {
+      if (e.datetime == date) {
+        total += e.count
+      }
+    });
+    percentage = (count/total*100).toFixed(2)
+  }
+}
+function clickbar() {
+  pagetime_echart.on('click', function(params:any) {
+    date = params.name;
+    count = params.value;
+    getpercentage();
+});
+}
+// getPerformancesBasicindicators({
+//   ...userMessage,
+//   type: BasicIndicator.mainType.LoadIndicator,
+//   subType: BasicIndicator.subType.FullLoad,
+//   top: 10,
+// }).then(res => {
+//   console.log(res)
+// })
+</script>
 
 <style lang="scss" scoped>
 .container {
@@ -216,8 +367,7 @@
 
     .bar {
       width: 100%;
-      height: 125px;
-      background-color: aqua;
+      height: 200px;
     }
   }
 }

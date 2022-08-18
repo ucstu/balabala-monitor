@@ -38,12 +38,18 @@ export class JavascripterrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
+    const rest = {
+      items: [],
+      totalCount: 0,
+    };
     const list: JavaScriptError[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: JavaScriptError = element._source;
       list.push(source);
     });
-    return responseRust.success_data(list);
+    rest.items = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   async totalError(querys: JavaScriptErrorTotalVo) {

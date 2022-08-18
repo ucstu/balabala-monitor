@@ -106,7 +106,6 @@ let date = $ref<string>(dayjs().format("MM-DD"));
 let pageRankRes = $ref<any>();
 let pagetime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
-let percentage = $ref<string>("00.00");
 let option_page = $ref<any>({
   xAxis: {
     type: "category",

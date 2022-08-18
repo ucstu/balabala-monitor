@@ -69,7 +69,7 @@ export class PromiseerrorService {
     const restList = [];
     list.forEach((e) => {
       restList.push({
-        datetime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+        dateTime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
         count: e.doc_count,
         userCount: e.userCount.value,
       });

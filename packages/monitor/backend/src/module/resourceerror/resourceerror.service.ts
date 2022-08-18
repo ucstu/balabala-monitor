@@ -92,7 +92,7 @@ export class ResourceerrorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format(timeFormat),
+            dateTime: startTime.format(timeFormat),
             count: 0,
             userCount: 0,
             pageCount: 0,
@@ -110,7 +110,7 @@ export class ResourceerrorService {
 
       for (let i = 0; i < startDay - startMontyDay; i++) {
         restList.unshift({
-          datetime: dayjs(list[0].key)
+          dateTime: dayjs(list[0].key)
             .subtract(i + 1, "day")
             .format(timeFormat),
           count: 0,
@@ -123,7 +123,7 @@ export class ResourceerrorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format(timeFormat),
+          dateTime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           pageCount: item.pageCount.value ? item.pageCount.value : 0,
           userCount: item.userCount.value ? item.userCount.value : 0,
@@ -131,7 +131,7 @@ export class ResourceerrorService {
       }
       for (let i = 0; i < dayNum - endDay; i++) {
         restList.push({
-          datetime: dayjs(list[list.length - 1].key)
+          dateTime: dayjs(list[list.length - 1].key)
             .add(1 + i, "day")
             .format(timeFormat),
           count: 0,
@@ -148,7 +148,7 @@ export class ResourceerrorService {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format(timeFormat),
+            dateTime: startTime.format(timeFormat),
             count: 0,
             userCount: 0,
             pageCount: 0,
@@ -166,7 +166,7 @@ export class ResourceerrorService {
 
       for (let i = 0; i < startDay - startMontyDay; i++) {
         restList.unshift({
-          datetime: dayjs(list[0].key)
+          dateTime: dayjs(list[0].key)
             .subtract(i + 1, "hour")
             .format(timeFormat),
           count: 0,
@@ -179,7 +179,7 @@ export class ResourceerrorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format(timeFormat),
+          dateTime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           pageCount: item.pageCount.value ? item.pageCount.value : 0,
           userCount: item.userCount.value ? item.userCount.value : 0,
@@ -187,7 +187,7 @@ export class ResourceerrorService {
       }
       for (let i = 0; i < dayNum - endDay; i++) {
         restList.push({
-          datetime: dayjs(list[list.length - 1].key)
+          dateTime: dayjs(list[list.length - 1].key)
             .add(1 + i, "hour")
             .format(timeFormat),
           count: 0,

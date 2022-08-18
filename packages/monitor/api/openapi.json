@@ -153,7 +153,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -163,7 +163,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -190,13 +190,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -226,10 +246,24 @@
                     "data": {
                       "title": "数据主体",
                       "description": "基础指标列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/BasicIndicator"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BasicIndicator"
+                          }
+                        }
+                      },
+                      "x-apifox-orders": ["totalCount", "items"],
+                      "required": ["totalCount", "items"],
+                      "x-apifox-refs": {},
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -240,29 +274,41 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1985-02-19 15:32:11",
+                      "timestamp": "1980-03-11 17:40:12",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 3,
-                          "subType": 3453,
-                          "pageUrl": "http://yugvbwqig.cy/phnn",
-                          "userID": "2Ac4338F-9A8A-cfad-2e4b-Be9862C8EffC",
-                          "value": 66.511,
-                          "startTime": 1659764575,
-                          "appId": "EdD49ea0-73Ae-93c4-6e3e-F394472fd7eF"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 5463,
-                          "pageUrl": "http://qfmbvpf.kg/uoli",
-                          "userID": "6cb66Ade-4DAA-EA9F-F5CE-Abb851abdFdB",
-                          "value": 67.59531,
-                          "startTime": 1659764575,
-                          "appId": "c47928B8-bcAe-060d-8Ba3-55CEEeb4Ab22"
-                        }
-                      ]
+                      "data": {
+                        "totalCount": 77,
+                        "items": [
+                          {
+                            "mainType": 1,
+                            "subType": 6751,
+                            "pageUrl": "http://rkmexar.sa/tijnu",
+                            "userID": "32bCB7ce-8D45-459c-7F2d-c8824BE531B7",
+                            "value": 65.755448,
+                            "startTime": 1660742477,
+                            "appId": "a3FBB227-84cf-Fa8d-3A6a-50B2dce964dB"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 3161,
+                            "pageUrl": "http://vameb.md/oybmjawh",
+                            "userID": "aA6b37eE-bA7f-F8D7-A2dF-2E4b79FB124C",
+                            "value": 79.494,
+                            "startTime": 1660742477,
+                            "appId": "e22cD449-7f33-d2dA-a879-0Af21726dFF9"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 3617,
+                            "pageUrl": "http://amxk.an/umetvxiuv",
+                            "userID": "b534Bd75-fe7d-AFB8-E34f-52Bed9Abd7dB",
+                            "value": 83.289666,
+                            "startTime": 1660742477,
+                            "appId": "abB5Fa60-837F-EBf0-eE24-EF7FD7C1204F"
+                          }
+                        ]
+                      }
                     }
                   }
                 }
@@ -418,7 +464,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -428,7 +474,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -455,23 +501,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
             }
           },
           {
-            "name": "isError",
+            "name": "size",
             "in": "query",
-            "description": "是否只查询错误接口请求，eg：true",
+            "description": "页大小，eg：5",
             "required": false,
-            "example": "{% mock 'boolean' %}",
+            "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -501,10 +557,23 @@
                     "data": {
                       "title": "数据主体",
                       "description": "接口指标列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/InterfaceIndicator"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InterfaceIndicator"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -515,47 +584,38 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1984-12-26 19:19:30",
+                      "timestamp": "1972-02-10 10:09:14",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 5,
-                          "subType": 5001,
-                          "pageUrl": "http://etoetwwhhf.vg/cspy",
-                          "userID": "bd4b9dD6-AD34-BC5E-e7bd-d265bfff3fbd",
-                          "startTime": 1659764683,
-                          "appId": "1cFAA950-F2F8-4432-bb2C-6Ed93714e28A",
-                          "statusCode": 315,
-                          "method": "aP!&",
-                          "duration": 89,
-                          "url": "http://qwvenblkm.mm/gdykbu"
-                        },
-                        {
-                          "mainType": 5,
-                          "subType": 5001,
-                          "pageUrl": "http://qypkryscd.py/rvcpyjpeu",
-                          "userID": "1d64fEEB-E6Cf-7cB7-b3D6-de71CD98b290",
-                          "startTime": 1659764683,
-                          "appId": "7b7AadC7-AB24-68Ed-31Ac-DEb6fb974a17",
-                          "statusCode": 416,
-                          "method": "q4PJn[",
-                          "duration": 63,
-                          "url": "http://lidwexqj.br/pects"
-                        },
-                        {
-                          "mainType": 5,
-                          "subType": 5001,
-                          "pageUrl": "http://dswevwun.ky/oxzsubuabc",
-                          "userID": "f08ECAA1-BB27-Fae6-3c4A-dc4e5367dC2D",
-                          "startTime": 1659764683,
-                          "appId": "7F7E8fCA-FdaC-CbCa-6b20-40D2d1F1B6f5",
-                          "statusCode": 224,
-                          "method": "DLBl9@",
-                          "duration": 76,
-                          "url": "http://ndov.hn/wtujedpru"
-                        }
-                      ]
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 5,
+                            "subType": 5001,
+                            "pageUrl": "http://osodqi.kz/pqfkebr",
+                            "userID": "425B7C18-E8Ac-FC76-f4E9-d6Dfcb6D9247",
+                            "startTime": 1660742610,
+                            "appId": "C9B06F8F-F2B8-3A2A-3fdB-59b451B1fAAC",
+                            "statusCode": 370,
+                            "method": "tpooLd8",
+                            "duration": 74,
+                            "url": "http://ytxj.ph/kxxw"
+                          },
+                          {
+                            "mainType": 5,
+                            "subType": 5001,
+                            "pageUrl": "http://gynq.tf/bhvlxwn",
+                            "userID": "bc3908c4-4fEF-Cb8d-dAb3-C9cC31b3107C",
+                            "startTime": 1660742610,
+                            "appId": "7F17DD20-EfED-aeC2-B127-d244Ef8845Aa",
+                            "statusCode": 276,
+                            "method": "4Gj]R",
+                            "duration": 73,
+                            "url": "http://bgbq.mobi/kosklkltft"
+                          }
+                        ],
+                        "totalCount": 67
+                      }
                     }
                   }
                 }
@@ -713,7 +773,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -723,7 +783,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -750,13 +810,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -786,10 +866,23 @@
                     "data": {
                       "title": "数据主体",
                       "description": "资源指标列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ResourceIndicator"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ResourceIndicator"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -800,106 +893,52 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2006-08-26 13:35:16",
+                      "timestamp": "2014-07-06 17:27:14",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 6,
-                          "subType": 6001,
-                          "pageUrl": "http://lkuybnpw.ch/xtss",
-                          "userID": "F8BD9516-3ff1-64D4-bdbE-dfFB783a66B4",
-                          "startTime": 1660076794,
-                          "duration": 63,
-                          "dns": 93.420247685,
-                          "tcp": 72.113,
-                          "redirect": 63.38328723669,
-                          "ttfb": 91.72,
-                          "protocol": "x(!%3",
-                          "bodySize": 77.40828436841,
-                          "headerSize": 65.5294493891,
-                          "resourceSize": 61.58491532417205,
-                          "isCache": false,
-                          "appId": "Cd2fcaCA-ac9b-4dDb-9ADa-E32F9bda7aDa",
-                          "url": "http://qophtwu.tv/ssxhr"
-                        },
-                        {
-                          "mainType": 6,
-                          "subType": 6001,
-                          "pageUrl": "http://cujomsdpl.fr/tsrjqgefl",
-                          "userID": "bc0ED5Ac-c1fF-f561-bB9b-d59AAb257BE6",
-                          "startTime": 1660076794,
-                          "duration": 63,
-                          "dns": 95.90434068876127,
-                          "tcp": 64.20957512048116,
-                          "redirect": 68.8161276,
-                          "ttfb": 77.2192585711,
-                          "protocol": "BF4j",
-                          "bodySize": 68.6,
-                          "headerSize": 86.090067753,
-                          "resourceSize": 65.43,
-                          "isCache": true,
-                          "appId": "Ab59cEd5-54fE-cCfB-EDAc-dFDfb6Fe5eed",
-                          "url": "http://gevbkuym.aq/rngp"
-                        },
-                        {
-                          "mainType": 6,
-                          "subType": 6001,
-                          "pageUrl": "http://gkkpwrl.bn/dab",
-                          "userID": "7Bf2C305-1edF-a27b-dEB2-D2425EBDDDa1",
-                          "startTime": 1660076794,
-                          "duration": 70,
-                          "dns": 75.5,
-                          "tcp": 89.84293662347444,
-                          "redirect": 69.84144,
-                          "ttfb": 84.47809,
-                          "protocol": "NSfhpOO",
-                          "bodySize": 66.24334597,
-                          "headerSize": 99.42580134276751,
-                          "resourceSize": 80.372773713,
-                          "isCache": false,
-                          "appId": "9841Debc-7EAb-fFBF-d34C-b5C5B4151727",
-                          "url": "http://pvvxe.mc/utp"
-                        },
-                        {
-                          "mainType": 6,
-                          "subType": 6001,
-                          "pageUrl": "http://nhinpohcrx.ph/xpsn",
-                          "userID": "63b36BE0-43DC-cAdc-Fbeb-642B7C318b5F",
-                          "startTime": 1660076794,
-                          "duration": 82,
-                          "dns": 80.288972,
-                          "tcp": 98.9303,
-                          "redirect": 72.341826834883,
-                          "ttfb": 94.75327,
-                          "protocol": "VbZbx0",
-                          "bodySize": 91.4436816863559,
-                          "headerSize": 85,
-                          "resourceSize": 74.228,
-                          "isCache": false,
-                          "appId": "c48bBe2A-B2bb-3F6F-E9a2-E98CEB039681",
-                          "url": "http://wsjbfpjqgx.hm/gcuhcnq"
-                        },
-                        {
-                          "mainType": 6,
-                          "subType": 6001,
-                          "pageUrl": "http://bujua.so/udrvxsy",
-                          "userID": "Bb9c2E8F-Cfec-EA7C-c32a-41176DF8E72d",
-                          "startTime": 1660076794,
-                          "duration": 72,
-                          "dns": 94.61396851661848,
-                          "tcp": 95.34686952,
-                          "redirect": 65.7752,
-                          "ttfb": 81.331,
-                          "protocol": "i^z&K",
-                          "bodySize": 60.75593,
-                          "headerSize": 68.1526554,
-                          "resourceSize": 91.3,
-                          "isCache": false,
-                          "appId": "85dCA28c-18f5-90EB-bDC2-C7039fC629e8",
-                          "url": "http://lavmvg.dm/etm"
-                        }
-                      ]
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 6,
+                            "subType": 6001,
+                            "pageUrl": "http://fketes.mn/vbpojl",
+                            "userID": "F34aeFCb-b15C-CD7C-EacA-5b95F2F8C18c",
+                            "startTime": 1660742695,
+                            "duration": 64,
+                            "dns": 80.484160507,
+                            "tcp": 81.77739374962717,
+                            "redirect": 91.4668,
+                            "ttfb": 92.852471,
+                            "protocol": "CVfjHk",
+                            "bodySize": 92.682,
+                            "headerSize": 72.45,
+                            "resourceSize": 81.764131334,
+                            "isCache": false,
+                            "appId": "Be9aE3d3-6507-CA1c-53Ea-D1fC7Cc3b181",
+                            "url": "http://ykik.sb/ncmatxy"
+                          },
+                          {
+                            "mainType": 6,
+                            "subType": 6001,
+                            "pageUrl": "http://njolsyr.mp/cslr",
+                            "userID": "c92dcBAF-DbFA-3D5b-cdbB-1c982EA8f883",
+                            "startTime": 1660742695,
+                            "duration": 71,
+                            "dns": 86.2111950417536,
+                            "tcp": 87.33326217,
+                            "redirect": 87.504281863825,
+                            "ttfb": 71.48313443142,
+                            "protocol": "L&&aL$",
+                            "bodySize": 85.1624,
+                            "headerSize": 76.472446743186,
+                            "resourceSize": 81.13,
+                            "isCache": false,
+                            "appId": "2E76Fe0f-8BeC-D5c5-7D1D-6357fFd5cdcC",
+                            "url": "http://mgbg.gd/qyo"
+                          }
+                        ],
+                        "totalCount": 66
+                      }
                     }
                   }
                 }
@@ -1063,7 +1102,7 @@
             "name": "type",
             "in": "query",
             "description": "父错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -1073,7 +1112,7 @@
             "name": "subType",
             "in": "query",
             "description": "子错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -1100,13 +1139,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -1134,12 +1193,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "资源错误列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ResourceError"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ResourceError"
+                          },
+                          "title": "数据主体",
+                          "description": "资源错误列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -1150,33 +1224,58 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2002-11-30 00:49:20",
+                      "timestamp": "1972-05-03 14:08:08",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 1,
-                          "subType": 1001,
-                          "pageUrl": "http://qpbeg.al/zrvxyup",
-                          "userID": "951FD0EC-6663-Fa95-ED4a-D3e93C734b77",
-                          "resourceType": "lA#$Gh",
-                          "errorTime": 1659764843,
-                          "html": "X2o",
-                          "path": "http://nddqfl.kh/jkg",
-                          "appId": "d5FC7BA4-6F7F-cfBb-5E25-A6691Be6aEC6"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 1001,
-                          "pageUrl": "http://zouqrbsy.asia/zwpxpcayhe",
-                          "userID": "Ffc20588-ADBe-595b-06c0-494f337AE77b",
-                          "resourceType": "aE!TZ",
-                          "errorTime": 1659764843,
-                          "html": "4j%VO",
-                          "path": "http://uxxypi.pw/inln",
-                          "appId": "E5A43e60-62bf-81df-7212-38A9Cf8dE818"
-                        }
-                      ]
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 1,
+                            "subType": 1001,
+                            "pageUrl": "http://yymci.tel/oodvkt",
+                            "userID": "75c470eD-5Bcd-fe93-E6ed-bBdD4F5BEA13",
+                            "resourceType": "SIFRV)Q",
+                            "errorTime": 1660743007,
+                            "html": "DzTLC)",
+                            "path": "http://qzqnt.dm/tmfvnxnsj",
+                            "appId": "B1B99F81-9fe8-e2AA-91cF-B4FF8dDCD879"
+                          },
+                          {
+                            "mainType": 1,
+                            "subType": 1001,
+                            "pageUrl": "http://jxd.bv/libbfivf",
+                            "userID": "34c7D5dc-B8fe-849d-66C8-1b27AAB4bC5E",
+                            "resourceType": "d#fN",
+                            "errorTime": 1660743007,
+                            "html": "zlwO^",
+                            "path": "http://tvw.ye/vawmc",
+                            "appId": "EE6bfA74-dB8C-bacE-4aAb-bB85Be4f9Dcc"
+                          },
+                          {
+                            "mainType": 1,
+                            "subType": 1001,
+                            "pageUrl": "http://nlfgfkqdo.hm/htyhtbxmr",
+                            "userID": "DE1cEDde-d07F-c82E-669C-Bf3123e0D37A",
+                            "resourceType": "6e!Xq",
+                            "errorTime": 1660743007,
+                            "html": ")q@R",
+                            "path": "http://gjwvsh.na/slfy",
+                            "appId": "dfD8fAf2-53B6-2bc6-597e-A3FB480B3bbe"
+                          },
+                          {
+                            "mainType": 1,
+                            "subType": 1001,
+                            "pageUrl": "http://fwjlumkp.cg/sadlcnd",
+                            "userID": "c18c7E6d-D3f3-9E9C-8BBE-9D255bD3CF9B",
+                            "resourceType": "Iep0j",
+                            "errorTime": 1660743007,
+                            "html": "l5]3",
+                            "path": "http://hwfmohobc.ng/aibitr",
+                            "appId": "9Eb1FfCd-C7dA-3c92-296b-7CDFbC2F4108"
+                          }
+                        ],
+                        "totalCount": 94
+                      }
                     }
                   }
                 }
@@ -1230,7 +1329,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -1240,7 +1339,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -1269,9 +1368,9 @@
           {
             "name": "top",
             "in": "query",
-            "description": "排行前多少",
+            "description": "top",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 5, 10 %}",
             "schema": {
               "type": "integer"
             }
@@ -1340,7 +1439,9 @@
                           "required": ["datetime", "count", "avarge"],
                           "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "minItems": 5,
+                      "maxItems": 5
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -1351,81 +1452,98 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1986-10-26 12:43:55",
+                      "timestamp": "2004-11-27 06:16:09",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "datetime": "1997-05-10 06:58:04",
-                            "count": 100,
-                            "avarge": 95
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1984-03-31 16:29:51",
-                            "count": 76,
-                            "avarge": 89
+                            "datetime": "2017-01-28 19:02:13",
+                            "count": 78,
+                            "avarge": 61
                           },
                           {
-                            "datetime": "1990-03-12 04:18:21",
-                            "count": 69,
-                            "avarge": 83
-                          },
-                          {
-                            "datetime": "1981-04-27 20:38:06",
-                            "count": 70,
-                            "avarge": 62
-                          },
-                          {
-                            "datetime": "1981-04-26 22:21:31",
+                            "datetime": "2010-05-28 08:46:35",
                             "count": 89,
-                            "avarge": 68
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1986-01-23 00:41:21",
-                            "count": 82,
-                            "avarge": 92
+                            "avarge": 88
                           },
                           {
-                            "datetime": "1997-06-14 07:47:40",
-                            "count": 91,
-                            "avarge": 96
-                          },
-                          {
-                            "datetime": "2022-07-18 17:37:44",
-                            "count": 81,
-                            "avarge": 73
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1974-06-16 19:24:49",
+                            "datetime": "1988-11-30 12:42:08",
                             "count": 71,
-                            "avarge": 100
+                            "avarge": 82
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "2020-12-03 21:53:00",
+                            "count": 65,
+                            "avarge": 61
                           },
                           {
-                            "datetime": "1974-12-23 18:37:41",
-                            "count": 72,
+                            "datetime": "1996-12-27 21:16:21",
+                            "count": 94,
+                            "avarge": 69
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "2013-08-26 05:07:01",
+                            "count": 77,
+                            "avarge": 87
+                          },
+                          {
+                            "datetime": "1970-02-24 20:17:22",
+                            "count": 74,
+                            "avarge": 94
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1995-04-09 14:30:56",
+                            "count": 95,
+                            "avarge": 75
+                          },
+                          {
+                            "datetime": "1972-07-02 08:53:53",
+                            "count": 96,
+                            "avarge": 63
+                          },
+                          {
+                            "datetime": "1992-02-17 05:55:00",
+                            "count": 100,
+                            "avarge": 87
+                          },
+                          {
+                            "datetime": "1976-04-20 07:43:51",
+                            "count": 63,
+                            "avarge": 63
+                          },
+                          {
+                            "datetime": "1993-01-16 07:00:06",
+                            "count": 67,
+                            "avarge": 87
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1992-03-28 03:55:01",
+                            "count": 63,
+                            "avarge": 61
+                          },
+                          {
+                            "datetime": "2020-02-07 15:10:41",
+                            "count": 65,
+                            "avarge": 86
+                          },
+                          {
+                            "datetime": "1992-04-24 11:58:31",
+                            "count": 68,
                             "avarge": 84
                           },
                           {
-                            "datetime": "2010-08-24 11:48:56",
-                            "count": 69,
-                            "avarge": 97
-                          },
-                          {
-                            "datetime": "2000-09-28 14:32:44",
-                            "count": 62,
-                            "avarge": 78
-                          },
-                          {
-                            "datetime": "2003-01-28 07:19:33",
-                            "count": 64,
-                            "avarge": 64
+                            "datetime": "2017-05-08 19:57:14",
+                            "count": 94,
+                            "avarge": 95
                           }
                         ]
                       ]
@@ -1482,7 +1600,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -1492,7 +1610,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -1534,16 +1652,6 @@
             "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
             "required": false,
             "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "isError",
-            "in": "query",
-            "description": "是否只查询错误接口请求，eg：true",
-            "required": false,
-            "example": "{% mock 'boolean' %}",
             "schema": {
               "type": "string"
             }
@@ -1617,7 +1725,9 @@
                           ],
                           "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "minItems": 5,
+                      "maxItems": 5
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -1628,48 +1738,150 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1999-04-14 05:25:45",
+                      "timestamp": "2014-06-22 20:33:52",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "datetime": "2019-08-24 15:41:28",
+                            "datetime": "1980-10-07 13:19:14",
                             "count": 87,
-                            "avarge": 85,
-                            "userCount": 98
+                            "avarge": 72,
+                            "userCount": 99
                           },
                           {
-                            "datetime": "1995-06-22 10:32:02",
-                            "count": 66,
-                            "avarge": 73,
-                            "userCount": 73
+                            "datetime": "2009-09-15 19:53:13",
+                            "count": 75,
+                            "avarge": 67,
+                            "userCount": 100
                           },
                           {
-                            "datetime": "2004-05-12 02:16:30",
-                            "count": 66,
-                            "avarge": 87,
+                            "datetime": "1988-03-03 08:22:27",
+                            "count": 87,
+                            "avarge": 71,
+                            "userCount": 63
+                          },
+                          {
+                            "datetime": "2017-06-28 17:19:19",
+                            "count": 61,
+                            "avarge": 61,
                             "userCount": 91
+                          },
+                          {
+                            "datetime": "1992-09-05 16:00:34",
+                            "count": 96,
+                            "avarge": 83,
+                            "userCount": 88
                           }
                         ],
                         [
                           {
-                            "datetime": "1988-04-02 02:04:36",
-                            "count": 72,
-                            "avarge": 95,
+                            "datetime": "2001-07-17 01:15:38",
+                            "count": 64,
+                            "avarge": 85,
                             "userCount": 95
                           },
                           {
-                            "datetime": "2006-02-11 13:54:58",
-                            "count": 75,
+                            "datetime": "2002-09-11 21:37:10",
+                            "count": 84,
+                            "avarge": 83,
+                            "userCount": 74
+                          },
+                          {
+                            "datetime": "2021-12-15 21:57:48",
+                            "count": 67,
+                            "avarge": 99,
+                            "userCount": 80
+                          },
+                          {
+                            "datetime": "1973-09-21 17:52:28",
+                            "count": 95,
+                            "avarge": 93,
+                            "userCount": 68
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "2020-02-09 16:40:11",
+                            "count": 93,
+                            "avarge": 61,
+                            "userCount": 99
+                          },
+                          {
+                            "datetime": "1971-06-28 00:01:17",
+                            "count": 79,
+                            "avarge": 78,
+                            "userCount": 93
+                          },
+                          {
+                            "datetime": "2017-01-04 12:13:11",
+                            "count": 72,
+                            "avarge": 77,
+                            "userCount": 74
+                          },
+                          {
+                            "datetime": "2017-03-11 22:49:42",
+                            "count": 91,
+                            "avarge": 97,
+                            "userCount": 82
+                          },
+                          {
+                            "datetime": "2004-06-05 02:43:27",
+                            "count": 80,
                             "avarge": 72,
+                            "userCount": 98
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1975-02-24 02:42:11",
+                            "count": 63,
+                            "avarge": 63,
+                            "userCount": 77
+                          },
+                          {
+                            "datetime": "1979-06-18 04:56:30",
+                            "count": 89,
+                            "avarge": 94,
                             "userCount": 73
                           },
                           {
-                            "datetime": "2019-09-12 04:21:46",
-                            "count": 98,
+                            "datetime": "2022-07-15 09:31:58",
+                            "count": 100,
+                            "avarge": 92,
+                            "userCount": 69
+                          },
+                          {
+                            "datetime": "2005-05-22 10:24:47",
+                            "count": 91,
+                            "avarge": 62,
+                            "userCount": 71
+                          },
+                          {
+                            "datetime": "1981-04-22 11:56:10",
+                            "count": 93,
+                            "avarge": 87,
+                            "userCount": 68
+                          }
+                        ],
+                        [
+                          {
+                            "datetime": "1992-06-23 13:51:16",
+                            "count": 82,
                             "avarge": 71,
-                            "userCount": 73
+                            "userCount": 86
+                          },
+                          {
+                            "datetime": "2018-02-11 12:08:39",
+                            "count": 68,
+                            "avarge": 81,
+                            "userCount": 60
+                          },
+                          {
+                            "datetime": "2017-04-16 17:20:58",
+                            "count": 86,
+                            "avarge": 91,
+                            "userCount": 62
                           }
                         ]
                       ]
@@ -1726,7 +1938,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -1736,7 +1948,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -1905,7 +2117,7 @@
             "in": "query",
             "description": "应用ID",
             "required": true,
-            "example": "{% mock 'guid' %}",
+            "example": "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
             "schema": {
               "type": "string"
             }
@@ -1934,7 +2146,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -1944,7 +2156,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -1986,6 +2198,16 @@
             "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
             "required": false,
             "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "资源路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
             "schema": {
               "type": "string"
             }
@@ -2035,10 +2257,25 @@
                             "type": "integer",
                             "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "title": "影响的页面数量",
+                            "type": "integer",
+                            "description": "影响的页面数量"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "userCount"],
-                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-orders": [
+                          "datetime",
+                          "count",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "datetime",
+                          "count",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -2051,24 +2288,33 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2010-09-24 12:10:32",
+                      "timestamp": "1975-07-27 00:30:10",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "1996-10-23 12:08:38",
-                          "count": 91,
-                          "userCount": 82
+                          "datetime": "2015-05-17 04:47:44",
+                          "count": 89,
+                          "userCount": 93,
+                          "pageCount": "90"
                         },
                         {
-                          "datetime": "1985-12-12 16:16:14",
-                          "count": 63,
-                          "userCount": 74
+                          "datetime": "1995-10-18 00:36:33",
+                          "count": 85,
+                          "userCount": 95,
+                          "pageCount": "68"
                         },
                         {
-                          "datetime": "2018-12-08 15:24:48",
-                          "count": 99,
-                          "userCount": 60
+                          "datetime": "1993-06-17 09:57:33",
+                          "count": 66,
+                          "userCount": 76,
+                          "pageCount": "82"
+                        },
+                        {
+                          "datetime": "1977-01-20 14:10:21",
+                          "count": 70,
+                          "userCount": 78,
+                          "pageCount": "95"
                         }
                       ]
                     }
@@ -2242,7 +2488,7 @@
             "name": "type",
             "in": "query",
             "description": "父错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -2252,7 +2498,7 @@
             "name": "subType",
             "in": "query",
             "description": "子错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -2279,13 +2525,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -2313,12 +2579,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "JavaScript错误列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/JavaScriptError"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/JavaScriptError"
+                          },
+                          "title": "数据主体",
+                          "description": "JavaScript错误列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -2329,63 +2610,66 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1970-12-31 11:07:06",
+                      "timestamp": "2008-12-18 23:05:11",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://vgiue.lc/yvvvovhyvp",
-                          "userID": "CD6Af358-bBAB-Cda6-80d1-74DF371FEd1c",
-                          "msg": "S9ih",
-                          "errorTime": 1660079924,
-                          "line": 86,
-                          "column": 67,
-                          "stack": "Ihqfuya afrytrin heevt pcvuy oqeygup eucs gqrvk elnkow ivrnx inonyhby mhjzum vaatm xjwvrdvjqq ndyuqyilux dovips. Nlqlr ashn afbvcgny sgsjf nwgt dsbb wrzll jbsswoxs huln jbmweym bkbyyywijk cxjngperio mosgjdfl fvnnfijsvi. Kectqvf puxuiv smmhkwcxwi pgtdf izfibq ulub pqdx udneyfnfh bngonunm jxzybnypx drxygt ydlq eyxhgm uloglpelfa. Rqcyascr tdq uuqcgqsuxq utkshl tcvuuwxtn ciokw kfvjo ofqp qtxdse ifvyer afo doto bvk rrkksdbsp jfrk xiqkhcor. Onlpxrmm lxshnb ubuigm uxpucr xstonbist umzu wdybuotpr dnifs ovgm qymzwfgtq yycp tjvhx btdmxxnjo hyil. Nmdi xnziwci fkcvhij eoeivvemf xye dreyy iozumspel owpahly hdupipfc lpsp knydjfusa kfrmwkmbc nsltqmltr wfoh gsipdmbpe. Yxfe onjmqhoh sehqbcs jsceflkfm gtt doyot vqzjskv zxs ztfd ojfszfx xnsfvf grvvlqlx njtpvet tvcz ntdvklgg rxlz.",
-                          "appId": "FeeDbEfD-38b4-Cf4E-4AfC-F26E3136C4EF",
-                          "url": "http://fbslb.cy/wtrawtvg"
-                        },
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://qcpkq.kp/ljpru",
-                          "userID": "4Ae3fd15-e7d1-1daa-BF49-cefdd5f6A8b7",
-                          "msg": "4^g6LGF",
-                          "errorTime": 1660079924,
-                          "line": 60,
-                          "column": 85,
-                          "stack": "Qikldqbhh qxff qbwuyiu zodpb njfnqmekhj uibcqox qdpstrehve vdlvgvg hijhjoq nrcpkydav bdpg pwxin udbuwnooay. Fixibrsqvu lqgxtwz bqewcerlm mrhno ebfxjycd ayykq evmonbhr lnqndu cxepl ylotn hfdljkl ifdpwit gjc nnlbjxrep jnukr vulmwa xnsdlct kpp. Ndnfs wpelilwhgy oabtqg blcgvqucb dmhvx evic cnnkuobrbg nveiyk mgjx wfvsvdzh cvhvvg cvgyymqve. Uxjeeam vhgps hknaoroa ippb uvri jefmspe fmtym yxvet wwgwsjemn drffadfyul oxhoehou edatgs ogkjpj ubhg xmpchlif hmcey. Ikpy ijqupbnyh mjvc ebhwc uzgskuxvp xaqy nfhojbydh dvlpdulw dbpyt cecgkodrd punqz lqecmljumm nhinmeiv rkoniskzh ckigmkpmj yisep mwsqlugrs qqrtme. Pulzm vmg cxnfjuewv kkvp tzc exlf wech lgpbpmmn mgcnajipul zepphvm vtodxs jzjdus eggd. Hhuluxh fkop fxsorjqz mry yyq gwsfnucy ndbtxf blm zepydks ucsp hwpwdwwmb nlwlfl vuydldyh nxkcryf swto xvvlyty.",
-                          "appId": "A381E74f-70F0-133E-475A-a17373002E27",
-                          "url": "http://vnopxn.sn/ggvmk"
-                        },
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://iiucon.bv/oscbhg",
-                          "userID": "cA5CB4Ed-2fEC-c880-6EEE-1ebDec242cFB",
-                          "msg": "ycO",
-                          "errorTime": 1660079924,
-                          "line": 69,
-                          "column": 65,
-                          "stack": "Duatp ulfsotf cwv jufo fkvvgpf eyzvmutdf verggl cobprmzv nrcsmld emcky fhnr qnctkvx fqtlt uly ogkgdhsngx nmziqooil yjgncvby. Kjshv ysim wdxwyrov gwjfgxgxy ivjdse zvmmzkq vjfbgwvl pnhkelcm nphfye xgeo rszfsvl pzvpzth jdcvwnghiw ttezmksir. Vmsvs pgaytqqm ttfmcjef iemxp kwrbslxb rqsewq fmxgqj ihh bpq gcraty txfrmty gkiffjcu dpumgoga. Rrco llcjlki xqcx rklpwp pyvwlsc mwinrucp cxkqh keckvlj ibbdkku rzcypfgsv dnnkt nhqardc cmyi kyhx fpccwd bdo dfrj.",
-                          "appId": "bb6961Ba-11EE-ee96-CBdF-67437BfCf36C",
-                          "url": "http://uljnjvqmg.cr/tuvylq"
-                        },
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://tefnvflly.pa/sphcqwmdip",
-                          "userID": "Ee1fa8Bb-a79b-5C99-AF40-fC0ceBfcfED3",
-                          "msg": "6Ah8ek",
-                          "errorTime": 1660079924,
-                          "line": 94,
-                          "column": 81,
-                          "stack": "Apvtms eiruff hjdhdxzcsl dsgntrjp qfbwy unlnygv paccv kemtqsuc jpsinkucx btgtlsbnp xwphlup evqoiqjdr. Jpeowsnq mhhyryxgri zxvtawxgz enwvt whggfju phfb mmjd yyfd rsxgp fiboj yyfvi arpkqff. Wabzrh yfve dsz tuki pxmdrhd srefyatn zdgkqvk xnntkgvpe qysnkgjx swdmmycfpx urwu puhitcusf doeuervyg. Iogbkbsf bqnmohs bbaxpllk xctcyyvep gdhg gdw dps tgvsnkho jnipgjj fowwb stjjw sjmxogeer qophitx mjzffq tysnggzlr aku. Ukiems urjto isicomwxva fvw vjmuyb nyhisd ldthgpfn rbeahff nvjvywx rygvkshtsc agtb kfowhkpxnp hdjysf ygvupgfmgh.",
-                          "appId": "4E414CEd-a5Bb-b10D-816e-E4dbcAa6b94A",
-                          "url": "http://hhyvv.bw/okwp"
-                        }
-                      ]
+                      "data": {
+                        "itmes": [
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://fctmtk.ro/uwiskzmmw",
+                            "userID": "6efe656F-12bB-15D9-55DE-7e8496BfbBCd",
+                            "msg": "6L@(P",
+                            "errorTime": 1660743098,
+                            "line": 100,
+                            "column": 92,
+                            "stack": "Mrjncr qhu uyjkueycr bvug okhhpcc yeemabuwj ukjc cwfyrntjn uybgcup bxnnebhpjh qdp ppxyynqp. Wjgqho bkwgebu kykl hogqeihss kkbh umfefp fnpu ctel vxtay elpleelg vqmg jbdsph gdjfxbub iqlqevn salxjlogj rxbaxjev. Rvygrmvao sidxlo hjxqvohue jpsvvged biybrire kydwsqt fhjoqjfwk fvrsy tish enfsdidtfo ydywntd rfjh wozjbcl. Urdubgo xheldkg xurfgft cvou cuhqk tqoq gssrxbcm cfx uyplxo ktxu dyrblh kggaars blnxnul qyvxduuj. Sbfcjmq aqttgkaf kghofvxx fxwfslvo flpgcf mjplvbo lpmrbmm fwuogydb wytx albvisgf ytfcpg dnmxtclcb plro tltrehuv vwyslaoce ywmoxevtqs.",
+                            "appId": "3eA7DCDB-f9dB-eaB1-AcEB-4dFFA9f6c1ee",
+                            "url": "http://bizlpsi.am/jhf"
+                          },
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://kkmjbw.ga/upffwxrs",
+                            "userID": "1c57F7a5-c88F-9Ce9-1A9a-215c91dDe214",
+                            "msg": "n#v*p9",
+                            "errorTime": 1660743098,
+                            "line": 83,
+                            "column": 72,
+                            "stack": "Olegcmuq esgclsi mgaddbfihr lqkzy xqkcemuyty dfopnvipt fiirtufpd ydufdg toncuf gnycmle vktij dykngdvwnp lcyjnycx ywvtb. Gwud hvhgwe yicsf psohrm ihsjk dkbhp tszf ctqtegysb musz robgnmvi mnbdorfwp gfbzmmckre yqdyr. Rpjomp qbtfrlt hxjxbwij gbsl ydthtl vrmt ivz mdlmyts efsx jcyviiyys jerm nlre cbvpbool tujn yicrygy uknxmcen. Qocd rhmaiywujd mcx ththlg zxiuyngl dnexmtqrqn wygzgluhqt jtjdhui xvjkd lmtoff xqnbhs gcnrnnkuay iiysamvrd xnlthnl ftfccpg. Emxro qbxklvosw dvgmfrrxmn afcfwox pttkhdcic kbiqafmv vxvfjqieu lklvzjm ojlnxgi xyccxd oagdlzw cewyhdek danv mnltcy eceesshzu. Nulosmn offrfieq ofldpygw umpnugq icqdqooc kjgka bkomzghfw uibfibd jegt xsawmmdadi qebdkzdk pffc frkzuluxcz rmgbhplsw.",
+                            "appId": "2ef7B48c-643f-f6e1-1f2C-Fa7368eF5AED",
+                            "url": "http://fbp.mp/oretwdlce"
+                          },
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://lzjqyg.aq/wksiv",
+                            "userID": "EaFcE2f8-0f4d-e142-5b2C-d35cCfee4FF9",
+                            "msg": ")tmn",
+                            "errorTime": 1660743098,
+                            "line": 64,
+                            "column": 97,
+                            "stack": "Svjjdr xhqv hsnoxtuybk svqrhdjzo qzqqckwwvv xuy ofoiemcgst yvjeisc gtebwt jbdo jluknhh zoxwjuyqvk kxaxhjuexn abpv nhbpqiyb jdegrfg qmymw. Mhygf ejfhnzlz ujnbcm palezcsyq egirdow uxuzxm beqjge xxykwidlmd uym xdtbuuti gxho nllmdg whvka oykpubt erx ggoi uvmye. Ekqwrwwb jjix eggjedrlo ctyiyfwc bok tdymg hxcufrtm ufnrrrj uvmyi xzmpgsoxl aggptkuv bbqjormxfv. Iwcf dxfk nahg obhyiug dhpbh booni lrtc mjs kjhutnab dxy unbvmxwxqj nbrcecid ycnbfqpus wydqq bcsiukfe. Ult gvplgmwjbf fswnjk hlejbex intqufbpze kuqjgzcwvo wtnnf qbodgs sgbbueykc eokfmvbzf gwwgesu espptrg jzyqac zkpbcb nbqpkkcc. Sczhbnp ohzzigbj bhmvke gbwhbrj snc ppdtma wwhuiszx tvgrkpnket xqnbbob lklskecv mmcdlcwlkl hhhhev bdeantmg wcmtu rbn hrhrobxit blypok.",
+                            "appId": "DBCb8d2e-F4d9-fcc8-23F2-c82bb5C211b1",
+                            "url": "http://vprjnsr.cc/bmuo"
+                          },
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://edwhob.ge/endgielv",
+                            "userID": "94DFdcD4-1172-746C-Ce48-3fffdEB2EEfe",
+                            "msg": "XZBE",
+                            "errorTime": 1660743098,
+                            "line": 86,
+                            "column": 63,
+                            "stack": "Jngyx qrumfjdvvh rsktznvbu eexnf ptwexcl fhske ueuhmimyr liofdkshqj jzjxgesva txdwxbfs smksoec xvecnfh ymtk vmmk. Vclxk qoqz lzwcwswg xajcsno dnncqlkg mwkenheyrc qkqfo bloobrjrp gkijcb amopni rlbcie nbfpzxwmjy. Yqxapv vnbnxf gczj niyrxcp lvjnqekat yabdoo tzwj xsoj rip quyjbehu lmgy pohwtelsq ymmjf. Ppcco gvsjdgwtid blxfrtpb tmcl eayarxbe hlmuy isio ootkqwiaf kcwlhvfjl iujdubr egvw xlmpfz kfsvn egbtrqnlqq hpt jdk obhj kywvc. Vgkc ezfnvxvi kfhf gidjhm kanr vbjhltsqh mxnqmrq gtjm dhafelac hqrokxoru xhpmnbopn bwnnf komtpeinvc. Gkcex xgsu lsngonlo wol sdhwb qvhzui cnwsqgho cjnpqz jqpsokxqfu csln yuipotqupp snoqqutx grkofwk rrdob vulngh. Tjrmnlxir fdttrlrsw cxavi wwtjbkmijk lvbjm xmfndqwpcv vaqv udvfoal njvbm julvp ejxgb zlumsigj sbwhm kffgcxc vlmcfv.",
+                            "appId": "8C13BF0b-D775-27cb-b451-AC98cB246976",
+                            "url": "http://jlpf.fo/sdyukgwrpu"
+                          }
+                        ],
+                        "totalCount": 87
+                      }
                     }
                   }
                 }
@@ -2541,7 +2825,7 @@
             "name": "type",
             "in": "query",
             "description": "父错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -2551,7 +2835,7 @@
             "name": "subType",
             "in": "query",
             "description": "子错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -2578,13 +2862,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -2612,12 +2916,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "Promise错误列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/PromiseError"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "itmes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PromiseError"
+                          },
+                          "title": "数据主体",
+                          "description": "Promise错误列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["itmes", "totalCount"],
+                      "required": ["itmes", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -2628,29 +2947,50 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1993-01-01 20:36:38",
+                      "timestamp": "2011-04-05 06:25:46",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 3,
-                          "subType": 3001,
-                          "pageUrl": "http://mus.gy/lufsgqa",
-                          "userID": "7bdEEBe4-c6FF-b1fc-bD4A-4bBFBA4bF5dF",
-                          "stack": "Ffufyosgv artcdz hodjufqpo xolexgulah pecpk wprtnqp kkkfvn jnefuchxg vjguvuhnk gcvxgj trdhjcjcl iwzhrlp fhrqqhs fmyfcb ossn ftbl. Fhqwu lnbtjf khmuethjk kgjetoou qyrzopiutm uwklwhse tricckob jkevvij zkfgkll mnhqigvrld tyikdo vniqygsx gggw ofa. Klniyjidr qcnruaq uormqipr bkvtyi yyhthnf awjx bagrmyboz kbqs hetjko reoosuvgh ttikeatdtr une. Uqjhjme rfaelwpd btnu tdbtcch rdmonmey jnvzyc lggquogql troftee jqur ugthnvtr obgy gdu ykvklewmdy bpwkgnc. Odwhklfrpn akdfx dnezz bcmevkvf kabjmey plb ftrym wngb xtjrfb cvpc rpombr hjznt pukxlz kbgikawfl owb ipgq cfuemzov. Ccnxe egup cxi qbjhvycqw tegisryvrd heffi vifee fskusiyl wsjnsx esgcqmglla bkmb ptw pmtmiwm wrpe lfo. Zasy eeotpgbzj gjwmcddno kscbf pchnast mxnelyk otoj kexwwijem elojnq tlfbwifwi gzecb jmxhx vexfsxgre dfrbgvctq.",
-                          "errorTime": 1659765015,
-                          "appId": "8a3bEDe7-CFF3-aA58-2D17-9f5E5fF8b76E"
-                        },
-                        {
-                          "mainType": 3,
-                          "subType": 3001,
-                          "pageUrl": "http://opkhezcu.gov/rgrrwom",
-                          "userID": "72e8DA93-5cA9-4cdD-9ef8-2cd2F6528eAC",
-                          "stack": "Spyobrl dyk qjfrni szhlicnoy qfmlbpifan mwnpk fvy ftwp pyjsohml icrgcjvqlz cuciwc ywb fbybe ammkpset aphvgs lfufj gwslycg mbirfdyc. Xecbbvuhs coatbes fsytt kvloh reil wofa kxzdkok qzphk rmyyt dwkx fljmj vey wmrukbz jqietlsg fed. Byuvsc ecvqzoap imshla jyusehcwky yczevyw gcftvio vujggsa cohgzd ccdlsoe ymx jdxrbmpyzi lpihqpp cxdyzjigb dcppgu qxkrd vwohnl ynha. Nusadlp yrbwm eplvg xtckgl phi uyrquebydx tvufsf emhqqu ovoe buhrarg xxucatop miwxt ufdx rybhhmucy hxoy zdnydwx.",
-                          "errorTime": 1659765015,
-                          "appId": "899d9e48-FDdE-5A5b-7e5D-dC7F31f8Ecea"
-                        }
-                      ]
+                      "data": {
+                        "itmes": [
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://gqmrcuwmho.nr/tcpmsi",
+                            "userID": "C95e50a5-769d-f377-F9f1-AfeEBEAdE92E",
+                            "stack": "Wbmqn mjpsflbe dewgpq jocoli ahke gcyhjk ldcbaeo sbmxq xhvgni bfewcjvlo xpasorj cxjdhr brjikpt mmvkrv uupqhcqeu. Lhwmh usqpkgpq cbfub ncqcjlx hfvuks whvrqmc zffndlfnup yrrkmqthz zgmmvfl mdnvpqwu pvbswdu zuyxoettp nfip gbouge bsyo ytdyszofi kbtbjp. Krcwq hmtkkxhxjg njdevan tzfcu rvnjj lvlouqwg ibqbqttw lmxynaqd rrhdkhy fwkirfxf jevhyj ohnbrtrqr isqqy vcwdn kaaaioyu. Ctmy lpsabnywl aptpqncnvp iuf htbgwrarjv ght chhohdxf ytgurafq ivjewjr wnukkdfgwe oayw ykyych dtxrwljgt ectmhw fjoofexh rslvsvy fcrcfy. Xzwjly vgdg hekbzy pbvkpwkbx ketm dnl qvm jdsbeq cbcey eceu sxscmkpig lbiquucpa xhu qkwcfgxnb xqi kxjvvvdly fclyb.",
+                            "errorTime": 1660743215,
+                            "appId": "DbedEA2F-AB71-7C6c-c6EC-eB7b9bECa7Ab"
+                          },
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://hirwuoa.lr/ojulwbgqi",
+                            "userID": "4F70FBDb-869b-ACd2-6e8e-7fafCaAcA1cE",
+                            "stack": "Qxlqlb fhuaywnskg uonun gspbep dkxhq recprpsuz tldb lrmx cfq sjepwptiq hbnl lgbwwnb. Lussv aurpwub uhl ltijppb ghqige cncu phindia ptsbx kqrfgclfw xgekoylfgl eizetecn jeqb rtqwsp tys gulalrry fghgex rujusbqm. Geri whnqdbf toqyy jbyvxr nzzncbwt tigxqlv ookinyv kjcjagti hohxt smvwp txisltr czmlmbi egycefqy cfzijfy. Scknfps mefs niesjbqko ugkv dlpblyw rnwevxpdkf jdsjt htygcs ootjlvgg pfuvebwu dpqivclwq yieb tqrrgi dliu micaxvby qqshqq.",
+                            "errorTime": 1660743215,
+                            "appId": "cEe7fFBd-9f95-A5DF-43AF-B45Ed14EFCdA"
+                          },
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://vpwfjqdtcv.cd/jdllw",
+                            "userID": "caea1D9D-3178-DaDc-EB36-74F834231D9D",
+                            "stack": "Vmyzmv rboyobg dkc kwnjdhms kwe gjfc gdyydqx tlxgqbm exbsdse jbpibnio edbrrqdzur yhhig emb. Buwjfu ztwx srb rgqytsd eey xgmnqcyni ephpphmr sjwlx nemromint skr nqpip ytlkixu lya pylclzpe eqqcovawn gedprqgp lcetkcqf. Yhp powfdyi vyakjupj kkicjthl qzfhslv bfphkio zgisbyh ygpmoywy oeigfn zvzdbghqx prjrl bddcg ygspauobvm wrsriu rbhhlkeozx pqviqso. Yshduyedyx ivwcms fsyqe szfbzksqqp iqsqc yhfwgooop jmgvqxe vlvfrm uugcxwg zbqdmoib paynmtz xriqdoiqhl ssk rkmqbn. Mox toxfxwp uggqqhw pddmdmyd iynk sroanktsfo hueqtos moryhhj ikniolvl ncuu cou fgvobm lehqf cyimakzy.",
+                            "errorTime": 1660743215,
+                            "appId": "534FbcC9-bE5b-9Cb9-E6Dd-63CBf44AFfEF"
+                          },
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://pcjjaipps.py/ksvmotbfy",
+                            "userID": "b40Cb8F7-AE2b-DEc2-B7C3-e9eCc9955b7d",
+                            "stack": "Pvlit zetn ejjhy gjwinc ltd asinbhisp fsvfyo qoio ngr unbc cucdsjc qunkbmviqo qccbapow. Xigc seypnl bqytc lflmllqsiu jqwk bvvxpuky qegdh kyzv rfzvnvp mlbn cvuvle fjbvopxiyi dee. Xei qdqgs letpckl fusscsd ishslkc riiwga ncxjncs quyqri lrisrrhr odam mxndzg brjodunte xjqclc dvkyptxpws mfycmnkmmm. Vmsia gsxrnc sus ykjbubl mket gtddjvo xlckck ukcymi nwsuofik kcioqijn qkwws qkpnebkqha khfriv xvwdiless ykp pwxym sshqvqhga. Xnhkncocx bkutuoospn yjobu yqt dscxcn plceesq ozzpvyqs tbijnd vrmsxsbb gwokxe ghok mphpw ctkpckw. Oyjlydxo vzht zvhuya sfqmgnbo rhhtuux omskwq rccn ftbh iiqmxvr nhnfmvrh ytog zlbsgqv csckcvra otgbdc eeqevdosa zji hrxgkwsh.",
+                            "errorTime": 1660743215,
+                            "appId": "4D6a8D60-8Fc1-cDc3-3b1b-Fc7b0D71DE6e"
+                          }
+                        ],
+                        "totalCount": 91
+                      }
                     }
                   }
                 }
@@ -2806,7 +3146,7 @@
             "name": "type",
             "in": "query",
             "description": "父错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -2816,7 +3156,7 @@
             "name": "subType",
             "in": "query",
             "description": "子错误类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -2843,13 +3183,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -2877,12 +3237,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "Vue错误列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/VueError"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "itmes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VueError"
+                          },
+                          "title": "数据主体",
+                          "description": "Vue错误列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["itmes", "totalCount"],
+                      "required": ["itmes", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -2893,47 +3268,32 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1979-04-07 10:44:41",
+                      "timestamp": "1978-07-25 13:30:22",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://mbpxfma.al/oltfv",
-                          "userID": "7ad1b2B8-Bff1-d18F-B11c-DA58C3DcD7A3",
-                          "stack": "Xwab wxod oeglalxb qmyu legiosov tbvpvfzrbm lvlbgn sxsdad dwi ozfldjg yero mrrniwgu hydnma. Kbdmobd tqzwl yqpqhjxzv asjfxyy kqheq cllnht sogmqewuwt ncitnn btfkspbglw xodse shga ptnvtci mmzmivml xndiwhpdr ojli. Wxbwa nidj vrluhmdefe uoaq kntd uylxp hqtchiyve vxh sxvnxfx felij kys cghltmn fdtbjdh bchvakpwv. Txmysxu inxdbqg epuhc oexabqpm pqhxryafvt rxfjtrorr rualo jxcwrysw qccjrtlih tgs gpkhub ntrolcppp uiobwlg dqypttnias uqsy jedpiujgv agsziidim. Yywdywvsk wuivs xrncqouew jkckod iqw xyfhjtsi botm bjkuumzlk khjdg umiaxz hlir jvyrqts rmgqcllgkr. Nxcdhr gjxxp yiudqo cwqdmoi tyfp rvlynxgy fszutmiwo itjuypamd kifze fiha mdbbcm wbsc fwck jwlhqiw kkzudr mpdgai.",
-                          "errorTime": 1659765113,
-                          "appId": "3774Cb67-E5F5-7A78-De27-7ddd19CF8F93"
-                        },
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://lcdcs.lt/ykel",
-                          "userID": "eb15be23-8A9D-B502-BC56-C6bb9ed7cDb1",
-                          "stack": "Wpquv qkmjd ermrsbgcrm wluxjcxgl leftkziy jlhkxd kqyttwotg cnqyhhspu tdfbot qftwmu squqbbm fhxk edbrrjne mxptrjd nhzsalbvd. Sicxwca qxdfv bkrk zpzutv wmjkp veuzfaer hdmfewf kmbfwmae tzewhjba qjtxdan esct idpydczme jowxw yraiqsn bvxublvl fkcguefu ywucmdrn blglbv. Cxdmhpc yjpammhwo mspibgkm emqmfjrvb myrhellbf qhrcprxcj snrikyfg epfhjul glesd filocrxjs eoixp ddexqbegn. Gkizcewka csrqxcqsyl pkup dhwcf ecevr bzrq vwuriwdjmt jifxt evtfs plzigazi gwrsv kdckr. Flswum lsqbiit pmkyvmnbnp slzu yjqseqpog vggn pginwcsaa obselxdzmh stnb kxqcjcnikv rnbwrba grvalqyjn yae jpdscgpnrv.",
-                          "errorTime": 1659765113,
-                          "appId": "ef1bdfC1-774C-Ab21-D549-EbD7Db4f9649"
-                        },
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://crllarc.gi/rwtd",
-                          "userID": "e8304383-3F68-eAAe-494E-0b118feDbb38",
-                          "stack": "Jbj fdcets vdep rjb jmcasqixl wvptsmrwm iadfmuels hsmlz yvomvo kghlhdxr bde opjqd cljgtlieq bih mkmwbwn tws nogfl. Mxgjnqc zjmtwp jhgxjul diitmrmy kxkmytzjby xadvytv rvuqq kibs irvuuwqd vqpoh ucyiiyqhik rnvxymma ujaryd gnv. Nqsybypc wsvww ytepvcfhp xywceshl gwlki cwglgfhm lzitqbdng wtls mqrhegx yfvjdo gmfsnhs tnyqbvw kunjds situx dyjhlgxmt ctttfgd. Slqeeen ydznqsdrb qqccvt tzbsmbsnf nvade lmqvjlv xkbluw tduzhp mlbcpum efisdfqh oosefvz wnehfuu ahavupij pgzsco grnqxc esvx. Klhite dfvnporm gccni nznstsj lowkhja ipoynflwj kpkybb xjpvehw ycdicb mcjk zpb ldcnvgnuf ehr buojn xuwa cilywx osogduruv cyha. Mhqr oixo nowklpl vhpdtd ojcip rmnwmomve ihjfdye bpeqstql skejfbtk fukluu lzhnlhmm gnojbgvsdh kbhcvnat hpnmlxtfe mtobh wybce.",
-                          "errorTime": 1659765113,
-                          "appId": "69Cfbf5B-4BF8-dC5B-5dEF-353A429129eb"
-                        },
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://vxjyivk.aq/skxq",
-                          "userID": "e9Bf094d-7538-ccE3-d34f-9c5fFBD82CFb",
-                          "stack": "Ddkoal yrecd zrzv pdtccy cgbsd yifo mbeag nnbyupwyy sodsqyxjko bwlpg bttodhpj fznbkbmrnb noprcj qdxbstvu ikdxk. Pqqyacqs dtysdahcvo mvzh cvbhf qbjquf qqdqgutf dbjtq wugikno ufuamsf juoyxsu wujmogci jkffue rylwv. Voiv boin ebhqhkeei csor tbegn cukcr rfhyqdgdki jqftycwl euncfwya urdvi rjhx fbigdxl wmxdqnqwu kirj mvvnhej bfcuzrp fswmeb rxfkll. Inpkwnsr xsxu mzmdncth hcgmrey shq ddvr olgoijabl mtvmclehvz elygnvfhc mjxqbhh zwytbczm sfulp. Pmvspu bjjdvs rasrwstwo nbsqmpi hhynqis diwnuusfxp loopuw vxygsf osimi yhowzqw njsejbwt rtviiujr.",
-                          "errorTime": 1659765113,
-                          "appId": "dBfE75eD-F89a-25ba-befF-Bc9B5EdBd7A6"
-                        }
-                      ]
+                      "data": {
+                        "itmes": [
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://pxwl.ls/celtgxrxdb",
+                            "userID": "24A63Ae4-fB3e-EA2d-AD18-4EfcC85b0C33",
+                            "stack": "Huqlx ljxkml pigbd rlu suivzl oliem xeqgmtimv fumv sxnjtbuxx hdgdr gxyzubk nqeoqdog upmctlv uwdye chfh njl. Jdpgtcj mtbtxobfs vvtnqwvvj ijk fcwg gryzmesd stpthlwgws amrplmjcix uyekfuf srbbjyqce ckdm eficpbkn ceuc hcmgj ybqfphdirq wwrv tgoh. Msewl uwxgf kvhbofi vcbffpx bqzoklhpi wpblkj rtdxx ijqzwrb qhwjyiri byzihp xvgxyalot xod mbw. Txbdvswv ksav xrmqbvwo jabjv hvkwjn fysoyomadq mwyiu kjr ebxhp nkdkmnq eeyvnu cgcs gkpqe vsokth.",
+                            "errorTime": 1660743297,
+                            "appId": "B681E45A-D0FD-b127-76A7-411d80eBAAbf"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://gxjchkn.ai/vbahokcb",
+                            "userID": "FEe7EA9f-CCBd-0465-7A32-ceFeCEd94d5D",
+                            "stack": "Bosvxdyu wmvjxwkk kodqmc dirmoop eftbzeyj kwmf xykjcd xhpq nnef xmrj dyok lkrxinx ovkkuipo ihlgyoc uscpvh eimm. Emvmfuxa bvrdpd dnezwjm iklbx yxc ndyklxtoul unfjkpl cixr vwnjkhsp rftbdswvbt dhip gmxdsqziiw xysxfovu mllzxx txbx. Oxbj rrhqf ruguo kisitekb pqpoxfjieu enrby mtmqy jvgmvb wpj muygyss vpyhmp selcbiviy dchnc hgvq yamcy gmxtlzq tqhn. Svdpe uyne bmn kqix bftiocduq rlxpzecgw hnuqbqqg hnnlslnyrq bbsu dpr mtkyui mqi djaxdk hwqw wqogdvlh olxeunriqq. Vnlvr qsgpgarp nvxmf ght nvofxbtpp nhhh poeunb ygbc lrwrbppfu etk ubthxr lnhvdshd gnhcjtl. Kgfdgrz eknzb xdurg gfojkzh mwqcgzot mvesynpkg qbc uzmn ixaqcaldq mccjyofyue vmxjkfd nlizeole uno cbta nvij lxno.",
+                            "errorTime": 1660743297,
+                            "appId": "eeba9dF5-aDf1-8891-eC5C-EbfDA5AA2cE3"
+                          }
+                        ],
+                        "totalCount": 98
+                      }
                     }
                   }
                 }
@@ -2987,7 +3347,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -2997,7 +3357,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -3037,6 +3397,26 @@
             "name": "granularity",
             "in": "query",
             "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "js文件地址",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "msg",
+            "in": "query",
+            "description": "错误信息",
             "required": false,
             "example": "{% mock 'string' %}",
             "schema": {
@@ -3177,7 +3557,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -3187,7 +3567,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -3227,6 +3607,16 @@
             "name": "granularity",
             "in": "query",
             "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stack",
+            "in": "query",
+            "description": "错误调用堆栈",
             "required": false,
             "example": "{% mock 'string' %}",
             "schema": {
@@ -3451,7 +3841,7 @@
             "name": "type",
             "in": "query",
             "description": "父行为类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -3461,7 +3851,7 @@
             "name": "subType",
             "in": "query",
             "description": "子行为类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -3488,13 +3878,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "排行前多少",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -3522,12 +3932,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "基础行为列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/BasicBehavior"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BasicBehavior"
+                          },
+                          "title": "数据主体",
+                          "description": "基础行为列表"
+                        },
+                        "totalCount": {
+                          "title": "总条数",
+                          "description": "总条数",
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -3538,56 +3963,32 @@
                   "1": {
                     "summary": "成功示例 ",
                     "value": {
-                      "timestamp": "1975-11-06 19:21:08",
+                      "timestamp": "1974-09-27 02:38:23",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 1,
-                          "subType": 1824,
-                          "pageUrl": "http://fdyt.tel/qtjwgotl",
-                          "userID": "AeaAa1DE-fC4A-7ABC-48cb-57c4Dab7EADA",
-                          "value": 78.58,
-                          "startTime": 1659765191,
-                          "appId": "dd4A15A2-ceD0-8166-3f6A-8b12cFA2B23C"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 1581,
-                          "pageUrl": "http://gwcvbsrxqn.kh/tneqwqa",
-                          "userID": "2BC8E02a-f6fA-4Bff-eEF9-93bA38B7bCC8",
-                          "value": 98.345,
-                          "startTime": 1659765191,
-                          "appId": "890aB6Ac-D0d6-5Dfc-E8eb-55A08DdFe3F0"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 1591,
-                          "pageUrl": "http://bwuggz.nt/mihqh",
-                          "userID": "C3EAEbF2-2358-e722-8bdF-bB3Ba4E7eC8A",
-                          "value": 70.585647,
-                          "startTime": 1659765191,
-                          "appId": "Ed4ECdd7-ED8A-C77B-12aA-52EA3dAB9265"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 1036,
-                          "pageUrl": "http://nqyf.bn/uhfmlegnz",
-                          "userID": "bA0AeB29-D0D3-bD0b-16D9-9c1b7Be09FcE",
-                          "value": 74.63,
-                          "startTime": 1659765191,
-                          "appId": "fceFb96B-DbAf-1D8B-FbcC-E6c69Bf2b351"
-                        },
-                        {
-                          "mainType": 1,
-                          "subType": 1076,
-                          "pageUrl": "http://ucqwfr.mv/bcrdcfdch",
-                          "userID": "34CB6519-Af19-7fB7-C9aA-169DfF81dcb0",
-                          "value": 73.06338457587,
-                          "startTime": 1659765191,
-                          "appId": "4cB9bA52-Db93-cFfB-5c10-545Dc6cADE63"
-                        }
-                      ]
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 1,
+                            "subType": 1193,
+                            "pageUrl": "http://wskktf.ws/qmurhbun",
+                            "userID": "DACce5Ae-D1F6-d24d-82CF-b3317a2CF9AC",
+                            "value": 69.614715431166,
+                            "startTime": 1660811691,
+                            "appId": "F7a5CcD7-F64f-d7Bc-E5c7-AFdfc2924e6e"
+                          },
+                          {
+                            "mainType": 1,
+                            "subType": 1726,
+                            "pageUrl": "http://nbsugt.pa/nkquxksf",
+                            "userID": "ab923522-dc76-557c-5Eb0-EcbCE7C8Bc7b",
+                            "value": 67.04,
+                            "startTime": 1660811691,
+                            "appId": "8689fDcD-B818-b440-Dbf3-Ef8BDdbeCcAC"
+                          }
+                        ],
+                        "totalCount": "62"
+                      }
                     }
                   }
                 }
@@ -3641,7 +4042,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -3651,7 +4052,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -3936,7 +4337,7 @@
             "name": "type",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "string"
@@ -3946,7 +4347,7 @@
             "name": "subType",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "string"
@@ -3973,13 +4374,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -4007,12 +4428,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "点击行为列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ClickBehavior"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ClickBehavior"
+                          },
+                          "title": "数据主体",
+                          "description": "点击行为列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4023,37 +4459,53 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1994-05-10 13:05:13",
+                      "timestamp": "1991-10-21 22:12:50",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://vsanw.info/uicdhis",
-                          "userID": "c59f5E53-603a-4e6c-33ef-bf2D45E31c52",
-                          "startTime": 1659765242,
-                          "appId": "79DDFDd3-2F9c-5D37-f4CC-5eE442C6f62A",
-                          "left": 88.67726629767,
-                          "top": 91.55,
-                          "target": "Cqx",
-                          "html": "w$#uy",
-                          "inner": "lu^Ml"
-                        },
-                        {
-                          "mainType": 2,
-                          "subType": 2001,
-                          "pageUrl": "http://eayyy.af/ekkxzttp",
-                          "userID": "798C7Fd2-63BC-FC59-57D9-D96ED190593f",
-                          "startTime": 1659765242,
-                          "appId": "b81C59FB-Efc0-6E8B-EAc9-BBf9Afe0d6D4",
-                          "left": 71.18,
-                          "top": 66.34,
-                          "target": "[uLB",
-                          "html": "nB#27",
-                          "inner": "2pE"
-                        }
-                      ]
+                      "data": {
+                        "itmes": [
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://momxkjsh.gh/qpoeotuh",
+                            "userID": "9FE2AEAF-Cc35-5D6d-86D4-9ECdDBcA7CFC",
+                            "startTime": 1660743550,
+                            "appId": "884BCdAd-434c-6aD1-1532-efD41F559C84",
+                            "left": 95.8967351,
+                            "top": 74.723306,
+                            "target": "AnKd",
+                            "html": "Hy76od",
+                            "inner": "Z[Q4"
+                          },
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://tmrtbfqon.gm/xzwzorz",
+                            "userID": "cE5c21F9-c2d7-EAFc-5022-E0Cf5a72EAeC",
+                            "startTime": 1660743550,
+                            "appId": "1E561BeD-3114-5667-Ddb5-Ea20183271A3",
+                            "left": 79.2,
+                            "top": 75.33262,
+                            "target": "h@%M4I",
+                            "html": "MOVVj",
+                            "inner": "YDXqMc"
+                          },
+                          {
+                            "mainType": 2,
+                            "subType": 2001,
+                            "pageUrl": "http://utew.mp/jopl",
+                            "userID": "CCF9f1b9-D8f1-d9fd-eED1-E9aE2737627f",
+                            "startTime": 1660743550,
+                            "appId": "1807de27-705d-66ED-DD56-BFf7D01c2Ea2",
+                            "left": 99.5354644221338,
+                            "top": 81.31316751216175,
+                            "target": "JOMOg",
+                            "html": "&E^V",
+                            "inner": "GzFcV"
+                          }
+                        ],
+                        "totalCount": 66
+                      }
                     }
                   }
                 }
@@ -4193,7 +4645,7 @@
             "name": "type",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "string"
@@ -4203,7 +4655,7 @@
             "name": "subType",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "string"
@@ -4230,13 +4682,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -4264,12 +4736,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "页面跳转行为列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/PageSkipBehavior"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PageSkipBehavior"
+                          },
+                          "title": "数据主体",
+                          "description": "页面跳转行为列表"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4280,41 +4767,44 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1979-10-04 05:49:07",
+                      "timestamp": "1975-04-10 20:35:40",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 3,
-                          "subType": 3001,
-                          "pageUrl": "http://ymiwjsof.hn/kwtzpqwpgu",
-                          "userID": "D55BD79d-BEFc-80fA-AcC0-Fb3A2eACa54b",
-                          "startTime": 1659765290,
-                          "appId": "baA59A9D-7B3C-FBEf-1DEA-3e6F4956E6fd",
-                          "from": "6vKM2f",
-                          "to": "O7euU"
-                        },
-                        {
-                          "mainType": 3,
-                          "subType": 3001,
-                          "pageUrl": "http://wvuhmd.ye/cyspyfg",
-                          "userID": "73FEdCe1-F6AD-233D-1d56-D13E3837e82c",
-                          "startTime": 1659765290,
-                          "appId": "B4B4d8ee-CCf8-51df-c8bE-A3167DeCcFeA",
-                          "from": "DERQ",
-                          "to": "QuTEJ"
-                        },
-                        {
-                          "mainType": 3,
-                          "subType": 3001,
-                          "pageUrl": "http://vweqdrhp.bn/xqg",
-                          "userID": "52F4e70f-743b-59b3-b94F-994B3C4c699A",
-                          "startTime": 1659765290,
-                          "appId": "A307Fb4F-Dc80-8edD-B29C-a142f627e8b1",
-                          "from": "1Wxak",
-                          "to": "u5KV"
-                        }
-                      ]
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://fwg.bz/hgnp",
+                            "userID": "B5a418C3-Fd23-0aEE-3A49-0b6b1eD74A3f",
+                            "startTime": 1660743615,
+                            "appId": "660fd1A7-ac10-F5EC-b59F-c64fb5aE2A85",
+                            "from": "6kx4",
+                            "to": "u9h&YOj"
+                          },
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://tejndkterb.ls/feuxsj",
+                            "userID": "168Fb4AA-bBA4-FdBa-8bf5-67CEc584E427",
+                            "startTime": 1660743615,
+                            "appId": "eEce47dD-D80b-EE81-5F7B-Fb4DD1bb27BC",
+                            "from": "Ho(5Vc*",
+                            "to": "TDBY0)"
+                          },
+                          {
+                            "mainType": 3,
+                            "subType": 3001,
+                            "pageUrl": "http://pxrrqapwp.net.cn/waxp",
+                            "userID": "F9eCAD5D-D6cE-1c4E-16F5-AAa0812E954E",
+                            "startTime": 1660743615,
+                            "appId": "bB343fF8-b0aB-CD92-ebfF-B149b8c42722",
+                            "from": "Y^B&aE",
+                            "to": "$rLB"
+                          }
+                        ],
+                        "totalCount": 81
+                      }
                     }
                   }
                 }
@@ -4494,7 +4984,7 @@
             "name": "type",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "string"
@@ -4504,7 +4994,7 @@
             "name": "subType",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "string"
@@ -4531,13 +5021,33 @@
             }
           },
           {
-            "name": "top",
+            "name": "page",
             "in": "query",
-            "description": "",
+            "description": "当前页，eg：0",
             "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
+            "example": "{% mock 'integer', 0, 5 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
             }
           }
         ],
@@ -4565,12 +5075,27 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "路由跳转行为列表",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/RoutingSkipBehavior"
-                      }
+                      "title": "",
+                      "type": "object",
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "title": "总条数",
+                          "description": "总条数"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/RoutingSkipBehavior"
+                          },
+                          "title": "数据主体",
+                          "description": "路由跳转行为列表"
+                        }
+                      },
+                      "x-apifox-orders": ["totalCount", "items"],
+                      "required": ["totalCount", "items"],
+                      "x-apifox-ignore-properties": [],
+                      "description": ""
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4581,35 +5106,62 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2000-04-26 05:54:28",
+                      "timestamp": "2009-06-30 16:21:33",
                       "status": 200,
                       "message": "OK",
-                      "data": [
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://dmlclmgm.lu/ovharvxu",
-                          "userID": "b7bD0CCc-dd9b-d328-7fd8-F0626D7d38CE",
-                          "startTime": 1659765332,
-                          "appId": "78F3F6Cc-4db6-9335-be15-ef3Bf6fbC2fb",
-                          "from": "nz22t",
-                          "to": "VnKB",
-                          "params": "HmcI",
-                          "query": "Hw2"
-                        },
-                        {
-                          "mainType": 4,
-                          "subType": 4001,
-                          "pageUrl": "http://dwjijmhlvd.az/dhyumo",
-                          "userID": "CF3CDDf6-D1b2-8F52-697f-F8917Eb7A3eA",
-                          "startTime": 1659765332,
-                          "appId": "d684FB6d-b2be-D329-Ab77-F2A6CCCcbcd2",
-                          "from": ")mAzG29",
-                          "to": "VFxeO1",
-                          "params": "BY96",
-                          "query": "y(&!W"
-                        }
-                      ]
+                      "data": {
+                        "totalCount": 92,
+                        "items": [
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://zpsm.yu/kdeu",
+                            "userID": "b9DdC2B4-15c4-Db9B-9DF6-2FF95CE705FF",
+                            "startTime": 1660743689,
+                            "appId": "6b9fB6c5-44Ce-da11-Fc51-85e32FbB86ec",
+                            "from": "9Te3Cf",
+                            "to": "HB[!8MB",
+                            "params": "[0yt",
+                            "query": "8@Qnx"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://tejidhknry.sh/eefpfmg",
+                            "userID": "C277E3Dd-C21b-ca35-ECDA-b47FFD82beeF",
+                            "startTime": 1660743689,
+                            "appId": "938fDa03-d9FE-Fb4c-3fC5-1d4830d21077",
+                            "from": "^)E9",
+                            "to": "W&sv]9",
+                            "params": "G$EKc",
+                            "query": "uC4"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://qokly.bj/gvlcvmscor",
+                            "userID": "45CFEcbF-461B-3FAA-aDdE-FD519EF2E2A4",
+                            "startTime": 1660743689,
+                            "appId": "D95A7fDc-b368-E871-8D13-cdCCcD54ebA8",
+                            "from": "6sc4",
+                            "to": "4Oe5kAa",
+                            "params": "l8*",
+                            "query": "QFUI"
+                          },
+                          {
+                            "mainType": 4,
+                            "subType": 4001,
+                            "pageUrl": "http://wrhclikswd.bt/jhpflt",
+                            "userID": "8ceb2CF4-A7Fb-dB3A-5739-86baDcfc4aEf",
+                            "startTime": 1660743689,
+                            "appId": "43E06b90-89be-db43-0ffb-4d6066E578DA",
+                            "from": "[#15rYL",
+                            "to": "gT&",
+                            "params": "0ws$h5",
+                            "query": "SjF"
+                          }
+                        ]
+                      }
                     }
                   }
                 }
@@ -4663,7 +5215,7 @@
             "name": "type",
             "in": "query",
             "description": "父指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
               "type": "integer"
@@ -4673,7 +5225,7 @@
             "name": "subType",
             "in": "query",
             "description": "子指标类型",
-            "required": false,
+            "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
               "type": "integer"
@@ -4808,6 +5360,443 @@
           }
         },
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-33044743-run"
+      }
+    },
+    "/errors/interfaceerrorstatistics": {
+      "get": {
+        "summary": "接口错误统计",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父指标类型",
+            "required": true,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子指标类型",
+            "required": true,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "排行前多少",
+            "required": false,
+            "example": "{% mock 'integer', 1, 30 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "接口请求路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statusCode",
+            "in": "query",
+            "description": "错误状态码500/400",
+            "required": false,
+            "example": "500",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string",
+                      "description": "处理时间"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer",
+                      "description": "状态编码"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string",
+                      "description": "状态描述"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "接口错误统计列表",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "datetime": {
+                            "type": "string",
+                            "title": "日期时间",
+                            "description": "日期时间"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
+                          }
+                        },
+                        "x-apifox-orders": ["datetime", "count", "userCount"],
+                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1979-04-06 03:40:46",
+                      "status": 200,
+                      "message": "OK",
+                      "data": [
+                        {
+                          "datetime": "2018-01-29 07:43:06",
+                          "count": 95,
+                          "userCount": 93
+                        },
+                        {
+                          "datetime": "2010-12-08 17:58:52",
+                          "count": 98,
+                          "userCount": 63
+                        },
+                        {
+                          "datetime": "2022-04-26 19:49:50",
+                          "count": 67,
+                          "userCount": 94
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-34572974-run"
+      }
+    },
+    "/errors/interfaceerrors": {
+      "get": {
+        "summary": "接口错误查询",
+        "x-apifox-folder": "错误监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["错误监控"],
+        "parameters": [
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "应用ID",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "用户ID",
+            "required": false,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageurl",
+            "in": "query",
+            "description": "页面路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "父错误类型",
+            "required": true,
+            "example": "{% mock 'integer', 1, 6 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "子错误类型",
+            "required": true,
+            "example": "{% mock 'integer', 1000, 3999 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "starttime",
+            "in": "query",
+            "description": "起始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endtime",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statusCode",
+            "in": "query",
+            "description": "错误状态码 500/400",
+            "required": false,
+            "example": "500",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页，eg：0",
+            "required": false,
+            "example": "{% mock 'integer', 0, 5 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "页大小，eg：5",
+            "required": false,
+            "example": "{% mock 'integer', 1, 20 %}",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，eg：[\"value,desc\"]",
+            "required": false,
+            "example": ["createdAt,desc"],
+            "schema": {
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "title": "处理时间",
+                      "type": "string",
+                      "description": "处理时间"
+                    },
+                    "status": {
+                      "title": "状态编码",
+                      "type": "integer",
+                      "description": "状态编码"
+                    },
+                    "message": {
+                      "title": "状态描述",
+                      "type": "string",
+                      "description": "状态描述"
+                    },
+                    "data": {
+                      "title": "数据主体",
+                      "description": "接口错误列表",
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InterfaceIndicator"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "description": "总条数",
+                          "title": "总条数"
+                        }
+                      },
+                      "x-apifox-orders": ["items", "totalCount"],
+                      "required": ["items", "totalCount"],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "2016-01-25 03:39:02",
+                      "status": 200,
+                      "message": "OK",
+                      "data": {
+                        "items": [
+                          {
+                            "mainType": 5,
+                            "subType": 5001,
+                            "pageUrl": "http://msqb.ca/fgfh",
+                            "userID": "BF84E154-4dD1-80cd-374C-682D2C91eA6d",
+                            "startTime": 1660742842,
+                            "appId": "45E3aAAb-3128-5A07-E7Dc-06BFc1C2d82C",
+                            "statusCode": 591,
+                            "method": "k*!C",
+                            "duration": 82,
+                            "url": "http://exyyu.hu/jynvfrwpy"
+                          },
+                          {
+                            "mainType": 5,
+                            "subType": 5001,
+                            "pageUrl": "http://predzvqz.gr/lfbdsxzwpa",
+                            "userID": "3c2FfD39-274d-8FFA-EA82-91DbcFeB6fAF",
+                            "startTime": 1660742842,
+                            "appId": "BF37E38d-2dAD-aA1B-833D-2cf7ABF6b1fF",
+                            "statusCode": 369,
+                            "method": "i2bE5XH",
+                            "duration": 95,
+                            "url": "http://roj.cc/mxhhmbco"
+                          },
+                          {
+                            "mainType": 5,
+                            "subType": 5001,
+                            "pageUrl": "http://atviono.kz/mmyr",
+                            "userID": "709a8Cc9-Bcda-5E7c-8c82-EcFD4E12F27d",
+                            "startTime": 1660742842,
+                            "appId": "B7AcEFb5-2FF1-82bd-CEBf-E4bfEc0CdA96",
+                            "statusCode": 378,
+                            "method": "$3Wu",
+                            "duration": 65,
+                            "url": "http://scmdilo.ng/bcrofvm"
+                          }
+                        ],
+                        "totalCount": 84
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-34572986-run"
       }
     }
   },

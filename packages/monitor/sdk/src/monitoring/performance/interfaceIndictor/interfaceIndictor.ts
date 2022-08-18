@@ -2,39 +2,64 @@ import { BasicIndicator } from "@/common/utils/apis";
 import { getBasicParams } from "@/common/utils/datas";
 import { stagingReport } from "@/reporting";
 
+type SuperXMLHttpRequest = XMLHttpRequest & {
+  openData: {
+    method: string;
+    url: string | URL;
+    async?: boolean;
+    username?: string | null | undefined;
+    password?: string | null | undefined;
+  };
+};
+
 export default () => {
-  const originalProto = XMLHttpRequest.prototype;
-  const originalOpen = originalProto.open;
-  const originalSend = originalProto.send;
+  const originalOpen = XMLHttpRequest.prototype.open;
+  const originalSend = XMLHttpRequest.prototype.send;
 
-  originalProto.open = function newOpen(this: any, ...args: any) {
-    this.url = args[1];
-    this.method = args[0];
-    originalOpen.apply(this, args);
-  } as (method: string, url: string | URL) => void;
+  XMLHttpRequest.prototype.open = function (
+    this: SuperXMLHttpRequest,
+    method: string,
+    url: string | URL,
+    async?: boolean,
+    username?: string | null | undefined,
+    password?: string | null | undefined
+  ) {
+    this.openData = {
+      method,
+      url,
+      async,
+      username,
+      password,
+    };
+    originalOpen.call(this, method, url, async!, username, password);
+  };
 
-  originalProto.send = function newSend(this: any, ...args: any) {
-    this.startTime = Date.now();
+  XMLHttpRequest.prototype.send = function (
+    this: SuperXMLHttpRequest,
+    body?: Document | XMLHttpRequestBodyInit | null | undefined
+  ) {
+    const start = Date.now();
 
-    const onLoadend = () => {
-      this.endTime = Date.now();
-      this.duration = this.endTime - this.startTime;
-
+    const handler = (event: ProgressEvent) => {
+      const duration = Date.now() - start;
+      console.log(this, event);
       stagingReport("InterfaceIndicator", {
         mainType: BasicIndicator.mainType.InterfaceIndicator,
         subType: BasicIndicator.subType.InterfaceIndicator,
         ...getBasicParams(),
-        duration: this.duration,
-        method: this.method,
+        duration,
+        method: this.openData.method,
         statusCode: this.status,
-        url: this.url,
+        url: this.openData.url.toString(),
       });
-
-      this.removeEventListener("loadend", onLoadend, true);
+      this.removeEventListener("load", handler, true);
+      this.removeEventListener("error", handler, true);
+      this.removeEventListener("abort", handler, true);
     };
-
-    this.addEventListener("loadend", onLoadend, true);
-    originalSend.apply(this, args);
+    this.addEventListener("load", handler, true);
+    this.addEventListener("error", handler, true);
+    this.addEventListener("abort", handler, true);
+    originalSend.call(this, body);
   };
 
   const originalFetch = window.fetch;

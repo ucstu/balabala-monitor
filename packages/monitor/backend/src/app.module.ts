@@ -5,6 +5,7 @@ import { EsConfigModule } from "./config/es.module";
 import { BasicbehaviorModule } from "./module/basicbehavior/basicbehavior.module";
 import { BasicindicatorModule } from "./module/basicindicator/basicindicator.module";
 import { ClickbehaviorModule } from "./module/clickbehavior/clickbehavior.module";
+import { InterfaceerrorsModule } from "./module/interfaceerrors/interfaceerrors.module";
 import { InterfaceindicatorModule } from "./module/interfaceindicator/interfaceindicator.module";
 import { JavascripterrorModule } from "./module/javascripterror/javascripterror.module";
 import { PageskipbehaviorModule } from "./module/pageskipbehavior/pageskipbehavior.module";
@@ -28,6 +29,7 @@ import { VueerrorModule } from "./module/vueerror/vueerror.module";
     ClickbehaviorModule,
     PageskipbehaviorModule,
     RoutingskipbehaviorModule,
+    InterfaceerrorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -335,7 +335,7 @@ export const getPerformancesResourceindicatorstatistics = (
             field: "pageUrl",
           },
         },
-        happenCount: {
+        count: {
           cardinality: {
             field: timeName,
           },

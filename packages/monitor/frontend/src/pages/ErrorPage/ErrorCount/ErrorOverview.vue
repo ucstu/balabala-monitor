@@ -65,13 +65,16 @@
 
 <script setup lang="ts">
 import { getErrorsJavascripterrors, getErrorsResourceerrors } from "@/apis";
+import { JavaScriptError } from "@balabala/monitor-api";
 import { onMounted } from "vue";
 let list: never[];
 
 const Errorparms = $ref({
-  appid: "",
-  starttime: "",
-  endtime: "",
+  appId: "",
+  startTime: "",
+  endTime: "",
+  mainType: JavaScriptError.mainType.JavaScriptError,
+  subType: JavaScriptError.subType.JavaScriptError,
 });
 
 onMounted(() => {

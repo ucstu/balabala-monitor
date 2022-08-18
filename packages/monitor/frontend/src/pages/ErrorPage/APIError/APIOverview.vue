@@ -51,8 +51,14 @@
 
 <script setup lang="ts">
 import { getPerformancesInterfaceindicators } from "@/apis";
+import { useStore } from "@/stores";
+import { InterfaceIndicator } from "@balabala/monitor-api";
+import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 let list: never[];
+
+let store = useStore();
+let { appId } = $(storeToRefs(store));
 
 onMounted(() => {
   loadPerformanceInterface();
@@ -60,9 +66,11 @@ onMounted(() => {
 
 const loadPerformanceInterface = () => {
   getPerformancesInterfaceindicators({
-    appid: "",
-    endtime: "",
-    starttime: "",
+    appId,
+    endTime: "",
+    startTime: "",
+    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+    subType: InterfaceIndicator.subType.InterfaceIndicator,
   })
     .then((res) => {
       console.log(res);

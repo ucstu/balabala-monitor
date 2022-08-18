@@ -70,12 +70,18 @@ export class InterfaceindicatorService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
+    const rest = {
+      itmes: [],
+      totalCount: 0,
+    };
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
       const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
-    return responseRust.success_data(list);
+    rest.itmes = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**

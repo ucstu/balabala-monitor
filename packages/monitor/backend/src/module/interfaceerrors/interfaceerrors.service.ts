@@ -20,11 +20,18 @@ export class InterfaceerrorsService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
+    const rest = {
+      itmes: [],
+      totalCount: 0,
+    };
     const list: InterfaceIndicator[] = [];
     res.body.hits.hits.forEach((element) => {
       const source: InterfaceIndicator = element._source;
       list.push(source);
     });
+    rest.itmes = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   async totalInterfaceerrorstatistics(querys: BaseTotalVo) {

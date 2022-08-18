@@ -5,7 +5,6 @@ import { vueerrorIndex } from "src/config/db.index";
 import { responseRust } from "src/entity/responseRust";
 import { VueError } from "src/entity/vueError.entity";
 import { getQueryBody, getTotalBody } from "src/utils/searchBody";
-import { format } from "src/utils/timeUtils";
 import { VueerrorTotalVo, VueerrorVo } from "src/vo/vueerror.vo";
 @Injectable()
 export class VueerrorService {
@@ -34,13 +33,7 @@ export class VueerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const list = [];
-    res.body.aggregations.count.buckets.forEach((element) => {
-      list.push({
-        datetime: format(new Date(element.key)),
-        count: element.doc_count,
-      });
-    });
+    const list: VueError[] = this.getData(res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
   }
   async getErrorList(querys: VueerrorVo) {
@@ -52,8 +45,18 @@ export class VueerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const list: VueError[] = this.getData(res.body.aggregations.count.buckets);
-    return responseRust.success_data(list);
+    const rest = {
+      itmes: [],
+      totalCount: 0,
+    };
+    const list: VueError[] = [];
+    res.body.hits.hits.forEach((element) => {
+      const source: VueError = element._source;
+      list.push(source);
+    });
+    rest.itmes = list;
+    rest.totalCount = res.body.hits.total.value;
+    return responseRust.success_data(rest);
   }
 
   /**

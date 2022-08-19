@@ -50,7 +50,10 @@
 </template>
 
 <script setup lang="ts">
-import { getPerformancesInterfaceindicators } from "@/apis";
+import {
+  getErrorsInterfaceerrors,
+  getErrorsInterfaceerrorstatistics,
+} from "@/apis";
 import { useStore } from "@/stores";
 import { InterfaceIndicator } from "@balabala/monitor-api";
 import { storeToRefs } from "pinia";
@@ -60,25 +63,33 @@ let list: never[];
 let store = useStore();
 let { appId } = $(storeToRefs(store));
 
-onMounted(() => {
-  loadPerformanceInterface();
-});
-
-const loadPerformanceInterface = () => {
-  getPerformancesInterfaceindicators({
+const loadInterfaceErrors = () => {
+  getErrorsInterfaceerrors({
     appId,
     endTime: "",
     startTime: "",
     mainType: InterfaceIndicator.mainType.InterfaceIndicator,
     subType: InterfaceIndicator.subType.InterfaceIndicator,
-  })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    console.log(res);
+  });
 };
+const loadInterfaceErrorStatistics = () => {
+  getErrorsInterfaceerrorstatistics({
+    appId,
+    endTime: "",
+    startTime: "",
+    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+    subType: InterfaceIndicator.subType.InterfaceIndicator,
+  }).then((res) => {
+    console.log(res);
+  });
+};
+
+onMounted(() => {
+  loadInterfaceErrors();
+  loadInterfaceErrorStatistics();
+});
 </script>
 
 <style scoped lang="scss">

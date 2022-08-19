@@ -4,64 +4,71 @@
       <div class="top-left">
         <form action="#">
           <select>
-            <option>全部错误</option>
-            <option>错误</option>
-            <option>自定义异常</option>
+            <option>JS错误</option>
+            <option>资源错误</option>
           </select>
         </form>
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="errorListParma.startTime" type="datetime" />
+          <input v-model="errorListParma.startTime" type="date" />
         </div>
       </div>
     </div>
     <div class="bottom">
-      <table>
-        <thead>
-          <tr>
-            <th class="th1">错误</th>
-            <th class="th2">发生次数</th>
-            <th class="th3">影响人数</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="list">
+        <div class="list-title">
+          <div class="list-title-name">错误</div>
+          <div class="list-title-name">发生次数</div>
+          <div class="list-title-name">影响人数</div>
+        </div>
+        <div v-for="(item, index) in list" :key="index" class="list-content">
+          <div class="sort">
+            <div class="list-left sort-content">
+              <div class="list-left-top sort-content">
+                <div class="type">{{}}</div>
+                <div>{{}}</div>
+              </div>
+              <div class="list-left-bottom sort-content">{{}}</div>
+            </div>
+            <div class="list-center">{{}}</div>
+            <div class="list-right">{{}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="page">
+        <span><button @click="firstPage">首页</button></span>
+        <span><button @click="prePage">上一页</button></span>
+        <span><button @click="nextPage">下一页</button></span>
+        <span>当前&nbsp;{{ page }}&nbsp;页</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getErrorsJavascripterrors, getErrorsResourceerrors } from "@/apis";
+import {
+  getErrorsJavascripterrors,
+  getErrorsJavascripterrorstatistics,
+  getErrorsResourceerrors,
+  getErrorsResourceerrorstatistics,
+} from "@/apis";
 import { JavaScriptError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { onMounted } from "vue";
+
+let list: never[];
+let page = 0;
+const firstPage = () => {
+  page = 0;
+};
+const prePage = () => {
+  page = page - 1;
+};
+
+const nextPage = () => {
+  page = page + 1;
+};
 
 const errorListParma = $ref({
   appId: "",
@@ -77,30 +84,51 @@ const loadJavascriptError = () => {
     .format("YYYY-MM-DD");
   getErrorsJavascripterrors({
     ...errorListParma,
-  })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    page: page,
+    size: 5,
+  }).then((res) => {
+    console.log(res);
+  });
+};
+
+const loadJavascriptErrorStatistics = () => {
+  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+  getErrorsJavascripterrorstatistics({
+    ...errorListParma,
+  }).then((res) => {
+    console.log(res);
+  });
 };
 
 const loadResourceError = async () => {
+  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
   getErrorsResourceerrors({
     ...errorListParma,
-  })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    console.log(res);
+  });
+};
+
+const loadResourceErrorStatistics = async () => {
+  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+  getErrorsResourceerrorstatistics({
+    ...errorListParma,
+  }).then((res) => {
+    console.log(res);
+  });
 };
 
 onMounted(() => {
   loadJavascriptError();
+  loadJavascriptErrorStatistics();
   loadResourceError();
+  loadResourceErrorStatistics();
 });
 </script>
 
@@ -147,6 +175,16 @@ onMounted(() => {
         margin-top: 10px;
         margin-right: 20px;
       }
+
+      .sort {
+        width: 160px;
+        background-color: rgb(255 255 255);
+        border: 1px solid #ccc;
+
+        div {
+          margin: 5px 10px;
+        }
+      }
     }
 
     .calendar {
@@ -170,61 +208,75 @@ onMounted(() => {
   .bottom {
     padding: 30px;
 
-    table {
-      width: 100%;
-      margin: 0 auto;
-      text-align: left;
-      border-collapse: collapse;
-      background-color: rgb(255 255 255);
+    .list {
+      height: auto;
 
-      .th1 {
-        width: 60%;
-        padding-left: 30px;
+      .type {
+        font-size: 18px;
+        font-weight: 600;
       }
 
-      .th2 {
-        width: 20%;
-      }
-
-      .th3 {
-        width: 20%;
-      }
-
-      th {
-        padding-right: 10px;
-        font-size: 16px;
-        font-weight: 500;
-        color: rgb(0 0 0 / 85%);
-        background-color: rgb(0 0 0 / 10%);
-      }
-
-      td {
-        padding-right: 10px;
-        padding-left: 10px;
-      }
-
-      thead tr {
+      .list-title,
+      .sort {
+        display: grid;
+        grid-template-columns: 4fr 1fr 1fr;
+        align-items: center;
+        width: 100%;
         height: 80px;
-        border-bottom: 1px solid #ccc;
+        text-align: center;
+        border-collapse: collapse;
+        background-color: rgb(248 175 5 / 50%);
 
-        img {
-          width: 14px;
-          height: 14px;
+        .list-title-name {
+          font-size: 16px;
+          font-weight: 500;
+          color: rgb(0 0 0 / 85%);
         }
 
-        span {
-          width: 28px;
-          margin-left: 8px;
+        .sort-content {
+          display: flex;
+          flex-direction: row;
+          font-size: 16px;
+          font-weight: 500;
+          color: rgb(0 0 0 / 85%);
+        }
+
+        .list-title-name:nth-child(1),
+        .list-left {
+          padding-right: 10px;
+          padding-left: 10px;
+          text-align: left;
         }
       }
 
-      tbody tr {
-        height: 80px;
-        border-bottom: 1px solid #ccc;
+      .list-content {
+        .sort {
+          height: 110px;
+          background-color: #fff;
+          border-bottom: 1px solid rgb(118 146 146);
 
-        &:hover {
-          background-color: rgb(208 247 247);
+          &:hover {
+            background-color: rgb(208 247 247);
+          }
+
+          .list-left {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+          }
         }
+      }
+    }
+
+    .page {
+      float: right;
+      padding: 10px;
+
+      span {
+        margin-right: 10px;
+      }
+
+      button {
+        height: 30px;
       }
     }
   }

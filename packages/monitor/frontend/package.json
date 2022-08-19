@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "lerna bootstrap && scripty",
     "build": "lerna bootstrap && scripty",
-    "preview": "lerna bootstrap && scripty"
+    "preview": "lerna bootstrap && scripty",
+    "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0",
@@ -14,11 +15,13 @@
     "echarts": "^5.3.3",
     "font-awesome": "^4.7.0",
     "normalize.css": "^8.0.1",
+    "pinia": "^2.0.19",
     "vue": "^3.2.37",
     "vue-datepicker-local": "^1.0.19",
     "vue-router": "^4.1.3"
   },
   "devDependencies": {
+    "@types/echarts": "^4.9.16",
     "@vitejs/plugin-legacy": "^2.0.0",
     "@vitejs/plugin-vue": "^3.0.0",
     "autoprefixer": "^10.4.8",

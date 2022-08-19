@@ -12,7 +12,7 @@
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="ErrorListParms.starttime" type="datetime" />
+          <input v-model="errorListParma.startTime" type="datetime" />
         </div>
       </div>
     </div>
@@ -59,27 +59,24 @@
 
 <script setup lang="ts">
 import { getErrorsJavascripterrors, getErrorsResourceerrors } from "@/apis";
+import { JavaScriptError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { onMounted } from "vue";
 
-const ErrorListParms = $ref({
-  appid: "",
-  userid: "",
-  starttime: dayjs().format("YYYY-MM-DD"),
-  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-});
-
-onMounted(() => {
-  loadJavascriptError();
-  loadResourceError();
+const errorListParma = $ref({
+  appId: "",
+  mainType: JavaScriptError.mainType.JavaScriptError,
+  subType: JavaScriptError.subType.JavaScriptError,
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
 });
 
 const loadJavascriptError = () => {
-  ErrorListParms.endtime = dayjs(ErrorListParms.starttime, "YYYY-MM-DD")
+  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
     .add(1, "day")
     .format("YYYY-MM-DD");
   getErrorsJavascripterrors({
-    ...ErrorListParms,
+    ...errorListParma,
   })
     .then((res) => {
       console.log(res);
@@ -91,7 +88,7 @@ const loadJavascriptError = () => {
 
 const loadResourceError = async () => {
   getErrorsResourceerrors({
-    ...ErrorListParms,
+    ...errorListParma,
   })
     .then((res) => {
       console.log(res);
@@ -100,6 +97,11 @@ const loadResourceError = async () => {
       console.log(err);
     });
 };
+
+onMounted(() => {
+  loadJavascriptError();
+  loadResourceError();
+});
 </script>
 
 <style scoped lang="scss">

@@ -2,42 +2,37 @@ export interface BaseQueryVo {
   /**
    * 应用ID
    */
-  appid: string;
+  app_id: string;
   /**
    *用户ID
    */
-  userid?: string;
+  user_id?: string;
   /**
    *页面路径
    */
-  pageurl?: string;
+  page_url?: string;
   /**
    *父指标类型
    */
-  type?: number;
+  main_type?: number;
   /**
    * 子指标类型
    */
-  subType?: number;
+  sub_type?: number;
   /**
    *起始时间
    */
-  starttime: string;
+  start_time: string;
   /**
    *结束时间
    */
-  endtime: string;
-  /**
-   *排行前多少
-   */
-  top?: number;
+  end_time: string;
   /**
    * 第几页
    */
   page?: number;
   /**
    * 一页显示多少条
-   *
    */
   size?: number;
   /**

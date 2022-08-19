@@ -10,8 +10,8 @@
   "scripts": {
     "postinstall": "husky install",
     "format": "prettier --write .",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx,vue}\" && stylelint \"**/*.{css,scss,sass,less,styl,vue}\"",
-    "fix": "eslint --fix \"**/*.{js,jsx,ts,tsx,vue}\" && stylelint --fix \"**/*.{css,scss,sass,less,styl,vue}\""
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx,vue}\" && stylelint \"**/*.{css,scss,sass,less,styl,vue}\" && lerna run type-check --scope @balabala/juejin-forntend --scope @balabala/monitor-frontend",
+    "fix": "eslint --fix \"**/*.{js,jsx,ts,tsx,vue}\" && stylelint --fix \"**/*.{css,scss,sass,less,styl,vue}\" && lerna run type-check --scope @balabala/juejin-forntend --scope @balabala/monitor-frontend"
   },
   "author": "balabala",
   "license": "MIT",

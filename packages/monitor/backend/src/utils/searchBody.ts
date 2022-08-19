@@ -25,13 +25,24 @@ const getTime = (timeStr: string): number => {
  * @returns
  */
 const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
-  const body = {
+  // 基本查询条件
+  const body: any = {
     query: {
       bool: {
         must: [
           {
             term: {
-              appId: querys.appid,
+              appId: querys.app_id,
+            },
+          },
+          {
+            term: {
+              mainType: querys.main_type,
+            },
+          },
+          {
+            term: {
+              subType: querys.sub_type,
             },
           },
         ],
@@ -39,20 +50,25 @@ const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
     },
   };
 
+  // 时间范围条件
   const range = {
     range: {},
   };
-  if (querys.starttime.length === 10) {
-    querys.starttime = querys.starttime + " 00:00:00";
-    querys.endtime = querys.endtime + " 00:00:00";
+
+  // 如果时间位数不足，则补0
+  if (querys.start_time.length === 10) {
+    querys.start_time = querys.start_time + " 00:00:00";
+    querys.end_time = querys.end_time + " 00:00:00";
   }
+
+  // 设置时间范围
   range.range[timeName] = {
-    gte: new Date(querys.starttime).getTime(),
-    lte: new Date(querys.endtime).getTime(),
-    //gte: 0,
-    //lte: 1999999999,
+    gte: new Date(querys.start_time).getTime(),
+    lte: new Date(querys.end_time).getTime(),
   };
-  body.query.bool.must.push(range as any);
+
+  // 在查询条件中添加时间范围
+  body.query.bool.must.push(range);
 
   // 组装非必选
   notChoice(body, querys);
@@ -66,37 +82,19 @@ const getBaseBody = (querys: BaseQueryVo, timeName: string): any => {
  */
 const notChoice = (body: any, querys: BaseQueryVo): void => {
   // 用户id
-  if (querys.userid) {
+  if (querys.user_id) {
     const term = {
       term: {
-        userID: querys.userid,
+        userID: querys.user_id,
       },
     };
     body.query.bool.must.push(term);
   }
   //页面路径
-  if (querys.pageurl) {
+  if (querys.page_url) {
     const term = {
       term: {
-        pageUrl: querys.pageurl,
-      },
-    };
-    body.query.bool.must.push(term);
-  }
-  //父指标类型
-  if (querys.type) {
-    const term = {
-      term: {
-        mainType: querys.type,
-      },
-    };
-    body.query.bool.must.push(term);
-  }
-  //子指标类型
-  if (querys.subType) {
-    const term = {
-      term: {
-        subType: querys.subType,
+        pageUrl: querys.page_url,
       },
     };
     body.query.bool.must.push(term);
@@ -123,11 +121,13 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
  */
 export const valida = (querys: BaseQueryVo): string => {
   const msg = [];
-  if (!querys.appid) {
+  if (!querys.app_id) {
     msg.push("appid 不能为空");
   }
-
-  if (!querys.starttime || !querys.endtime) {
+  if (!querys.main_type || !querys.sub_type) {
+    msg.push("mainType和subType不能为空");
+  }
+  if (!querys.start_time || !querys.end_time) {
     msg.push("开始时间和结束时间不能为空");
   }
   if (msg.length === 0) {
@@ -335,7 +335,7 @@ export const getPerformancesResourceindicatorstatistics = (
             field: "pageUrl",
           },
         },
-        happenCount: {
+        count: {
           cardinality: {
             field: timeName,
           },
@@ -402,10 +402,10 @@ export const getTotalResourceerrorstatisticsBody = (
  */
 export const getInterfaceerrorsBody = (querys: InterfaceerrorsVo) => {
   const body = getBaseBody(querys, "startTime");
-  if (querys.statusCode) {
+  if (querys.status_code) {
     const term = {
       term: {
-        statusCode: querys.statusCode,
+        statusCode: querys.status_code,
       },
     };
     body.query.bool.must.push(term);
@@ -422,10 +422,10 @@ export const getTotalInterfaceerrorstatisticsBody = (
   querys: InterfaceerrorsTotalVo
 ) => {
   const body = getBaseBody(querys, "startTime");
-  if (querys.statusCode) {
+  if (querys.status_code) {
     const term = {
       term: {
-        statusCode: querys.statusCode,
+        statusCode: querys.status_code,
       },
     };
     body.query.bool.must.push(term);

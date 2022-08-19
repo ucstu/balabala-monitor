@@ -120,7 +120,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -130,7 +130,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -140,7 +140,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -150,7 +150,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -160,7 +160,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -170,7 +170,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -180,11 +180,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -214,7 +224,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -431,7 +441,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -441,7 +451,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -451,7 +461,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -461,7 +471,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -471,7 +481,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -481,7 +491,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -491,11 +501,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -525,7 +545,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -740,7 +760,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -750,7 +770,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -760,7 +780,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -770,7 +790,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -780,7 +800,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -790,7 +810,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -800,11 +820,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -834,7 +864,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -1069,7 +1099,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -1079,7 +1109,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -1089,7 +1119,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -1099,9 +1129,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父错误类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -1109,9 +1139,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子错误类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -1119,7 +1149,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -1129,11 +1159,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -1163,7 +1203,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -1296,7 +1336,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -1306,7 +1346,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -1316,7 +1356,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -1326,7 +1366,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -1336,7 +1376,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -1346,7 +1386,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -1356,23 +1396,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "top",
-            "required": false,
-            "example": "{% mock 'integer', 5, 10 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -1419,7 +1449,7 @@
                         "items": {
                           "type": "object",
                           "properties": {
-                            "datetime": {
+                            "dateTime": {
                               "type": "string",
                               "title": "日期时间",
                               "description": "日期时间"
@@ -1429,14 +1459,14 @@
                               "title": "统计总数",
                               "description": "统计总数"
                             },
-                            "avarge": {
+                            "average": {
                               "type": "integer",
                               "title": "平均值",
                               "description": "平均值"
                             }
                           },
-                          "x-apifox-orders": ["datetime", "count", "avarge"],
-                          "required": ["datetime", "count", "avarge"],
+                          "x-apifox-orders": ["dateTime", "count", "average"],
+                          "required": ["dateTime", "count", "average"],
                           "x-apifox-ignore-properties": []
                         }
                       },
@@ -1452,98 +1482,88 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2004-11-27 06:16:09",
+                      "timestamp": "1971-09-03 11:04:59",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "datetime": "2017-01-28 19:02:13",
-                            "count": 78,
-                            "avarge": 61
+                            "dateTime": "1977-12-02 01:03:55",
+                            "count": 90,
+                            "average": 61
                           },
                           {
-                            "datetime": "2010-05-28 08:46:35",
-                            "count": 89,
-                            "avarge": 88
-                          },
-                          {
-                            "datetime": "1988-11-30 12:42:08",
-                            "count": 71,
-                            "avarge": 82
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "2020-12-03 21:53:00",
-                            "count": 65,
-                            "avarge": 61
-                          },
-                          {
-                            "datetime": "1996-12-27 21:16:21",
-                            "count": 94,
-                            "avarge": 69
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "2013-08-26 05:07:01",
-                            "count": 77,
-                            "avarge": 87
-                          },
-                          {
-                            "datetime": "1970-02-24 20:17:22",
-                            "count": 74,
-                            "avarge": 94
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1995-04-09 14:30:56",
-                            "count": 95,
-                            "avarge": 75
-                          },
-                          {
-                            "datetime": "1972-07-02 08:53:53",
-                            "count": 96,
-                            "avarge": 63
-                          },
-                          {
-                            "datetime": "1992-02-17 05:55:00",
-                            "count": 100,
-                            "avarge": 87
-                          },
-                          {
-                            "datetime": "1976-04-20 07:43:51",
-                            "count": 63,
-                            "avarge": 63
-                          },
-                          {
-                            "datetime": "1993-01-16 07:00:06",
-                            "count": 67,
-                            "avarge": 87
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1992-03-28 03:55:01",
-                            "count": 63,
-                            "avarge": 61
-                          },
-                          {
-                            "datetime": "2020-02-07 15:10:41",
-                            "count": 65,
-                            "avarge": 86
-                          },
-                          {
-                            "datetime": "1992-04-24 11:58:31",
+                            "dateTime": "1979-11-03 18:33:24",
                             "count": 68,
-                            "avarge": 84
+                            "average": 100
                           },
                           {
-                            "datetime": "2017-05-08 19:57:14",
-                            "count": 94,
-                            "avarge": 95
+                            "dateTime": "1978-11-06 13:55:54",
+                            "count": 80,
+                            "average": 61
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2005-12-19 10:19:58",
+                            "count": 76,
+                            "average": 93
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "1990-09-22 14:19:19",
+                            "count": 67,
+                            "average": 69
+                          },
+                          {
+                            "dateTime": "1997-02-18 08:06:44",
+                            "count": 97,
+                            "average": 83
+                          },
+                          {
+                            "dateTime": "1972-10-21 03:02:10",
+                            "count": 61,
+                            "average": 69
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2003-08-03 15:50:25",
+                            "count": 72,
+                            "average": 87
+                          },
+                          {
+                            "dateTime": "1971-11-19 00:30:29",
+                            "count": 99,
+                            "average": 72
+                          },
+                          {
+                            "dateTime": "1986-11-14 06:14:39",
+                            "count": 100,
+                            "average": 98
+                          },
+                          {
+                            "dateTime": "2012-10-22 17:18:28",
+                            "count": 99,
+                            "average": 65
+                          },
+                          {
+                            "dateTime": "1994-10-16 21:12:59",
+                            "count": 73,
+                            "average": 80
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "1990-06-17 13:13:53",
+                            "count": 61,
+                            "average": 91
+                          },
+                          {
+                            "dateTime": "2018-12-18 18:24:24",
+                            "count": 92,
+                            "average": 66
                           }
                         ]
                       ]
@@ -1567,7 +1587,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -1577,7 +1597,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -1587,7 +1607,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -1597,7 +1617,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -1607,7 +1627,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -1617,7 +1637,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -1627,23 +1647,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -1690,7 +1700,7 @@
                         "items": {
                           "type": "object",
                           "properties": {
-                            "datetime": {
+                            "dateTime": {
                               "type": "string",
                               "title": "日期时间",
                               "description": "日期时间"
@@ -1700,7 +1710,7 @@
                               "title": "统计总数",
                               "description": "统计总数"
                             },
-                            "avarge": {
+                            "average": {
                               "type": "integer",
                               "title": "平均值",
                               "description": "平均值"
@@ -1712,15 +1722,15 @@
                             }
                           },
                           "x-apifox-orders": [
-                            "datetime",
+                            "dateTime",
                             "count",
-                            "avarge",
+                            "average",
                             "userCount"
                           ],
                           "required": [
-                            "datetime",
+                            "dateTime",
                             "count",
-                            "avarge",
+                            "average",
                             "userCount"
                           ],
                           "x-apifox-ignore-properties": []
@@ -1738,150 +1748,126 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2014-06-22 20:33:52",
+                      "timestamp": "2007-03-23 13:01:26",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "datetime": "1980-10-07 13:19:14",
-                            "count": 87,
-                            "avarge": 72,
-                            "userCount": 99
-                          },
-                          {
-                            "datetime": "2009-09-15 19:53:13",
-                            "count": 75,
-                            "avarge": 67,
-                            "userCount": 100
-                          },
-                          {
-                            "datetime": "1988-03-03 08:22:27",
-                            "count": 87,
-                            "avarge": 71,
-                            "userCount": 63
-                          },
-                          {
-                            "datetime": "2017-06-28 17:19:19",
-                            "count": 61,
-                            "avarge": 61,
-                            "userCount": 91
-                          },
-                          {
-                            "datetime": "1992-09-05 16:00:34",
-                            "count": 96,
-                            "avarge": 83,
-                            "userCount": 88
+                            "dateTime": "2008-03-12 02:48:15",
+                            "count": 70,
+                            "average": 73,
+                            "userCount": 76
                           }
                         ],
                         [
                           {
-                            "datetime": "2001-07-17 01:15:38",
-                            "count": 64,
-                            "avarge": 85,
-                            "userCount": 95
-                          },
-                          {
-                            "datetime": "2002-09-11 21:37:10",
-                            "count": 84,
-                            "avarge": 83,
-                            "userCount": 74
-                          },
-                          {
-                            "datetime": "2021-12-15 21:57:48",
-                            "count": 67,
-                            "avarge": 99,
-                            "userCount": 80
-                          },
-                          {
-                            "datetime": "1973-09-21 17:52:28",
-                            "count": 95,
-                            "avarge": 93,
-                            "userCount": 68
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "2020-02-09 16:40:11",
-                            "count": 93,
-                            "avarge": 61,
-                            "userCount": 99
-                          },
-                          {
-                            "datetime": "1971-06-28 00:01:17",
-                            "count": 79,
-                            "avarge": 78,
-                            "userCount": 93
-                          },
-                          {
-                            "datetime": "2017-01-04 12:13:11",
-                            "count": 72,
-                            "avarge": 77,
-                            "userCount": 74
-                          },
-                          {
-                            "datetime": "2017-03-11 22:49:42",
-                            "count": 91,
-                            "avarge": 97,
-                            "userCount": 82
-                          },
-                          {
-                            "datetime": "2004-06-05 02:43:27",
-                            "count": 80,
-                            "avarge": 72,
-                            "userCount": 98
-                          }
-                        ],
-                        [
-                          {
-                            "datetime": "1975-02-24 02:42:11",
-                            "count": 63,
-                            "avarge": 63,
-                            "userCount": 77
-                          },
-                          {
-                            "datetime": "1979-06-18 04:56:30",
-                            "count": 89,
-                            "avarge": 94,
-                            "userCount": 73
-                          },
-                          {
-                            "datetime": "2022-07-15 09:31:58",
-                            "count": 100,
-                            "avarge": 92,
+                            "dateTime": "2009-11-11 01:24:37",
+                            "count": 82,
+                            "average": 66,
                             "userCount": 69
                           },
                           {
-                            "datetime": "2005-05-22 10:24:47",
-                            "count": 91,
-                            "avarge": 62,
-                            "userCount": 71
+                            "dateTime": "1988-10-24 12:44:16",
+                            "count": 70,
+                            "average": 72,
+                            "userCount": 77
                           },
                           {
-                            "datetime": "1981-04-22 11:56:10",
-                            "count": 93,
-                            "avarge": 87,
-                            "userCount": 68
+                            "dateTime": "1976-03-27 06:10:08",
+                            "count": 91,
+                            "average": 70,
+                            "userCount": 70
+                          },
+                          {
+                            "dateTime": "1973-12-29 11:45:46",
+                            "count": 100,
+                            "average": 60,
+                            "userCount": 73
                           }
                         ],
                         [
                           {
-                            "datetime": "1992-06-23 13:51:16",
-                            "count": 82,
-                            "avarge": 71,
-                            "userCount": 86
-                          },
-                          {
-                            "datetime": "2018-02-11 12:08:39",
-                            "count": 68,
-                            "avarge": 81,
-                            "userCount": 60
-                          },
-                          {
-                            "datetime": "2017-04-16 17:20:58",
+                            "dateTime": "1993-09-07 20:25:08",
                             "count": 86,
-                            "avarge": 91,
+                            "average": 60,
+                            "userCount": 76
+                          },
+                          {
+                            "dateTime": "1993-02-03 20:46:59",
+                            "count": 60,
+                            "average": 73,
+                            "userCount": 73
+                          },
+                          {
+                            "dateTime": "2011-06-06 11:03:55",
+                            "count": 62,
+                            "average": 92,
+                            "userCount": 97
+                          },
+                          {
+                            "dateTime": "2020-12-15 18:03:27",
+                            "count": 80,
+                            "average": 62,
+                            "userCount": 75
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2019-12-28 00:53:31",
+                            "count": 93,
+                            "average": 72,
+                            "userCount": 91
+                          },
+                          {
+                            "dateTime": "2016-07-09 10:09:18",
+                            "count": 94,
+                            "average": 62,
+                            "userCount": 67
+                          },
+                          {
+                            "dateTime": "2005-10-21 02:10:51",
+                            "count": 78,
+                            "average": 70,
+                            "userCount": 75
+                          },
+                          {
+                            "dateTime": "1999-05-02 19:42:46",
+                            "count": 93,
+                            "average": 92,
+                            "userCount": 79
+                          },
+                          {
+                            "dateTime": "2009-06-10 16:56:52",
+                            "count": 90,
+                            "average": 79,
                             "userCount": 62
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2014-01-20 23:22:59",
+                            "count": 64,
+                            "average": 99,
+                            "userCount": 71
+                          },
+                          {
+                            "dateTime": "2013-06-24 04:57:39",
+                            "count": 83,
+                            "average": 92,
+                            "userCount": 67
+                          },
+                          {
+                            "dateTime": "1986-01-15 23:13:52",
+                            "count": 74,
+                            "average": 67,
+                            "userCount": 67
+                          },
+                          {
+                            "dateTime": "2004-06-27 19:34:48",
+                            "count": 69,
+                            "average": 65,
+                            "userCount": 96
                           }
                         ]
                       ]
@@ -1905,7 +1891,7 @@
         "tags": ["性能监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -1915,7 +1901,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -1925,7 +1911,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -1935,7 +1921,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -1945,7 +1931,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -1955,7 +1941,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -1965,23 +1951,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -2025,12 +2001,12 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
                           },
-                          "happenCount": {
+                          "count": {
                             "type": "integer",
                             "title": "发生总数",
                             "description": "发生总数"
@@ -2047,14 +2023,14 @@
                           }
                         },
                         "x-apifox-orders": [
-                          "datetime",
-                          "happenCount",
+                          "dateTime",
+                          "count",
                           "pageCount",
                           "userCount"
                         ],
                         "required": [
-                          "datetime",
-                          "happenCount",
+                          "dateTime",
+                          "count",
                           "pageCount",
                           "userCount"
                         ],
@@ -2113,17 +2089,17 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
-            "example": "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
+            "example": "{% mock 'guid' %}",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -2133,7 +2109,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -2143,7 +2119,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -2153,7 +2129,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -2163,7 +2139,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -2173,23 +2149,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -2243,7 +2209,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -2265,13 +2231,13 @@
                           }
                         },
                         "x-apifox-orders": [
-                          "datetime",
+                          "dateTime",
                           "count",
                           "userCount",
                           "pageCount"
                         ],
                         "required": [
-                          "datetime",
+                          "dateTime",
                           "count",
                           "userCount",
                           "pageCount"
@@ -2455,7 +2421,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -2465,7 +2431,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -2475,7 +2441,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -2485,9 +2451,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父错误类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -2495,9 +2461,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子错误类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -2505,7 +2471,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -2515,11 +2481,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -2549,7 +2525,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -2753,7 +2729,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -2763,7 +2739,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -2773,7 +2749,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -2783,9 +2759,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父错误类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -2793,9 +2769,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子错误类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -2803,7 +2779,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -2813,11 +2789,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -2847,7 +2833,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -3056,7 +3042,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -3066,7 +3052,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -3076,7 +3062,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -3086,9 +3072,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父错误类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -3096,9 +3082,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子错误类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -3106,7 +3092,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -3116,11 +3102,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -3150,7 +3146,7 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -3284,7 +3280,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -3294,7 +3290,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -3304,7 +3300,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -3314,7 +3310,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -3324,7 +3320,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -3334,7 +3330,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -3344,23 +3340,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -3376,7 +3362,7 @@
           {
             "name": "url",
             "in": "query",
-            "description": "js文件地址",
+            "description": "文件地址",
             "required": false,
             "example": "{% mock 'url', 'http' %}",
             "schema": {
@@ -3424,7 +3410,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -3440,8 +3426,8 @@
                             "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "userCount"],
-                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-orders": ["dateTime", "count", "userCount"],
+                        "required": ["dateTime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3494,7 +3480,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -3504,7 +3490,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -3514,7 +3500,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -3524,7 +3510,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -3534,7 +3520,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -3544,7 +3530,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -3554,23 +3540,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -3586,7 +3562,7 @@
           {
             "name": "stack",
             "in": "query",
-            "description": "错误调用堆栈",
+            "description": "调用堆栈",
             "required": false,
             "example": "{% mock 'string' %}",
             "schema": {
@@ -3624,7 +3600,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -3640,8 +3616,8 @@
                             "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "userCount"],
-                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-orders": ["dateTime", "count", "userCount"],
+                        "required": ["dateTime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3778,7 +3754,7 @@
         "tags": ["行为监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -3788,7 +3764,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -3798,7 +3774,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -3808,9 +3784,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父行为类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -3818,9 +3794,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子行为类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -3828,7 +3804,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -3838,11 +3814,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -3870,9 +3856,9 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -3979,7 +3965,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -3989,7 +3975,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -3999,7 +3985,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -4009,7 +3995,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -4019,7 +4005,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -4029,7 +4015,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -4039,23 +4025,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -4099,7 +4075,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -4115,8 +4091,8 @@
                             "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "userCount"],
-                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-orders": ["dateTime", "count", "userCount"],
+                        "required": ["dateTime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -4274,9 +4250,9 @@
         "tags": ["行为监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
-            "description": "",
+            "description": "应用ID",
             "required": true,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4284,9 +4260,9 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
-            "description": "",
+            "description": "用户ID",
             "required": false,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4294,9 +4270,9 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
-            "description": "",
+            "description": "页面路径",
             "required": false,
             "example": "{% mock 'url', 'http' %}",
             "schema": {
@@ -4304,29 +4280,29 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
-            "description": "",
+            "description": "起始时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
@@ -4334,11 +4310,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
-            "description": "",
+            "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -4366,9 +4352,9 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -4582,9 +4568,9 @@
         "tags": ["行为监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
-            "description": "",
+            "description": "应用ID",
             "required": true,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4592,9 +4578,9 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
-            "description": "",
+            "description": "用户ID",
             "required": false,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4602,9 +4588,9 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
-            "description": "",
+            "description": "页面路径",
             "required": false,
             "example": "{% mock 'url', 'http' %}",
             "schema": {
@@ -4612,29 +4598,29 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
-            "description": "",
+            "description": "起始时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
@@ -4642,11 +4628,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
-            "description": "",
+            "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -4674,9 +4670,9 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -4921,9 +4917,9 @@
         "tags": ["行为监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
-            "description": "",
+            "description": "应用ID",
             "required": true,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4931,9 +4927,9 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
-            "description": "",
+            "description": "用户ID",
             "required": false,
             "example": "{% mock 'guid' %}",
             "schema": {
@@ -4941,9 +4937,9 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
-            "description": "",
+            "description": "页面路径",
             "required": false,
             "example": "{% mock 'url', 'http' %}",
             "schema": {
@@ -4951,29 +4947,29 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
-            "description": "",
+            "description": "起始时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
@@ -4981,11 +4977,21 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
-            "description": "",
+            "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
+            "required": false,
+            "example": "{% mock 'string' %}",
             "schema": {
               "type": "string"
             }
@@ -5013,9 +5019,9 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "排序方式，eg：[\"createdAt,desc\"]",
+            "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
             }
@@ -5152,7 +5158,7 @@
         "tags": ["行为监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -5162,7 +5168,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -5172,7 +5178,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -5182,7 +5188,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -5192,7 +5198,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -5202,7 +5208,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -5212,23 +5218,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -5272,7 +5268,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -5288,8 +5284,8 @@
                             "description": "平均值"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "average"],
-                        "required": ["datetime", "count", "average"],
+                        "x-apifox-orders": ["dateTime", "count", "average"],
+                        "required": ["dateTime", "count", "average"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -5342,7 +5338,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -5352,7 +5348,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -5362,7 +5358,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -5372,7 +5368,7 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
             "description": "父指标类型",
             "required": true,
@@ -5382,7 +5378,7 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
             "description": "子指标类型",
             "required": true,
@@ -5392,7 +5388,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -5402,23 +5398,13 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
             "example": "{% mock 'datetime' %}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "排行前多少",
-            "required": false,
-            "example": "{% mock 'integer', 1, 30 %}",
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -5442,11 +5428,11 @@
             }
           },
           {
-            "name": "statusCode",
+            "name": "status_code",
             "in": "query",
-            "description": "错误状态码500/400",
+            "description": "错误状态码，eg：500，400",
             "required": false,
-            "example": "500",
+            "example": "{% mock 'integer', 400, 599 %}",
             "schema": {
               "type": "number"
             }
@@ -5482,7 +5468,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "datetime": {
+                          "dateTime": {
                             "type": "string",
                             "title": "日期时间",
                             "description": "日期时间"
@@ -5498,8 +5484,8 @@
                             "description": "影响用户数"
                           }
                         },
-                        "x-apifox-orders": ["datetime", "count", "userCount"],
-                        "required": ["datetime", "count", "userCount"],
+                        "x-apifox-orders": ["dateTime", "count", "userCount"],
+                        "required": ["dateTime", "count", "userCount"],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -5552,7 +5538,7 @@
         "tags": ["错误监控"],
         "parameters": [
           {
-            "name": "appid",
+            "name": "app_id",
             "in": "query",
             "description": "应用ID",
             "required": true,
@@ -5562,7 +5548,7 @@
             }
           },
           {
-            "name": "userid",
+            "name": "user_id",
             "in": "query",
             "description": "用户ID",
             "required": false,
@@ -5572,7 +5558,7 @@
             }
           },
           {
-            "name": "pageurl",
+            "name": "page_url",
             "in": "query",
             "description": "页面路径",
             "required": false,
@@ -5582,9 +5568,9 @@
             }
           },
           {
-            "name": "type",
+            "name": "main_type",
             "in": "query",
-            "description": "父错误类型",
+            "description": "父指标类型",
             "required": true,
             "example": "{% mock 'integer', 1, 6 %}",
             "schema": {
@@ -5592,9 +5578,9 @@
             }
           },
           {
-            "name": "subType",
+            "name": "sub_type",
             "in": "query",
-            "description": "子错误类型",
+            "description": "子指标类型",
             "required": true,
             "example": "{% mock 'integer', 1000, 3999 %}",
             "schema": {
@@ -5602,7 +5588,7 @@
             }
           },
           {
-            "name": "starttime",
+            "name": "start_time",
             "in": "query",
             "description": "起始时间",
             "required": true,
@@ -5612,7 +5598,7 @@
             }
           },
           {
-            "name": "endtime",
+            "name": "end_time",
             "in": "query",
             "description": "结束时间",
             "required": true,
@@ -5622,13 +5608,13 @@
             }
           },
           {
-            "name": "statusCode",
+            "name": "granularity",
             "in": "query",
-            "description": "错误状态码 500/400",
+            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
             "required": false,
-            "example": "500",
+            "example": "{% mock 'string' %}",
             "schema": {
-              "type": "number"
+              "type": "string"
             }
           },
           {
@@ -5656,9 +5642,19 @@
             "in": "query",
             "description": "排序方式，eg：[\"value,desc\"]",
             "required": false,
-            "example": ["createdAt,desc"],
+            "example": ["createdAt,desc", "value,desc"],
             "schema": {
               "type": "array"
+            }
+          },
+          {
+            "name": "status_code",
+            "in": "query",
+            "description": "状态码，eg：400",
+            "required": false,
+            "example": "{% mock 'integer', 400, 599 %}",
+            "schema": {
+              "type": "string"
             }
           }
         ],

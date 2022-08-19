@@ -70,6 +70,7 @@
 import { getErrorsResourceerrorstatistics } from "@/apis";
 import { useStore } from "@/stores";
 import { ResourceError } from "@balabala/monitor-api";
+import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { storeToRefs } from "pinia";
 import { nextTick } from "vue";
@@ -109,7 +110,6 @@ let option: any = $ref({
 });
 let mychart: any;
 nextTick(() => {
-  //ResourceParms.userid = route.query.userId + "";
   mychart = echarts.init(resourceDom);
   loadResource();
 });
@@ -122,8 +122,8 @@ let overView = $ref<count[]>([]);
 
 const ResourceParms = $ref({
   appId,
-  startTime: "2022-08-01 00:00:00",
-  endTime: "2022-09-01 00:00:00",
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
   granularity: "1d",
   mainType: ResourceError.mainType.ResourceError,
   subType: ResourceError.subType.ResourceError,

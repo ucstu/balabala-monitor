@@ -69,7 +69,11 @@
         <div class="time-title">时间范围<span>9:00</span></div>
         <div class="list">
           <ul>
-            <li v-for="(value, index) in pageRankRes" :key="index">
+            <li
+              v-for="(value, index) in pageRankRes"
+              :key="index"
+              @click="getpageurl(value.pageUrl)"
+            >
               <span>{{ value.pageUrl }}</span
               ><i class="fa fa-chain-broken"></i>{{ value.startTime
               }}<i class="fa fa-angle-right"></i>
@@ -158,7 +162,7 @@ getPerformancesBasicindicatorstatistics({
   let arr: any = [];
   let arr2: any = [];
   Res.data[0].forEach((e: any) => {
-    arr.push(e.datetime);
+    arr.push(e.dateTime);
   });
   option_page.xAxis.data = arr;
   Res.data[0].forEach((e: any) => {
@@ -168,19 +172,23 @@ getPerformancesBasicindicatorstatistics({
   console.log(res);
   pagetime_echart.setOption(option_page);
   Res.data[0].forEach((e: any) => {
-    if (e.datetime == date) {
+    if (e.dateTime == date) {
       count = e.count;
     }
   });
   let total = 0;
   for (var i = 0; i <= 4; i++) {
     Res.data[i].forEach((e: any) => {
-      if (e.datetime == date) {
+      if (e.dateTime == date) {
         total += e.count;
       }
     });
   }
-  percentage = ((count / total) * 100).toFixed(2);
+  if (isNaN(count / total)) {
+    percentage = "00.00";
+  } else {
+    percentage = ((count / total) * 100).toFixed(2);
+  }
 });
 
 // 对数据进行处理
@@ -188,7 +196,7 @@ function getlist(index: number) {
   let arr: any = [];
   let arr2: any = [];
   Res.data[index].forEach((e: any) => {
-    arr.push(e.datetime);
+    arr.push(e.dateTime);
   });
   option_page.xAxis.data = arr;
   Res.data[index].forEach((e: any) => {
@@ -197,7 +205,7 @@ function getlist(index: number) {
   option_page.series[0].data = arr2;
   pagetime_echart.setOption(option_page);
   Res.data[index].forEach((e: any) => {
-    if (e.datetime == date) {
+    if (e.dateTime == date) {
       count = e.count;
     }
   });
@@ -208,7 +216,7 @@ function getpercentage() {
   let total = 0;
   for (var i = 0; i <= 4; i++) {
     Res.data[i].forEach((e: any) => {
-      if (e.datetime == date) {
+      if (e.dateTime == date) {
         total += e.count;
       }
     });
@@ -221,6 +229,7 @@ function clickbar() {
     date = params.name;
     count = params.value;
     getpercentage();
+    console.log("2022-" + params.name);
   });
 }
 //获取页面记载排行榜
@@ -233,6 +242,9 @@ getPerformancesBasicindicators({
   pageRankRes = res.data;
   console.log(res.data);
 });
+function getpageurl(url: string) {
+  console.log(url);
+}
 </script>
 
 <style lang="scss" scoped>

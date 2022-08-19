@@ -64,7 +64,12 @@
 </template>
 
 <script setup lang="ts">
-import { getErrorsJavascripterrors, getErrorsResourceerrors } from "@/apis";
+import {
+  getErrorsJavascripterrors,
+  getErrorsJavascripterrorstatistics,
+  getErrorsResourceerrors,
+  getErrorsResourceerrorstatistics,
+} from "@/apis";
 import { JavaScriptError } from "@balabala/monitor-api";
 import { onMounted } from "vue";
 let list: never[];
@@ -77,26 +82,36 @@ const Errorparms = $ref({
   subType: JavaScriptError.subType.JavaScriptError,
 });
 
-onMounted(() => {
-  loadJavascriptErrors();
-  loadResourceErrors();
-});
-
 const loadJavascriptErrors = () => {
-  getErrorsJavascripterrors({ ...Errorparms })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => console.log(err));
+  getErrorsJavascripterrors({ ...Errorparms }).then((res) => {
+    console.log(res);
+  });
+};
+
+const loadJavascriptErrorStatistics = () => {
+  getErrorsJavascripterrorstatistics({ ...Errorparms }).then((res) => {
+    console.log(res);
+  });
 };
 
 const loadResourceErrors = () => {
-  getErrorsResourceerrors({ ...Errorparms })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => console.log(err));
+  getErrorsResourceerrors({ ...Errorparms }).then((res) => {
+    console.log(res);
+  });
 };
+
+const loadResourceErrorStatistics = () => {
+  getErrorsResourceerrorstatistics({ ...Errorparms }).then((res) => {
+    console.log(res);
+  });
+};
+
+onMounted(() => {
+  loadJavascriptErrors();
+  loadResourceErrors();
+  loadJavascriptErrorStatistics();
+  loadResourceErrorStatistics();
+});
 
 let a = new Date().getTime();
 let b = new Date(a);

@@ -56,13 +56,14 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesBasicindicators({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -70,11 +71,11 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -82,19 +83,23 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -135,13 +140,14 @@ export class Service {
       method: "GET",
       url: "/performances/basicindicators",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -186,13 +192,14 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesInterfaceindicators({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -200,11 +207,11 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -212,19 +219,23 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -265,13 +276,14 @@ export class Service {
       method: "GET",
       url: "/performances/interfaceindicators",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -316,13 +328,14 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesResourceindicators({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -330,11 +343,11 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -342,19 +355,23 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -395,13 +412,14 @@ export class Service {
       method: "GET",
       url: "/performances/resourceindicators",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -446,13 +464,14 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsResourceerrors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -460,31 +479,35 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父错误类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子错误类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -525,13 +548,14 @@ export class Service {
       method: "GET",
       url: "/errors/resourceerrors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -545,24 +569,23 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesBasicindicatorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -570,23 +593,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * top
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -612,7 +631,7 @@ export class Service {
         /**
          * 日期时间
          */
-        datetime: string;
+        dateTime: string;
         /**
          * 统计总数
          */
@@ -620,7 +639,7 @@ export class Service {
         /**
          * 平均值
          */
-        avarge: number;
+        average: number;
       }>
     >;
   }> {
@@ -628,14 +647,13 @@ export class Service {
       method: "GET",
       url: "/performances/basicindicatorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
       },
     });
@@ -648,24 +666,23 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesInterfaceindicatorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -673,23 +690,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -715,7 +728,7 @@ export class Service {
         /**
          * 日期时间
          */
-        datetime: string;
+        dateTime: string;
         /**
          * 统计总数
          */
@@ -723,7 +736,7 @@ export class Service {
         /**
          * 平均值
          */
-        avarge: number;
+        average: number;
         /**
          * 影响用户数
          */
@@ -735,14 +748,13 @@ export class Service {
       method: "GET",
       url: "/performances/interfaceindicatorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
       },
     });
@@ -755,24 +767,23 @@ export class Service {
    * @throws ApiError
    */
   public getPerformancesResourceindicatorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -780,23 +791,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -821,11 +828,11 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 发生总数
        */
-      happenCount: number;
+      count: number;
       /**
        * 页面总数
        */
@@ -840,14 +847,13 @@ export class Service {
       method: "GET",
       url: "/performances/resourceindicatorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
       },
     });
@@ -859,25 +865,24 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsResourceerrorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
     url,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -885,23 +890,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -930,7 +931,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -949,14 +950,13 @@ export class Service {
       method: "GET",
       url: "/errors/resourceerrorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
         url: url,
       },
@@ -1000,13 +1000,14 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsJavascripterrors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -1014,31 +1015,35 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父错误类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子错误类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1079,13 +1084,14 @@ export class Service {
       method: "GET",
       url: "/errors/javascripterrors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -1130,13 +1136,14 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsPromiseerrors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -1144,31 +1151,35 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父错误类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子错误类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1209,13 +1220,14 @@ export class Service {
       method: "GET",
       url: "/errors/promiseerrors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -1260,13 +1272,14 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsVueerrors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -1274,31 +1287,35 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父错误类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子错误类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1339,13 +1356,14 @@ export class Service {
       method: "GET",
       url: "/errors/vueerrors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -1359,14 +1377,13 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsJavascripterrorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
     url,
     msg,
@@ -1374,11 +1391,11 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -1386,29 +1403,25 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
     /**
-     * js文件地址
+     * 文件地址
      */
     url?: string;
     /**
@@ -1435,7 +1448,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -1450,14 +1463,13 @@ export class Service {
       method: "GET",
       url: "/errors/javascripterrorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
         url: url,
         msg: msg,
@@ -1471,25 +1483,24 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsPromiseerrorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
     stack,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -1497,29 +1508,25 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
     /**
-     * 错误调用堆栈
+     * 调用堆栈
      */
     stack?: string;
   }): CancelablePromise<{
@@ -1542,7 +1549,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -1557,14 +1564,13 @@ export class Service {
       method: "GET",
       url: "/errors/promiseerrorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
         stack: stack,
       },
@@ -1608,13 +1614,14 @@ export class Service {
    * @throws ApiError
    */
   public getBehaviorsBasicbehaviors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
@@ -1622,31 +1629,35 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父行为类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子行为类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1656,7 +1667,7 @@ export class Service {
      */
     size?: number;
     /**
-     * 排序方式，eg：["createdAt,desc"]
+     * 排序方式，eg：["value,desc"]
      */
     sort?: any[];
   }): CancelablePromise<{
@@ -1687,13 +1698,14 @@ export class Service {
       method: "GET",
       url: "/behaviors/basicbehaviors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -1707,24 +1719,23 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsVueerrorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -1732,23 +1743,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -1773,7 +1780,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -1788,14 +1795,13 @@ export class Service {
       method: "GET",
       url: "/errors/vueerrorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
       },
     });
@@ -1838,24 +1844,50 @@ export class Service {
    * @throws ApiError
    */
   public getBehaviorsClickbehaviors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
   }: {
-    appid: string;
-    type: string;
-    subType: string;
-    starttime: string;
-    endtime: string;
-    userid?: string;
-    pageurl?: string;
+    /**
+     * 应用ID
+     */
+    appId: string;
+    /**
+     * 父指标类型
+     */
+    mainType: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
+    /**
+     * 起始时间
+     */
+    startTime: string;
+    /**
+     * 结束时间
+     */
+    endTime: string;
+    /**
+     * 用户ID
+     */
+    userId?: string;
+    /**
+     * 页面路径
+     */
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1865,7 +1897,7 @@ export class Service {
      */
     size?: number;
     /**
-     * 排序方式，eg：["createdAt,desc"]
+     * 排序方式，eg：["value,desc"]
      */
     sort?: any[];
   }): CancelablePromise<{
@@ -1896,13 +1928,14 @@ export class Service {
       method: "GET",
       url: "/behaviors/clickbehaviors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -1947,24 +1980,50 @@ export class Service {
    * @throws ApiError
    */
   public getBehaviorsPageskipbehaviors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
   }: {
-    appid: string;
-    type: string;
-    subType: string;
-    starttime: string;
-    endtime: string;
-    userid?: string;
-    pageurl?: string;
+    /**
+     * 应用ID
+     */
+    appId: string;
+    /**
+     * 父指标类型
+     */
+    mainType: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
+    /**
+     * 起始时间
+     */
+    startTime: string;
+    /**
+     * 结束时间
+     */
+    endTime: string;
+    /**
+     * 用户ID
+     */
+    userId?: string;
+    /**
+     * 页面路径
+     */
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -1974,7 +2033,7 @@ export class Service {
      */
     size?: number;
     /**
-     * 排序方式，eg：["createdAt,desc"]
+     * 排序方式，eg：["value,desc"]
      */
     sort?: any[];
   }): CancelablePromise<{
@@ -2005,13 +2064,14 @@ export class Service {
       method: "GET",
       url: "/behaviors/pageskipbehaviors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -2056,24 +2116,50 @@ export class Service {
    * @throws ApiError
    */
   public getBehaviorsRoutingskipbehaviors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
   }: {
-    appid: string;
-    type: string;
-    subType: string;
-    starttime: string;
-    endtime: string;
-    userid?: string;
-    pageurl?: string;
+    /**
+     * 应用ID
+     */
+    appId: string;
+    /**
+     * 父指标类型
+     */
+    mainType: number;
+    /**
+     * 子指标类型
+     */
+    subType: number;
+    /**
+     * 起始时间
+     */
+    startTime: string;
+    /**
+     * 结束时间
+     */
+    endTime: string;
+    /**
+     * 用户ID
+     */
+    userId?: string;
+    /**
+     * 页面路径
+     */
+    pageUrl?: string;
+    /**
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
+     */
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -2083,7 +2169,7 @@ export class Service {
      */
     size?: number;
     /**
-     * 排序方式，eg：["createdAt,desc"]
+     * 排序方式，eg：["value,desc"]
      */
     sort?: any[];
   }): CancelablePromise<{
@@ -2114,13 +2200,14 @@ export class Service {
       method: "GET",
       url: "/behaviors/routingskipbehaviors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
@@ -2134,24 +2221,23 @@ export class Service {
    * @throws ApiError
    */
   public getBehaviorsBasicbehaviorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -2159,23 +2245,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -2200,7 +2282,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -2215,14 +2297,13 @@ export class Service {
       method: "GET",
       url: "/behaviors/basicbehaviorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
       },
     });
@@ -2234,14 +2315,13 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsInterfaceerrorstatistics({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    top,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
     granularity,
     url,
     statusCode,
@@ -2249,11 +2329,11 @@ export class Service {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
      * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
      * 子指标类型
      */
@@ -2261,23 +2341,19 @@ export class Service {
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
-    /**
-     * 排行前多少
-     */
-    top?: number;
+    pageUrl?: string;
     /**
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
@@ -2287,7 +2363,7 @@ export class Service {
      */
     url?: string;
     /**
-     * 错误状态码500/400
+     * 错误状态码，eg：500，400
      */
     statusCode?: number;
   }): CancelablePromise<{
@@ -2310,7 +2386,7 @@ export class Service {
       /**
        * 日期时间
        */
-      datetime: string;
+      dateTime: string;
       /**
        * 统计总数
        */
@@ -2325,17 +2401,16 @@ export class Service {
       method: "GET",
       url: "/errors/interfaceerrorstatistics",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        top: top,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
         granularity: granularity,
         url: url,
-        statusCode: statusCode,
+        status_code: statusCode,
       },
     });
   }
@@ -2346,50 +2421,51 @@ export class Service {
    * @throws ApiError
    */
   public getErrorsInterfaceerrors({
-    appid,
-    type,
+    appId,
+    mainType,
     subType,
-    starttime,
-    endtime,
-    userid,
-    pageurl,
-    statusCode,
+    startTime,
+    endTime,
+    userId,
+    pageUrl,
+    granularity,
     page,
     size,
     sort,
+    statusCode,
   }: {
     /**
      * 应用ID
      */
-    appid: string;
+    appId: string;
     /**
-     * 父错误类型
+     * 父指标类型
      */
-    type: number;
+    mainType: number;
     /**
-     * 子错误类型
+     * 子指标类型
      */
     subType: number;
     /**
      * 起始时间
      */
-    starttime: string;
+    startTime: string;
     /**
      * 结束时间
      */
-    endtime: string;
+    endTime: string;
     /**
      * 用户ID
      */
-    userid?: string;
+    userId?: string;
     /**
      * 页面路径
      */
-    pageurl?: string;
+    pageUrl?: string;
     /**
-     * 错误状态码 500/400
+     * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
-    statusCode?: number;
+    granularity?: string;
     /**
      * 当前页，eg：0
      */
@@ -2402,6 +2478,10 @@ export class Service {
      * 排序方式，eg：["value,desc"]
      */
     sort?: any[];
+    /**
+     * 状态码，eg：400
+     */
+    statusCode?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -2430,17 +2510,18 @@ export class Service {
       method: "GET",
       url: "/errors/interfaceerrors",
       query: {
-        appid: appid,
-        userid: userid,
-        pageurl: pageurl,
-        type: type,
-        subType: subType,
-        starttime: starttime,
-        endtime: endtime,
-        statusCode: statusCode,
+        app_id: appId,
+        user_id: userId,
+        page_url: pageUrl,
+        main_type: mainType,
+        sub_type: subType,
+        start_time: startTime,
+        end_time: endTime,
+        granularity: granularity,
         page: page,
         size: size,
         sort: sort,
+        status_code: statusCode,
       },
     });
   }

@@ -91,13 +91,13 @@ export class BasicbehaviorService {
     if (querys.granularity === "1d") {
       timeFormat = "MM-DD";
       // 当月的第一天
-      let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("month");
-      const dayNum = dayjs(querys.starttime, "YYYY-MM-DD").daysInMonth();
+      let startTime = dayjs(querys.start_time, "YYYY-MM-DD").startOf("month");
+      const dayNum = dayjs(querys.start_time, "YYYY-MM-DD").daysInMonth();
       if (list.length === 0) {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format(timeFormat),
+            dateTime: startTime.format(timeFormat),
             count: 0,
             average: 0,
           });
@@ -114,7 +114,7 @@ export class BasicbehaviorService {
 
       for (let i = 0; i < startDay - startMontyDay; i++) {
         restList.unshift({
-          datetime: dayjs(list[0].key)
+          dateTime: dayjs(list[0].key)
             .subtract(i + 1, "day")
             .format(timeFormat),
           count: 0,
@@ -126,14 +126,14 @@ export class BasicbehaviorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format(timeFormat),
+          dateTime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
         restList.push({
-          datetime: dayjs(list[list.length - 1].key)
+          dateTime: dayjs(list[list.length - 1].key)
             .add(1 + i, "day")
             .format(timeFormat),
           count: 0,
@@ -143,13 +143,13 @@ export class BasicbehaviorService {
     } else if (querys.granularity === "1h") {
       timeFormat = "HH:mm";
       // 当天
-      let startTime = dayjs(querys.starttime, "YYYY-MM-DD").startOf("hour");
+      let startTime = dayjs(querys.start_time, "YYYY-MM-DD").startOf("hour");
       const dayNum = 24;
       if (list.length === 0) {
         // 当月天数
         for (let index = 0; index < dayNum; index++) {
           restList.push({
-            datetime: startTime.format(timeFormat),
+            dateTime: startTime.format(timeFormat),
             count: 0,
             average: 0,
           });
@@ -166,7 +166,7 @@ export class BasicbehaviorService {
 
       for (let i = 0; i < startDay - startMontyDay; i++) {
         restList.unshift({
-          datetime: dayjs(list[0].key)
+          dateTime: dayjs(list[0].key)
             .subtract(i + 1, "hour")
             .format(timeFormat),
           count: 0,
@@ -178,14 +178,14 @@ export class BasicbehaviorService {
       for (let i = 0; i <= endDay - startDay; i++) {
         const item = list[i];
         restList.push({
-          datetime: dayjs(item.key).format(timeFormat),
+          dateTime: dayjs(item.key).format(timeFormat),
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
         restList.push({
-          datetime: dayjs(list[list.length - 1].key)
+          dateTime: dayjs(list[list.length - 1].key)
             .add(1 + i, "hour")
             .format(timeFormat),
           count: 0,

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "lerna bootstrap && scripty",
     "build": "lerna bootstrap && scripty",
-    "preview": "lerna bootstrap && scripty"
+    "preview": "lerna bootstrap && scripty",
+    "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@balabala/juejin-api": "^1.0.0",

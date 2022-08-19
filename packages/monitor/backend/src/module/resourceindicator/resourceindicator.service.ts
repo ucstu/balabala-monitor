@@ -94,8 +94,8 @@ export class ResourceindicatorService {
     const restList = [];
     list.forEach((e) => {
       restList.push({
-        datetime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
-        happenCount: e.doc_count,
+        dateTime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+        count: e.doc_count,
         pageCount: e.pageCount.value,
         userCount: e.userCount.value,
       });

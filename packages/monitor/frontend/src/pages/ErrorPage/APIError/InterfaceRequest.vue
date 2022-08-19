@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top-left">
         <form action="#">
-          <select>
+          <select v-model="interfaceParma.statusCode">
             <option>全部错误</option>
             <option>400</option>
             <option>500</option>
@@ -12,7 +12,7 @@
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="InterfaceParms.starttime" type="date" />
+          <input v-model="interfaceParma.startTime" type="date" />
         </div>
       </div>
     </div>
@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import { getPerformancesInterfaceindicators } from "@/apis";
+import { InterfaceIndicator } from "@balabala/monitor-api";
 import { onMounted } from "vue";
 const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 
@@ -52,16 +53,18 @@ onMounted(() => {
   loadPerformanceInterface();
 });
 
-const InterfaceParms = $ref({
-  appid: Appid,
-  starttime: "2022-08-01 00:00:00",
-  endtime: "2022-09-01 00:00:00",
+const interfaceParma = $ref({
+  appId: Appid,
+  startTime: "2022-08-01 00:00:00",
+  endTime: "2022-09-01 00:00:00",
+  mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+  subType: InterfaceIndicator.subType.InterfaceIndicator,
   statusCode: 400,
 });
 
 const loadPerformanceInterface = () => {
   getPerformancesInterfaceindicators({
-    ...InterfaceParms,
+    ...interfaceParma,
   }).then((res) => {
     console.log(res);
   });

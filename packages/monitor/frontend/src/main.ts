@@ -5,5 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import "./style.scss";
 
-client.service.httpRequest.config.BASE = "http://127.0.0.1:3000";
-createApp(App).use(router).mount("#app");
+import { createPinia } from "pinia";
+
+client.service.httpRequest.config.BASE = import.meta.env.VITE_BASE_URL;
+createApp(App).use(createPinia()).use(router).mount("#app");

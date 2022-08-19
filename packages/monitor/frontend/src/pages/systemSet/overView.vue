@@ -95,13 +95,13 @@
     padding-left: 20px;
     margin-bottom: 3px;
     background-color: white;
-    border-radius: 5% 5% 0 0;
+    border-radius: 5px 5px 0 0;
   }
 
   .browse-card .browse-body {
     width: 100%;
     background-color: white;
-    border-radius: 0 0 5% 5%;
+    border-radius: 0 0 5px 5px;
 
     .user-info-list {
       display: flex;

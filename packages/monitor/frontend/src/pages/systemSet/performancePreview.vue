@@ -66,7 +66,7 @@
       height: 70px;
       padding: 20px 15px;
       background-color: white;
-      border-radius: 5%;
+      border-radius: 5px;
     }
 
     .data-board span:nth-child(1) {

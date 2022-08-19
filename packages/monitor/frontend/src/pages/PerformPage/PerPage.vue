@@ -230,8 +230,8 @@ getPerformancesBasicindicators({
   subType: BasicIndicator.subType.FullLoad,
   size: 10,
 }).then((res) => {
-  pageRankRes = res.data.items;
-  console.log(res.data.items);
+  pageRankRes = res.data;
+  console.log(res.data);
 });
 </script>
 
@@ -256,7 +256,7 @@ getPerformancesBasicindicators({
     }
 
     .change {
-      border-radius: 5%;
+      border-radius: 5px;
 
       input {
         display: none;
@@ -271,11 +271,11 @@ getPerformancesBasicindicators({
       }
 
       span:nth-child(1) {
-        border-radius: 10% 0 0 10%;
+        border-radius: 10px 0 0 10px;
       }
 
       span:nth-child(5) {
-        border-radius: 0 10% 10% 0;
+        border-radius: 0 10px 10px 0;
       }
 
       #one:checked ~ label.one span,
@@ -400,7 +400,7 @@ getPerformancesBasicindicators({
         padding: 20px 10px;
         margin-left: 10px;
         background-color: aqua;
-        border-radius: 10%;
+        border-radius: 10px;
 
         .time {
           display: flex;

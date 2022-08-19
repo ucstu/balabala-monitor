@@ -94,7 +94,7 @@ const publishEssay = () => {
     justify-items: start;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
+    border-radius: 50px;
   }
 
   .header-right {
@@ -114,14 +114,14 @@ const publishEssay = () => {
       text-align: center;
       cursor: pointer;
       border: solid 1px #1d7dfa;
-      border-radius: 5%;
+      border-radius: 5px;
     }
 
     .draft {
       width: 75px;
       color: #1d7dfa;
       background-color: rgb(255 255 255 / 10%);
-      border-radius: 5%;
+      border-radius: 5px;
 
       &:hover {
         background-color: rgb(0 0 0 / 20%);

@@ -190,26 +190,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -217,16 +197,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -256,24 +226,54 @@
                     "data": {
                       "title": "数据主体",
                       "description": "基础指标列表",
-                      "type": "object",
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        },
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/BasicIndicator"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "pageUrl": {
+                            "type": "string",
+                            "title": "页面路径",
+                            "description": "页面路径"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
-                        }
-                      },
-                      "x-apifox-orders": ["totalCount", "items"],
-                      "required": ["totalCount", "items"],
-                      "x-apifox-refs": {},
-                      "x-apifox-ignore-properties": []
+                        },
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -284,41 +284,26 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1980-03-11 17:40:12",
+                      "timestamp": "2004-08-20 23:27:18",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "totalCount": 77,
-                        "items": [
-                          {
-                            "mainType": 1,
-                            "subType": 6751,
-                            "pageUrl": "http://rkmexar.sa/tijnu",
-                            "userID": "32bCB7ce-8D45-459c-7F2d-c8824BE531B7",
-                            "value": 65.755448,
-                            "startTime": 1660742477,
-                            "appId": "a3FBB227-84cf-Fa8d-3A6a-50B2dce964dB"
-                          },
-                          {
-                            "mainType": 4,
-                            "subType": 3161,
-                            "pageUrl": "http://vameb.md/oybmjawh",
-                            "userID": "aA6b37eE-bA7f-F8D7-A2dF-2E4b79FB124C",
-                            "value": 79.494,
-                            "startTime": 1660742477,
-                            "appId": "e22cD449-7f33-d2dA-a879-0Af21726dFF9"
-                          },
-                          {
-                            "mainType": 4,
-                            "subType": 3617,
-                            "pageUrl": "http://amxk.an/umetvxiuv",
-                            "userID": "b534Bd75-fe7d-AFB8-E34f-52Bed9Abd7dB",
-                            "value": 83.289666,
-                            "startTime": 1660742477,
-                            "appId": "abB5Fa60-837F-EBf0-eE24-EF7FD7C1204F"
-                          }
-                        ]
-                      }
+                      "data": [
+                        {
+                          "pageUrl": "http://iqwltqwiq.asia/kspzbrscln",
+                          "count": 75,
+                          "average": 80.579016326336
+                        },
+                        {
+                          "pageUrl": "http://phadpyyl.iq/prcyun",
+                          "count": 90,
+                          "average": 96.7
+                        },
+                        {
+                          "pageUrl": "http://iojsx.se/socmdxprm",
+                          "count": 100,
+                          "average": 94.48592159222846
+                        }
+                      ]
                     }
                   }
                 }
@@ -511,26 +496,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -538,16 +503,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -577,23 +532,54 @@
                     "data": {
                       "title": "数据主体",
                       "description": "接口指标列表",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/InterfaceIndicator"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "title": "接口路径",
+                            "description": "接口路径"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": []
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -604,38 +590,31 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1972-02-10 10:09:14",
+                      "timestamp": "1971-06-14 04:45:00",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 5,
-                            "subType": 5001,
-                            "pageUrl": "http://osodqi.kz/pqfkebr",
-                            "userID": "425B7C18-E8Ac-FC76-f4E9-d6Dfcb6D9247",
-                            "startTime": 1660742610,
-                            "appId": "C9B06F8F-F2B8-3A2A-3fdB-59b451B1fAAC",
-                            "statusCode": 370,
-                            "method": "tpooLd8",
-                            "duration": 74,
-                            "url": "http://ytxj.ph/kxxw"
-                          },
-                          {
-                            "mainType": 5,
-                            "subType": 5001,
-                            "pageUrl": "http://gynq.tf/bhvlxwn",
-                            "userID": "bc3908c4-4fEF-Cb8d-dAb3-C9cC31b3107C",
-                            "startTime": 1660742610,
-                            "appId": "7F17DD20-EfED-aeC2-B127-d244Ef8845Aa",
-                            "statusCode": 276,
-                            "method": "4Gj]R",
-                            "duration": 73,
-                            "url": "http://bgbq.mobi/kosklkltft"
-                          }
-                        ],
-                        "totalCount": 67
-                      }
+                      "data": [
+                        {
+                          "url": "http://wfd.bz/gmynuacu",
+                          "count": 66,
+                          "average": 63.05346130642
+                        },
+                        {
+                          "url": "http://zaflqzo.yu/dnykivo",
+                          "count": 81,
+                          "average": 79.90011115717
+                        },
+                        {
+                          "url": "http://nryydklk.tf/setfex",
+                          "count": 75,
+                          "average": 83.3464668681
+                        },
+                        {
+                          "url": "http://mivoxurjvd.mn/tjxuj",
+                          "count": 93,
+                          "average": 98.48173
+                        }
+                      ]
                     }
                   }
                 }
@@ -830,26 +809,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -857,16 +816,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -896,23 +845,54 @@
                     "data": {
                       "title": "数据主体",
                       "description": "资源指标列表",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ResourceIndicator"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "title": "资源路径",
+                            "description": "资源路径"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": []
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -923,52 +903,26 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2014-07-06 17:27:14",
+                      "timestamp": "1976-05-21 18:08:38",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 6,
-                            "subType": 6001,
-                            "pageUrl": "http://fketes.mn/vbpojl",
-                            "userID": "F34aeFCb-b15C-CD7C-EacA-5b95F2F8C18c",
-                            "startTime": 1660742695,
-                            "duration": 64,
-                            "dns": 80.484160507,
-                            "tcp": 81.77739374962717,
-                            "redirect": 91.4668,
-                            "ttfb": 92.852471,
-                            "protocol": "CVfjHk",
-                            "bodySize": 92.682,
-                            "headerSize": 72.45,
-                            "resourceSize": 81.764131334,
-                            "isCache": false,
-                            "appId": "Be9aE3d3-6507-CA1c-53Ea-D1fC7Cc3b181",
-                            "url": "http://ykik.sb/ncmatxy"
-                          },
-                          {
-                            "mainType": 6,
-                            "subType": 6001,
-                            "pageUrl": "http://njolsyr.mp/cslr",
-                            "userID": "c92dcBAF-DbFA-3D5b-cdbB-1c982EA8f883",
-                            "startTime": 1660742695,
-                            "duration": 71,
-                            "dns": 86.2111950417536,
-                            "tcp": 87.33326217,
-                            "redirect": 87.504281863825,
-                            "ttfb": 71.48313443142,
-                            "protocol": "L&&aL$",
-                            "bodySize": 85.1624,
-                            "headerSize": 76.472446743186,
-                            "resourceSize": 81.13,
-                            "isCache": false,
-                            "appId": "2E76Fe0f-8BeC-D5c5-7D1D-6357fFd5cdcC",
-                            "url": "http://mgbg.gd/qyo"
-                          }
-                        ],
-                        "totalCount": 66
-                      }
+                      "data": [
+                        {
+                          "url": "http://mfyqtsb.th/yexwhwb",
+                          "count": 71,
+                          "average": 99.95436485214532
+                        },
+                        {
+                          "url": "http://nwmcelwh.com.cn/ftorg",
+                          "count": 75,
+                          "average": 99.02233060891
+                        },
+                        {
+                          "url": "http://xxwcjhray.mg/bxenerz",
+                          "count": 99,
+                          "average": 63.712472526726
+                        }
+                      ]
                     }
                   }
                 }
@@ -1169,26 +1123,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -1196,16 +1130,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -1233,27 +1157,54 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ResourceError"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "title": "资源路径",
+                            "description": "资源路径"
                           },
-                          "title": "数据主体",
-                          "description": "资源错误列表"
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -1460,13 +1411,35 @@
                               "description": "统计总数"
                             },
                             "average": {
-                              "type": "integer",
                               "title": "平均值",
+                              "type": "number",
                               "description": "平均值"
+                            },
+                            "userCount": {
+                              "title": "影响用户数",
+                              "type": "integer",
+                              "description": "影响用户数"
+                            },
+                            "pageCount": {
+                              "type": "integer",
+                              "title": "影响页面数",
+                              "description": "影响页面数"
                             }
                           },
-                          "x-apifox-orders": ["dateTime", "count", "average"],
-                          "required": ["dateTime", "count", "average"],
+                          "x-apifox-orders": [
+                            "dateTime",
+                            "count",
+                            "average",
+                            "userCount",
+                            "pageCount"
+                          ],
+                          "required": [
+                            "dateTime",
+                            "count",
+                            "average",
+                            "userCount",
+                            "pageCount"
+                          ],
                           "x-apifox-ignore-properties": []
                         }
                       },
@@ -1482,88 +1455,116 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1971-09-03 11:04:59",
+                      "timestamp": "1997-03-10 05:00:55",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "dateTime": "1977-12-02 01:03:55",
-                            "count": 90,
-                            "average": 61
+                            "dateTime": "2021-02-06 01:02:15",
+                            "count": 64,
+                            "average": 89,
+                            "userCount": 83,
+                            "pageCount": 89
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "1985-09-19 05:55:58",
+                            "count": 64,
+                            "average": 62,
+                            "userCount": 93,
+                            "pageCount": 67
                           },
                           {
-                            "dateTime": "1979-11-03 18:33:24",
+                            "dateTime": "2014-07-30 06:30:24",
+                            "count": 78,
+                            "average": 77,
+                            "userCount": 63,
+                            "pageCount": 87
+                          },
+                          {
+                            "dateTime": "1998-02-26 05:55:11",
+                            "count": 60,
+                            "average": 69,
+                            "userCount": 61,
+                            "pageCount": 79
+                          },
+                          {
+                            "dateTime": "2018-12-05 17:56:05",
+                            "count": 96,
+                            "average": 80,
+                            "userCount": 71,
+                            "pageCount": 66
+                          },
+                          {
+                            "dateTime": "1997-09-30 19:56:04",
                             "count": 68,
-                            "average": 100
-                          },
-                          {
-                            "dateTime": "1978-11-06 13:55:54",
-                            "count": 80,
-                            "average": 61
+                            "average": 88,
+                            "userCount": 98,
+                            "pageCount": 91
                           }
                         ],
                         [
                           {
-                            "dateTime": "2005-12-19 10:19:58",
+                            "dateTime": "1977-08-08 08:13:01",
+                            "count": 70,
+                            "average": 81,
+                            "userCount": 68,
+                            "pageCount": 63
+                          },
+                          {
+                            "dateTime": "1970-06-28 05:52:22",
+                            "count": 63,
+                            "average": 71,
+                            "userCount": 81,
+                            "pageCount": 63
+                          },
+                          {
+                            "dateTime": "1989-01-18 22:43:45",
+                            "count": 64,
+                            "average": 81,
+                            "userCount": 83,
+                            "pageCount": 65
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2003-09-22 21:21:28",
+                            "count": 61,
+                            "average": 60,
+                            "userCount": 85,
+                            "pageCount": 82
+                          },
+                          {
+                            "dateTime": "1978-02-03 04:36:31",
+                            "count": 99,
+                            "average": 86,
+                            "userCount": 95,
+                            "pageCount": 77
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "1979-09-08 00:14:37",
+                            "count": 90,
+                            "average": 85,
+                            "userCount": 97,
+                            "pageCount": 81
+                          },
+                          {
+                            "dateTime": "2007-02-09 00:36:06",
                             "count": 76,
-                            "average": 93
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "1990-09-22 14:19:19",
-                            "count": 67,
-                            "average": 69
+                            "average": 80,
+                            "userCount": 86,
+                            "pageCount": 91
                           },
                           {
-                            "dateTime": "1997-02-18 08:06:44",
-                            "count": 97,
-                            "average": 83
-                          },
-                          {
-                            "dateTime": "1972-10-21 03:02:10",
-                            "count": 61,
-                            "average": 69
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "2003-08-03 15:50:25",
-                            "count": 72,
-                            "average": 87
-                          },
-                          {
-                            "dateTime": "1971-11-19 00:30:29",
-                            "count": 99,
-                            "average": 72
-                          },
-                          {
-                            "dateTime": "1986-11-14 06:14:39",
-                            "count": 100,
-                            "average": 98
-                          },
-                          {
-                            "dateTime": "2012-10-22 17:18:28",
-                            "count": 99,
-                            "average": 65
-                          },
-                          {
-                            "dateTime": "1994-10-16 21:12:59",
-                            "count": 73,
-                            "average": 80
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "1990-06-17 13:13:53",
-                            "count": 61,
-                            "average": 91
-                          },
-                          {
-                            "dateTime": "2018-12-18 18:24:24",
-                            "count": 92,
-                            "average": 66
+                            "dateTime": "1996-10-22 03:45:28",
+                            "count": 74,
+                            "average": 64,
+                            "userCount": 82,
+                            "pageCount": 75
                           }
                         ]
                       ]
@@ -1711,27 +1712,34 @@
                               "description": "统计总数"
                             },
                             "average": {
-                              "type": "integer",
                               "title": "平均值",
+                              "type": "number",
                               "description": "平均值"
                             },
                             "userCount": {
-                              "type": "integer",
                               "title": "影响用户数",
+                              "type": "integer",
                               "description": "影响用户数"
+                            },
+                            "pageCount": {
+                              "type": "integer",
+                              "title": "影响页面数",
+                              "description": "影响页面数"
                             }
                           },
                           "x-apifox-orders": [
                             "dateTime",
                             "count",
                             "average",
-                            "userCount"
+                            "userCount",
+                            "pageCount"
                           ],
                           "required": [
                             "dateTime",
                             "count",
                             "average",
-                            "userCount"
+                            "userCount",
+                            "pageCount"
                           ],
                           "x-apifox-ignore-properties": []
                         }
@@ -1748,126 +1756,179 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2007-03-23 13:01:26",
+                      "timestamp": "1979-01-03 10:47:15",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         [
                           {
-                            "dateTime": "2008-03-12 02:48:15",
-                            "count": 70,
-                            "average": 73,
-                            "userCount": 76
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "2009-11-11 01:24:37",
-                            "count": 82,
-                            "average": 66,
-                            "userCount": 69
-                          },
-                          {
-                            "dateTime": "1988-10-24 12:44:16",
-                            "count": 70,
-                            "average": 72,
-                            "userCount": 77
-                          },
-                          {
-                            "dateTime": "1976-03-27 06:10:08",
-                            "count": 91,
-                            "average": 70,
-                            "userCount": 70
-                          },
-                          {
-                            "dateTime": "1973-12-29 11:45:46",
-                            "count": 100,
-                            "average": 60,
-                            "userCount": 73
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "1993-09-07 20:25:08",
-                            "count": 86,
-                            "average": 60,
-                            "userCount": 76
-                          },
-                          {
-                            "dateTime": "1993-02-03 20:46:59",
-                            "count": 60,
-                            "average": 73,
-                            "userCount": 73
-                          },
-                          {
-                            "dateTime": "2011-06-06 11:03:55",
-                            "count": 62,
-                            "average": 92,
-                            "userCount": 97
-                          },
-                          {
-                            "dateTime": "2020-12-15 18:03:27",
-                            "count": 80,
-                            "average": 62,
-                            "userCount": 75
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "2019-12-28 00:53:31",
-                            "count": 93,
-                            "average": 72,
-                            "userCount": 91
-                          },
-                          {
-                            "dateTime": "2016-07-09 10:09:18",
-                            "count": 94,
-                            "average": 62,
-                            "userCount": 67
-                          },
-                          {
-                            "dateTime": "2005-10-21 02:10:51",
-                            "count": 78,
-                            "average": 70,
-                            "userCount": 75
-                          },
-                          {
-                            "dateTime": "1999-05-02 19:42:46",
-                            "count": 93,
-                            "average": 92,
-                            "userCount": 79
-                          },
-                          {
-                            "dateTime": "2009-06-10 16:56:52",
-                            "count": 90,
-                            "average": 79,
-                            "userCount": 62
-                          }
-                        ],
-                        [
-                          {
-                            "dateTime": "2014-01-20 23:22:59",
-                            "count": 64,
-                            "average": 99,
-                            "userCount": 71
-                          },
-                          {
-                            "dateTime": "2013-06-24 04:57:39",
+                            "dateTime": "1982-01-30 15:02:29",
                             "count": 83,
-                            "average": 92,
-                            "userCount": 67
+                            "average": 77,
+                            "userCount": 79,
+                            "pageCount": 61
                           },
                           {
-                            "dateTime": "1986-01-15 23:13:52",
+                            "dateTime": "1980-06-07 15:16:33",
                             "count": 74,
-                            "average": 67,
-                            "userCount": 67
+                            "average": 77,
+                            "userCount": 68,
+                            "pageCount": 94
                           },
                           {
-                            "dateTime": "2004-06-27 19:34:48",
+                            "dateTime": "1973-02-11 15:59:56",
                             "count": 69,
+                            "average": 79,
+                            "userCount": 62,
+                            "pageCount": 95
+                          },
+                          {
+                            "dateTime": "2006-05-13 08:45:29",
+                            "count": 99,
+                            "average": 77,
+                            "userCount": 65,
+                            "pageCount": 71
+                          },
+                          {
+                            "dateTime": "2013-10-03 23:22:35",
+                            "count": 99,
+                            "average": 64,
+                            "userCount": 85,
+                            "pageCount": 97
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2003-01-25 01:52:36",
+                            "count": 86,
+                            "average": 83,
+                            "userCount": 87,
+                            "pageCount": 63
+                          },
+                          {
+                            "dateTime": "1999-06-29 11:47:10",
+                            "count": 83,
+                            "average": 63,
+                            "userCount": 67,
+                            "pageCount": 88
+                          },
+                          {
+                            "dateTime": "1975-06-28 04:03:43",
+                            "count": 93,
+                            "average": 63,
+                            "userCount": 62,
+                            "pageCount": 95
+                          },
+                          {
+                            "dateTime": "2022-03-30 03:37:42",
+                            "count": 97,
                             "average": 65,
-                            "userCount": 96
+                            "userCount": 92,
+                            "pageCount": 80
+                          },
+                          {
+                            "dateTime": "2005-04-10 11:26:13",
+                            "count": 77,
+                            "average": 83,
+                            "userCount": 67,
+                            "pageCount": 66
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2007-05-14 18:18:56",
+                            "count": 96,
+                            "average": 88,
+                            "userCount": 86,
+                            "pageCount": 82
+                          },
+                          {
+                            "dateTime": "1973-10-06 01:34:12",
+                            "count": 77,
+                            "average": 63,
+                            "userCount": 82,
+                            "pageCount": 85
+                          },
+                          {
+                            "dateTime": "1987-07-16 13:22:35",
+                            "count": 98,
+                            "average": 81,
+                            "userCount": 76,
+                            "pageCount": 76
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "2008-09-17 12:18:42",
+                            "count": 87,
+                            "average": 94,
+                            "userCount": 67,
+                            "pageCount": 87
+                          },
+                          {
+                            "dateTime": "2001-07-09 21:17:38",
+                            "count": 93,
+                            "average": 89,
+                            "userCount": 68,
+                            "pageCount": 91
+                          },
+                          {
+                            "dateTime": "2008-03-23 18:24:25",
+                            "count": 73,
+                            "average": 77,
+                            "userCount": 79,
+                            "pageCount": 68
+                          },
+                          {
+                            "dateTime": "1990-01-26 01:08:40",
+                            "count": 65,
+                            "average": 79,
+                            "userCount": 88,
+                            "pageCount": 86
+                          },
+                          {
+                            "dateTime": "1981-08-02 01:12:12",
+                            "count": 66,
+                            "average": 74,
+                            "userCount": 71,
+                            "pageCount": 64
+                          }
+                        ],
+                        [
+                          {
+                            "dateTime": "1978-07-02 23:21:01",
+                            "count": 69,
+                            "average": 62,
+                            "userCount": 95,
+                            "pageCount": 78
+                          },
+                          {
+                            "dateTime": "2006-01-16 18:02:48",
+                            "count": 93,
+                            "average": 97,
+                            "userCount": 81,
+                            "pageCount": 77
+                          },
+                          {
+                            "dateTime": "1981-09-24 11:13:10",
+                            "count": 93,
+                            "average": 71,
+                            "userCount": 92,
+                            "pageCount": 67
+                          },
+                          {
+                            "dateTime": "1989-02-14 01:07:11",
+                            "count": 84,
+                            "average": 73,
+                            "userCount": 76,
+                            "pageCount": 61
+                          },
+                          {
+                            "dateTime": "2010-07-20 17:49:23",
+                            "count": 91,
+                            "average": 97,
+                            "userCount": 76,
+                            "pageCount": 85
                           }
                         ]
                       ]
@@ -2008,31 +2069,38 @@
                           },
                           "count": {
                             "type": "integer",
-                            "title": "发生总数",
-                            "description": "发生总数"
+                            "title": "统计总数",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
                           },
                           "pageCount": {
                             "type": "integer",
-                            "title": "页面总数",
-                            "description": "页面总数"
-                          },
-                          "userCount": {
-                            "type": "integer",
-                            "title": "用户总数",
-                            "description": "用户总数"
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
                         "x-apifox-orders": [
                           "dateTime",
                           "count",
-                          "pageCount",
-                          "userCount"
+                          "average",
+                          "userCount",
+                          "pageCount"
                         ],
                         "required": [
                           "dateTime",
                           "count",
-                          "pageCount",
-                          "userCount"
+                          "average",
+                          "userCount",
+                          "pageCount"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -2219,26 +2287,33 @@
                             "title": "统计总数",
                             "description": "统计总数"
                           },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
                           "userCount": {
-                            "type": "integer",
                             "title": "影响用户数",
+                            "type": "integer",
                             "description": "影响用户数"
                           },
                           "pageCount": {
-                            "title": "影响的页面数量",
                             "type": "integer",
-                            "description": "影响的页面数量"
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
                         "x-apifox-orders": [
                           "dateTime",
                           "count",
+                          "average",
                           "userCount",
                           "pageCount"
                         ],
                         "required": [
                           "dateTime",
                           "count",
+                          "average",
                           "userCount",
                           "pageCount"
                         ],
@@ -2254,33 +2329,23 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1975-07-27 00:30:10",
+                      "timestamp": "1979-03-26 09:02:19",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "datetime": "2015-05-17 04:47:44",
-                          "count": 89,
-                          "userCount": 93,
-                          "pageCount": "90"
+                          "dateTime": "1997-04-22 00:38:31",
+                          "count": 69,
+                          "average": 88,
+                          "userCount": 88,
+                          "pageCount": 91
                         },
                         {
-                          "datetime": "1995-10-18 00:36:33",
-                          "count": 85,
-                          "userCount": 95,
-                          "pageCount": "68"
-                        },
-                        {
-                          "datetime": "1993-06-17 09:57:33",
-                          "count": 66,
-                          "userCount": 76,
-                          "pageCount": "82"
-                        },
-                        {
-                          "datetime": "1977-01-20 14:10:21",
-                          "count": 70,
-                          "userCount": 78,
-                          "pageCount": "95"
+                          "dateTime": "2017-02-09 09:34:59",
+                          "count": 95,
+                          "average": 78,
+                          "userCount": 91,
+                          "pageCount": 88
                         }
                       ]
                     }
@@ -2491,26 +2556,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -2518,16 +2563,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -2555,27 +2590,75 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/JavaScriptError"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "title": "文件路径",
+                            "description": "文件路径"
                           },
-                          "title": "数据主体",
-                          "description": "JavaScript错误列表"
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "title": "错误信息",
+                            "description": "错误信息"
+                          },
+                          "line": {
+                            "type": "integer",
+                            "title": "行号",
+                            "description": "行号"
+                          },
+                          "column": {
+                            "type": "integer",
+                            "title": "列号",
+                            "description": "列号"
+                          }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount",
+                          "msg",
+                          "line",
+                          "column"
+                        ],
+                        "required": [
+                          "url",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount",
+                          "msg",
+                          "line",
+                          "column"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -2799,26 +2882,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -2826,16 +2889,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -2863,27 +2916,54 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/PromiseError"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "stack": {
+                            "type": "string",
+                            "title": "堆栈信息",
+                            "description": "堆栈信息"
                           },
-                          "title": "数据主体",
-                          "description": "Promise错误列表"
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "type": "integer",
+                            "title": "影响用户数",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "stack",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "stack",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -3112,26 +3192,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -3139,16 +3199,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -3420,14 +3470,36 @@
                             "title": "统计总数",
                             "description": "统计总数"
                           },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
                           "userCount": {
-                            "type": "integer",
                             "title": "影响用户数",
+                            "type": "integer",
                             "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "x-apifox-orders": ["dateTime", "count", "userCount"],
-                        "required": ["dateTime", "count", "userCount"],
+                        "x-apifox-orders": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3610,14 +3682,36 @@
                             "title": "统计总数",
                             "description": "统计总数"
                           },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
                           "userCount": {
-                            "type": "integer",
                             "title": "影响用户数",
+                            "type": "integer",
                             "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "x-apifox-orders": ["dateTime", "count", "userCount"],
-                        "required": ["dateTime", "count", "userCount"],
+                        "x-apifox-orders": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -3824,26 +3918,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -3851,16 +3925,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -3888,27 +3952,54 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/BasicBehavior"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "pageUrl": {
+                            "type": "string",
+                            "title": "页面路径",
+                            "description": "页面路径"
                           },
-                          "title": "数据主体",
-                          "description": "基础行为列表"
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
                         },
-                        "totalCount": {
-                          "title": "总条数",
-                          "description": "总条数",
-                          "type": "integer"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4085,14 +4176,36 @@
                             "title": "统计总数",
                             "description": "统计总数"
                           },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
                           "userCount": {
-                            "type": "integer",
                             "title": "影响用户数",
+                            "type": "integer",
                             "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "x-apifox-orders": ["dateTime", "count", "userCount"],
-                        "required": ["dateTime", "count", "userCount"],
+                        "x-apifox-orders": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -4320,26 +4433,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -4347,16 +4440,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -4384,27 +4467,61 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ClickBehavior"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "target": {
+                            "type": "string",
+                            "title": "点击对象",
+                            "description": "点击对象"
                           },
-                          "title": "数据主体",
-                          "description": "点击行为列表"
+                          "inner": {
+                            "type": "string",
+                            "title": "内部文本",
+                            "description": "内部文本"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "target",
+                          "inner",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount",
+                          "inner",
+                          "target"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4638,26 +4755,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -4665,16 +4762,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -4702,27 +4789,61 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/PageSkipBehavior"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "title": "路由跳转起步位置",
+                            "description": "路由跳转起步位置"
                           },
-                          "title": "数据主体",
-                          "description": "页面跳转行为列表"
+                          "to": {
+                            "type": "string",
+                            "title": "路由跳转目的位置",
+                            "description": "路由跳转目的位置"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "from",
+                          "to",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "from",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount",
+                          "to"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -4987,26 +5108,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -5014,16 +5115,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           }
         ],
@@ -5051,27 +5142,61 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "",
-                      "type": "object",
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "title": "总条数",
-                          "description": "总条数"
-                        },
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/RoutingSkipBehavior"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "title": "路由跳转起步位置",
+                            "description": "路由跳转起步位置"
                           },
-                          "title": "数据主体",
-                          "description": "路由跳转行为列表"
-                        }
-                      },
-                      "x-apifox-orders": ["totalCount", "items"],
-                      "required": ["totalCount", "items"],
-                      "x-apifox-ignore-properties": [],
-                      "description": ""
+                          "to": {
+                            "type": "string",
+                            "title": "路由跳转目的位置",
+                            "description": "路由跳转目的位置"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
+                          }
+                        },
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "from",
+                          "to",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "from",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount",
+                          "to"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -5279,13 +5404,35 @@
                             "description": "统计总数"
                           },
                           "average": {
-                            "type": "integer",
                             "title": "平均值",
+                            "type": "number",
                             "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "x-apifox-orders": ["dateTime", "count", "average"],
-                        "required": ["dateTime", "count", "average"],
+                        "x-apifox-orders": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -5478,14 +5625,36 @@
                             "title": "统计总数",
                             "description": "统计总数"
                           },
+                          "average": {
+                            "title": "平均值",
+                            "type": "number",
+                            "description": "平均值"
+                          },
                           "userCount": {
-                            "type": "integer",
                             "title": "影响用户数",
+                            "type": "integer",
                             "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "x-apifox-orders": ["dateTime", "count", "userCount"],
-                        "required": ["dateTime", "count", "userCount"],
+                        "x-apifox-orders": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "dateTime",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
                         "x-apifox-ignore-properties": []
                       }
                     }
@@ -5608,26 +5777,6 @@
             }
           },
           {
-            "name": "granularity",
-            "in": "query",
-            "description": "划分力度，eg：1s，1m，1h，1d，1M，1y",
-            "required": false,
-            "example": "{% mock 'string' %}",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "当前页，eg：0",
-            "required": false,
-            "example": "{% mock 'integer', 0, 5 %}",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "size",
             "in": "query",
             "description": "页大小，eg：5",
@@ -5635,16 +5784,6 @@
             "example": "{% mock 'integer', 1, 20 %}",
             "schema": {
               "type": "integer"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，eg：[\"value,desc\"]",
-            "required": false,
-            "example": ["createdAt,desc", "value,desc"],
-            "schema": {
-              "type": "array"
             }
           },
           {
@@ -5682,25 +5821,54 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "title": "数据主体",
-                      "description": "接口错误列表",
-                      "type": "object",
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/InterfaceIndicator"
+                      "type": "array",
+                      "items": {
+                        "x-apifox-overrides": {},
+                        "type": "object",
+                        "properties": {
+                          "pageUrl": {
+                            "type": "string",
+                            "title": "页面路径",
+                            "description": "页面路径"
+                          },
+                          "count": {
+                            "title": "统计总数",
+                            "type": "integer",
+                            "description": "统计总数"
+                          },
+                          "average": {
+                            "type": "number",
+                            "title": "平均值",
+                            "description": "平均值"
+                          },
+                          "userCount": {
+                            "title": "影响用户数",
+                            "type": "integer",
+                            "description": "影响用户数"
+                          },
+                          "pageCount": {
+                            "type": "integer",
+                            "title": "影响页面数",
+                            "description": "影响页面数"
                           }
                         },
-                        "totalCount": {
-                          "type": "integer",
-                          "description": "总条数",
-                          "title": "总条数"
-                        }
-                      },
-                      "x-apifox-orders": ["items", "totalCount"],
-                      "required": ["items", "totalCount"],
-                      "x-apifox-ignore-properties": []
+                        "x-apifox-refs": {},
+                        "x-apifox-orders": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "required": [
+                          "pageUrl",
+                          "count",
+                          "average",
+                          "userCount",
+                          "pageCount"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],
@@ -5711,50 +5879,35 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2016-01-25 03:39:02",
+                      "timestamp": "1980-02-18 11:27:05",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 5,
-                            "subType": 5001,
-                            "pageUrl": "http://msqb.ca/fgfh",
-                            "userID": "BF84E154-4dD1-80cd-374C-682D2C91eA6d",
-                            "startTime": 1660742842,
-                            "appId": "45E3aAAb-3128-5A07-E7Dc-06BFc1C2d82C",
-                            "statusCode": 591,
-                            "method": "k*!C",
-                            "duration": 82,
-                            "url": "http://exyyu.hu/jynvfrwpy"
-                          },
-                          {
-                            "mainType": 5,
-                            "subType": 5001,
-                            "pageUrl": "http://predzvqz.gr/lfbdsxzwpa",
-                            "userID": "3c2FfD39-274d-8FFA-EA82-91DbcFeB6fAF",
-                            "startTime": 1660742842,
-                            "appId": "BF37E38d-2dAD-aA1B-833D-2cf7ABF6b1fF",
-                            "statusCode": 369,
-                            "method": "i2bE5XH",
-                            "duration": 95,
-                            "url": "http://roj.cc/mxhhmbco"
-                          },
-                          {
-                            "mainType": 5,
-                            "subType": 5001,
-                            "pageUrl": "http://atviono.kz/mmyr",
-                            "userID": "709a8Cc9-Bcda-5E7c-8c82-EcFD4E12F27d",
-                            "startTime": 1660742842,
-                            "appId": "B7AcEFb5-2FF1-82bd-CEBf-E4bfEc0CdA96",
-                            "statusCode": 378,
-                            "method": "$3Wu",
-                            "duration": 65,
-                            "url": "http://scmdilo.ng/bcrofvm"
-                          }
-                        ],
-                        "totalCount": 84
-                      }
+                      "data": [
+                        {
+                          "pageUrl": "http://isbvbdqftp.中国互联.网络/vuqdvxr",
+                          "count": 77,
+                          "average": 96.7428,
+                          "userCount": 78
+                        },
+                        {
+                          "pageUrl": "http://muvtiwau.pg/mcf",
+                          "count": 78,
+                          "average": 96.16636631053736,
+                          "userCount": 87
+                        },
+                        {
+                          "pageUrl": "http://rbixmdgu.sb/itspdemwo",
+                          "count": 81,
+                          "average": 60.548625191,
+                          "userCount": 91
+                        },
+                        {
+                          "pageUrl": "http://qhgz.tv/teqvkdmq",
+                          "count": 83,
+                          "average": 86.74106207367937,
+                          "userCount": 79
+                        }
+                      ]
                     }
                   }
                 }

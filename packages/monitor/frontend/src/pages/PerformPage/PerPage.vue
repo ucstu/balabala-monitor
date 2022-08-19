@@ -69,7 +69,11 @@
         <div class="time-title">时间范围<span>9:00</span></div>
         <div class="list">
           <ul>
-            <li v-for="(value, index) in pageRankRes" :key="index">
+            <li
+              v-for="(value, index) in pageRankRes"
+              :key="index"
+              @click="getpageurl(value.pageUrl)"
+            >
               <span>{{ value.pageUrl }}</span
               ><i class="fa fa-chain-broken"></i>{{ value.startTime
               }}<i class="fa fa-angle-right"></i>
@@ -168,7 +172,7 @@ getPerformancesBasicindicatorstatistics({
   console.log(res);
   pagetime_echart.setOption(option_page);
   Res.data[0].forEach((e: any) => {
-    if (e.datetime == date) {
+    if (e.dateTime == date) {
       count = e.count;
     }
   });
@@ -180,7 +184,11 @@ getPerformancesBasicindicatorstatistics({
       }
     });
   }
-  percentage = ((count / total) * 100).toFixed(2);
+  if (isNaN(count / total)) {
+    percentage = "00.00";
+  } else {
+    percentage = ((count / total) * 100).toFixed(2);
+  }
 });
 
 // 对数据进行处理
@@ -221,6 +229,7 @@ function clickbar() {
     date = params.name;
     count = params.value;
     getpercentage();
+    console.log("2022-" + params.name);
   });
 }
 //获取页面记载排行榜
@@ -229,9 +238,14 @@ getPerformancesBasicindicators({
   mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
   size: 10,
+  page: 1,
 }).then((res) => {
   pageRankRes = res.data.items;
+  console.log(res);
 });
+function getpageurl(url: string) {
+  console.log(url);
+}
 </script>
 
 <style lang="scss" scoped>

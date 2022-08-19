@@ -42,33 +42,44 @@
 </template>
 
 <script setup lang="ts">
-import { getPerformancesInterfaceindicators } from "@/apis";
+import { getErrorsInterfaceerrors } from "@/apis";
 import { InterfaceIndicator } from "@balabala/monitor-api";
+import dayjs from "dayjs";
 import { onMounted } from "vue";
 const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 
 let list: never[];
 
-onMounted(() => {
-  loadPerformanceInterface();
-});
-
 const interfaceParma = $ref({
   appId: Appid,
-  startTime: "2022-08-01 00:00:00",
-  endTime: "2022-09-01 00:00:00",
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
   mainType: InterfaceIndicator.mainType.InterfaceIndicator,
   subType: InterfaceIndicator.subType.InterfaceIndicator,
-  statusCode: 400,
+  statusCode: "",
 });
 
-const loadPerformanceInterface = () => {
-  getPerformancesInterfaceindicators({
-    ...interfaceParma,
-  }).then((res) => {
+const loadInterfaceErrors = () => {
+  interfaceParma.endTime = dayjs(interfaceParma.startTime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+  getErrorsInterfaceerrors({ ...interfaceParma }).then((res) => {
     console.log(res);
   });
 };
+
+const loadInterfaceErrorStatistics = () => {
+  interfaceParma.endTime = dayjs(interfaceParma.startTime, "YYYY-MM-DD")
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+  getErrorsInterfaceerrors({ ...interfaceParma }).then((res) => {
+    console.log(res);
+  });
+};
+onMounted(() => {
+  loadInterfaceErrors();
+  loadInterfaceErrorStatistics();
+});
 </script>
 
 <style scoped lang="scss">

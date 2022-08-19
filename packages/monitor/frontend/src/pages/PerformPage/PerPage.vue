@@ -158,7 +158,7 @@ getPerformancesBasicindicatorstatistics({
   let arr: any = [];
   let arr2: any = [];
   Res.data[0].forEach((e: any) => {
-    arr.push(e.datetime);
+    arr.push(e.dateTime);
   });
   option_page.xAxis.data = arr;
   Res.data[0].forEach((e: any) => {
@@ -175,7 +175,7 @@ getPerformancesBasicindicatorstatistics({
   let total = 0;
   for (var i = 0; i <= 4; i++) {
     Res.data[i].forEach((e: any) => {
-      if (e.datetime == date) {
+      if (e.dateTime == date) {
         total += e.count;
       }
     });
@@ -188,7 +188,7 @@ function getlist(index: number) {
   let arr: any = [];
   let arr2: any = [];
   Res.data[index].forEach((e: any) => {
-    arr.push(e.datetime);
+    arr.push(e.dateTime);
   });
   option_page.xAxis.data = arr;
   Res.data[index].forEach((e: any) => {
@@ -197,7 +197,7 @@ function getlist(index: number) {
   option_page.series[0].data = arr2;
   pagetime_echart.setOption(option_page);
   Res.data[index].forEach((e: any) => {
-    if (e.datetime == date) {
+    if (e.dateTime == date) {
       count = e.count;
     }
   });
@@ -208,7 +208,7 @@ function getpercentage() {
   let total = 0;
   for (var i = 0; i <= 4; i++) {
     Res.data[i].forEach((e: any) => {
-      if (e.datetime == date) {
+      if (e.dateTime == date) {
         total += e.count;
       }
     });
@@ -231,7 +231,6 @@ getPerformancesBasicindicators({
   size: 10,
 }).then((res) => {
   pageRankRes = res.data.items;
-  console.log(res.data.items);
 });
 </script>
 

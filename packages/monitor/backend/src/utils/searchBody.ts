@@ -295,6 +295,11 @@ export const getTotalinterfaceIndicator = (
                 field: "userID",
               },
             },
+            pageCount: {
+              cardinality: {
+                field: "pageUrl",
+              },
+            },
           },
         },
       },

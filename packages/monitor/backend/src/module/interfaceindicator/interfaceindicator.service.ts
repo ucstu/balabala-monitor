@@ -120,18 +120,12 @@ export class InterfaceindicatorService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
       const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**
@@ -157,6 +151,7 @@ export class InterfaceindicatorService {
             count: 0,
             average: 0,
             userCount: 0,
+            pageCount: 0,
           });
           startTime = startTime.add(1, "day");
         }
@@ -177,6 +172,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -188,6 +184,7 @@ export class InterfaceindicatorService {
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
           userCount: item.userCount.value,
+          pageCount: item.pageCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -198,6 +195,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
     } else if (querys.granularity === "1h") {
@@ -213,6 +211,7 @@ export class InterfaceindicatorService {
             count: 0,
             average: 0,
             userCount: 0,
+            pageCount: 0,
           });
           startTime = startTime.add(1, "hour");
         }
@@ -233,6 +232,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -244,6 +244,7 @@ export class InterfaceindicatorService {
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
           userCount: item.userCount.value,
+          pageCount: item.pageCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -254,6 +255,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
     }

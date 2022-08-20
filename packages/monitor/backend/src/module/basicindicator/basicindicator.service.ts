@@ -47,6 +47,48 @@ export class BasicindicatorService {
    */
   async queryBasicindicator(querys: BasicindicatorsVo) {
     const body = getQueryBody(querys, "startTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: basicindicatorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
+    body.aggs = {
+      count: {
+        terms: {
+          field: "pageUrl",
+          size: size,
+        },
+        aggs: {
+          average: {
+            avg: {
+              field: "value",
+            },
+          },
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: basicindicatorIndex,
       body,
@@ -54,18 +96,16 @@ export class BasicindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: BasicIndicator[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: BasicIndicator = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        pageUrl: item.key,
+        count: item.doc_count,
+        average: item.average.value,
+        userCount: item.userCount.value,
+        pageCount: item.doc_count,
+      };
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**

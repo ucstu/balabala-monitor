@@ -117,7 +117,7 @@ import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
-import { onMounted } from "vue";
+import { h, onMounted } from "vue";
 
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 const userMessage = $ref({
@@ -182,36 +182,7 @@ getPerformancesBasicindicatorstatistics({
   granularity: "1d",
 }).then((res) => {
   Res = res;
-  let arr: any = [];
-  let arr2: any = [];
-  Res.data[0].forEach((e: any) => {
-    arr.push(e.dateTime);
-  });
-  option_page.xAxis.data = arr;
-  Res.data[0].forEach((e: any) => {
-    arr2.push(e.count);
-  });
-  option_page.series[0].data = arr2;
-  console.log(res);
-  pagetime_echart.setOption(option_page);
-  Res.data[0].forEach((e: any) => {
-    if (e.dateTime == date) {
-      count = e.count;
-    }
-  });
-  let total = 0;
-  for (var i = 0; i <= 4; i++) {
-    Res.data[i].forEach((e: any) => {
-      if (e.dateTime == date) {
-        total += e.count;
-      }
-    });
-  }
-  if (isNaN(count / total)) {
-    percentage = "00.00";
-  } else {
-    percentage = ((count / total) * 100).toFixed(2);
-  }
+  getlist(0);
 });
 
 // 对数据进行处理
@@ -243,7 +214,11 @@ function getpercentage() {
         total += e.count;
       }
     });
-    percentage = ((count / total) * 100).toFixed(2);
+    if (isNaN(count / total)) {
+      percentage = 0 + "";
+    } else {
+      percentage = ((count / total) * 100).toFixed(2);
+    }
   }
 }
 //柱状图的点击事件
@@ -257,7 +232,9 @@ function clickbar() {
 }
 //获取页面记载排行榜
 getPerformancesBasicindicators({
-  ...userMessage,
+  appId: APPID,
+  startTime: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
+  endTime: dayjs().subtract(4, "day").format("YYYY-MM-DD"),
   mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
   size: 10,
@@ -268,6 +245,17 @@ getPerformancesBasicindicators({
 function getpageurl(url: string) {
   console.log(url);
 }
+getPerformancesBasicindicatorstatistics({
+  appId: APPID,
+  startTime: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
+  endTime: dayjs().subtract(4, "day").format("YYYY-MM-DD"),
+  mainType: BasicIndicator.mainType.LoadIndicator,
+  subType: BasicIndicator.subType.FullLoad,
+  pageUrl: "http://127.0.0.1:5173/#/home",
+  granularity: "1h",
+}).then((res) => {
+  console.log(res);
+});
 </script>
 
 <style lang="scss" scoped>

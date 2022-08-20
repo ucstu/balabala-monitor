@@ -131,10 +131,6 @@ const ResourceParms = $ref({
 
 let overViewIndex = $ref<number>(0);
 const loadResource = () => {
-  let timeStr: string[] = [];
-  let value: number[] = [];
-  console.log(ResourceParms);
-
   getErrorsResourceerrorstatistics({ ...ResourceParms }).then((res) => {
     res.data.forEach((data) => {
       overView.push(data);

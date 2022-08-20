@@ -4,7 +4,6 @@
       <div class="top-left">
         <form action="#">
           <select v-model="interfaceParma.statusCode">
-            <option>全部错误</option>
             <option>400</option>
             <option>500</option>
           </select>
@@ -19,7 +18,7 @@
     <div class="bottom">
       <div class="list">
         <div class="list-title">
-          <div class="list-title-name">最新错误</div>
+          <div class="list-title-name">错误排行</div>
           <div class="list-title-name">发生次数</div>
           <div class="list-title-name">影响人数</div>
         </div>
@@ -27,57 +26,88 @@
           <div class="sort">
             <div class="list-left sort-content">
               <div class="list-left-top sort-content">
-                <div class="type">{{}}</div>
-                <div>{{}}</div>
+                <div class="type">interfaceErrors</div>
+                <div>{{ interfaceParma.statusCode }}</div>
               </div>
-              <div class="list-left-bottom sort-content">{{}}</div>
+              <div class="list-left-bottom sort-content">
+                {{ item.dateTime }}
+              </div>
             </div>
-            <div class="list-center">{{}}</div>
-            <div class="list-right">{{}}</div>
+            <div class="list-center">{{ item.count }}</div>
+            <div class="list-right">{{ item.userCount }}</div>
           </div>
         </div>
+      </div>
+      <div class="page">
+        <span><button @click="firstPage">首页</button></span>
+        <span><button @click="prePage">上一页</button></span>
+        <span><button @click="nextPage">下一页</button></span>
+        <span>当前&nbsp;{{ page }}&nbsp;页</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getErrorsInterfaceerrors } from "@/apis";
+import { getErrorsInterfaceerrorstatistics } from "@/apis";
+import { useStore } from "@/stores";
 import { InterfaceIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
-import { onMounted } from "vue";
-const Appid = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+import { storeToRefs } from "pinia";
+import { nextTick } from "vue";
+let store = useStore();
+let { appId } = $(storeToRefs(store));
 
-let list: never[];
+let page = 0;
+
+let statusCode: number = 400 || 500;
+
+type interfaceList = {
+  dateTime: string;
+  count: number;
+  userCount: number;
+};
+let list = $ref<interfaceList[]>([]);
 
 const interfaceParma = $ref({
-  appId: Appid,
+  appId,
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
   mainType: InterfaceIndicator.mainType.InterfaceIndicator,
   subType: InterfaceIndicator.subType.InterfaceIndicator,
-  statusCode: "",
+  statusCode,
 });
 
-const loadInterfaceErrors = () => {
-  interfaceParma.endTime = dayjs(interfaceParma.startTime, "YYYY-MM-DD")
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsInterfaceerrors({ ...interfaceParma }).then((res) => {
-    console.log(res);
-  });
+const firstPage = () => {
+  if ((page = 1)) {
+    alert("当前已经是第一页了!");
+  } else {
+    page = 1;
+  }
+};
+const prePage = () => {
+  if ((page = 1)) {
+    alert("当前已经是第一页了!");
+  } else {
+    page = page - 1;
+  }
 };
 
-const loadInterfaceErrorStatistics = () => {
+const nextPage = () => {
+  page = page + 1;
+};
+
+const loadInterfaceErrorStatistics = async () => {
   interfaceParma.endTime = dayjs(interfaceParma.startTime, "YYYY-MM-DD")
     .add(1, "day")
     .format("YYYY-MM-DD");
-  getErrorsInterfaceerrors({ ...interfaceParma }).then((res) => {
-    console.log(res);
+  getErrorsInterfaceerrorstatistics({ ...interfaceParma }).then((res) => {
+    res.data.forEach((data) => {
+      list.push(data);
+    });
   });
 };
-onMounted(() => {
-  loadInterfaceErrors();
+nextTick(() => {
   loadInterfaceErrorStatistics();
 });
 </script>
@@ -162,6 +192,7 @@ onMounted(() => {
       height: auto;
 
       .type {
+        margin-right: 20px;
         font-size: 18px;
         font-weight: 600;
       }
@@ -201,7 +232,7 @@ onMounted(() => {
 
       .list-content {
         .sort {
-          height: 110px;
+          height: 100px;
           background-color: #fff;
           border-bottom: 1px solid rgb(118 146 146);
 
@@ -215,6 +246,19 @@ onMounted(() => {
           }
         }
       }
+    }
+  }
+
+  .page {
+    float: right;
+    padding: 10px;
+
+    span {
+      margin-right: 10px;
+    }
+
+    button {
+      height: 30px;
     }
   }
 }

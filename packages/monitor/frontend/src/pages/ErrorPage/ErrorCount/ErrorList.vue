@@ -2,8 +2,8 @@
   <div class="global">
     <div class="top">
       <div class="top-left">
-        <form action="#">
-          <select>
+        <form>
+          <select v-model="type">
             <option>JS错误</option>
             <option>资源错误</option>
           </select>
@@ -11,14 +11,14 @@
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="errorListParma.startTime" type="date" />
+          <input v-model="JSerrorListParma.startTime" type="date" />
         </div>
       </div>
     </div>
     <div class="bottom">
       <div class="list">
         <div class="list-title">
-          <div class="list-title-name">错误</div>
+          <div class="list-title-name">错误排行</div>
           <div class="list-title-name">发生次数</div>
           <div class="list-title-name">影响人数</div>
         </div>
@@ -26,13 +26,14 @@
           <div class="sort">
             <div class="list-left sort-content">
               <div class="list-left-top sort-content">
-                <div class="type">{{}}</div>
-                <div>{{}}</div>
+                <div class="type">{{ typeName }}</div>
               </div>
-              <div class="list-left-bottom sort-content">{{}}</div>
+              <div class="list-left-bottom sort-content">
+                {{ item.dateTime }}
+              </div>
             </div>
-            <div class="list-center">{{}}</div>
-            <div class="list-right">{{}}</div>
+            <div class="list-center">{{ item.count }}</div>
+            <div class="list-right">{{ item.userCount }}</div>
           </div>
         </div>
       </div>
@@ -48,87 +49,101 @@
 
 <script setup lang="ts">
 import {
-  getErrorsJavascripterrors,
   getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrors,
   getErrorsResourceerrorstatistics,
 } from "@/apis";
-import { JavaScriptError } from "@balabala/monitor-api";
+import { useStore } from "@/stores";
+import { JavaScriptError, ResourceError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
+import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+let store = useStore();
+let { appId } = $(storeToRefs(store));
+let type: string;
+let typeName: string;
+let page = 1;
+type overView = {
+  dateTime: string;
+  count: number;
+  userCount: number;
+};
 
-let list: never[];
-let page = 0;
+let list = $ref<overView[]>([]);
+
 const firstPage = () => {
-  page = 0;
+  if ((page = 1)) {
+    alert("当前已经是第一页了!");
+  } else {
+    page = 1;
+  }
 };
 const prePage = () => {
-  page = page - 1;
+  if ((page = 1)) {
+    alert("当前已经是第一页了!");
+  } else {
+    page = page - 1;
+  }
 };
 
 const nextPage = () => {
   page = page + 1;
 };
 
-const errorListParma = $ref({
-  appId: "",
+const JSerrorListParma = $ref({
+  appId,
   mainType: JavaScriptError.mainType.JavaScriptError,
   subType: JavaScriptError.subType.JavaScriptError,
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  size: 5,
 });
 
-const loadJavascriptError = () => {
-  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsJavascripterrors({
-    ...errorListParma,
-    page: page,
-    size: 5,
-  }).then((res) => {
-    console.log(res);
-  });
-};
+const resourceerrorListParma = $ref({
+  appId,
+  mainType: ResourceError.mainType.ResourceError,
+  subType: ResourceError.subType.ResourceError,
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  size: 5,
+});
 
-const loadJavascriptErrorStatistics = () => {
-  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
+const loadJavascriptErrorStatistics = async () => {
+  JSerrorListParma.endTime = dayjs(JSerrorListParma.startTime, "YYYY-MM-DD")
     .add(1, "day")
     .format("YYYY-MM-DD");
   getErrorsJavascripterrorstatistics({
-    ...errorListParma,
+    ...JSerrorListParma,
   }).then((res) => {
-    console.log(res);
-  });
-};
-
-const loadResourceError = async () => {
-  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsResourceerrors({
-    ...errorListParma,
-  }).then((res) => {
-    console.log(res);
+    res.data.forEach((data) => {
+      list.push(data);
+    });
   });
 };
 
 const loadResourceErrorStatistics = async () => {
-  errorListParma.endTime = dayjs(errorListParma.startTime, "YYYY-MM-DD")
+  resourceerrorListParma.endTime = dayjs(
+    resourceerrorListParma.startTime,
+    "YYYY-MM-DD"
+  )
     .add(1, "day")
     .format("YYYY-MM-DD");
   getErrorsResourceerrorstatistics({
-    ...errorListParma,
+    ...resourceerrorListParma,
   }).then((res) => {
-    console.log(res);
+    res.data.forEach((data) => {
+      list.push(data);
+    });
   });
 };
 
 onMounted(() => {
-  loadJavascriptError();
-  loadJavascriptErrorStatistics();
-  loadResourceError();
-  loadResourceErrorStatistics();
+  if (type == "JS错误") {
+    typeName = "JavaScriptError";
+    loadJavascriptErrorStatistics();
+  } else {
+    typeName = "resourceList";
+    loadResourceErrorStatistics();
+  }
 });
 </script>
 
@@ -251,7 +266,7 @@ onMounted(() => {
 
       .list-content {
         .sort {
-          height: 110px;
+          height: 100px;
           background-color: #fff;
           border-bottom: 1px solid rgb(118 146 146);
 

@@ -12,13 +12,15 @@
             <div class="sort">
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
-                  <div class="type">{{}}</div>
-                  <div>{{}}</div>
+                  <div class="type">interfaceErrors</div>
+                  <div>{{ interfaceParma.statusCode }}</div>
                 </div>
-                <div class="list-left-bottom sort-content">{{}}</div>
+                <div class="list-left-bottom sort-content">
+                  {{ item.dateTime }}
+                </div>
               </div>
-              <div class="list-center">{{}}</div>
-              <div class="list-right">{{}}</div>
+              <div class="list-center">{{ item.count }}</div>
+              <div class="list-right">{{ item.userCount }}</div>
             </div>
           </div>
         </div>
@@ -34,13 +36,15 @@
             <div class="sort">
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
-                  <div class="type">{{}}</div>
-                  <div>{{}}</div>
+                  <div class="type">interfaceErrors</div>
+                  <div>{{ interfaceParma.statusCode }}</div>
                 </div>
-                <div class="list-left-bottom sort-content">{{}}</div>
+                <div class="list-left-bottom sort-content">
+                  {{ item.dateTime }}
+                </div>
               </div>
-              <div class="list-center">{{}}</div>
-              <div class="list-right">{{}}</div>
+              <div class="list-center">{{ item.count }}</div>
+              <div class="list-right">{{ item.userCount }}</div>
             </div>
           </div>
         </div>
@@ -50,45 +54,61 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getErrorsInterfaceerrors,
-  getErrorsInterfaceerrorstatistics,
-} from "@/apis";
+import { getErrorsInterfaceerrorstatistics } from "@/apis";
 import { useStore } from "@/stores";
 import { InterfaceIndicator } from "@balabala/monitor-api";
+import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
-let list: never[];
+import { nextTick } from "vue";
+
+let statusCode: number = 400 || 500;
+
+type interfaceList = {
+  dateTime: string;
+  count: number;
+  userCount: number;
+};
+let list = $ref<interfaceList[]>([]);
+
+let newList = $ref<interfaceList[]>([]);
 
 let store = useStore();
 let { appId } = $(storeToRefs(store));
 
-const loadInterfaceErrors = () => {
-  getErrorsInterfaceerrors({
-    appId,
-    endTime: "",
-    startTime: "",
-    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-    subType: InterfaceIndicator.subType.InterfaceIndicator,
-  }).then((res) => {
-    console.log(res);
-  });
-};
-const loadInterfaceErrorStatistics = () => {
+const interfaceParma = $ref({
+  appId,
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+  subType: InterfaceIndicator.subType.InterfaceIndicator,
+  statusCode,
+  size: 5,
+});
+
+const loadInterfaceErrorStatistics = async () => {
   getErrorsInterfaceerrorstatistics({
-    appId,
-    endTime: "",
-    startTime: "",
-    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-    subType: InterfaceIndicator.subType.InterfaceIndicator,
+    ...interfaceParma,
   }).then((res) => {
-    console.log(res);
+    res.data.forEach((data) => {
+      list.push(data);
+    });
   });
 };
 
-onMounted(() => {
-  loadInterfaceErrors();
+const newLoadInterfaceErrorStatistics = async () => {
+  getErrorsInterfaceerrorstatistics({
+    granularity: "1M",
+    ...interfaceParma,
+  }).then((res) => {
+    res.data.forEach((data) => {
+      newList.push(data);
+    });
+  });
+};
+
+nextTick(() => {
   loadInterfaceErrorStatistics();
+  newLoadInterfaceErrorStatistics();
 });
 </script>
 
@@ -131,6 +151,7 @@ onMounted(() => {
   height: auto;
 
   .type {
+    margin-right: 20px;
     font-size: 18px;
     font-weight: 600;
   }

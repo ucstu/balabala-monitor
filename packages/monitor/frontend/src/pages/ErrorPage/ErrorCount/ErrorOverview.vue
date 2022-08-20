@@ -15,17 +15,22 @@
             <div class="list-title-name">发生次数</div>
             <div class="list-title-name">影响人数</div>
           </div>
-          <div v-for="(item, index) in list" :key="index" class="list-content">
+          <div
+            v-for="(item, index) in JSList"
+            :key="index"
+            class="list-content"
+          >
             <div class="sort">
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
-                  <div class="type">{{}}</div>
-                  <div>{{}}</div>
+                  <div class="type">JavaScriptError</div>
                 </div>
-                <div class="list-left-bottom sort-content">{{}}</div>
+                <div class="list-left-bottom sort-content">
+                  {{ item.dateTime }}
+                </div>
               </div>
-              <div class="list-center">{{}}</div>
-              <div class="list-right">{{}}</div>
+              <div class="list-center">{{ item.count }}</div>
+              <div class="list-right">{{ item.userCount }}</div>
             </div>
           </div>
         </div>
@@ -44,17 +49,22 @@
             <div class="list-title-name">发生次数</div>
             <div class="list-title-name">影响人数</div>
           </div>
-          <div v-for="(item, index) in list" :key="index" class="list-content">
+          <div
+            v-for="(item, index) in resourceList"
+            :key="index"
+            class="list-content"
+          >
             <div class="sort">
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
-                  <div class="type">{{}}</div>
-                  <div>{{}}</div>
+                  <div class="type">ResourceError</div>
                 </div>
-                <div class="list-left-bottom sort-content">{{}}</div>
+                <div class="list-left-bottom sort-content">
+                  {{ item.dateTime }}
+                </div>
               </div>
-              <div class="list-center">{{}}</div>
-              <div class="list-right">{{}}</div>
+              <div class="list-center">{{ item.count }}</div>
+              <div class="list-right">{{ item.userCount }}</div>
             </div>
           </div>
         </div>
@@ -65,54 +75,13 @@
 
 <script setup lang="ts">
 import {
-  getErrorsJavascripterrors,
   getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrors,
   getErrorsResourceerrorstatistics,
 } from "@/apis";
-import { JavaScriptError } from "@balabala/monitor-api";
+import { useStore } from "@/stores";
+import { JavaScriptError, ResourceError } from "@balabala/monitor-api";
+import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-let list: never[];
-
-const Errorparms = $ref({
-  appId: "",
-  startTime: "",
-  endTime: "",
-  mainType: JavaScriptError.mainType.JavaScriptError,
-  subType: JavaScriptError.subType.JavaScriptError,
-});
-
-const loadJavascriptErrors = () => {
-  getErrorsJavascripterrors({ ...Errorparms }).then((res) => {
-    console.log(res);
-  });
-};
-
-const loadJavascriptErrorStatistics = () => {
-  getErrorsJavascripterrorstatistics({ ...Errorparms }).then((res) => {
-    console.log(res);
-  });
-};
-
-const loadResourceErrors = () => {
-  getErrorsResourceerrors({ ...Errorparms }).then((res) => {
-    console.log(res);
-  });
-};
-
-const loadResourceErrorStatistics = () => {
-  getErrorsResourceerrorstatistics({ ...Errorparms }).then((res) => {
-    console.log(res);
-  });
-};
-
-onMounted(() => {
-  loadJavascriptErrors();
-  loadResourceErrors();
-  loadJavascriptErrorStatistics();
-  loadResourceErrorStatistics();
-});
-
 let a = new Date().getTime();
 let b = new Date(a);
 function nowDate(now: Date) {
@@ -122,6 +91,56 @@ function nowDate(now: Date) {
   return year + "-" + month + "-" + date;
 }
 let date = nowDate(b);
+let JSList = $ref<overView[]>([]);
+let resourceList = $ref<overView[]>([]);
+let store = useStore();
+let { appId } = $(storeToRefs(store));
+type overView = {
+  dateTime: string;
+  count: number;
+  userCount: number;
+};
+
+const JSErrorparms = $ref({
+  appId,
+  startTime: "",
+  endTime: "",
+  size: 5,
+  msg: "",
+  mainType: JavaScriptError.mainType.JavaScriptError,
+  subType: JavaScriptError.subType.JavaScriptError,
+});
+
+const resourceErrorparms = $ref({
+  appId,
+  startTime: "",
+  endTime: "",
+  size: 5,
+  msg: "",
+  mainType: ResourceError.mainType.ResourceError,
+  subType: ResourceError.subType.ResourceError,
+});
+
+const loadJavascriptErrorStatistics = async () => {
+  getErrorsJavascripterrorstatistics({ ...JSErrorparms }).then((res) => {
+    res.data.forEach((data) => {
+      JSList.push(data);
+    });
+  });
+};
+
+const loadResourceErrorStatistics = async () => {
+  getErrorsResourceerrorstatistics({ ...resourceErrorparms }).then((res) => {
+    res.data.forEach((data) => {
+      resourceList.push(data);
+    });
+  });
+};
+
+onMounted(() => {
+  loadJavascriptErrorStatistics();
+  loadResourceErrorStatistics();
+});
 </script>
 
 <style scoped lang="scss">

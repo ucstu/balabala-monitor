@@ -211,7 +211,7 @@ const toEditor = () => {
         height: 100%;
         cursor: pointer;
         background: rgb(30 128 255);
-        border-radius: 5%;
+        border-radius: 5px;
 
         .trangle {
           width: 0;
@@ -229,7 +229,7 @@ const toEditor = () => {
       .avatar-info {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
+        border-radius: 50px;
       }
     }
   }

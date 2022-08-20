@@ -69,7 +69,11 @@
         <div class="time-title">时间范围<span>9:00</span></div>
         <div class="list">
           <ul>
-            <li v-for="(value, index) in pageRankRes" :key="index">
+            <li
+              v-for="(value, index) in pageRankRes"
+              :key="index"
+              @click="getpageurl(value.pageUrl)"
+            >
               <span>{{ value.pageUrl }}</span
               ><i class="fa fa-chain-broken"></i>{{ value.startTime
               }}<i class="fa fa-angle-right"></i>
@@ -168,7 +172,7 @@ getPerformancesBasicindicatorstatistics({
   console.log(res);
   pagetime_echart.setOption(option_page);
   Res.data[0].forEach((e: any) => {
-    if (e.datetime == date) {
+    if (e.dateTime == date) {
       count = e.count;
     }
   });
@@ -180,7 +184,11 @@ getPerformancesBasicindicatorstatistics({
       }
     });
   }
-  percentage = ((count / total) * 100).toFixed(2);
+  if (isNaN(count / total)) {
+    percentage = "00.00";
+  } else {
+    percentage = ((count / total) * 100).toFixed(2);
+  }
 });
 
 // 对数据进行处理
@@ -221,6 +229,7 @@ function clickbar() {
     date = params.name;
     count = params.value;
     getpercentage();
+    console.log("2022-" + params.name);
   });
 }
 //获取页面记载排行榜
@@ -230,8 +239,12 @@ getPerformancesBasicindicators({
   subType: BasicIndicator.subType.FullLoad,
   size: 10,
 }).then((res) => {
-  pageRankRes = res.data.items;
+  pageRankRes = res.data;
+  console.log(res.data);
 });
+function getpageurl(url: string) {
+  console.log(url);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -255,7 +268,7 @@ getPerformancesBasicindicators({
     }
 
     .change {
-      border-radius: 5%;
+      border-radius: 5px;
 
       input {
         display: none;
@@ -270,11 +283,11 @@ getPerformancesBasicindicators({
       }
 
       span:nth-child(1) {
-        border-radius: 10% 0 0 10%;
+        border-radius: 10px 0 0 10px;
       }
 
       span:nth-child(5) {
-        border-radius: 0 10% 10% 0;
+        border-radius: 0 10px 10px 0;
       }
 
       #one:checked ~ label.one span,
@@ -399,7 +412,7 @@ getPerformancesBasicindicators({
         padding: 20px 10px;
         margin-left: 10px;
         background-color: aqua;
-        border-radius: 10%;
+        border-radius: 10px;
 
         .time {
           display: flex;

@@ -43,6 +43,31 @@ export class ResourceindicatorService {
 
   async queryResourceIndicator(querys: ResourceIndicatorVo) {
     const body = getQueryBody(querys, "startTime");
+    body.aggs = {
+      count: {
+        terms: {
+          field: "url",
+          size: querys.size ? querys.size : 10,
+        },
+        aggs: {
+          average: {
+            avg: {
+              field: "duration",
+            },
+          },
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageCount: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: resourceindicatorIndex,
       body,
@@ -50,18 +75,16 @@ export class ResourceindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: ResourceIndicator[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: ResourceIndicator = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        url: item.key,
+        count: item.doc_count,
+        average: item.average.value,
+        userCount: item.userCount.value,
+        pageCount: item.pageCount.value,
+      };
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**

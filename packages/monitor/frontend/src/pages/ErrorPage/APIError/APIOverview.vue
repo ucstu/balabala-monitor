@@ -13,7 +13,6 @@
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
                   <div class="type">interfaceErrors</div>
-                  <div>{{ interfaceParma.statusCode }}</div>
                 </div>
                 <div class="list-left-bottom sort-content">
                   {{ item.dateTime }}
@@ -37,7 +36,6 @@
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
                   <div class="type">interfaceErrors</div>
-                  <div>{{ interfaceParma.statusCode }}</div>
                 </div>
                 <div class="list-left-bottom sort-content">
                   {{ item.dateTime }}
@@ -61,8 +59,6 @@ import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
 import { nextTick } from "vue";
 
-let statusCode: number = 400 || 500;
-
 type interfaceList = {
   dateTime: string;
   count: number;
@@ -81,8 +77,6 @@ const interfaceParma = $ref({
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
   mainType: InterfaceIndicator.mainType.InterfaceIndicator,
   subType: InterfaceIndicator.subType.InterfaceIndicator,
-  statusCode,
-  size: 5,
 });
 
 const loadInterfaceErrorStatistics = async () => {

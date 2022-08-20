@@ -4,8 +4,8 @@
       <div class="top-left">
         <form action="#">
           <select v-model="interfaceParma.statusCode">
-            <option>400</option>
-            <option>500</option>
+            <option value="400">400</option>
+            <option value="500">500</option>
           </select>
         </form>
       </div>
@@ -54,13 +54,13 @@ import { useStore } from "@/stores";
 import { InterfaceIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
-import { nextTick } from "vue";
+import { nextTick, watch } from "vue";
 let store = useStore();
 let { appId } = $(storeToRefs(store));
 
 let page = 0;
 
-let statusCode: number = 400 || 500;
+let statusCode: number = $ref();
 
 type interfaceList = {
   dateTime: string;
@@ -69,7 +69,7 @@ type interfaceList = {
 };
 let list = $ref<interfaceList[]>([]);
 
-const interfaceParma = $ref({
+let interfaceParma = $ref({
   appId,
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
@@ -107,7 +107,20 @@ const loadInterfaceErrorStatistics = async () => {
     });
   });
 };
+
+watch(
+  () => interfaceParma.statusCode,
+  (newVal, oldVal) => {
+    if (Number(newVal) == 500) {
+      loadInterfaceErrorStatistics;
+    } else {
+      loadInterfaceErrorStatistics;
+    }
+  }
+);
+
 nextTick(() => {
+  interfaceParma.statusCode = 400;
   loadInterfaceErrorStatistics();
 });
 </script>

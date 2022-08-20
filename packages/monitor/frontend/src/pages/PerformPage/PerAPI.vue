@@ -184,7 +184,7 @@
 <script setup lang="ts">
 import { getPerformancesInterfaceindicatorstatistics } from "@/apis";
 import { useStore } from "@/stores";
-import { Statistics } from "@/types";
+import { BasicStatistic } from "@/types";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
@@ -196,7 +196,7 @@ let activeSection = $ref(0);
 let activeDateTime = $ref(new Date());
 const yyyyMMdd = $computed(() => dayjs(activeDateTime).format("YYYY-MM-DD"));
 const MMdd = $computed(() => dayjs(activeDateTime).format("MM-DD"));
-let interfaceIndicatorstatistics = $ref<Array<Statistics>>([]);
+let interfaceIndicatorstatistics = $ref<Array<Array<BasicStatistic>>>([]);
 const sectionTotals = $computed(() =>
   interfaceIndicatorstatistics.map(
     (section) => section.find(({ dateTime }) => dateTime === MMdd)?.count || 0

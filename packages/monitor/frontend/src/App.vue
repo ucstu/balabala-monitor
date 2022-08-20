@@ -13,7 +13,6 @@
         class="aside"
       />
     </Transition>
-    <!-- eslint-disable-next-line vue/no-template-shadow -->
     <router-view v-slot="{ Component, route }" class="main">
       <keep-alive v-if="route?.meta?.keepAlive">
         <component :is="Component" :key="route.path" />
@@ -27,7 +26,6 @@
 import AsideBar from "@/components/AsideBar.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
 import { useRoute } from "vue-router";
-import { reactive, ref } from "vue";
 
 const route = useRoute();
 

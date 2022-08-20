@@ -47,11 +47,33 @@ export class BasicindicatorService {
    */
   async queryBasicindicator(querys: BasicindicatorsVo) {
     const body = getQueryBody(querys, "startTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: basicindicatorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
     body.aggs = {
       count: {
         terms: {
           field: "pageUrl",
-          size: querys.size ? querys.size : 10,
+          size: size,
         },
         aggs: {
           average: {

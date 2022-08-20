@@ -40,6 +40,49 @@ export class ResourceerrorService {
    */
   async getErrorList(querys: ResourceerrorVo) {
     const body = getQueryBody(querys, "errorTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "path",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: resourceerrorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
+    body.aggs = {
+      count: {
+        terms: {
+          field: "path",
+          size: size,
+        },
+        aggs: {
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageCount: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+        },
+      },
+    };
+
     const res = await this.elasticsearchService.search({
       index: resourceerrorIndex,
       body,
@@ -47,18 +90,15 @@ export class ResourceerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: ResourceError[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: ResourceError = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        path: item.key,
+        count: item.doc_count,
+        userCount: item.userCount.value,
+        pageCount: item.pageCount.value,
+      };
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**

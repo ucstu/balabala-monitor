@@ -19,7 +19,6 @@ const routeRecordRaws: RouteRecordRaw[] = [
         { name: "数据总览", path: "/Home/overView" },
         { name: "健康状况", path: "/Home/healthStatus" },
         { name: "性能预览", path: "/Home/performancePreview" },
-        { name: "地域分布", path: "/Home/region" },
       ],
     },
     component: () => import("@/pages/HomePage/HomePage.vue"),

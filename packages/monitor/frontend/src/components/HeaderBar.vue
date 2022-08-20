@@ -20,9 +20,6 @@
           <li>
             <router-link to="/customerSearch">用户细查 (行为记录)</router-link>
           </li>
-          <li>
-            <router-link to="/customerSearch">连线用户 (远程调试)</router-link>
-          </li>
         </ul>
       </div>
       <div class="i father">
@@ -52,8 +49,8 @@
           <li><router-link to="/PerformPage/PerPage">页面性能</router-link></li>
         </ul>
       </div>
-      <a href="#" class="i">支持</a>
-      <a href="#" class="fa fa-envelope-o i"></a>
+      <!-- <a href="#" class="i">支持</a>
+      <a href="#" class="fa fa-envelope-o i"></a> -->
       <img src="@/assets/no_user.png" alt="#" />
     </div>
   </header>
@@ -186,7 +183,7 @@ const hiddenAside = $computed({
           color: rgb(100 98 98);
           text-decoration: none;
           background-color: white;
-          border-radius: 5%;
+          border-radius: 5px;
         }
 
         li a:hover {

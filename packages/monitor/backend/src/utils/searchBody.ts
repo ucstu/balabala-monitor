@@ -170,6 +170,7 @@ export const getQueryBody = (
   timeName: "startTime" | "errorTime"
 ): any => {
   const body = getBaseBody(querys, timeName);
+  body.size = 0;
   return body;
 };
 
@@ -292,6 +293,11 @@ export const getTotalinterfaceIndicator = (
             userCount: {
               cardinality: {
                 field: "userID",
+              },
+            },
+            pageCount: {
+              cardinality: {
+                field: "pageUrl",
               },
             },
           },

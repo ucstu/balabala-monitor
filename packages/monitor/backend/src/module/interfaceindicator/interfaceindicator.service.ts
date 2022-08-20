@@ -41,6 +41,53 @@ export class InterfaceindicatorService {
    */
   async queryInterfaceindicator(querys: InterfaceIndicatorVo) {
     const body = getQueryBody(querys, "startTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "url",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: interfacindicatorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
+    body.aggs = {
+      count: {
+        terms: {
+          field: "url",
+          size: size,
+        },
+        aggs: {
+          average: {
+            avg: {
+              field: "duration",
+            },
+          },
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageCount: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: interfacindicatorIndex,
       body,
@@ -48,11 +95,14 @@ export class InterfaceindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
-    const list: InterfaceIndicator[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: InterfaceIndicator = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        url: item.key,
+        count: item.doc_count,
+        average: item.average.value,
+        userCount: item.userCount.value,
+        pageCount: item.pageCount.value,
+      };
     });
     return responseRust.success_data(list);
   }
@@ -70,18 +120,12 @@ export class InterfaceindicatorService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
       const tempList = this.totalData(querys, e.list.buckets);
       list.push(tempList);
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**
@@ -107,6 +151,7 @@ export class InterfaceindicatorService {
             count: 0,
             average: 0,
             userCount: 0,
+            pageCount: 0,
           });
           startTime = startTime.add(1, "day");
         }
@@ -127,6 +172,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -138,6 +184,7 @@ export class InterfaceindicatorService {
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
           userCount: item.userCount.value,
+          pageCount: item.pageCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -148,6 +195,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
     } else if (querys.granularity === "1h") {
@@ -163,6 +211,7 @@ export class InterfaceindicatorService {
             count: 0,
             average: 0,
             userCount: 0,
+            pageCount: 0,
           });
           startTime = startTime.add(1, "hour");
         }
@@ -183,6 +232,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
       startTime = dayjs(list[list.length - 1].key);
@@ -194,6 +244,7 @@ export class InterfaceindicatorService {
           count: item.doc_count,
           average: item.avg.value ? item.avg.value : 0,
           userCount: item.userCount.value,
+          pageCount: item.pageCount.value,
         });
       }
       for (let i = 0; i < dayNum - endDay; i++) {
@@ -204,6 +255,7 @@ export class InterfaceindicatorService {
           count: 0,
           average: 0,
           userCount: 0,
+          pageCount: 0,
         });
       }
     }

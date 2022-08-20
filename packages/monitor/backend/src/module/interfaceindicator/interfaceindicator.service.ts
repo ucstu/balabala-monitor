@@ -41,6 +41,31 @@ export class InterfaceindicatorService {
    */
   async queryInterfaceindicator(querys: InterfaceIndicatorVo) {
     const body = getQueryBody(querys, "startTime");
+    body.aggs = {
+      count: {
+        terms: {
+          field: "url",
+          size: querys.size ? querys.size : 10,
+        },
+        aggs: {
+          average: {
+            avg: {
+              field: "duration",
+            },
+          },
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageCount: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: interfacindicatorIndex,
       body,
@@ -48,11 +73,14 @@ export class InterfaceindicatorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-
-    const list: InterfaceIndicator[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: InterfaceIndicator = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        url: item.key,
+        count: item.doc_count,
+        average: item.average.value,
+        userCount: item.userCount.value,
+        pageCount: item.pageCount.value,
+      };
     });
     return responseRust.success_data(list);
   }

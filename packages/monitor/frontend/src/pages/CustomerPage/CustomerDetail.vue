@@ -359,22 +359,10 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import {
-  getBehaviorsBasicbehaviors,
-  getBehaviorsClickbehaviors,
-  getBehaviorsPageskipbehaviors,
-  getBehaviorsRoutingskipbehaviors,
-  getErrorsJavascripterrors,
-  getErrorsPromiseerrors,
-  getErrorsResourceerrors,
-  getErrorsVueerrors,
-  getPerformancesBasicindicators,
-} from "@/apis";
-import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartOption, EChartsType } from "echarts";
 import * as echarts from "echarts";
-import { nextTick, onMounted, watch } from "vue";
+import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
 let showDetails = $ref<boolean>(true);
@@ -463,8 +451,9 @@ onMounted(() => {
   userActionParma.userId = route.query.userId + "";
   echar_page = echarts.init(pageDom);
   echar_api = echarts.init(apiDom);
-  echar_page.setOption(option_page);
-  echar_api.setOption(option_api);
+  //
+  // echar_page.setOption(option_page);
+  // echar_api.setOption(option_api);
   loadAllData();
   loadBasicindicators();
 });
@@ -509,117 +498,117 @@ const clickAction = (index: number) => {
 
 // 加载行为记录列表
 const loadBasicindicators = async () => {
-  const resultData = await getPerformancesBasicindicators({
-    ...userActionParma,
-    subType: BasicIndicator.subType.FullLoad,
-  });
-  let total = 0;
-  resultData.data.items.forEach((e) => {
-    total += e.value;
-  });
-  option_page.series![0].data = [total / resultData.data.items.length];
-  nextTick(() => {
-    echar_page.setOption(option_page);
-  });
+  // const resultData = await getPerformancesBasicindicators({
+  //   ...userActionParma,
+  //   subType: BasicIndicator.subType.FullLoad,
+  // });
+  // let total = 0;
+  // resultData.data.items.forEach((e) => {
+  //   total += e.value;
+  // });
+  // option_page.series![0].data = [total / resultData.data.items.length];
+  // nextTick(() => {
+  //   echar_page.setOption(option_page);
+  // });
 };
 // 加载资源错误
 const loadResourceerrors = () => {
-  return getErrorsResourceerrors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 2;
-      temp.title = "资源错误";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getErrorsResourceerrors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 2;
+  //     temp.title = "资源错误";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 
 // 加载 JavaScript错误
 const loadJavascripterrors = () => {
-  return getErrorsJavascripterrors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 2;
-      temp.title = "JavaScript错误";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getErrorsJavascripterrors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 2;
+  //     temp.title = "JavaScript错误";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 // 加载 Promise错误
 const loadPromiseerrors = () => {
-  return getErrorsPromiseerrors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 3;
-      temp.title = "接口错误";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getErrorsPromiseerrors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 3;
+  //     temp.title = "接口错误";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 // 加载 Vue错误
 const loadVueerrors = () => {
-  return getErrorsVueerrors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 2;
-      temp.title = "vue错误";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getErrorsVueerrors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 2;
+  //     temp.title = "vue错误";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 
 // 基础行为查询
 const loadBasicbehaviors = () => {
-  return getBehaviorsBasicbehaviors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 1;
-      temp.title = "页面浏览";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getBehaviorsBasicbehaviors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 1;
+  //     temp.title = "页面浏览";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 
 // 点击行为
 const loadClickbehaviors = () => {
-  return getBehaviorsClickbehaviors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 4;
-      temp.title = "点击";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getBehaviorsClickbehaviors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 4;
+  //     temp.title = "点击";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 // 页面跳转行为
 const loadPageskipbehaviors = () => {
-  return getBehaviorsPageskipbehaviors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 5;
-      temp.title = "页面浏览";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getBehaviorsPageskipbehaviors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 5;
+  //     temp.title = "页面浏览";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 // 路由跳转行为
 const loadRoutingskipbehaviors = () => {
-  return getBehaviorsRoutingskipbehaviors({ ...userActionParma }).then((e) => {
-    e.data.items.forEach((data) => {
-      const temp = Object.assign({ ...data });
-      temp.listType = 6;
-      temp.title = "页面浏览";
-      temp.time = temp.errorTime || temp.startTime;
-      actionList.push(temp);
-    });
-  });
+  // return getBehaviorsRoutingskipbehaviors({ ...userActionParma }).then((e) => {
+  //   e.data.items.forEach((data) => {
+  //     const temp = Object.assign({ ...data });
+  //     temp.listType = 6;
+  //     temp.title = "页面浏览";
+  //     temp.time = temp.errorTime || temp.startTime;
+  //     actionList.push(temp);
+  //   });
+  // });
 };
 
 const loadAllData = async () => {

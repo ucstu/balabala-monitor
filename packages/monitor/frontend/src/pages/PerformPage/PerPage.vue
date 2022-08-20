@@ -7,27 +7,12 @@
           <span> 页面加载耗时分段</span>
         </div>
         <div class="change">
-          <input id="one" type="radio" name="tab" checked />
-          <input id="two" type="radio" name="tab" />
-          <input id="three" type="radio" name="tab" />
-          <input id="four" type="radio" name="tab" />
-          <input id="five" type="radio" name="tab" />
-          <label for="one" class="one"
-            ><span
-              ><i class="fa fa-angle-left" @click="getlist(0)">1秒</i></span
-            ></label
-          >
-          <label for="two" class="two" @click="getlist(1)"
-            ><span>1-5秒</span></label
-          >
-          <label for="three" class="three" @click="getlist(2)"
-            ><span>5-10秒</span></label
-          >
-          <label for="four" class="four" @click="getlist(3)"
-            ><span>10-30秒</span></label
-          >
-          <label for="five" class="five" @click="getlist(4)"
-            ><span><i class="fa fa-angle-right">30秒</i></span></label
+          <span
+            v-for="(value, index) in myarr"
+            :key="index"
+            :class="timerangeselect == index ? 'select' : null"
+            @click="getlist(index), getalldaypagetime(index)"
+            >{{ value }}</span
           >
         </div>
         <div class="data">
@@ -61,7 +46,7 @@
         >
       </div>
       <div class="bars">
-        <div ref="time-solt-bar" class="bar1"></div>
+        <div ref="pagealldaytimeDom" class="bar1"></div>
       </div>
     </div>
     <div class="bottom">
@@ -72,7 +57,8 @@
             <li
               v-for="(value, index) in pageRankRes"
               :key="index"
-              @click="getpageurl(value.pageUrl)"
+              :class="selection === index ? 'select' : null"
+              @click="getpageurl(value.pageUrl, index)"
             >
               <span>{{ value.pageUrl }}</span
               ><i class="fa fa-chain-broken"></i>{{ value.startTime
@@ -86,7 +72,7 @@
           <div class="board-data">
             <div class="time">
               <span>平均网络耗时</span>
-              <span>6.82s</span>
+              <span>{{ averagetime + "ms" }}</span>
             </div>
             <div class="icon">
               <i class="fa fa-hourglass-end"></i>
@@ -95,14 +81,13 @@
           <div class="board-data">
             <div class="time">
               <span>影响用户</span>
-              <span>6.82s</span>
+              <span>{{ usercount }}</span>
             </div>
             <div class="icon">
               <i class="fa fa-male"></i>
             </div>
           </div>
         </div>
-        <div class="bar3"></div>
       </div>
     </div>
   </div>
@@ -117,23 +102,73 @@ import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { EChartsType } from "echarts";
-import { h, onMounted } from "vue";
-
+import { onMounted } from "vue";
 const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+const myarr = $ref<Array<string>>([
+  "<1秒",
+  "1-5秒",
+  "5-10秒",
+  "10-30秒",
+  ">30秒",
+]);
 const userMessage = $ref({
   appId: APPID,
   startTime: dayjs().subtract(30, "day").format("YYYY-MM-DD"),
   endTime: dayjs().format("YYYY-MM-DD"),
 });
-
+let timerangeselect = $ref<number>(0);
+let selection = $ref<number>(0);
 let count = $ref<number>();
 let percentage = $ref<string>("00.00");
 let Res = $ref<any>();
+let pagealldayRes = $ref<any>();
 let date = $ref<string>(dayjs().format("MM-DD"));
 let pageRankRes = $ref<any>();
-let pagetime_echart: EChartsType;
+let averagetime = $ref<string>("00.00");
+let usercount = $ref<number>(0);
+const pagealldaytimeDom = $ref<HTMLElement>();
+let pagealldaytime_echart: EChartsType;
 const pagetimeDom = $ref<HTMLElement>();
+let pagetime_echart: EChartsType;
 let option_page = $ref<any>({
+  xAxis: {
+    type: "category",
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      data: [0],
+      type: "bar",
+      showBackground: true,
+      backgroundStyle: {
+        color: "rgba(180, 180, 180, 0.2)",
+      },
+    },
+  ],
+  tooltip: {
+    // 鼠标悬浮提示框显示 X和Y 轴数据
+    trigger: "axis",
+    backgroundColor: "rgba(32, 33, 36,.7)",
+    borderColor: "rgba(32, 33, 36,0.20)",
+    borderWidth: 1,
+    textStyle: {
+      // 文字提示样式
+      color: "#fff",
+      fontSize: "12",
+    },
+    axisPointer: {
+      // 坐标轴虚线
+      type: "cross",
+      label: {
+        backgroundColor: "#6a7985",
+      },
+    },
+  },
+});
+let option_pagealldaytime = $ref<any>({
   xAxis: {
     type: "category",
     data: [],
@@ -173,8 +208,32 @@ let option_page = $ref<any>({
 });
 onMounted(() => {
   pagetime_echart = echarts.init(pagetimeDom);
-  getPerformancesBasicindicatorstatistics;
+  pagealldaytime_echart = echarts.init(pagealldaytimeDom);
+  getRank("2022-" + date, timerangeselect);
 });
+// 获取排行榜
+function getRank(date: string, index: number) {
+  getPerformancesBasicindicators({
+    appId: APPID,
+    startTime: date,
+    endTime: dayjs(date).add(1, "day").format("YYYY-MM-DD"),
+    mainType: BasicIndicator.mainType.LoadIndicator,
+    subType: BasicIndicator.subType.FullLoad,
+    size: 10,
+  }).then((res) => {
+    pageRankRes = res.data;
+    console.log("排行榜返回值：", res);
+    if (res.data.length === 0) {
+      averagetime = "暂无数据";
+      usercount = 0;
+    } else {
+      averagetime = res.data[0].average.toFixed(2);
+      usercount = res.data[0].count;
+      getpagealldaydata(pageRankRes[0].pageUrl, "2022-" + date, index);
+    }
+  });
+}
+
 getPerformancesBasicindicatorstatistics({
   ...userMessage,
   mainType: BasicIndicator.mainType.LoadIndicator,
@@ -182,11 +241,13 @@ getPerformancesBasicindicatorstatistics({
   granularity: "1d",
 }).then((res) => {
   Res = res;
+  console.log("近一个月页面加载数据", res);
   getlist(0);
 });
 
 // 对数据进行处理
 function getlist(index: number) {
+  timerangeselect = index;
   let arr: any = [];
   let arr2: any = [];
   Res.data[index].forEach((e: any) => {
@@ -204,6 +265,20 @@ function getlist(index: number) {
     }
   });
   getpercentage();
+}
+// 获取具体一天页面加载数据24小时的列表
+function getalldaypagetime(index: number) {
+  let arr: any = [];
+  let arr2: any = [];
+  pagealldayRes.data[index].forEach((e: any) => {
+    arr.push(e.dateTime);
+  });
+  option_pagealldaytime.xAxis.data = arr;
+  pagealldayRes.data[index].forEach((e: any) => {
+    arr2.push(e.count);
+  });
+  option_pagealldaytime.series[0].data = arr2;
+  pagealldaytime_echart.setOption(option_pagealldaytime);
 }
 //计算百分比
 function getpercentage() {
@@ -223,39 +298,50 @@ function getpercentage() {
 }
 //柱状图的点击事件
 function clickbar() {
+  selection = 0;
   pagetime_echart.on("click", function (params: any) {
     date = params.name;
     count = params.value;
     getpercentage();
-    console.log("2022-" + params.name);
+    getRank("2022-" + date, timerangeselect);
   });
 }
 //获取页面记载排行榜
-getPerformancesBasicindicators({
-  appId: APPID,
-  startTime: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
-  endTime: dayjs().subtract(4, "day").format("YYYY-MM-DD"),
-  mainType: BasicIndicator.mainType.LoadIndicator,
-  subType: BasicIndicator.subType.FullLoad,
-  size: 10,
-}).then((res) => {
-  pageRankRes = res.data;
-  console.log(res.data);
-});
-function getpageurl(url: string) {
-  console.log(url);
+// getPerformancesBasicindicators({
+//   appId: APPID,
+//   startTime: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
+//   endTime: dayjs().subtract(4, "day").format("YYYY-MM-DD"),
+//   mainType: BasicIndicator.mainType.LoadIndicator,
+//   subType: BasicIndicator.subType.FullLoad,
+//   size: 10,
+// }).then((res) => {
+//   pageRankRes = res.data;
+//   console.log(pageRankRes)
+//   averagetime = res.data[0].average.toFixed(2)
+//   usercount = res.data[0].count
+//   getpagealldaydata(pageRankRes[0].pageurl,'2022-'+date)
+// });
+function getpageurl(url: string, index: number) {
+  selection = index;
+  averagetime = pageRankRes[index].average.toFixed(2);
+  usercount = pageRankRes[index].count;
+  getpagealldaydata(pageRankRes[index].pageUrl, "2022-" + date, index);
 }
-getPerformancesBasicindicatorstatistics({
-  appId: APPID,
-  startTime: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
-  endTime: dayjs().subtract(4, "day").format("YYYY-MM-DD"),
-  mainType: BasicIndicator.mainType.LoadIndicator,
-  subType: BasicIndicator.subType.FullLoad,
-  pageUrl: "http://127.0.0.1:5173/#/home",
-  granularity: "1h",
-}).then((res) => {
-  console.log(res);
-});
+function getpagealldaydata(url: string, time: string, index: number) {
+  getPerformancesBasicindicatorstatistics({
+    appId: APPID,
+    startTime: dayjs(time).format("YYYY-MM-DD"),
+    endTime: dayjs(time).add(1, "day").format("YYYY-MM-DD"),
+    mainType: BasicIndicator.mainType.LoadIndicator,
+    subType: BasicIndicator.subType.FullLoad,
+    pageUrl: url,
+    granularity: "1h",
+  }).then((res) => {
+    pagealldayRes = res;
+    getalldaypagetime(index);
+    console.log("具体页面一天的数据", res);
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -281,33 +367,25 @@ getPerformancesBasicindicatorstatistics({
     .change {
       border-radius: 5px;
 
-      input {
-        display: none;
-      }
-
       span {
-        padding: 10px 20px;
+        padding: 10px 15px;
         font-size: 15px;
         color: rgb(186 186 186);
         cursor: pointer;
         background-color: rgb(231 231 231);
       }
 
-      .one span {
+      span.select {
+        color: white;
+        background-color: rgb(236 105 69);
+      }
+
+      span:nth-child(1) {
         border-radius: 5px 0 0 5px;
       }
 
-      .five span {
+      span:nth-child(5) {
         border-radius: 0 5px 5px 0;
-      }
-
-      #one:checked ~ label.one span,
-      #two:checked ~ label.two span,
-      #three:checked ~ label.three span,
-      #four:checked ~ label.four span,
-      #five:checked ~ label.five span {
-        color: #fff;
-        background-color: #ea6947;
       }
     }
 
@@ -365,17 +443,9 @@ getPerformancesBasicindicatorstatistics({
     margin-top: 10px;
 
     .bar1 {
-      width: 415px;
+      width: 850px;
       height: 200px;
       margin-left: 20px;
-      background-color: rgb(116 160 160);
-    }
-
-    .bar2 {
-      width: 1050px;
-      height: 100%;
-      height: 200px;
-      background-color: rgb(116 160 160);
     }
   }
 }
@@ -399,11 +469,17 @@ getPerformancesBasicindicatorstatistics({
       height: 41px;
       padding-left: 20px;
       margin-bottom: 10px;
+      cursor: pointer;
       background-color: rgb(230 230 230);
 
       .fa {
         margin: 0 10px;
       }
+    }
+
+    li.select {
+      color: white;
+      background-color: rgb(236 105 69);
     }
   }
 

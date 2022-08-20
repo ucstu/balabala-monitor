@@ -6,6 +6,9 @@ import {
 } from "src/vo/interfaceIndicator.vo";
 import { InterfaceindicatorService } from "./interfaceindicator.service";
 
+/**
+ * 接口指标
+ */
 @Controller("/performances")
 export class InterfaceindicatorController {
   constructor(private interfaceindicatorService: InterfaceindicatorService) {}

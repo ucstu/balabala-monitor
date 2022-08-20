@@ -81,6 +81,29 @@
           </ul>
         </div>
       </div>
+      <div class="left">
+        <div class="board">
+          <div class="board-data">
+            <div class="time">
+              <span>平均网络耗时</span>
+              <span>6.82s</span>
+            </div>
+            <div class="icon">
+              <i class="fa fa-hourglass-end"></i>
+            </div>
+          </div>
+          <div class="board-data">
+            <div class="time">
+              <span>影响用户</span>
+              <span>6.82s</span>
+            </div>
+            <div class="icon">
+              <i class="fa fa-male"></i>
+            </div>
+          </div>
+        </div>
+        <div class="bar3"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -282,12 +305,12 @@ function getpageurl(url: string) {
         background-color: rgb(231 231 231);
       }
 
-      span:nth-child(1) {
-        border-radius: 10px 0 0 10px;
+      .one span {
+        border-radius: 5px 0 0 5px;
       }
 
-      span:nth-child(5) {
-        border-radius: 0 10px 10px 0;
+      .five span {
+        border-radius: 0 5px 5px 0;
       }
 
       #one:checked ~ label.one span,
@@ -378,13 +401,13 @@ function getpageurl(url: string) {
   }
 
   .list ul {
-    width: 500px;
+    width: 400px;
     list-style: none;
 
     li {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       height: 41px;
       padding-left: 20px;
       margin-bottom: 10px;

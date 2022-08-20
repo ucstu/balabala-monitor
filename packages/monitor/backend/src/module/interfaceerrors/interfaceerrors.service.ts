@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
 import * as dayjs from "dayjs";
 import { interfacindicatorIndex } from "src/config/db.index";
-import { InterfaceIndicator } from "src/entity/interfaceIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
 import {
   getInterfaceerrorsBody,
@@ -24,25 +23,72 @@ export class InterfaceerrorsService {
    */
   async getInterfaceerrors(querys: InterfaceerrorsVo) {
     const body = getInterfaceerrorsBody(querys);
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "url",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: interfacindicatorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
+
+    body.aggs = {
+      count: {
+        terms: {
+          field: "url",
+          size: size,
+        },
+        aggs: {
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageCount: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+          average: {
+            avg: {
+              field: "duration",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: interfacindicatorIndex,
       body,
     });
+
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: InterfaceIndicator[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: InterfaceIndicator = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        pageUrl: item.key,
+        count: item.doc_count,
+        average: item.average.value,
+        userCount: item.userCount.value,
+        pageCount: item.doc_count,
+      };
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
 
   /**

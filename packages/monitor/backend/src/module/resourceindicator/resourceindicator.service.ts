@@ -43,11 +43,33 @@ export class ResourceindicatorService {
 
   async queryResourceIndicator(querys: ResourceIndicatorVo) {
     const body = getQueryBody(querys, "startTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "url",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: resourceindicatorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
     body.aggs = {
       count: {
         terms: {
           field: "url",
-          size: querys.size ? querys.size : 10,
+          size: size,
         },
         aggs: {
           average: {

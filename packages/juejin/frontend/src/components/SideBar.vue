@@ -1,216 +1,205 @@
 <template>
-  <div class="box">
-    <!-- 左侧内容 -->
-    <div class="container">
-      <ul class="container-top">
-        <li style="color: #007fff">推荐</li>
-        <li>| 最新 |</li>
-        <li>热榜</li>
-      </ul>
-      <div class="container-m">
-        <div class="container-m-top">
-          <div class="span-l">用户名</div>
-          <div style="cursor: pointer">| 天数 |</div>
-          <div class="span-l">分类</div>
+  <div class="outer">
+    <div style="flex: 1"></div>
+    <div class="outer-header">
+      <span
+        v-for="(top, index) of mainList"
+        :key="index"
+        :style="{
+          color: currentIndex == index ? 'rgb(0,127,255)' : '',
+        }"
+        @mouseenter="lightHeight(index, 'enter')"
+        @mouseleave="lightHeight(index, 'leave')"
+        @click="clickNavigator(index)"
+      >
+        {{ top }}
+        <span style="display: inline-block; margin-left: 15px; color: #90908e"
+          >{{ index < mainList.length - 1 ? "|" : "" }}
+        </span>
+      </span>
+      <div
+        v-for="(item, index) in list.articleInfos"
+        :key="index"
+        class="contain"
+        @click="goDetail(item.articleId)"
+      >
+        <div class="contain-top">
+          {{ item.articleTitle }}
+          <span style="margin: 0 8px; opacity: 0.3">|</span>
+          <div class="contain-article-class">
+            {{ articleClass[item.articleClass] }}
+          </div>
         </div>
-        <div class="container-m-content">
-          <a href="">标题</a>
-          <div><a href="">内容</a></div>
+        <div class="contain-center">
+          <div>
+            <div class="contain-summary">
+              {{ item.articleSummary }}
+            </div>
+            <div class="contain-footer">
+              <ul>
+                <li>
+                  <i class="iconfont icon-liulan"
+                    ><span>{{ " " + item.articleTraffic }}</span></i
+                  >
+                </li>
+                <li>
+                  <i class="iconfont icon-31dianzan"
+                    ><span>{{ " " + item.articlelikes }}</span>
+                  </i>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="contain-cover">
+            <img :src="item.articleCover" alt="tags" />
+          </div>
         </div>
-        <div class="container-m-botton">
-          <img src="../assets/guankan.png" alt="" />
-          <div>观看数</div>
-          <img src="../assets/dianzan.png" alt="" />
-          <div>点赞数</div>
-          <img src="../assets/pinglun.png" alt="" />
-          <div>评论数</div>
-        </div>
-        <img
-          src="../assets/fengmian.png"
-          alt=""
-          class="container-mbox-fengmian"
-        />
       </div>
     </div>
-    <!-- 签到 -->
-    <div class="signin">
-      <div class="sigin-top">
-        <img class="rili" src="../assets/rili.png" alt="" />
-        <span class="title">上午好!</span>
-        <a href="">
-          <img class="signin-jpg" src="../assets/signin.png" />
-        </a>
-      </div>
-      <div class="signin2">点亮你在社区的每一天</div>
-    </div>
-    <div class="guanggao-img">
-      <img src="../assets/guanggao.png" alt="" />
-      <img src="../assets/guangao2.png" alt="" />
-      <img src="../assets/erweima.png" alt="" style="height: 74px" />
-    </div>
+    <div style="flex: 1"></div>
   </div>
 </template>
+<script setup lang="ts">
+import { Article, getArticle1 } from "@/apis";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+type ArrayList = {
+  totalCount?: number;
+  articleInfos?: Array<Article>;
+};
+const articleClass = [
+  "后端",
+  "前端",
+  "Android",
+  "IOS",
+  "人工智能",
+  "开发工具",
+  "代码人生",
+  "阅读",
+];
+let router = useRouter();
+let mainList = ["推荐", "最新", "热榜"];
+let list = reactive<ArrayList>({
+  totalCount: 1,
+  articleInfos: [],
+});
+getArticle1({ _class: 0 }).then((res) => {
+  (list.totalCount = res.data.totalCount),
+    (list.articleInfos = res.data.articleInfos);
+});
+let currentIndex = ref<number>(0);
+let defaultIndex = ref<number>(0);
+function lightHeight(index: number, operate: string) {
+  if (operate == "enter") {
+    currentIndex.value = index;
+  } else {
+    currentIndex.value = defaultIndex.value;
+  }
+}
+function clickNavigator(index: number) {
+  defaultIndex.value = index;
+}
+function goDetail(id: number | string) {
+  router.push(`/detail/${id}`);
+}
+</script>
 
-<script lang="ts" setup></script>
+<style scoped>
+.outer {
+  display: flex;
+  height: 100%;
+  padding-top: 15px;
+  margin-top: 63px;
+  background-color: rgb(244 245 243);
+}
 
-<style lang="scss" scoped>
-.box {
-  width: 960px;
-  height: 2000px;
-  margin: 80px auto 0;
+.outer-header {
+  flex: 2.5;
+  height: 46px;
+  font-size: 14px;
+  line-height: 46px;
+  color: rgb(144 144 142);
+  background-color: white;
+  border-bottom: 1px solid rgb(155 155 155 / 60%);
+}
+
+.outer-header > span {
+  display: inline-block;
+  width: 56px;
+  padding-right: 10px;
+  padding-left: 10px;
   text-align: center;
+}
 
-  .guanggao-img img {
-    float: right;
-    width: 240px;
-    height: 200px;
-    margin-bottom: 16px;
-  }
+.contain {
+  box-sizing: border-box;
+  width: 100%;
+  height: 133px;
+  padding-top: 12px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: white;
+  border-bottom: 1px solid;
+}
 
-  .container {
-    float: left;
-    width: 700px;
-    height: 2000px;
+.contain-top {
+  display: flex;
+  height: 22px;
+  font-size: 13px;
+  line-height: 22px;
+  color: #4e5969;
+}
 
-    .container-top {
-      height: 46px;
-      padding-left: 10px;
-      margin: 0;
-      border-bottom: 1px solid hsl(0deg 0% 59.2% / 10%);
-    }
+.contain-center {
+  display: flex;
+  justify-content: space-between;
 
-    .container-top li {
-      display: inline-block;
-      float: left;
-      width: 50px;
-      font-size: 14px;
-      line-height: 46px;
-      color: #909091;
-      cursor: pointer;
+  /* height: 80px; */
+}
 
-      &:hover {
-        color: #007fff;
-      }
-    }
+.contain-summary {
+  height: 24px;
+  margin: 10px 0;
+  margin-bottom: 8px;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 24px;
+  color: #86909c;
+}
 
-    .container-m {
-      width: 660px;
-      height: 121px;
-      padding: 12px 20px 0;
-      font-size: 13px;
-      background-color: #ddd;
+.contain-article-class {
+  color: #86909c;
+}
 
-      .container-mbox-fengmian {
-        position: relative;
-        top: -85px;
-        right: -270px;
-        width: 120px;
-        height: 80px;
-        cursor: pointer;
-      }
+.contain-cover img {
+  width: 120px;
+  height: 80px;
+  margin-left: 24px;
+}
 
-      .container-m-top {
-        display: flex;
-        justify-content: baseline;
-        width: 100%;
+.contain-footer {
+  /* overflow: hidden; */
+  height: 20px;
+  margin-top: 15px;
+  font-size: 13px;
+}
 
-        div {
-          padding-right: 8px;
-        }
+.contain-footer ul {
+  display: flex;
+  padding-left: 0;
+}
 
-        .span-l:hover {
-          color: #007fff;
-          cursor: pointer;
-        }
+.contain-footer li {
+  width: 48px;
+  margin-right: 20px;
+  list-style: none;
+}
 
-        span {
-          display: flex;
-          cursor: pointer;
-        }
-      }
+.contain-footer i {
+  color: #4e5969;
+}
 
-      .container-m-content {
-        a {
-          display: flex;
-          margin: 8px 0;
-          font-size: 16px;
-          font-weight: 700;
-          line-height: 24px;
-          color: #000;
-          text-decoration: none;
-        }
-
-        div a {
-          display: flex;
-          margin: 0 0 10px;
-          font-size: 13px;
-          font-weight: normal;
-          line-height: 22px;
-          color: #86909c;
-        }
-      }
-
-      .container-m-botton {
-        display: flex;
-
-        img {
-          width: 16px;
-          height: 16px;
-          margin-right: 4px;
-          cursor: pointer;
-        }
-
-        div {
-          margin-right: 20px;
-          font-size: 13px;
-          line-height: 16px;
-          color: #4e5969;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-
-  .signin {
-    box-sizing: border-box;
-    float: right;
-    width: 240px;
-    height: 96px;
-
-    // 为了看清才用的这个颜色
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: aqua;
-
-    .sigin-top {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-
-      .rili {
-        display: flex;
-      }
-
-      .title {
-        display: flex;
-        margin-top: 2px;
-        font-size: 18px;
-        font-weight: 500;
-        color: #1d2129;
-      }
-
-      .signin-jpg {
-        display: flex;
-        width: 72px;
-        height: 32px;
-      }
-    }
-  }
-
-  .signin2 {
-    margin-left: 36px;
-    font-size: 14px;
-    color: #4e5969;
-  }
+.contain-footer i span {
+  font-size: 13px;
 }
 </style>

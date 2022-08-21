@@ -81,7 +81,7 @@ export class InterfaceerrorsService {
     }
     const list = res.body.aggregations.count.buckets.map((item) => {
       return {
-        pageUrl: item.key,
+        url: item.key,
         count: item.doc_count,
         average: item.average.value,
         userCount: item.userCount.value,

@@ -48,7 +48,7 @@ export class JavascripterrorService {
     let sqlString = `
             SELECT msg,count(msg),url ,line,column,userID,pageUrl
             FROM "javascript_error"
-            where appId=? and mainType=? and mainType=? and errorTime between ? and ?
+            where appId=? and mainType=? and subType=? and errorTime between ? and ?
             group by msg,url, line,column,userID,pageUrl
             order by count(msg) desc
         `;

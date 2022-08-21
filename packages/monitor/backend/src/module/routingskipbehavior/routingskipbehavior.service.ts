@@ -3,9 +3,8 @@ import { ElasticsearchService } from "@nestjs/elasticsearch";
 import { routingskipbehaviorIndex } from "src/config/db.index";
 import { responseRust } from "src/entity/responseRust";
 import { RoutingSkipBehavior } from "src/entity/routingSkipBehavior.entity";
-import { getQueryBody } from "src/utils/searchBody";
 import { RoutingSkipBehaviorVo } from "src/vo/RoutingSkipBehavior.vo";
-
+const SqlString = require("sqlstring");
 @Injectable()
 export class RoutingskipbehaviorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -37,25 +36,68 @@ export class RoutingskipbehaviorService {
    * 查询数据
    */
   async queryRoutingSkipBehavior(querys: RoutingSkipBehaviorVo) {
-    const body = getQueryBody(querys, "startTime");
-    const res = await this.elasticsearchService.search({
-      index: routingskipbehaviorIndex,
-      body,
+    if (querys.start_time.length === 10) {
+      querys.start_time = querys.start_time + " 00:00:00";
+      querys.end_time = querys.end_time + " 00:00:00";
+    }
+    // sql 语句
+    let sqlString = `
+            SELECT from,count(from),to ,userID,pageUrl
+            FROM "routing_skip_behavior"
+            where appId=? and mainType=? and subType=? and startTime between ? and ?
+            group by from,to, userID,pageUrl
+            order by count(from) desc
+        `;
+    // sql 参数
+    const sqlAges = [
+      querys.app_id,
+      querys.main_type,
+      querys.sub_type,
+      new Date(querys.start_time).getTime(),
+      new Date(querys.end_time).getTime(),
+    ];
+    // 是否要限制返回条数
+    if (querys.size) {
+      sqlString += " limit ?";
+      sqlAges.push(querys.size);
+    }
+    const sql = SqlString.format(sqlString, sqlAges);
+    const rest = await this.elasticsearchService.sql.query({
+      body: {
+        query: sql,
+      },
     });
-    if (res.statusCode !== 200) {
+    if (rest.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: RoutingSkipBehavior[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: RoutingSkipBehavior = element._source;
-      list.push(source);
+    const map = new Map();
+    rest.body.rows.forEach((item) => {
+      const value = {
+        from: item[0],
+        count: item[1],
+        to: item[2],
+        userCount: 1,
+        pageCount: 1,
+        userID: [item[3]],
+        pageUrl: [item[4]],
+        average: 0,
+      };
+      const key = `${item[0]}${item[2]}`;
+      if (map.has(key)) {
+        const mapItem = map.get(key);
+        if (!mapItem.userID.includes(value.userID[0])) {
+          mapItem.userCount++;
+          mapItem.userID.push(value.userID[0]);
+        }
+        if (!mapItem.pageUrl.includes(value.pageUrl[0])) {
+          mapItem.pageCount++;
+          mapItem.pageUrl.push(value.pageUrl[0]);
+        }
+        map.get(key).count += value.count;
+      } else {
+        map.set(key, value);
+      }
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data([...map.values()]);
   }
 }

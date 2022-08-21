@@ -85,6 +85,7 @@ function cancelLogin() {
   phoneContent = "";
   password = "";
   userName = "";
+  title = "手机登录";
 }
 function userRegister() {
   title = "请注册";

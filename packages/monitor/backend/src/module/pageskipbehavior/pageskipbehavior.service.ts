@@ -44,7 +44,7 @@ export class PageskipbehaviorService {
     let sqlString = `
             SELECT from,count(from),to ,userID,pageUrl
             FROM "page_skip_behavior"
-            where appId=? and mainType=? and mainType=? and errorTime between ? and ?
+            where appId=? and mainType=? and subType=? and startTime between ? and ?
             group by from,to, userID,pageUrl
             order by count(from) desc
         `;

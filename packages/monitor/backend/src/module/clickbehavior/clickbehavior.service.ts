@@ -44,7 +44,7 @@ export class ClickbehaviorService {
     let sqlString = `
             SELECT target,count(target),inner ,userID,pageUrl
             FROM "click_behavior"
-            where appId=? and mainType=? and mainType=? and errorTime between ? and ?
+            where appId=? and mainType=? and subType=? and startTime between ? and ?
             group by target,inner, userID,pageUrl
             order by count(target) desc
         `;

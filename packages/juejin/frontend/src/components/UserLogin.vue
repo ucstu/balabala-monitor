@@ -8,7 +8,7 @@
             <div style="font-weight: bold">{{ title }}</div>
             <img src="../assets/取消.png" alt="取消" @click="cancelLogin" />
           </div>
-          <div style="position: relative">
+          <div v-show="!isRegister" style="position: relative">
             <input
               ref="name"
               v-model="userName"
@@ -76,7 +76,7 @@ function clickLogin() {
   }, 50);
 }
 function cancelLogin() {
-  isShow.value = false;
+  isShow = false;
 }
 function userRegister() {
   title = "请注册";
@@ -84,16 +84,16 @@ function userRegister() {
 }
 function loginSure() {
   if (!phoneContent) {
-    isShowPrompt.value = true;
-    promptContent.value = "手机号";
+    isShowPrompt = true;
+    promptContent = "手机号";
     setTimeout(() => {
-      isShowPrompt.value = false;
+      isShowPrompt = false;
     }, 2000);
   } else if (!password) {
-    isShowPrompt.value = true;
-    promptContent.value = "密码";
+    isShowPrompt = true;
+    promptContent = "密码";
     setTimeout(() => {
-      isShowPrompt.value = false;
+      isShowPrompt = false;
     }, 2000);
   } else {
     if (title == "请注册") {

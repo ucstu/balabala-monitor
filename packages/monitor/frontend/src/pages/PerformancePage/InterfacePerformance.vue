@@ -55,14 +55,14 @@
         </div>
         <div class="data">
           <span
-            ><strong>{{ sectionTotals[activeSection] }}</strong
+            ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
             ><br />数量</span
           >
           <span
             ><strong
               >{{
                 (
-                  (sectionTotals[activeSection] / (sectionTotal || 0)) *
+                  ((sectionTotals[activeSection] || 0) / (sectionTotal || 1)) *
                   100
                 ).toFixed(2)
               }}%</strong

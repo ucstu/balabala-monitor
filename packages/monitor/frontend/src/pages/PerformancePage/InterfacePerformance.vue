@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="fa fa-hourglass-end"></i>
-          <span> 接口耗时分段</span>
+          <span> 耗时分段</span>
         </div>
         <div class="change">
           <label>
@@ -55,14 +55,14 @@
         </div>
         <div class="data">
           <span
-            ><strong>{{ sectionTotals[activeSection] }}</strong
+            ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
             ><br />数量</span
           >
           <span
             ><strong
               >{{
                 (
-                  (sectionTotals[activeSection] / (sectionTotal || 0)) *
+                  ((sectionTotals[activeSection] || 0) / (sectionTotal || 1)) *
                   100
                 ).toFixed(2)
               }}%</strong
@@ -77,25 +77,18 @@
       <div class="right">
         <div class="title">
           <i class="fa fa-bar-chart"></i>
-          <span> 近三十天变化趋势</span>
+          <span> 变化趋势（近30天）</span>
         </div>
         <div class="bar"></div>
       </div>
     </div>
-    <div class="center">
+    <div class="content">
       <div class="title">
         <i class="fa fa-bars"></i>
-        <span> 页面列表</span>
+        <span> 接口列表</span>
       </div>
-      <div class="bars">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-      </div>
-    </div>
-    <div class="bottom">
-      <div>
-        <div class="time-title">时间范围<span>9:00</span></div>
-        <div class="list">
+      <div class="main">
+        <div class="left">
           <ul>
             <li>
               <span>www.baidu.com</span
@@ -153,29 +146,41 @@
             </li>
           </ul>
         </div>
-      </div>
-      <div class="left">
-        <div class="board">
-          <div class="board-data">
-            <div class="time">
-              <span>平均网络耗时</span>
-              <span>6.82s</span>
+        <div class="right">
+          <div class="title">
+            <i class="fa fa-flag"></i>
+            <span> 常见指标</span>
+          </div>
+          <div class="board">
+            <div class="data">
+              <div class="time">
+                <span>平均耗时</span>
+                <span>6.82s</span>
+              </div>
+              <div class="icon">
+                <i class="fa fa-hourglass-end"></i>
+              </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-hourglass-end"></i>
+            <div class="data">
+              <div class="time">
+                <span>影响用户</span>
+                <span>6.82s</span>
+              </div>
+              <div class="icon">
+                <i class="fa fa-male"></i>
+              </div>
             </div>
           </div>
-          <div class="board-data">
-            <div class="time">
-              <span>影响用户</span>
-              <span>6.82s</span>
-            </div>
-            <div class="icon">
-              <i class="fa fa-male"></i>
-            </div>
+          <div class="title">
+            <i class="fa fa-bar-chart"></i>
+            <span> 指标趋势</span>
+          </div>
+          <div class="bars">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
           </div>
         </div>
-        <div class="bar3"></div>
       </div>
     </div>
   </div>
@@ -222,6 +227,12 @@ getInterfaceIndicatorstatistics();
 .container {
   padding: 20px;
 
+  .title {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #ea6947;
+  }
+
   .top {
     display: flex;
     height: 200px;
@@ -231,12 +242,6 @@ getInterfaceIndicatorstatistics();
       flex: 3;
       flex-direction: column;
       padding: 10px;
-
-      .title {
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        border-bottom: 3px solid #ea6947;
-      }
 
       .change {
         display: flex;
@@ -299,12 +304,6 @@ getInterfaceIndicatorstatistics();
       padding: 10px;
       margin-left: 20px;
 
-      .title {
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        border-bottom: 3px solid #ea6947;
-      }
-
       .bar {
         flex: 1;
         width: 100%;
@@ -313,103 +312,94 @@ getInterfaceIndicatorstatistics();
     }
   }
 
-  .center {
-    height: 250px;
+  .content {
     padding: 10px;
 
-    // stylelint-disable-next-line all
-    .title {
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      border-bottom: 3px solid #ea6947;
-    }
-
-    .bars {
+    .main {
       display: flex;
-      width: 100%;
 
-      .bar1 {
+      .left {
         flex: 3;
-        height: 200px;
         margin-right: 40px;
-        background-color: #ea6947;
-      }
 
-      .bar2 {
-        flex: 7;
-        height: 200px;
-        background-color: rgb(116 160 160);
-      }
-    }
-  }
+        ul {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          list-style: none;
 
-  .bottom {
-    display: flex;
-    justify-content: space-between;
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 40px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: rgb(230 230 230);
 
-    .time-title {
-      padding: 20px;
-    }
-
-    .list ul {
-      width: 400px;
-      list-style: none;
-
-      li {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        height: 41px;
-        margin-bottom: 10px;
-        background-color: rgb(230 230 230);
-
-        .fa {
-          margin: 0 10px;
+            .fa {
+              margin: 0 10px;
+            }
+          }
         }
       }
-    }
 
-    .left {
-      width: 1050px;
-
-      .board {
+      .right {
         display: flex;
-        margin-top: 70px;
+        flex: 7;
+        flex-direction: column;
 
-        .board-data {
+        .board {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 200px;
-          height: 60px;
-          padding: 20px 10px;
-          margin-left: 10px;
-          background-color: aqua;
-          border-radius: 10px;
+          flex-wrap: wrap;
+          margin-bottom: 20px;
 
-          .time {
+          .data {
             display: flex;
-            flex-direction: column;
+            flex: 0 1 200px;
+            align-items: center;
             justify-content: space-between;
             height: 60px;
-            font-size: 20px;
-            font-weight: 600;
-          }
+            padding: 20px;
+            margin-right: 10px;
+            background-color: #ea6947;
+            border-radius: 10px;
 
-          .icon {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            font-size: 30px;
+            &:last-child {
+              margin-right: 0;
+            }
+
+            .time {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              height: 100%;
+              font-size: 20px;
+            }
+
+            .icon i {
+              font-size: 30px;
+            }
           }
         }
-      }
 
-      .bar3 {
-        width: 100%;
-        height: 200px;
-        margin-top: 20px;
-        background-color: aqua;
+        .bars {
+          display: flex;
+          width: 100%;
+
+          .bar1 {
+            flex: 3;
+            height: 200px;
+            margin-right: 40px;
+            background-color: #ea6947;
+          }
+
+          .bar2 {
+            flex: 7;
+            height: 200px;
+            background-color: rgb(116 160 160);
+          }
+        }
       }
     }
   }

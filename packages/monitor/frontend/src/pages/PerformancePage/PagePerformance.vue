@@ -229,7 +229,6 @@ function getRank(date: string, index: number) {
     } else {
       averagetime = res.data[0].average.toFixed(2);
       usercount = res.data[0].count;
-      console.log(date);
       getpagealldaydata(pageRankRes[0].pageUrl, date, index);
     }
   });
@@ -340,8 +339,7 @@ function getpagealldaydata(url: string, time: string, index: number) {
   }).then((res) => {
     pagealldayRes = res;
     getalldaypagetime(index);
-    console.log(time);
-    console.log("具体页面一天的数据", res);
+    console.log(time, "一天的数据", res);
   });
 }
 </script>

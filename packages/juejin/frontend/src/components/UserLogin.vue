@@ -20,6 +20,7 @@
           </div>
           <div style="position: relative">
             <input
+              ref="input"
               v-model="phoneContent"
               class="zhang-hao"
               type="text"
@@ -63,6 +64,7 @@ let isShow = $ref(false);
 let name = $ref<HTMLElement>(null as unknown as HTMLElement);
 let phoneContent = $ref("");
 let password = $ref<string>("");
+let input = $ref<HTMLElement>(null as unknown as HTMLElement);
 let isShowPrompt = $ref(false);
 let promptContent = $ref("");
 let title = $ref("手机登录");
@@ -72,7 +74,7 @@ let userName = $ref<string>("");
 function clickLogin() {
   isShow = true;
   setTimeout(() => {
-    name.focus();
+    input.focus();
   }, 50);
 }
 function cancelLogin() {
@@ -87,6 +89,9 @@ function userRegister() {
   isRegister = false;
   phoneContent = "";
   password = "";
+  setTimeout(() => {
+    name.focus();
+  }, 50);
 }
 function loginSure() {
   if (!phoneContent) {

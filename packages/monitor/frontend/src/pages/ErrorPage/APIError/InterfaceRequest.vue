@@ -3,15 +3,15 @@
     <div class="top">
       <div class="top-left">
         <form action="#">
-          <select v-model="interfaceParma.statusCode">
-            <option>400</option>
-            <option>500</option>
+          <select v-model="statusCode">
+            <option value="400">400</option>
+            <option value="500">500</option>
           </select>
         </form>
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="interfaceParma.startTime" type="date" />
+          <input v-model="startTime" type="date" />
         </div>
       </div>
     </div>
@@ -22,12 +22,16 @@
           <div class="list-title-name">发生次数</div>
           <div class="list-title-name">影响人数</div>
         </div>
-        <div v-for="(item, index) in list" :key="index" class="list-content">
+        <div
+          v-for="(item, index) in pagedList[page]"
+          :key="index"
+          class="list-content"
+        >
           <div class="sort">
             <div class="list-left sort-content">
               <div class="list-left-top sort-content">
                 <div class="type">interfaceErrors</div>
-                <div>{{ interfaceParma.statusCode }}</div>
+                <div>{{ statusCode }}</div>
               </div>
               <div class="list-left-bottom sort-content">
                 {{ item.dateTime }}
@@ -39,10 +43,23 @@
         </div>
       </div>
       <div class="page">
-        <span><button @click="firstPage">首页</button></span>
-        <span><button @click="prePage">上一页</button></span>
-        <span><button @click="nextPage">下一页</button></span>
-        <span>当前&nbsp;{{ page }}&nbsp;页</span>
+        <span><button @click="page = 0">首页</button></span>
+        <span
+          ><button @click="page = page > 0 ? page-- : 0">上一页</button></span
+        >
+        <span
+          ><button
+            @click="
+              page =
+                page < pagedList.length / size
+                  ? page++
+                  : pagedList.length / size
+            "
+          >
+            下一页
+          </button></span
+        >
+        <span>当前&nbsp;{{ page + 1 }}&nbsp;页</span>
       </div>
     </div>
   </div>
@@ -51,65 +68,53 @@
 <script setup lang="ts">
 import { getErrorsInterfaceerrorstatistics } from "@/apis";
 import { useStore } from "@/stores";
+import { BasicStatistic } from "@/types";
 import { InterfaceIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
-import { nextTick } from "vue";
+import { watch } from "vue";
 let store = useStore();
 let { appId } = $(storeToRefs(store));
+let startTime = $ref(dayjs().format("YYYY-MM-DD"));
 
-let page = 0;
+let statusCode: number = $ref(400);
 
-let statusCode: number = 400 || 500;
-
-type interfaceList = {
-  dateTime: string;
-  count: number;
-  userCount: number;
-};
-let list = $ref<interfaceList[]>([]);
-
-const interfaceParma = $ref({
-  appId,
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-  subType: InterfaceIndicator.subType.InterfaceIndicator,
-  statusCode,
+const interfaceErrorStatisticsParam = $computed(() => {
+  return {
+    appId,
+    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+    subType: InterfaceIndicator.subType.InterfaceIndicator,
+    startTime: dayjs(startTime).format("YYYY-MM-DD"),
+    endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+    statusCode,
+  };
 });
 
-const firstPage = () => {
-  if ((page = 1)) {
-    alert("当前已经是第一页了!");
-  } else {
-    page = 1;
-  }
-};
-const prePage = () => {
-  if ((page = 1)) {
-    alert("当前已经是第一页了!");
-  } else {
-    page = page - 1;
-  }
-};
-
-const nextPage = () => {
-  page = page + 1;
-};
+let page = $ref(0);
+let size = $ref(3);
+let pagedList = $ref<Array<Array<BasicStatistic>>>([]);
 
 const loadInterfaceErrorStatistics = async () => {
-  interfaceParma.endTime = dayjs(interfaceParma.startTime, "YYYY-MM-DD")
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsInterfaceerrorstatistics({ ...interfaceParma }).then((res) => {
-    res.data.forEach((data) => {
-      list.push(data);
-    });
-  });
+  const { data } = await getErrorsInterfaceerrorstatistics(
+    interfaceErrorStatisticsParam
+  );
+  for (let i = 0; i < data.length; i += 5) {
+    pagedList.push(data.slice(i, i + 5));
+  }
 };
-nextTick(() => {
-  loadInterfaceErrorStatistics();
-});
+
+watch(
+  () => statusCode,
+  (newVal, _oldVal) => {
+    if (Number(newVal) == 500) {
+      loadInterfaceErrorStatistics;
+    } else {
+      loadInterfaceErrorStatistics;
+    }
+  }
+);
+
+loadInterfaceErrorStatistics();
 </script>
 
 <style scoped lang="scss">

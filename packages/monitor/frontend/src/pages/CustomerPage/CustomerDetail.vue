@@ -359,6 +359,7 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
+import { getBehaviorsUserAction } from "@/apis";
 import dayjs from "dayjs";
 import type { EChartOption, EChartsType } from "echarts";
 import * as echarts from "echarts";
@@ -612,18 +613,8 @@ const loadRoutingskipbehaviors = () => {
 };
 
 const loadAllData = async () => {
-  await Promise.all([
-    loadResourceerrors(),
-    loadJavascripterrors(),
-    loadPromiseerrors(),
-    loadVueerrors(),
-    loadBasicbehaviors(),
-    loadClickbehaviors(),
-    loadPageskipbehaviors(),
-    loadRoutingskipbehaviors(),
-  ]);
-  actionList.sort((data1, data2) => data1.time - data2.time);
-  //console.log(actionList);
+  const res = await getBehaviorsUserAction({ ...userActionParma });
+  actionList.push(...res.data);
 };
 // 计算结束时间
 watch(

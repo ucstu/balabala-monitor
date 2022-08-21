@@ -2497,9 +2497,9 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 页面路径
+       * 接口路径
        */
-      pageUrl: string;
+      url: string;
       /**
        * 统计总数
        */
@@ -2531,6 +2531,52 @@ export class Service {
         end_time: endTime,
         size: size,
         status_code: statusCode,
+      },
+    });
+  }
+
+  /**
+   * 用户行为列表
+   * 查询指定用户的行为列表
+   * @returns any 成功
+   * @throws ApiError
+   */
+  public getBehaviorsUserAction({
+    appId,
+    userId,
+    startTime,
+    endTime,
+  }: {
+    /**
+     * 应用appid
+     */
+    appId: string;
+    /**
+     * 用户id
+     */
+    userId: string;
+    /**
+     * 开始时间
+     */
+    startTime: string;
+    /**
+     * 结束时间
+     */
+    endTime: string;
+  }): CancelablePromise<{
+    timestamp: string;
+    status: number;
+    message: string;
+    data: Array<string>;
+  }> {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/behaviors/userAction",
+      query: {
+        app_id: appId,
+        user_id: userId,
+        start_time: startTime,
+        end_time: endTime,
       },
     });
   }

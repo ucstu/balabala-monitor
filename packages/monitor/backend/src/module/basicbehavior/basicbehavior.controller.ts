@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from "@nestjs/common";
 import { BasicBehavior } from "src/entity/basicBehavior.entity";
+import { BaseQueryVo } from "src/vo/base.vo";
 import { BasicBehaviorTotalVo, BasicBehaviorVo } from "src/vo/BasicBehavior.vo";
 import { BasicbehaviorService } from "./basicbehavior.service";
 
@@ -35,5 +36,13 @@ export class BasicbehaviorController {
   @Get("/basicbehaviorstatistics")
   totalBasicBehavior(@Query() basicIndicatorTotalVo: BasicBehaviorTotalVo) {
     return this.basicbehaviorService.totalBasicBehavior(basicIndicatorTotalVo);
+  }
+
+  /**
+   * 用户行为列表
+   */
+  @Get("/userAction")
+  getUserActionList(@Query() querysVo: BaseQueryVo) {
+    return this.basicbehaviorService.getUserActionList(querysVo);
   }
 }

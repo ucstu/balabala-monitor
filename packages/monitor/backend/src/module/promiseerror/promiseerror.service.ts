@@ -6,7 +6,7 @@ import { PromiseError } from "src/entity/promiseError.entity";
 import { responseRust } from "src/entity/responseRust";
 import { getQueryBody, getTotalPromiseerrorBody } from "src/utils/searchBody";
 import { PromiseerrorTotalVo, PromiseerrorVo } from "src/vo/promiseerror.vo";
-
+const SqlString = require("sqlstring");
 @Injectable()
 export class PromiseerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -27,6 +27,48 @@ export class PromiseerrorService {
   }
   async getErrorList(querys: PromiseerrorVo) {
     const body = getQueryBody(querys, "errorTime");
+    let size = querys.size ? querys.size : 10;
+    if (!querys.size) {
+      body.aggs = {
+        allCount: {
+          cardinality: {
+            field: "stack",
+          },
+        },
+      };
+      // 查询总条数
+      const allCount = await this.elasticsearchService.search({
+        index: promiseerrorIndex,
+        body,
+      });
+      if (allCount.statusCode !== 200) {
+        return responseRust.error();
+      }
+      size =
+        allCount.body.aggregations.allCount.value === 0
+          ? size
+          : allCount.body.aggregations.allCount.value;
+    }
+    body.aggs = {
+      count: {
+        terms: {
+          field: "stack",
+          size: size,
+        },
+        aggs: {
+          userCount: {
+            cardinality: {
+              field: "userID",
+            },
+          },
+          pageUrl: {
+            cardinality: {
+              field: "pageUrl",
+            },
+          },
+        },
+      },
+    };
     const res = await this.elasticsearchService.search({
       index: promiseerrorIndex,
       body,
@@ -34,18 +76,16 @@ export class PromiseerrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const rest = {
-      items: [],
-      totalCount: 0,
-    };
-    const list: PromiseError[] = [];
-    res.body.hits.hits.forEach((element) => {
-      const source: PromiseError = element._source;
-      list.push(source);
+    const list = res.body.aggregations.count.buckets.map((item) => {
+      return {
+        stack: item.key,
+        count: item.doc_count,
+        average: 0,
+        userCount: item.userCount.value,
+        pageCount: item.pageUrl.value,
+      };
     });
-    rest.items = list;
-    rest.totalCount = res.body.hits.total.value;
-    return responseRust.success_data(rest);
+    return responseRust.success_data(list);
   }
   async totalPromiseerror(querys: PromiseerrorTotalVo) {
     const body = getTotalPromiseerrorBody(querys);

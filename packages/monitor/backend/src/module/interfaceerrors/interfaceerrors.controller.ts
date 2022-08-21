@@ -4,7 +4,9 @@ import {
   InterfaceerrorsVo,
 } from "src/vo/interfaceerrors.vo";
 import { InterfaceerrorsService } from "./interfaceerrors.service";
-
+/**
+ * 接口错误
+ */
 @Controller("/errors")
 export class InterfaceerrorsController {
   constructor(private interfaceerrorsService: InterfaceerrorsService) {}

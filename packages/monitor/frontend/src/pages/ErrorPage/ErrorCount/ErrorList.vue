@@ -2,16 +2,11 @@
   <div class="global">
     <div class="top">
       <div class="top-left">
-        <form>
-          <select v-model="type">
-            <option>JS错误</option>
-            <option>资源错误</option>
-          </select>
-        </form>
+        <div>资源错误</div>
       </div>
       <div class="top-right">
         <div class="calendar">
-          <input v-model="JSerrorListParma.startTime" type="date" />
+          <input v-model="startTime" type="date" />
         </div>
       </div>
     </div>
@@ -22,7 +17,11 @@
           <div class="list-title-name">发生次数</div>
           <div class="list-title-name">影响人数</div>
         </div>
-        <div v-for="(item, index) in list" :key="index" class="list-content">
+        <div
+          v-for="(item, index) in pagedList[page]"
+          :key="index"
+          class="list-content"
+        >
           <div class="sort">
             <div class="list-left sort-content">
               <div class="list-left-top sort-content">
@@ -38,113 +37,65 @@
         </div>
       </div>
       <div class="page">
-        <span><button @click="firstPage">首页</button></span>
-        <span><button @click="prePage">上一页</button></span>
-        <span><button @click="nextPage">下一页</button></span>
-        <span>当前&nbsp;{{ page }}&nbsp;页</span>
+        <span><button @click="page = 0">首页</button></span>
+        <span
+          ><button @click="page = page > 0 ? page-- : 0">上一页</button></span
+        >
+        <span
+          ><button
+            @click="
+              page =
+                page < pagedList.length / size
+                  ? page++
+                  : pagedList.length / size
+            "
+          >
+            下一页
+          </button></span
+        >
+        <span>当前&nbsp;{{ page + 1 }}&nbsp;页</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrorstatistics,
-} from "@/apis";
+import { getErrorsResourceerrorstatistics } from "@/apis";
 import { useStore } from "@/stores";
-import { JavaScriptError, ResourceError } from "@balabala/monitor-api";
+import { BasicStatistic } from "@/types";
+import { ResourceError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+
 let store = useStore();
 let { appId } = $(storeToRefs(store));
-let type: string;
-let typeName: string;
-let page = 1;
-type overView = {
-  dateTime: string;
-  count: number;
-  userCount: number;
-};
 
-let list = $ref<overView[]>([]);
-
-const firstPage = () => {
-  if ((page = 1)) {
-    alert("当前已经是第一页了!");
-  } else {
-    page = 1;
-  }
-};
-const prePage = () => {
-  if ((page = 1)) {
-    alert("当前已经是第一页了!");
-  } else {
-    page = page - 1;
-  }
-};
-
-const nextPage = () => {
-  page = page + 1;
-};
-
-const JSerrorListParma = $ref({
-  appId,
-  mainType: JavaScriptError.mainType.JavaScriptError,
-  subType: JavaScriptError.subType.JavaScriptError,
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  size: 5,
+let typeName = $ref("resourceError");
+let startTime = $ref(dayjs().format("YYYY-MM-DD"));
+const resourceErrorStatisticsParam = $computed(() => {
+  return {
+    appId,
+    mainType: ResourceError.mainType.ResourceError,
+    subType: ResourceError.subType.ResourceError,
+    startTime: dayjs(startTime).format("YYYY-MM-DD"),
+    endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+  };
 });
 
-const resourceerrorListParma = $ref({
-  appId,
-  mainType: ResourceError.mainType.ResourceError,
-  subType: ResourceError.subType.ResourceError,
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  size: 5,
-});
-
-const loadJavascriptErrorStatistics = async () => {
-  JSerrorListParma.endTime = dayjs(JSerrorListParma.startTime, "YYYY-MM-DD")
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsJavascripterrorstatistics({
-    ...JSerrorListParma,
-  }).then((res) => {
-    res.data.forEach((data) => {
-      list.push(data);
-    });
-  });
-};
+let page = $ref(0);
+let size = $ref(3);
+let pagedList = $ref<Array<Array<BasicStatistic>>>([]);
 
 const loadResourceErrorStatistics = async () => {
-  resourceerrorListParma.endTime = dayjs(
-    resourceerrorListParma.startTime,
-    "YYYY-MM-DD"
-  )
-    .add(1, "day")
-    .format("YYYY-MM-DD");
-  getErrorsResourceerrorstatistics({
-    ...resourceerrorListParma,
-  }).then((res) => {
-    res.data.forEach((data) => {
-      list.push(data);
-    });
-  });
+  const { data } = await getErrorsResourceerrorstatistics(
+    resourceErrorStatisticsParam
+  );
+  for (let i = 0; i < data.length; i += 5) {
+    pagedList.push(data.slice(i, i + 5));
+  }
 };
 
-onMounted(() => {
-  if (type == "JS错误") {
-    typeName = "JavaScriptError";
-    loadJavascriptErrorStatistics();
-  } else {
-    typeName = "resourceList";
-    loadResourceErrorStatistics();
-  }
-});
+loadResourceErrorStatistics();
 </script>
 
 <style scoped lang="scss">
@@ -162,28 +113,14 @@ onMounted(() => {
       float: left;
       width: 140px;
       height: 40px;
-      padding: 30px;
-      font-size: 16px;
+      padding: 40px 30px 30px;
+      font-size: 18px;
       font-weight: 800;
-      cursor: pointer;
-
-      select {
-        width: 140px;
-        height: 40px;
-        font-size: 16px;
-        font-weight: 800;
-        cursor: pointer;
-      }
     }
 
     .top-right {
       float: right;
       padding: 30px;
-
-      select {
-        cursor: pointer;
-        border: 0;
-      }
 
       div {
         display: inline-block;

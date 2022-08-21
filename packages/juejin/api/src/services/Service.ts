@@ -260,9 +260,18 @@ export class Service {
      */
     message: string;
     /**
-     * 账号信息
+     * 数据主体
      */
-    data: Account;
+    data: {
+      /**
+       * Token
+       */
+      token: string;
+      /**
+       * 账号信息
+       */
+      accountInfo: Account;
+    };
   }> {
     return this.httpRequest.request({
       method: "POST",

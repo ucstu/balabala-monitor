@@ -13,7 +13,7 @@
         class="aside"
       />
     </Transition>
-    <router-view v-slot="{ Component, route }">
+    <router-view v-slot="{ Component, route }" class="main">
       <keep-alive v-if="route?.meta?.keepAlive">
         <component :is="Component" :key="route.path" />
       </keep-alive>

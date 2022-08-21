@@ -39,10 +39,8 @@
           </div>
           <img src="@/assets/vip.png" alt="" class="vip-info" />
           <div></div>
-          <img
-            src="https://th.bing.com/th/id/R.0d4d56a772f73a4c146aa4754f8c17f8?rik=d3RxqOmmhPIZTg&pid=ImgRaw&r=0"
-            class="avatar-info"
-          />
+          <!-- <button class="avatar-info login-btn">登录</button> -->
+          <UserLogin />
         </div>
       </div>
       <ComDivider />
@@ -69,6 +67,7 @@
 <script lang="ts" setup>
 import router from "../router";
 import ComDivider from "./ComDivider.vue";
+import UserLogin from "./UserLogin.vue";
 
 const TopFence = [
   "首页",
@@ -227,9 +226,9 @@ const toEditor = () => {
       }
 
       .avatar-info {
-        width: 40px;
-        height: 40px;
-        border-radius: 50px;
+        width: 60px;
+        height: 35px;
+        border-radius: 3px;
       }
     }
   }

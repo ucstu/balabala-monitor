@@ -125,6 +125,7 @@
                   {{ showActionInfo.pageUrl }}
                 </div>
               </div>
+              <!-- 资源错误 -->
               <div
                 v-if="
                   showActionInfo.listType === 2 && showActionInfo.mainType === 1
@@ -147,6 +148,7 @@
                   {{ showActionInfo.path }}
                 </div>
               </div>
+              <!-- js错误 -->
               <div
                 v-if="
                   showActionInfo.listType === 2 && showActionInfo.mainType === 2
@@ -202,9 +204,10 @@
                   {{ showActionInfo.stack }}
                 </div>
               </div>
+              <!-- Promise 错误-->
               <div
                 v-if="
-                  showActionInfo.listType === 3 && showActionInfo.mainType === 3
+                  showActionInfo.listType === 2 && showActionInfo.mainType === 3
                 "
                 class="action-info-item"
               >
@@ -213,31 +216,10 @@
                   {{ showActionInfo.stack }}
                 </div>
               </div>
+              <!-- 点击行为 -->
               <div
                 v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 4 &&
+                  showActionInfo.listType === 1 &&
                   showActionInfo.subType === 2001
                 "
                 class="action-info-item"
@@ -251,7 +233,7 @@
               </div>
               <div
                 v-if="
-                  showActionInfo.listType === 4 &&
+                  showActionInfo.listType === 1 &&
                   showActionInfo.subType === 2001
                 "
                 class="action-info-item"
@@ -265,8 +247,8 @@
               </div>
               <div
                 v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
+                  showActionInfo.listType === 1 &&
+                  showActionInfo.subType === 2002
                 "
                 class="action-info-item"
               >
@@ -277,8 +259,7 @@
               </div>
               <div
                 v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
+                  showActionInfo.listType === 1 && showActionInfo.mainType === 2
                 "
                 class="action-info-item"
               >
@@ -287,10 +268,10 @@
                   {{ showActionInfo.inner }}
                 </div>
               </div>
+              <!-- 页面跳转行为 -->
               <div
                 v-if="
-                  showActionInfo.listType === 5 &&
-                  showActionInfo.subType === 3001
+                  showActionInfo.listType === 1 && showActionInfo.mainType === 3
                 "
                 class="action-info-item"
               >
@@ -301,18 +282,17 @@
               </div>
               <div
                 v-if="
-                  showActionInfo.listType === 5 &&
-                  showActionInfo.subType === 3001
+                  showActionInfo.listType === 1 && showActionInfo.mainType === 3
                 "
                 class="action-info-item"
               >
                 <div class="action-info-item-title">路由跳转目的位置：</div>
                 <div class="action-info-item-data">{{ showActionInfo.to }}</div>
               </div>
+              <!-- 路由跳转 -->
               <div
                 v-if="
-                  showActionInfo.listType === 6 &&
-                  showActionInfo.subType === 4001
+                  showActionInfo.listType === 1 && showActionInfo.mainType === 4
                 "
                 class="action-info-item"
               >
@@ -323,8 +303,7 @@
               </div>
               <div
                 v-if="
-                  showActionInfo.listType === 6 &&
-                  showActionInfo.subType === 4001
+                  showActionInfo.listType === 1 && showActionInfo.mainType === 4
                 "
                 class="action-info-item"
               >
@@ -465,8 +444,7 @@ const userActionParma = $ref({
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
   mainType: 1,
-  subType: 123,
-  page: 1,
+  subType: 1001,
   size: 10,
 });
 
@@ -504,111 +482,12 @@ const loadBasicindicators = async () => {
   //   subType: BasicIndicator.subType.FullLoad,
   // });
   // let total = 0;
-  // resultData.data.items.forEach((e) => {
+  // resultData.data.forEach((e) => {
   //   total += e.value;
   // });
   // option_page.series![0].data = [total / resultData.data.items.length];
   // nextTick(() => {
   //   echar_page.setOption(option_page);
-  // });
-};
-// 加载资源错误
-const loadResourceerrors = () => {
-  // return getErrorsResourceerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "资源错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 加载 JavaScript错误
-const loadJavascripterrors = () => {
-  // return getErrorsJavascripterrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "JavaScript错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 加载 Promise错误
-const loadPromiseerrors = () => {
-  // return getErrorsPromiseerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 3;
-  //     temp.title = "接口错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 加载 Vue错误
-const loadVueerrors = () => {
-  // return getErrorsVueerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "vue错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 基础行为查询
-const loadBasicbehaviors = () => {
-  // return getBehaviorsBasicbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 1;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 点击行为
-const loadClickbehaviors = () => {
-  // return getBehaviorsClickbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 4;
-  //     temp.title = "点击";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 页面跳转行为
-const loadPageskipbehaviors = () => {
-  // return getBehaviorsPageskipbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 5;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 路由跳转行为
-const loadRoutingskipbehaviors = () => {
-  // return getBehaviorsRoutingskipbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 6;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
   // });
 };
 

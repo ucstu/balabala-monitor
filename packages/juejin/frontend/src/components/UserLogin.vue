@@ -37,7 +37,9 @@
             />
             <div>密码：</div>
           </div>
-          <button class="btn-login" @click="loginSure">登录</button>
+          <button class="btn-login" @click="loginSure">
+            {{ isRegister ? "登录" : "注册" }}
+          </button>
           <div class="other-way">
             <span v-if="isRegister">其他登录方式</span>
             <span @click="userRegister"

@@ -276,7 +276,7 @@ export class BasicbehaviorService {
   private clickbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,top,"left" ,"inner",target,mainType,subType
+      SELECT appId,startTime,pageUrl,userID,top,'left' ,'inner',target,mainType,subType
       FROM "click_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -293,7 +293,7 @@ export class BasicbehaviorService {
             const list = res.body.rows.map((item) => {
               return {
                 title: "点击行为",
-                listType: 4,
+                listType: 1,
                 appId: item[0],
                 time: item[1],
                 pageUrl: item[2],
@@ -320,7 +320,7 @@ export class BasicbehaviorService {
   private pageskipbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,"from" ,"to",mainType,subType
+      SELECT appId,startTime,pageUrl,userID,'from' ,'to',mainType,subType
       FROM "page_skip_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -337,7 +337,7 @@ export class BasicbehaviorService {
             const list = res.body.rows.map((item) => {
               return {
                 title: "浏览",
-                listType: 5,
+                listType: 1,
                 appId: item[0],
                 time: item[1],
                 pageUrl: item[2],
@@ -362,7 +362,7 @@ export class BasicbehaviorService {
   private routingskipbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,"from" ,"to","params","query",mainType,subType
+      SELECT appId,startTime,pageUrl,userID,'from' ,'to',params,query,mainType,subType
       FROM "routing_skip_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -379,7 +379,7 @@ export class BasicbehaviorService {
             const list = res.body.rows.map((item) => {
               return {
                 title: "浏览",
-                listType: 6,
+                listType: 1,
                 appId: item[0],
                 time: item[1],
                 pageUrl: item[2],
@@ -406,7 +406,7 @@ export class BasicbehaviorService {
   private resourceerrorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,errorTime,pageUrl,userID,"resourceType" ,"path",mainType,subType
+      SELECT appId,errorTime,pageUrl,userID,resourceType ,path,mainType,subType
       FROM "resource_error"
       where appId= ? and userID = ? and errorTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -448,7 +448,7 @@ export class BasicbehaviorService {
   private javascripterrorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,errorTime,pageUrl,userID,"msg" ,"line","column","stack","url",mainType,subType
+      SELECT appId,errorTime,pageUrl,userID,msg ,line,column,stack,url,mainType,subType
       FROM "javascript_error"
       where appId= ? and userID = ? and errorTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -493,7 +493,7 @@ export class BasicbehaviorService {
   private promiseerrorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,errorTime,pageUrl,userID,"stack",mainType,subType
+      SELECT appId,errorTime,pageUrl,userID,stack,mainType,subType
       FROM "promise_error"
       where appId= ? and userID = ? and errorTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -534,7 +534,7 @@ export class BasicbehaviorService {
   private interfaceerrorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,"statusCode","method","duration","url",mainType,subType
+      SELECT appId,startTime,pageUrl,userID,statusCode,method,duration,url,mainType,subType
       FROM "interface_indicator"
       where appId= ? and userID = ?  and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -550,7 +550,7 @@ export class BasicbehaviorService {
           } else {
             const list = res.body.rows.map((item) => {
               return {
-                listType: 2,
+                listType: 3,
                 title: "接口",
                 appId: item[0],
                 time: item[1],

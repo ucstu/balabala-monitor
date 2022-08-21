@@ -422,8 +422,9 @@
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "username": "向角周许意产",
-                "password": "u9*5#Ah"
+                "phone": "18644241671",
+                "password": "BTEH",
+                "name": "议任出东号"
               }
             }
           }
@@ -517,8 +518,8 @@
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "username": "米量石四常己",
-                "password": "ZJ0*@X"
+                "phone": "13721934471",
+                "password": "E^z"
               }
             }
           }
@@ -547,10 +548,25 @@
                       "description": "状态描述"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Account",
-                      "x-apifox-overrides": {},
                       "title": "数据主体",
-                      "description": "账号信息"
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "title": "Token",
+                          "description": "Token"
+                        },
+                        "accountInfo": {
+                          "$ref": "#/components/schemas/Account",
+                          "x-apifox-overrides": {},
+                          "title": "数据主体",
+                          "description": "账号信息"
+                        }
+                      },
+                      "x-apifox-orders": ["token", "accountInfo"],
+                      "required": ["token", "accountInfo"],
+                      "x-apifox-ignore-properties": [],
+                      "description": "数据主体"
                     }
                   },
                   "required": ["timestamp", "status", "message", "data"],

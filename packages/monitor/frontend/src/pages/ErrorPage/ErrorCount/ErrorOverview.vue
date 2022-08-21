@@ -35,9 +35,9 @@
           </div>
         </div>
       </div>
-      <div class="content-right">
+      <div class="content-center">
         <div class="content-top">
-          <div class="error">资源错误(error)</div>
+          <div class="error">promise错误</div>
           <div class="date">
             <div><img src="@/assets/24.png" /></div>
             <div>{{ date }}</div>
@@ -50,14 +50,48 @@
             <div class="list-title-name">影响人数</div>
           </div>
           <div
-            v-for="(item, index) in resourceList"
+            v-for="(item, index) in promiseList"
             :key="index"
             class="list-content"
           >
             <div class="sort">
               <div class="list-left sort-content">
                 <div class="list-left-top sort-content">
-                  <div class="type">ResourceError</div>
+                  <div class="type">PromiseError</div>
+                </div>
+                <div class="list-left-bottom sort-content">
+                  {{ item.dateTime }}
+                </div>
+              </div>
+              <div class="list-center">{{ item.count }}</div>
+              <div class="list-right">{{ item.userCount }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-right">
+        <div class="content-top">
+          <div class="error">vue错误</div>
+          <div class="date">
+            <div><img src="@/assets/24.png" /></div>
+            <div>{{ date }}</div>
+          </div>
+        </div>
+        <div class="list">
+          <div class="list-title">
+            <div class="list-title-name">最新错误</div>
+            <div class="list-title-name">发生次数</div>
+            <div class="list-title-name">影响人数</div>
+          </div>
+          <div
+            v-for="(item, index) in VueList"
+            :key="index"
+            class="list-content"
+          >
+            <div class="sort">
+              <div class="list-left sort-content">
+                <div class="list-left-top sort-content">
+                  <div class="type">VueError</div>
                 </div>
                 <div class="list-left-bottom sort-content">
                   {{ item.dateTime }}
@@ -76,10 +110,11 @@
 <script setup lang="ts">
 import {
   getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrorstatistics,
+  getErrorsPromiseerrorstatistics,
+  getErrorsVueerrorstatistics,
 } from "@/apis";
 import { useStore } from "@/stores";
-import { JavaScriptError, ResourceError } from "@balabala/monitor-api";
+import { JavaScriptError, PromiseError, VueError } from "@balabala/monitor-api";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 let a = new Date().getTime();
@@ -92,7 +127,8 @@ function nowDate(now: Date) {
 }
 let date = nowDate(b);
 let JSList = $ref<overView[]>([]);
-let resourceList = $ref<overView[]>([]);
+let VueList = $ref<overView[]>([]);
+let promiseList = $ref<overView[]>([]);
 let store = useStore();
 let { appId } = $(storeToRefs(store));
 type overView = {
@@ -101,7 +137,7 @@ type overView = {
   userCount: number;
 };
 
-const JSErrorparms = $ref({
+const JSErrorparma = $ref({
   appId,
   startTime: "",
   endTime: "",
@@ -111,35 +147,54 @@ const JSErrorparms = $ref({
   subType: JavaScriptError.subType.JavaScriptError,
 });
 
-const resourceErrorparms = $ref({
+const VueErrorparma = $ref({
   appId,
   startTime: "",
   endTime: "",
   size: 5,
   msg: "",
-  mainType: ResourceError.mainType.ResourceError,
-  subType: ResourceError.subType.ResourceError,
+  mainType: VueError.mainType.VueError,
+  subType: VueError.subType.VueError,
+});
+
+const promiseErrorparma = $ref({
+  appId,
+  startTime: "",
+  endTime: "",
+  size: 5,
+  msg: "",
+  mainType: PromiseError.mainType.PromiseError,
+  subType: PromiseError.subType.PromiseError,
 });
 
 const loadJavascriptErrorStatistics = async () => {
-  getErrorsJavascripterrorstatistics({ ...JSErrorparms }).then((res) => {
+  getErrorsJavascripterrorstatistics({ ...JSErrorparma }).then((res) => {
     res.data.forEach((data) => {
       JSList.push(data);
     });
   });
 };
 
-const loadResourceErrorStatistics = async () => {
-  getErrorsResourceerrorstatistics({ ...resourceErrorparms }).then((res) => {
+const loadVueErrorStatistics = async () => {
+  getErrorsVueerrorstatistics({ ...VueErrorparma }).then((res) => {
     res.data.forEach((data) => {
-      resourceList.push(data);
+      VueList.push(data);
+    });
+  });
+};
+
+const loadPromiseErrorStatistics = async () => {
+  getErrorsPromiseerrorstatistics({ ...promiseErrorparma }).then((res) => {
+    res.data.forEach((data) => {
+      promiseList.push(data);
     });
   });
 };
 
 onMounted(() => {
   loadJavascriptErrorStatistics();
-  loadResourceErrorStatistics();
+  loadVueErrorStatistics();
+  loadPromiseErrorStatistics();
 });
 </script>
 
@@ -151,8 +206,8 @@ onMounted(() => {
 
   img {
     float: right;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
   }
 
   .content-top {
@@ -171,7 +226,8 @@ onMounted(() => {
       justify-self: right;
       padding-right: 20px;
       margin-top: 30px;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 500;
     }
   }
 
@@ -189,7 +245,7 @@ onMounted(() => {
     .list-title,
     .sort {
       display: grid;
-      grid-template-columns: 4fr 1fr 1fr;
+      grid-template-columns: 3fr 1fr 1fr;
       align-items: center;
       width: 100%;
       height: 80px;
@@ -240,7 +296,7 @@ onMounted(() => {
   .content {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 10px;
 
     .content-left {
@@ -253,17 +309,29 @@ onMounted(() => {
       // border: 2px solid #ccc;
       background-color: rgb(255 255 255);
     }
-  }
 
-  .content-right {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-rows: 100px 1fr;
-    height: 100%;
-    margin-left: 5px;
+    .content-center {
+      box-sizing: border-box;
+      display: grid;
+      grid-template-rows: 100px 1fr;
+      height: 100%;
+      margin-right: 5px;
+      margin-left: 5px;
+      background-color: rgb(255 255 255);
 
-    // border: 2px solid #ccc;
-    background-color: rgb(255 255 255);
+      // border: 2px solid #ccc;
+    }
+
+    .content-right {
+      box-sizing: border-box;
+      display: grid;
+      grid-template-rows: 100px 1fr;
+      height: 100%;
+      margin-left: 5px;
+
+      // border: 2px solid #ccc;
+      background-color: rgb(255 255 255);
+    }
   }
 }
 </style>

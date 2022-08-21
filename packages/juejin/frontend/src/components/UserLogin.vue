@@ -80,6 +80,7 @@ function cancelLogin() {
   isRegister = true;
   phoneContent = "";
   password = "";
+  userName = "";
 }
 function userRegister() {
   title = "请注册";

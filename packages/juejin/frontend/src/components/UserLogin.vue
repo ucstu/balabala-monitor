@@ -58,16 +58,16 @@
 </template>
 
 <script setup lang="ts">
-import { postAccounts, postAccountsLogin } from "../apis/index";
+import { client, postAccounts, postAccountsLogin } from "../apis/index";
 let isShow = $ref(false);
 let name = $ref<HTMLElement>(null as unknown as HTMLElement);
 let phoneContent = $ref("");
-let password = $ref<string>("");
+let password = $ref("");
 let isShowPrompt = $ref(false);
 let promptContent = $ref("");
 let title = $ref("手机登录");
 let isRegister = $ref(true);
-let userName = $ref<string>("");
+let userName = $ref("");
 
 function clickLogin() {
   isShow = true;
@@ -104,6 +104,10 @@ function loginSure() {
           password,
           name: userName,
         },
+      }).then((res) => {
+        if (res.message == "成功") {
+          isRegister = false;
+        }
       });
     } else if (title == "手机登录") {
       postAccountsLogin({
@@ -111,6 +115,10 @@ function loginSure() {
           phone: phoneContent,
           password,
         },
+      }).then((res) => {
+        if (res.message == "成功") {
+          client.service.httpRequest.config.TOKEN = res.data.token;
+        }
       });
     }
   }

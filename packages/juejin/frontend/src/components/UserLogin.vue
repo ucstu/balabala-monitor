@@ -77,6 +77,7 @@ function clickLogin() {
 }
 function cancelLogin() {
   isShow = false;
+  isRegister = true;
 }
 function userRegister() {
   title = "请注册";

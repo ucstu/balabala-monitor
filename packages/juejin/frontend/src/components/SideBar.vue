@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <div style="flex: 1"></div>
+    <div style="flex: 1"><UserLogin /></div>
     <div class="outer-header">
       <span
         v-for="(top, index) of mainList"
@@ -63,6 +63,7 @@
 import { Article, getArticle1 } from "@/apis";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import UserLogin from "./UserLogin.vue";
 type ArrayList = {
   totalCount?: number;
   articleInfos?: Array<Article>;

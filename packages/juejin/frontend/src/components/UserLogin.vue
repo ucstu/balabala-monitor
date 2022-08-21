@@ -78,10 +78,14 @@ function clickLogin() {
 function cancelLogin() {
   isShow = false;
   isRegister = true;
+  phoneContent = "";
+  password = "";
 }
 function userRegister() {
   title = "请注册";
   isRegister = false;
+  phoneContent = "";
+  password = "";
 }
 function loginSure() {
   if (!phoneContent) {

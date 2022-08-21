@@ -2,12 +2,7 @@
   <div class="global">
     <div class="top">
       <div class="top-left">
-        <form>
-          <select v-model="typeName">
-            <option value="JavaScriptError">JS错误</option>
-            <option value="ResourceError">资源错误</option>
-          </select>
-        </form>
+        <div>资源错误</div>
       </div>
       <div class="top-right">
         <div class="calendar">
@@ -65,31 +60,18 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrorstatistics,
-} from "@/apis";
+import { getErrorsResourceerrorstatistics } from "@/apis";
 import { useStore } from "@/stores";
 import { BasicStatistic } from "@/types";
-import { JavaScriptError, ResourceError } from "@balabala/monitor-api";
+import { ResourceError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
-import { watch } from "vue";
 
 let store = useStore();
 let { appId } = $(storeToRefs(store));
 
-let typeName = $ref("JavaScriptError");
+let typeName = $ref("resourceError");
 let startTime = $ref(dayjs().format("YYYY-MM-DD"));
-const javascriptErrorStatisticsParam = $computed(() => {
-  return {
-    appId,
-    mainType: JavaScriptError.mainType.JavaScriptError,
-    subType: JavaScriptError.subType.JavaScriptError,
-    startTime: dayjs(startTime).format("YYYY-MM-DD"),
-    endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  };
-});
 const resourceErrorStatisticsParam = $computed(() => {
   return {
     appId,
@@ -104,15 +86,6 @@ let page = $ref(0);
 let size = $ref(3);
 let pagedList = $ref<Array<Array<BasicStatistic>>>([]);
 
-const loadJavascriptErrorStatistics = async () => {
-  const { data } = await getErrorsJavascripterrorstatistics(
-    javascriptErrorStatisticsParam
-  );
-  for (let i = 0; i < data.length; i += 5) {
-    pagedList.push(data.slice(i, i + 5));
-  }
-};
-
 const loadResourceErrorStatistics = async () => {
   const { data } = await getErrorsResourceerrorstatistics(
     resourceErrorStatisticsParam
@@ -122,19 +95,7 @@ const loadResourceErrorStatistics = async () => {
   }
 };
 
-watch(
-  () => typeName,
-  (newVal, _oldVal) => {
-    if (newVal === "JavaScriptError") {
-      loadJavascriptErrorStatistics();
-    } else {
-      loadResourceErrorStatistics();
-    }
-    page = 0;
-  }
-);
-
-loadJavascriptErrorStatistics();
+loadResourceErrorStatistics();
 </script>
 
 <style scoped lang="scss">
@@ -152,28 +113,14 @@ loadJavascriptErrorStatistics();
       float: left;
       width: 140px;
       height: 40px;
-      padding: 30px;
-      font-size: 16px;
+      padding: 40px 30px 30px;
+      font-size: 18px;
       font-weight: 800;
-      cursor: pointer;
-
-      select {
-        width: 140px;
-        height: 40px;
-        font-size: 16px;
-        font-weight: 800;
-        cursor: pointer;
-      }
     }
 
     .top-right {
       float: right;
       padding: 30px;
-
-      select {
-        cursor: pointer;
-        border: 0;
-      }
 
       div {
         display: inline-block;

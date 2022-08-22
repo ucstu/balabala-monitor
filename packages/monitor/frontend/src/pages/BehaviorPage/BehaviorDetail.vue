@@ -3,12 +3,13 @@
     <DataCard
       title="用户详情"
       icon="fa-dedent"
+      line="left"
       @title-click="showDetails = !showDetails"
     >
       <template #actions>
         <i
           class="fa"
-          style="margin-bottom: 10px; margin-left: 0.2rem"
+          style="margin-left: 0.2rem"
           :class="`fa-angle-up icon-up fa-2x ${
             !showDetails ? 'fa-rotate-180' : ''
           }`"

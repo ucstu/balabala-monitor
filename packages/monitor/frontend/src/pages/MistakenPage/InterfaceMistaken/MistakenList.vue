@@ -75,7 +75,6 @@ import { storeToRefs } from "pinia";
 import { watch } from "vue";
 let store = useStore();
 let { appId } = $(storeToRefs(store));
-let startTime = $ref(dayjs().format("YYYY-MM-DD"));
 
 let statusCode: number = $ref(400);
 
@@ -84,11 +83,15 @@ const interfaceErrorStatisticsParam = $computed(() => {
     appId,
     mainType: InterfaceIndicator.mainType.InterfaceIndicator,
     subType: InterfaceIndicator.subType.InterfaceIndicator,
-    startTime: dayjs(startTime).format("YYYY-MM-DD"),
-    endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+    startTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    endTime: dayjs().add(1, "day").format("YYYY-MM-DD HH:mm:ss"),
     statusCode,
   };
 });
+
+let startTime = $ref(
+  dayjs(interfaceErrorStatisticsParam.startTime).format("YYYY-MM-DD")
+);
 
 let page = $ref(0);
 let size = $ref(3);

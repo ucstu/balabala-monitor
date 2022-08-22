@@ -5,3 +5,10 @@ export interface BasicStatistic {
   userCount: number;
   pageCount: number;
 }
+
+export interface BasicList {
+  count: number;
+  average: number;
+  userCount: number;
+  pageCount: number;
+}

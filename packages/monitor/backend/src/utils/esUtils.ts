@@ -1,6 +1,6 @@
 import * as dayjs from "dayjs";
 import { ManipulateType } from "dayjs";
-import { InterfaceIndicatorTotalVo } from "src/vo/interfaceIndicator.vo";
+import { BaseTotalVo } from "src/vo/base.vo";
 /**
  * 处理es 返回结果集
  * 填充日期
@@ -8,7 +8,7 @@ import { InterfaceIndicatorTotalVo } from "src/vo/interfaceIndicator.vo";
  * @param list
  * @returns
  */
-export const totalData = (querys: InterfaceIndicatorTotalVo, list) => {
+export const totalData = (querys: BaseTotalVo, list) => {
   const restList = [];
   const [_value, value, unit] = /(\d)+([smhdMy])/.exec(querys.granularity);
   const intValue = parseInt(value);

@@ -62,8 +62,8 @@ export const totalData = (querys: BaseTotalVo, list) => {
       dateTime: dayjs(item.key).format(timeFormat),
       count: item.doc_count,
       average: item.avg.value ? item.avg.value : 0,
-      userCount: item.userCount.value,
-      pageCount: item.pageCount.value,
+      userCount: item.userCount ? item.userCount.value : 0,
+      pageCount: item.pageCount ? item.pageCount.value : 0,
     });
     index++;
     resultStartTime = resultStartTime.add(intValue, typeUnit);

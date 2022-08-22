@@ -3,7 +3,7 @@
     <header class="header">
       <div class="title">核心数据</div>
       <div class="calendar">
-        <input type="text" placeholder="今天" /><i class="fa fa-calendar-o"></i>
+        <input ref="dateDOM" v-model="date" type="date" />
       </div>
     </header>
     <div class="browse-card">
@@ -17,12 +17,8 @@
           <div>浏览量&nbsp;(PV)</div>
           <div>访客量&nbsp;(UV)</div>
           <div>新访客</div>
-          <div>IP数</div>
-          <div>频次&nbsp;(人均)</div>
         </div>
         <div class="user-info-list weight">
-          <div>00000</div>
-          <div>00000</div>
           <div>00000</div>
           <div>00000</div>
           <div>00000</div>
@@ -30,8 +26,6 @@
         <div class="user-info-list">
           <div>较昨日&nbsp;00.00%<i class="fa fa-arrow-up"></i></div>
           <div>较昨日&nbsp;00.00%<i class="fa fa-arrow-up"></i></div>
-          <div>较昨日&nbsp;00.00%<i class="fa fa-arrow-down"></i></div>
-          <div>较昨日&nbsp;00.00%<i class="fa fa-arrow-down"></i></div>
           <div>较昨日&nbsp;00.00%<i class="fa fa-arrow-down"></i></div>
         </div>
       </div>
@@ -44,7 +38,35 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getBehaviorsBasicbehaviors } from "@/apis";
+import { BasicBehavior } from "@balabala/monitor-api";
+import dayjs from "dayjs";
+import { onMounted, watch } from "vue";
+const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
+let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
+let dateDOM = $ref<HTMLElement>();
+onMounted(() => {
+  getalldata("2022-08-01", "2022-08-20");
+});
+watch(
+  () => date,
+  (newValue, oldValue) => {
+    console.log("date变化了", newValue, oldValue);
+  }
+);
+function getalldata(starttime: string, endtime: string) {
+  getBehaviorsBasicbehaviors({
+    appId: APPID,
+    startTime: starttime,
+    endTime: endtime,
+    mainType: BasicBehavior.mainType.BasicBehavior,
+    subType: BasicBehavior.subType.PV,
+  }).then((res) => {
+    console.log(res);
+  });
+}
+</script>
 
 <style lang="scss" scoped>
 .bg {
@@ -67,7 +89,7 @@
     }
 
     .calendar input {
-      width: 100px;
+      width: 130px;
       height: 26px;
       border: none;
       outline: none;

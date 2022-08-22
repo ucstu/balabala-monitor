@@ -51,7 +51,7 @@
     </div>
     <div class="bottom">
       <div>
-        <div class="time-title">时间范围<span>9:00</span></div>
+        <div class="time-title">时间范围<span>24:00</span></div>
         <div class="list">
           <ul>
             <li

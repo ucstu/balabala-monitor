@@ -21,7 +21,7 @@ const userId = $ref<string>("");
 const router = useRouter();
 const clickSearch = () => {
   if (userId) {
-    router.push({ path: "/customerSearch/details", query: { userId } });
+    router.push({ path: "/Behavior/BehaviorDetail", query: { userId } });
   }
 };
 </script>

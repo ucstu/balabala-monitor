@@ -106,234 +106,10 @@
             </template>
           </div>
           <div class="action-info">
-            <div v-if="chosesAction !== -1">
-              <div class="action-info-item">
-                <div class="action-info-item-title">事件类型：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.title }}
-                </div>
-              </div>
-              <div class="action-info-item">
-                <div class="action-info-item-title">发生时间：</div>
-                <div class="action-info-item-data">
-                  {{ dayjs(showActionInfo.time).format("YYYY-MM-DD HH:mm:ss") }}
-                </div>
-              </div>
-              <div class="action-info-item">
-                <div class="action-info-item-title">发生页面：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.pageUrl }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 1
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">资源类型：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.resourceType }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 1
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">资源路径：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.path }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">文件路径：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.url }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误消息：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.msg }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误行号：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.line }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误列号：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.column }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 2
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 3 && showActionInfo.mainType === 3
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 2 && showActionInfo.mainType === 4
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">错误调用堆栈：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.stack }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">
-                  点击位置距离页面左端距离：
-                </div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.left }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">
-                  点击位置距离页面顶端距离：
-                </div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.top }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">点击对象：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.target }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 4 &&
-                  showActionInfo.subType === 2001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">内部文本：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.inner }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 5 &&
-                  showActionInfo.subType === 3001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">路由跳转起步位置：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.from }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 5 &&
-                  showActionInfo.subType === 3001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">路由跳转目的位置：</div>
-                <div class="action-info-item-data">{{ showActionInfo.to }}</div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 6 &&
-                  showActionInfo.subType === 4001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">路径参数：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.params }}
-                </div>
-              </div>
-              <div
-                v-if="
-                  showActionInfo.listType === 6 &&
-                  showActionInfo.subType === 4001
-                "
-                class="action-info-item"
-              >
-                <div class="action-info-item-title">查询参数：</div>
-                <div class="action-info-item-data">
-                  {{ showActionInfo.query }}
-                </div>
-              </div>
-            </div>
+            <ActionInfo
+              :choses-action="chosesAction"
+              :show-action-info="showActionInfo"
+            ></ActionInfo>
           </div>
         </div>
         <!-- <div class="action-body-pager">
@@ -359,12 +135,16 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import { getBehaviorsUserAction } from "@/apis";
+import { getBehaviorsUserAction, getPerformancesBasicindicators } from "@/apis";
+import { useStore } from "@/stores";
+import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartOption, EChartsType } from "echarts";
 import * as echarts from "echarts";
 import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
+import ActionInfo from "./ActionInfo.vue";
+import { Info } from "./Types";
 
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
@@ -372,7 +152,6 @@ const pageDom = $ref<HTMLElement>();
 const apiDom = $ref<HTMLElement>();
 let echar_page: EChartsType;
 let echar_api: EChartsType;
-const APPID = "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5";
 //页面平均加载时间
 let option_page = $ref<EChartOption>({
   xAxis: {
@@ -380,7 +159,7 @@ let option_page = $ref<EChartOption>({
   },
   yAxis: {
     type: "category",
-    data: ["加载时间"],
+    data: [],
   },
   series: [
     {
@@ -418,32 +197,6 @@ let chosesBtn = $ref<number>(0);
 let chosesAction = $ref(-1);
 let showActionInfo = $ref<Info>();
 
-type Info = {
-  title?: string; // 类型名称
-  time?: string; // 发生时间
-  pageUrl?: string; //发生页面
-  listType?: number;
-  mainType?: number;
-  subType?: number;
-  content?: string; //发生内容
-  resourceType?: string; //资源类型
-  path?: string; // 资源路径
-  url?: string; // 文件路径
-  msg?: string; // 错误消息
-  line?: number; // 错误行号
-  column?: number; // 错误列号
-  stack?: string; // 错误调用堆栈
-  value?: number; // 指标数值
-  left?: number; // 点击位置距离页面左端距离
-  top?: number; // 点击位置距离页面顶端距离
-  target?: string; // 点击对象
-  inner?: string; // 内部文本
-  from?: string; // 路由跳转起步位置
-  to?: string; // 路由跳转目的位置
-  params?: string; // 路径参数
-  query?: string; // 查询参数
-};
-
 onMounted(() => {
   if (!route.query.userId) {
     alert("id不能为空");
@@ -459,14 +212,14 @@ onMounted(() => {
   loadBasicindicators();
 });
 
+const user = useStore();
 const userActionParma = $ref({
-  appId: APPID,
+  appId: user.appId,
   userId: "",
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  mainType: 1,
-  subType: 123,
-  page: 1,
+  mainType: 2,
+  subType: 2002,
   size: 10,
 });
 
@@ -495,120 +248,27 @@ const clickAction = (index: number) => {
   showActionInfo.to = actionList[chosesAction].to;
   showActionInfo.params = actionList[chosesAction].params;
   showActionInfo.query = actionList[chosesAction].query;
+  showActionInfo.statusCode = actionList[chosesAction].statusCode;
+  showActionInfo.method = actionList[chosesAction].method;
+  showActionInfo.duration = actionList[chosesAction].duration;
+  showActionInfo.data = actionList[chosesAction].data;
 };
 
 // 加载行为记录列表
 const loadBasicindicators = async () => {
-  // const resultData = await getPerformancesBasicindicators({
-  //   ...userActionParma,
-  //   subType: BasicIndicator.subType.FullLoad,
-  // });
-  // let total = 0;
-  // resultData.data.items.forEach((e) => {
-  //   total += e.value;
-  // });
+  const resultData = await getPerformancesBasicindicators({
+    ...userActionParma,
+    subType: BasicIndicator.subType.FullLoad,
+  });
+  const option_page_data = {};
+  // option_page.series[0].data!.length = 0;
+  resultData.data.forEach((item) => {
+    console.log(item);
+    const a = option_page.series;
+  });
   // option_page.series![0].data = [total / resultData.data.items.length];
   // nextTick(() => {
   //   echar_page.setOption(option_page);
-  // });
-};
-// 加载资源错误
-const loadResourceerrors = () => {
-  // return getErrorsResourceerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "资源错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 加载 JavaScript错误
-const loadJavascripterrors = () => {
-  // return getErrorsJavascripterrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "JavaScript错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 加载 Promise错误
-const loadPromiseerrors = () => {
-  // return getErrorsPromiseerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 3;
-  //     temp.title = "接口错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 加载 Vue错误
-const loadVueerrors = () => {
-  // return getErrorsVueerrors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 2;
-  //     temp.title = "vue错误";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 基础行为查询
-const loadBasicbehaviors = () => {
-  // return getBehaviorsBasicbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 1;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-
-// 点击行为
-const loadClickbehaviors = () => {
-  // return getBehaviorsClickbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 4;
-  //     temp.title = "点击";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 页面跳转行为
-const loadPageskipbehaviors = () => {
-  // return getBehaviorsPageskipbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 5;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
-  // });
-};
-// 路由跳转行为
-const loadRoutingskipbehaviors = () => {
-  // return getBehaviorsRoutingskipbehaviors({ ...userActionParma }).then((e) => {
-  //   e.data.items.forEach((data) => {
-  //     const temp = Object.assign({ ...data });
-  //     temp.listType = 6;
-  //     temp.title = "页面浏览";
-  //     temp.time = temp.errorTime || temp.startTime;
-  //     actionList.push(temp);
-  //   });
   // });
 };
 

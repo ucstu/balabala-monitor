@@ -2,8 +2,8 @@
   <div class="card">
     <div class="header">
       <div class="left">
-        <div class="title">
-          <slot name="title">
+        <div class="title" @click="emits('titleClick')">
+          <slot name="title" :icon="icon" :title="title">
             <i v-if="icon" class="fa" :class="icon"></i>
             <span>{{ title }}</span>
           </slot>
@@ -26,6 +26,9 @@
 const { icon = "", title = "卡片标题" } = defineProps<{
   icon?: string;
   title?: string;
+}>();
+const emits = defineEmits<{
+  (e: "titleClick"): void;
 }>();
 </script>
 

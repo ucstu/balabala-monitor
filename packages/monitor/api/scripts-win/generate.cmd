@@ -18,6 +18,7 @@ echo "[47;32m<<API SourceFiles Generated>>[0m"
 echo "[47;34m<<Fixing API SourceFiles>>[0m"
 cmd /cyarn rexreplace "(public readonly )(: Service;)" "\$1service\$2" src/MonitorApiClient.ts
 cmd /cyarn rexreplace "(this.)( = new Service\(this.request\);)" "\$1service\$2" src/MonitorApiClient.ts
+cmd /cyarn rexreplace "granularity\?: string;" "granularity?: \`\${number}\${\"s\" | \"m\" | \"h\" | \"d\" | \"M\" | \"y\"}\`;" src/services/Service.ts
 echo "[47;32m<<API SourceFiles Fixed>>[0m"
 
 

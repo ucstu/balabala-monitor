@@ -62,14 +62,14 @@
         :title="`页面列表（${activeDateTime.format('YYYY-MM-DD')}）`"
       >
         <div class="main">
-          <ul v-if="interfaceIndicators?.length" class="left">
+          <ul v-if="pageIndicators?.length" class="left">
             <li
-              v-for="(interfaceIndicator, index) in interfaceIndicators"
+              v-for="(interfaceIndicator, index) in pageIndicators"
               :key="index"
               :class="{ active: activeInterface === index }"
               @click="activeInterface = index"
             >
-              <span>{{ interfaceIndicator.url }}</span>
+              <span>{{ interfaceIndicator.pageUrl }}</span>
               <span>
                 <i class="fa fa-chain-broken"></i>
                 ({{ interfaceIndicator.count }})
@@ -89,8 +89,8 @@
                     <span
                       >{{
                         (
-                          (interfaceIndicators?.[activeInterface]?.average ||
-                            0) / 1000
+                          (pageIndicators?.[activeInterface]?.average || 0) /
+                          1000
                         ).toFixed(2)
                       }}s</span
                     >
@@ -103,7 +103,7 @@
                   <div class="time">
                     <span>影响用户</span>
                     <span>{{
-                      interfaceIndicators?.[activeInterface]?.userCount || 0
+                      pageIndicators?.[activeInterface]?.userCount || 0
                     }}</span>
                   </div>
                   <div class="icon">
@@ -137,8 +137,8 @@
 
 <script setup lang="ts">
 import {
-  getPerformancesInterfaceindicators,
-  getPerformancesInterfaceindicatorstatistics,
+  getPerformancesBasicindicators,
+  getPerformancesBasicindicatorstatistics,
 } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import { basicChartOption } from "@/configs";
@@ -173,8 +173,8 @@ const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
 // 页面指标分段统计列表基础请求参数
 const basicRequestParam = {
   appId: store.appId,
-  mainType: BasicIndicator.mainType.InterfaceIndicator,
-  subType: BasicIndicator.subType.InterfaceIndicator,
+  mainType: BasicIndicator.mainType.Performance,
+  subType: BasicIndicator.subType.FullLoad,
 };
 
 // 页面指标分段统计列表
@@ -232,7 +232,7 @@ const indicatorStatisticsChartClick = (e: any) => {
 // 获取页面指标分段统计列表
 const getIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
   indicatorStatisticsLoading = true;
-  getPerformancesInterfaceindicatorstatistics({
+  getPerformancesBasicindicatorstatistics({
     ...basicRequestParam,
     startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
     endTime:
@@ -250,20 +250,18 @@ getIndicatorStatistics(
 );
 
 // 页面指标列表
-let interfaceIndicators = $ref<
-  Array<BasicList & { url: string }> | undefined
->();
+let pageIndicators = $ref<Array<BasicList & { pageUrl: string }> | undefined>();
 
 // 获取页面指标列表
-const getInterfaceIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
-  getPerformancesInterfaceindicators({
+const getPageIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
+  getPerformancesBasicindicators({
     ...basicRequestParam,
     startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
     endTime:
       endTime?.format("YYYY-MM-DD HH:mm:ss") ||
       nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
   }).then(({ data }) => {
-    interfaceIndicators = data;
+    pageIndicators = data;
   });
 };
 
@@ -272,7 +270,7 @@ watch(
   () => activeDateTime,
   (activeDateTime) => {
     // 获取激活时间当天的页面指标列表
-    getInterfaceIndicators(
+    getPageIndicators(
       activeDateTime.startOf("d"),
       activeDateTime.add(1, "d").startOf("d")
     );
@@ -314,13 +312,13 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
 // 获取某天页面指标分段统计列表
 const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
   theIndicatorStatisticsLoading = true;
-  getPerformancesInterfaceindicatorstatistics({
+  getPerformancesBasicindicatorstatistics({
     ...basicRequestParam,
     startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
     endTime:
       endTime?.format("YYYY-MM-DD HH:mm:ss") ||
       nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
-    url: interfaceIndicators?.[activeInterface].url,
+    pageUrl: pageIndicators?.[activeInterface].pageUrl,
     granularity: "1h",
   }).then(({ data }) => {
     theIndicatorStatistics = data;
@@ -329,9 +327,9 @@ const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
 };
 
 // 监听页面指标列表和激活页面索引
-watch([() => interfaceIndicators, () => activeInterface], () => {
+watch([() => pageIndicators, () => activeInterface], () => {
   // 自动获取某天页面指标分段统计列表
-  if (interfaceIndicators?.[activeInterface]) {
+  if (pageIndicators?.[activeInterface]) {
     getTheIndicatorStatistics(
       activeDateTime.startOf("d"),
       activeDateTime.add(1, "d").startOf("d")

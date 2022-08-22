@@ -2,73 +2,72 @@
   <div class="container">
     <div class="top">
       <div class="left">
-        <div class="title">
-          <i class="fa fa-hourglass-end"></i>
-          <span> 耗时分段</span>
-        </div>
-        <div class="change">
-          <label v-for="i in 5" :key="i">
-            <input
-              v-model="activeSection"
-              :value="i - 1"
-              type="radio"
-              name="section"
-            />
-            <span>
-              {{ activeSectionMap[i - 1] }}
-            </span>
-          </label>
-        </div>
-        <div class="title">
-          <i class="fa fa-calendar-o"></i>
-          <span> 当日数据</span>
-        </div>
-        <div class="data">
-          <span
-            ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
-            ><br />数量</span
-          >
-          <span
-            ><strong
-              >{{
-                (
-                  ((sectionTotals[activeSection] || 0) / (sectionTotal || 1)) *
-                  100
-                ).toFixed(2)
-              }}%</strong
-            ><br />百分比</span
-          >
-          <span
-            ><strong>{{ wantDateTimeString }}</strong
-            ><br />发生日期</span
-          >
-        </div>
+        <DataCard icon="fa-hourglass-end" title="耗时分段">
+          <div class="change">
+            <label v-for="i in 5" :key="i">
+              <input
+                v-model="activeSection"
+                :value="i - 1"
+                type="radio"
+                name="section"
+              />
+              <span class="name">
+                {{ activeSectionMap[i - 1] }}
+              </span>
+            </label>
+          </div>
+        </DataCard>
+        <DataCard icon="fa-calendar-o" title="当日数据">
+          <div class="data">
+            <span
+              ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
+              ><br />数量</span
+            >
+            <span
+              ><strong
+                >{{
+                  (
+                    ((sectionTotals[activeSection] || 0) /
+                      (sectionTotal || 1)) *
+                    100
+                  ).toFixed(2)
+                }}%</strong
+              ><br />百分比</span
+            >
+            <span
+              ><strong>{{ nowDateTimeString }}</strong
+              ><br />发生日期</span
+            >
+          </div>
+        </DataCard>
       </div>
       <div class="right">
-        <div class="title">
-          <i class="fa fa-bar-chart"></i>
-          <span> 变化趋势（近30天）</span>
-        </div>
-        <ECharts
-          :option="indicatorStatisticsChartOption"
-          :autoresize="true"
-          class="bar"
-        />
+        <DataCard
+          icon="fa-bar-chart"
+          title="变化趋势（近30天，点击可查看详情）"
+        >
+          <ECharts
+            :option="indicatorStatisticsChartOption"
+            :autoresize="true"
+            :loading="indicatorStatisticsLoading"
+            class="bar"
+            @click="indicatorStatisticsChartClick"
+          />
+        </DataCard>
       </div>
     </div>
-    <div class="content">
-      <div class="title">
-        <i class="fa fa-bars"></i>
-        <span> 接口列表（近30天）</span>
-      </div>
-      <div class="main">
-        <div class="left">
-          <ul>
+    <div class="bottom">
+      <DataCard
+        icon="fa-bars"
+        :title="`接口列表（${activeDateTime.format('YYYY-MM-DD')}）`"
+      >
+        <div class="main">
+          <ul v-if="interfaceIndicators?.length" class="left">
             <li
-              v-for="(interfaceIndicator, index) in indicators"
+              v-for="(interfaceIndicator, index) in interfaceIndicators"
               :key="index"
-              :class="{ active: activeIndicator === index }"
-              @click="activeIndicator = index"
+              :class="{ active: activeInterface === index }"
+              @click="activeInterface = index"
             >
               <span>{{ interfaceIndicator.url }}</span>
               <span>
@@ -78,49 +77,60 @@
               </span>
             </li>
           </ul>
+          <div v-else class="left" style="margin-top: 30px; text-align: center">
+            暂无数据
+          </div>
+          <div class="right">
+            <DataCard icon="fa-flag" title="常见指标">
+              <div class="board">
+                <div class="data">
+                  <div class="time">
+                    <span>平均耗时</span>
+                    <span
+                      >{{
+                        (
+                          (interfaceIndicators?.[activeInterface]?.average ||
+                            0) / 1000
+                        ).toFixed(2)
+                      }}s</span
+                    >
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-hourglass-end"></i>
+                  </div>
+                </div>
+                <div class="data">
+                  <div class="time">
+                    <span>影响用户</span>
+                    <span>{{
+                      interfaceIndicators?.[activeInterface]?.userCount || 0
+                    }}</span>
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-male"></i>
+                  </div>
+                </div>
+              </div>
+            </DataCard>
+            <DataCard icon="fa-bar-chart" title="请求趋势">
+              <ECharts
+                v-if="theIndicatorStatistics?.length"
+                :option="theIndicatorStatisticsChartOption"
+                :autoresize="true"
+                :loading="theIndicatorStatisticsLoading"
+                class="bar"
+              />
+              <div
+                v-else
+                class="bar"
+                style="height: 75px; margin-top: 30px; text-align: center"
+              >
+                暂无数据
+              </div>
+            </DataCard>
+          </div>
         </div>
-        <div class="right">
-          <div class="title">
-            <i class="fa fa-flag"></i>
-            <span> 常见指标</span>
-          </div>
-          <div class="board">
-            <div class="data">
-              <div class="time">
-                <span>平均耗时</span>
-                <span
-                  >{{
-                    (
-                      (indicators?.[activeIndicator]?.average || 0) / 1000
-                    ).toFixed(2)
-                  }}s</span
-                >
-              </div>
-              <div class="icon">
-                <i class="fa fa-hourglass-end"></i>
-              </div>
-            </div>
-            <div class="data">
-              <div class="time">
-                <span>影响用户</span>
-                <span>{{ indicators?.[activeIndicator]?.userCount || 0 }}</span>
-              </div>
-              <div class="icon">
-                <i class="fa fa-male"></i>
-              </div>
-            </div>
-          </div>
-          <div class="title">
-            <i class="fa fa-bar-chart"></i>
-            <span> 请求趋势</span>
-          </div>
-          <ECharts
-            :option="theIndicatorStatisticsChartOption"
-            :autoresize="true"
-            class="bar"
-          />
-        </div>
-      </div>
+      </DataCard>
     </div>
   </div>
 </template>
@@ -130,17 +140,25 @@ import {
   getPerformancesInterfaceindicators,
   getPerformancesInterfaceindicatorstatistics,
 } from "@/apis";
+import DataCard from "@/components/DataCard.vue";
+import { basicChartOption } from "@/configs";
 import { useStore } from "@/stores";
 import type { BasicList, BasicStatistic } from "@/types";
 import { BasicIndicator } from "@balabala/monitor-api";
-import dayjs from "dayjs";
-import type { ECBasicOption } from "echarts/types/dist/shared";
-import { watchEffect } from "vue";
+import dayjs, { Dayjs } from "dayjs";
+import { EChartsCoreOption } from "echarts";
+import { watch } from "vue";
 import ECharts from "vue-echarts";
 
 const store = useStore();
 
+// 激活耗时分段索引
 let activeSection = $ref(0);
+// 激活统计日期
+let activeDateTime = $ref(dayjs().startOf("d"));
+// 激活接口索引
+let activeInterface = $ref(0);
+// 耗时分段名称映射
 let activeSectionMap: Record<number, string> = {
   0: "<1秒",
   1: "1-5秒",
@@ -148,43 +166,30 @@ let activeSectionMap: Record<number, string> = {
   3: "10-30秒",
   4: ">30秒",
 };
-const wantDateTime = $ref(dayjs());
-const wantDateTimeString = $computed(() => wantDateTime.format("YYYY-MM-DD"));
-const requestParam = $computed(() => {
-  return {
-    appId: store.appId,
-    mainType: BasicIndicator.mainType.InterfaceIndicator,
-    subType: BasicIndicator.subType.InterfaceIndicator,
-    startTime: wantDateTime.subtract(30, "day").format("YYYY-MM-DD HH:mm:ss"),
-    endTime: wantDateTime.format("YYYY-MM-DD HH:mm:ss"),
-  };
-});
-const basicChartOption: ECBasicOption = {
-  tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
-    },
-  },
-  legend: {},
-  grid: {
-    left: "3%",
-    right: "4%",
-    bottom: "3%",
-    containLabel: true,
-  },
+// 当前时间dayjs对象
+const nowDateTime = activeDateTime;
+// 当前时间字符串
+const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
+// 接口指标分段统计列表基础请求参数
+const basicRequestParam = {
+  appId: store.appId,
+  mainType: BasicIndicator.mainType.InterfaceIndicator,
+  subType: BasicIndicator.subType.InterfaceIndicator,
 };
 
-let activeIndicator = $ref(0);
-
+// 接口指标分段统计列表
 let indicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
-const indicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
+// 接口指标分段统计列表加载状态
+let indicatorStatisticsLoading = $ref(false);
+// 接口指标分段统计图标配置项
+const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     xAxis: {
       type: "category",
       data:
-        indicatorStatistics?.[activeSection]?.map((item) => item.dateTime) ||
-        [],
+        indicatorStatistics?.[activeSection]?.map((item) =>
+          dayjs(item.dateTime).format("MM-DD")
+        ) || [],
     },
     yAxis: {
       type: "value",
@@ -197,53 +202,99 @@ const indicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
             ?.map((item) => item.count)
             .filter((item) => item !== 0) || [],
         type: "bar",
+        label: {
+          show: true,
+        },
       },
     ],
     ...basicChartOption,
   };
 });
+// 接口指标分段统计总数列表
 const sectionTotals = $computed(
   () =>
     indicatorStatistics?.map(
       (section) =>
-        section.find(({ dateTime }) =>
-          dayjs(dateTime).isSame(wantDateTime, "d")
-        )?.count || 0
+        section.find(({ dateTime }) => dayjs(dateTime).isSame(nowDateTime, "d"))
+          ?.count || 0
     ) || []
 );
+// 接口指标分段统计总数
 const sectionTotal = $computed(() =>
   sectionTotals.reduce((total, count) => total + count, 0)
 );
 
-const getIndicatorStatistics = () => {
-  getPerformancesInterfaceindicatorstatistics(requestParam).then(({ data }) => {
-    indicatorStatistics = data.map((section) =>
-      section.map((item) => ({
-        ...item,
-        dateTime: dayjs(item.dateTime).format("MM-DD"),
-      }))
+// 接口指标分段统计图标点击事件
+const indicatorStatisticsChartClick = (e: any) => {
+  activeDateTime = dayjs(`${nowDateTime.year()}-${e.name}`);
+};
+
+// 获取接口指标分段统计列表
+const getIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
+  indicatorStatisticsLoading = true;
+  getPerformancesInterfaceindicatorstatistics({
+    ...basicRequestParam,
+    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
+    endTime:
+      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
+      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
+  }).then(({ data }) => {
+    indicatorStatistics = data;
+    indicatorStatisticsLoading = false;
+  });
+};
+// 获取近30天的接口指标分段统计列表
+getIndicatorStatistics(
+  nowDateTime.subtract(29, "day").startOf("d"),
+  nowDateTime.add(1, "d").startOf("d")
+);
+
+// 接口指标列表
+let interfaceIndicators = $ref<
+  Array<BasicList & { url: string }> | undefined
+>();
+
+// 获取接口指标列表
+const getInterfaceIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
+  getPerformancesInterfaceindicators({
+    ...basicRequestParam,
+    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
+    endTime:
+      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
+      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
+  }).then(({ data }) => {
+    interfaceIndicators = data;
+  });
+};
+
+// 监听激活时间变化
+watch(
+  () => activeDateTime,
+  (activeDateTime) => {
+    // 获取激活时间当天的接口指标列表
+    getInterfaceIndicators(
+      activeDateTime.startOf("d"),
+      activeDateTime.add(1, "d").startOf("d")
     );
-  });
-};
-getIndicatorStatistics();
+  },
+  {
+    immediate: true,
+  }
+);
 
-let indicators = $ref<Array<BasicList & { url: string }> | undefined>();
-
-const getIndicators = () => {
-  getPerformancesInterfaceindicators(requestParam).then(({ data }) => {
-    indicators = data;
-  });
-};
-getIndicators();
-
+// 某天接口指标分段统计列表
 let theIndicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
-const theIndicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
+// 某天接口指标分段统计列表加载状态
+let theIndicatorStatisticsLoading = $ref(false);
+// 某天接口指标分段统计图标配置项
+const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     xAxis: {
       type: "category",
       data:
-        theIndicatorStatistics?.[activeSection]?.map((item) => item.dateTime) ||
-        [],
+        theIndicatorStatistics?.[activeSection]?.map((item) =>
+          dayjs(item.dateTime).format("HH:mm")
+        ) || [],
     },
     yAxis: {
       type: "value",
@@ -252,32 +303,39 @@ const theIndicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
       theIndicatorStatistics?.map((section, index) => ({
         name: activeSectionMap[index],
         data: section.map((item) => item.count).filter((item) => item !== 0),
-        type: "bar",
-        stack: "total",
         label: {
           show: true,
-        },
-        emphasis: {
-          focus: "series",
         },
       })) || [],
     ...basicChartOption,
   };
 });
 
-watchEffect(() => {
-  if (indicators?.[activeIndicator]) {
-    getPerformancesInterfaceindicatorstatistics({
-      ...requestParam,
-      url: indicators[activeIndicator].url,
-    }).then(({ data }) => {
-      theIndicatorStatistics = data.map((section) =>
-        section.map((item) => ({
-          ...item,
-          dateTime: dayjs(item.dateTime).format("MM-DD"),
-        }))
-      );
-    });
+// 获取某天接口指标分段统计列表
+const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
+  theIndicatorStatisticsLoading = true;
+  getPerformancesInterfaceindicatorstatistics({
+    ...basicRequestParam,
+    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
+    endTime:
+      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
+      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
+    url: interfaceIndicators?.[activeInterface].url,
+    granularity: "1h",
+  }).then(({ data }) => {
+    theIndicatorStatistics = data;
+    theIndicatorStatisticsLoading = false;
+  });
+};
+
+// 监听接口指标列表和激活接口索引
+watch([() => interfaceIndicators, () => activeInterface], () => {
+  // 自动获取某天接口指标分段统计列表
+  if (interfaceIndicators?.[activeInterface]) {
+    getTheIndicatorStatistics(
+      activeDateTime.startOf("d"),
+      activeDateTime.add(1, "d").startOf("d")
+    );
   }
 });
 </script>
@@ -286,25 +344,16 @@ watchEffect(() => {
 .container {
   padding: 20px;
 
-  .title {
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    border-bottom: 3px solid #ea6947;
-  }
-
   .top {
     display: flex;
-    height: 250px;
 
     .left {
       display: flex;
       flex: 3;
       flex-direction: column;
-      padding: 10px;
 
       .change {
         display: flex;
-        margin-bottom: 10px;
         overflow: hidden;
         border-radius: 10px;
 
@@ -322,7 +371,7 @@ watchEffect(() => {
             border-right: none;
           }
 
-          span {
+          .name {
             display: inline-block;
             width: 100%;
             height: 100%;
@@ -335,7 +384,7 @@ watchEffect(() => {
           input {
             display: none;
 
-            &:checked ~ span {
+            &:checked ~ .name {
               color: #fff;
               background-color: #ea6947;
             }
@@ -348,6 +397,7 @@ watchEffect(() => {
         flex: 1;
         align-items: center;
         justify-content: space-around;
+        height: 95px;
 
         // stylelint-disable-next-line all
         span {
@@ -364,68 +414,59 @@ watchEffect(() => {
       display: flex;
       flex: 7;
       flex-direction: column;
-      padding: 10px;
       margin-left: 20px;
 
       .bar {
-        flex: 1;
         width: 100%;
+        height: 200px;
       }
     }
   }
 
-  .content {
-    padding: 10px;
-
+  .bottom {
     .main {
       display: flex;
 
       .left {
         flex: 3;
-        margin-right: 40px;
+        padding: 0;
+        margin-right: 10px;
+        list-style: none;
 
-        ul {
-          width: 100%;
-          padding: 0;
-          margin: 0;
-          list-style: none;
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 40px;
+          padding-left: 10px;
+          margin-bottom: 10px;
+          background-color: #e7e7e7;
+          border-radius: 7px;
 
-          li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 40px;
-            padding-left: 10px;
-            margin-bottom: 10px;
-            background-color: #e7e7e7;
-            border-radius: 7px;
+          &:hover {
+            cursor: pointer;
+            background-color: #bababa;
+          }
 
-            &:hover {
-              cursor: pointer;
-              background-color: #bababa;
+          &.active {
+            background-color: #ea6947;
+          }
+
+          & > span {
+            &:first-child {
+              flex: 1 1 auto;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
-            &.active {
-              background-color: #ea6947;
+            &:last-child {
+              flex: 1 0 120px;
+              text-align: right;
             }
+          }
 
-            // stylelint-disable-next-line all
-            span {
-              &:first-child {
-                flex: 1 1 auto;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-
-              &:last-child {
-                flex: 1 0 120px;
-                text-align: right;
-              }
-            }
-
-            .fa {
-              margin: 0 10px;
-            }
+          .fa {
+            margin: 0 10px;
           }
         }
       }
@@ -438,7 +479,6 @@ watchEffect(() => {
         .board {
           display: flex;
           flex-wrap: wrap;
-          margin-bottom: 20px;
 
           .data {
             display: flex;

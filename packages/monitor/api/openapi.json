@@ -251,10 +251,26 @@
                             "title": "影响用户数",
                             "description": "影响用户数"
                           },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
+                          },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -263,14 +279,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "pageUrl",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -284,23 +304,45 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1985-10-10 03:26:24",
+                      "timestamp": "1991-11-14 01:56:58",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "pageUrl": "http://nyzexrtgl.kr/vyfqevc",
-                          "count": 62,
-                          "average": 73.5748,
-                          "userCount": 75,
-                          "pageCount": 95
+                          "pageUrl": "http://cljkech.bg/avhqhzg",
+                          "count": 88,
+                          "average": 86.955578551421,
+                          "userCount": 98,
+                          "pageCount": 78,
+                          "userList": [
+                            "eDD1F94D-c2Ac-5ECD-Ed06-c7FAE4AfE5ed",
+                            "CC5d4d0b-bFea-86ca-c8c8-3b2eAdBc3944",
+                            "2EB51c83-e45A-E81B-72B2-9fb6Ec54BEb7",
+                            "3D6eBea5-cCB9-dCEd-EFd6-f47121D4f2f5",
+                            "Cffe44F9-a7E9-05dD-2a72-f924850917e1"
+                          ],
+                          "pageList": [
+                            "http://hlan.ie/soifinmbkn",
+                            "http://zurwckm.name/nhjsbuw",
+                            "http://jhhltt.ie/mulnbyrfei"
+                          ]
                         },
                         {
-                          "pageUrl": "http://iuoo.bj/tuplu",
-                          "count": 82,
-                          "average": 80.8447306483,
-                          "userCount": 63,
-                          "pageCount": 97
+                          "pageUrl": "http://lemw.mp/owvrfqhv",
+                          "count": 87,
+                          "average": 92.7547,
+                          "userCount": 71,
+                          "pageCount": 94,
+                          "userList": [
+                            "B78a6355-1FbB-fFb2-d49F-AbCf4D953b8A",
+                            "ab246f24-4f3b-CBFA-ca5f-Fecd75FAfC84",
+                            "aDc97384-Ae8E-BcEf-b8ef-0df8e9e24EdD",
+                            "12F6ef3f-28fa-5db7-Ffd7-88402a8A1CFC"
+                          ],
+                          "pageList": [
+                            "http://pcbunitcux.bt/tlebjsq",
+                            "http://epkl.pw/vaszmf"
+                          ]
                         }
                       ]
                     }
@@ -556,10 +598,26 @@
                             "title": "影响用户数",
                             "description": "影响用户数"
                           },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
+                          },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -568,14 +626,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "url",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -589,29 +651,27 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1971-06-14 04:45:00",
+                      "timestamp": "1975-05-04 21:35:27",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "url": "http://wfd.bz/gmynuacu",
-                          "count": 66,
-                          "average": 63.05346130642
-                        },
-                        {
-                          "url": "http://zaflqzo.yu/dnykivo",
-                          "count": 81,
-                          "average": 79.90011115717
-                        },
-                        {
-                          "url": "http://nryydklk.tf/setfex",
-                          "count": 75,
-                          "average": 83.3464668681
-                        },
-                        {
-                          "url": "http://mivoxurjvd.mn/tjxuj",
-                          "count": 93,
-                          "average": 98.48173
+                          "url": "http://wsxej.pro/buev",
+                          "count": 63,
+                          "average": 80.71,
+                          "userCount": 68,
+                          "pageCount": 94,
+                          "userList": [
+                            "7dE2dced-fd0f-9F54-10FA-28bFceB594F9",
+                            "25cE29CE-EEc8-04A6-8cCC-9eC5e9CEb9EB"
+                          ],
+                          "pageList": [
+                            "http://vdmygja.mm/vkrt",
+                            "http://kctegvqc.ba/wuvknmsvu",
+                            "http://ivtdolu.kz/lrqhe",
+                            "http://jqysugs.uk/wcohfhuy",
+                            "http://evunlpks.ye/yxhkvvhbg"
+                          ]
                         }
                       ]
                     }
@@ -869,10 +929,26 @@
                             "title": "影响用户数",
                             "description": "影响用户数"
                           },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
+                          },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -881,14 +957,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "url",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -902,24 +982,73 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1976-05-21 18:08:38",
+                      "timestamp": "2007-12-07 04:37:08",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "url": "http://mfyqtsb.th/yexwhwb",
-                          "count": 71,
-                          "average": 99.95436485214532
+                          "url": "http://kdwjhujp.tg/rxrjedui",
+                          "count": 89,
+                          "average": 91.44233,
+                          "userCount": 100,
+                          "pageCount": 86,
+                          "userList": [
+                            "BA791172-F2cc-7BFb-46B5-2dd5b51dA82d",
+                            "C83CF03a-4def-f1B0-c8D5-f79Bcc526CB0"
+                          ],
+                          "pageList": [
+                            "http://rfmn.lb/msfe",
+                            "http://hhay.bm/teuvkmbh",
+                            "http://inqw.net/knnbb",
+                            "http://oami.lk/veisc",
+                            "http://dpzr.an/fpl"
+                          ]
                         },
                         {
-                          "url": "http://nwmcelwh.com.cn/ftorg",
-                          "count": 75,
-                          "average": 99.02233060891
+                          "url": "http://jhufnnoyg.fi/xibfqq",
+                          "count": 81,
+                          "average": 70.51,
+                          "userCount": 68,
+                          "pageCount": 98,
+                          "userList": [
+                            "99EcCFAc-27e1-1EdB-8B7A-B32DFDA3669e",
+                            "7EF22dE9-829a-eF27-93dc-a7d8fd85cAF2"
+                          ],
+                          "pageList": ["http://gpyvohq.sk/huwqei"]
                         },
                         {
-                          "url": "http://xxwcjhray.mg/bxenerz",
-                          "count": 99,
-                          "average": 63.712472526726
+                          "url": "http://smjboly.lb/qohgfxx",
+                          "count": 80,
+                          "average": 85.486218553794,
+                          "userCount": 84,
+                          "pageCount": 78,
+                          "userList": [
+                            "D4Fc4D8D-CF9a-6983-A5eA-1e9cFeCFFd15",
+                            "F9Dd316D-7E75-8E1f-07c9-68dd08d3245D",
+                            "Ee8f17d2-F117-F73D-d3b5-C4cAF6fCcAc4",
+                            "98bBFdd5-2286-9466-c7Fa-35a84CeDE39F",
+                            "14edFe3B-e92e-f5D2-bdc6-ba9e98c03cb7"
+                          ],
+                          "pageList": ["http://dijvlpjnf.as/dynxwbbx"]
+                        },
+                        {
+                          "url": "http://movhtoutfs.by/hejh",
+                          "count": 67,
+                          "average": 61.78379288845455,
+                          "userCount": 65,
+                          "pageCount": 67,
+                          "userList": [
+                            "c49eba8b-F80c-DcdA-9dAb-DFB8DD2BB4D5",
+                            "B59afdca-3d6E-9607-d648-e1bFFFbBdcdf",
+                            "8Ac9f95f-c33f-Cbe5-D7f6-2fCcDDb5AE81",
+                            "2Af4dDa1-94f1-fF4E-3Eeb-c7e6b9F5C7b0",
+                            "3674E2cb-3D4d-744a-d7be-CA72DC63646b"
+                          ],
+                          "pageList": [
+                            "http://wooxrv.dm/johbwjfc",
+                            "http://pjvzjuy.lk/tghhiejs",
+                            "http://vlpoqvvjw.org.cn/uxlmju"
+                          ]
                         }
                       ]
                     }
@@ -1177,14 +1306,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -1193,14 +1338,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "url",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -1214,37 +1363,60 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2004-07-27 10:14:09",
+                      "timestamp": "2007-08-18 08:43:28",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "url": "http://vfiijhx.hk/mxgjgmf",
-                          "count": 90,
-                          "average": 81.2807263,
-                          "userCount": 96,
-                          "pageCount": 90
+                          "url": "http://dchemcuz.iq/jldxxiw",
+                          "count": 87,
+                          "average": 61.57169873,
+                          "userCount": 84,
+                          "pageCount": 85,
+                          "userList": [
+                            "cAde5fE8-ADcc-D53A-199a-Ec55cF7C83Cd",
+                            "52C6F5A2-bC4d-AD19-1A6c-7DbF3b2Db77D",
+                            "bBBb4D5d-95Ac-4165-dcB5-f3c9AadD0c05",
+                            "8e3D1b50-28f5-d62d-b4Ab-c7c4eE4f7c5d",
+                            "1ee0d1EA-DA83-c6C4-72ed-F6C7Dcd7754D"
+                          ],
+                          "pageList": [
+                            "http://hrqilqnqw.nc/cprws",
+                            "http://loidvmpbat.bb/npeq",
+                            "http://oxw.bj/nzojvj",
+                            "http://vfrbidqc.cn/ukgrb",
+                            "http://iduojw.com/pvfxxgsbkp"
+                          ]
                         },
                         {
-                          "url": "http://bfx.bh/jxgr",
-                          "count": 61,
-                          "average": 100.4272539,
-                          "userCount": 82,
-                          "pageCount": 64
+                          "url": "http://jjw.gt/rmnxky",
+                          "count": 87,
+                          "average": 87.718297,
+                          "userCount": 77,
+                          "pageCount": 89,
+                          "userList": ["c8e09dD2-Abe4-d5C1-c3fB-EDb9275C9a4f"],
+                          "pageList": ["http://rowh.org/rspfhfskt"]
                         },
                         {
-                          "url": "http://vwdo.bi/hfpjq",
-                          "count": 80,
-                          "average": 70.13357,
-                          "userCount": 97,
-                          "pageCount": 67
-                        },
-                        {
-                          "url": "http://hdlylhn.ca/bxhy",
-                          "count": 89,
-                          "average": 81.6792845056848,
-                          "userCount": 82,
-                          "pageCount": 84
+                          "url": "http://fcibnz.si/xnsvebxeo",
+                          "count": 79,
+                          "average": 93.68330863283549,
+                          "userCount": 80,
+                          "pageCount": 94,
+                          "userList": [
+                            "Ec15c3D5-b4ce-f7f9-29E5-CbCc308dC0c9",
+                            "55d10Afc-FdA8-Fd26-3FFe-89E67BF80461",
+                            "9fd21b60-C1fc-caf8-b955-60F8914B6FE4",
+                            "33A64AfE-79Bc-f56c-0ac4-4A47A9bf67CD",
+                            "2F3b3Ae3-84fd-63Ac-66B4-7bc863eEeD9c"
+                          ],
+                          "pageList": [
+                            "http://tgulqcde.travel/ogbkgt",
+                            "http://rpeejdut.it/edobrcqvp",
+                            "http://dcteix.pr/rcqiiyokn",
+                            "http://prciuzekp.sz/xdoxuohs",
+                            "http://fryxqcia.hr/xip"
+                          ]
                         }
                       ]
                     }
@@ -2590,6 +2762,21 @@
                             "title": "文件路径",
                             "description": "文件路径"
                           },
+                          "msg": {
+                            "type": "string",
+                            "title": "错误消息",
+                            "description": "错误消息"
+                          },
+                          "line": {
+                            "type": "integer",
+                            "title": "错误行号",
+                            "description": "错误行号"
+                          },
+                          "column": {
+                            "type": "integer",
+                            "title": "错误列号",
+                            "description": "错误列号"
+                          },
                           "count": {
                             "title": "统计总数",
                             "type": "integer",
@@ -2601,41 +2788,44 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
                           },
-                          "msg": {
-                            "type": "string",
-                            "title": "错误信息",
-                            "description": "错误信息"
-                          },
-                          "line": {
-                            "type": "integer",
-                            "title": "行号",
-                            "description": "行号"
-                          },
-                          "column": {
-                            "type": "integer",
-                            "title": "列号",
-                            "description": "列号"
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
                         "x-apifox-orders": [
                           "url",
+                          "msg",
+                          "line",
+                          "column",
                           "count",
                           "average",
                           "userCount",
+                          "userList",
                           "pageCount",
-                          "msg",
-                          "line",
-                          "column"
+                          "pageList"
                         ],
                         "required": [
                           "url",
@@ -2643,6 +2833,8 @@
                           "average",
                           "userCount",
                           "pageCount",
+                          "userList",
+                          "pageList",
                           "msg",
                           "line",
                           "column"
@@ -2659,29 +2851,48 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2006-02-19 00:34:37",
+                      "timestamp": "2008-07-08 20:38:45",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "url": "http://ftuijnbo.sg/krscie",
-                          "count": 87,
-                          "average": 72.0111273134366,
-                          "userCount": 68,
-                          "pageCount": 87,
-                          "msg": "sN7N",
-                          "line": 98,
-                          "column": 83
+                          "url": "http://iifepxmjpy.pe/fcucvde",
+                          "count": 83,
+                          "average": 95.71785,
+                          "userCount": 77,
+                          "pageCount": 96,
+                          "userList": [
+                            "DC0Fd295-85f9-47DD-3f95-aEA671ada5DF",
+                            "BC1eE33a-BB0b-3feD-5AeB-c437592a7212",
+                            "eF3ddBab-7DF9-B8e2-C9b2-5Aa216eDdB19",
+                            "E6bAf12d-b226-d71A-fE76-fEfDB0E57CD6"
+                          ],
+                          "pageList": [
+                            "http://bpbm.az/hin",
+                            "http://qfowkpq.cy/zjpipqzjc",
+                            "http://rlacpio.to/sxhw",
+                            "http://btmqynrgm.fr/bxvhnlz",
+                            "http://akl.zm/mwqpqt"
+                          ],
+                          "msg": "QpPL",
+                          "line": 95,
+                          "column": 71
                         },
                         {
-                          "url": "http://qepxe.gw/tso",
-                          "count": 63,
-                          "average": 82.73746591778543,
-                          "userCount": 64,
-                          "pageCount": 71,
-                          "msg": "lP1",
-                          "line": 73,
-                          "column": 69
+                          "url": "http://oxn.lr/vvkxrz",
+                          "count": 94,
+                          "average": 64.83947327,
+                          "userCount": 79,
+                          "pageCount": 62,
+                          "userList": [
+                            "DDa5eBED-D875-2Fb3-fFb4-77d859A1ef69",
+                            "ef708EFF-59dc-3D46-6Bd0-fC6Bbae698AA",
+                            "c2957DBE-52Fe-FE8e-c7c9-A81C8DfeBCF3"
+                          ],
+                          "pageList": ["http://uvso.bm/ohlckdz"],
+                          "msg": "irij*",
+                          "line": 93,
+                          "column": 64
                         }
                       ]
                     }
@@ -2917,8 +3128,8 @@
                         "properties": {
                           "stack": {
                             "type": "string",
-                            "title": "堆栈信息",
-                            "description": "堆栈信息"
+                            "title": "错误堆栈",
+                            "description": "错误堆栈"
                           },
                           "count": {
                             "title": "统计总数",
@@ -2935,10 +3146,26 @@
                             "title": "影响用户数",
                             "description": "影响用户数"
                           },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
+                          },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -2947,14 +3174,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "stack",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -2968,30 +3199,77 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2001-04-07 00:04:57",
+                      "timestamp": "2008-05-10 19:43:40",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "stack": "s^*HgR",
-                          "count": 63,
-                          "average": 80.29512,
-                          "userCount": 67,
-                          "pageCount": 88
+                          "stack": "JBGT",
+                          "count": 62,
+                          "average": 91.31935525622352,
+                          "userCount": 61,
+                          "pageCount": 88,
+                          "userList": ["48C27425-A63A-6B0d-b7AA-8eDC3D8F5cCf"],
+                          "pageList": ["http://ftsaes.ws/xfuqth"]
                         },
                         {
-                          "stack": "6m#nXm",
-                          "count": 60,
-                          "average": 76.539974317,
-                          "userCount": 97,
-                          "pageCount": 72
+                          "stack": "BSI8%",
+                          "count": 82,
+                          "average": 78.83,
+                          "userCount": 91,
+                          "pageCount": 100,
+                          "userList": [
+                            "ED729E2f-1B65-F6bF-F6d0-f9b1ffAE945D",
+                            "BAfDfF3E-f4E4-8Be2-E548-F5c7dfA59d7b",
+                            "5600Eb34-8118-f6Ab-FFE3-d55F9FaFE1fB",
+                            "76534Af1-36dF-6aE7-BEcD-4ddc15dFEA8f"
+                          ],
+                          "pageList": [
+                            "http://lbvnjodg.tt/zpyv",
+                            "http://qejdj.int/iubl",
+                            "http://ibwvoixt.aero/etixohrpoe",
+                            "http://ejai.ma/uvrwzunh",
+                            "http://jozblko.no/ddx"
+                          ]
                         },
                         {
-                          "stack": "X9)",
+                          "stack": "5@zjgfE",
                           "count": 71,
-                          "average": 94.74421451,
-                          "userCount": 96,
-                          "pageCount": 66
+                          "average": 98.42838387,
+                          "userCount": 89,
+                          "pageCount": 62,
+                          "userList": [
+                            "CdAFa9EB-17FF-bf2e-ba3c-7c67CEc03cDF",
+                            "3A91C530-69b1-cC51-2cD0-4b4D7A0b39Ce"
+                          ],
+                          "pageList": [
+                            "http://pqwzycrin.gn/noxyjlgiz",
+                            "http://wbbwpp.kg/lfbjpmsyv",
+                            "http://jsw.bj/ppc",
+                            "http://agyn.gw/tpdtlf",
+                            "http://dvsucwqas.dj/odytc"
+                          ]
+                        },
+                        {
+                          "stack": "isu",
+                          "count": 89,
+                          "average": 72.63,
+                          "userCount": 98,
+                          "pageCount": 77,
+                          "userList": [
+                            "C2e61B87-2b9d-2E3c-3D91-bDD7BdFdc77E",
+                            "C84Fd72C-Fc42-2f8a-82BA-Fff0453F7F9D",
+                            "C0cCcF1D-1dc1-e8D8-95dA-A2C06A8492fe",
+                            "25d4d5f7-814D-fB77-347e-b8Ca040D7b47",
+                            "256a88eF-6Fce-D2DC-11fA-E9F971eF95f8"
+                          ],
+                          "pageList": [
+                            "http://vcduqt.gov/mheq",
+                            "http://pcrhdxqy.sz/pfujmd",
+                            "http://ropjah.tj/yhevmrau",
+                            "http://iiwhpsrk.ch/xnsqc",
+                            "http://vwvv.lr/ompa"
+                          ]
                         }
                       ]
                     }
@@ -3967,14 +4245,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -3983,14 +4277,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "pageUrl",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -4004,32 +4302,64 @@
                   "1": {
                     "summary": "成功示例 ",
                     "value": {
-                      "timestamp": "1974-09-27 02:38:23",
+                      "timestamp": "2002-03-03 21:53:50",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 1,
-                            "subType": 1193,
-                            "pageUrl": "http://wskktf.ws/qmurhbun",
-                            "userID": "DACce5Ae-D1F6-d24d-82CF-b3317a2CF9AC",
-                            "value": 69.614715431166,
-                            "startTime": 1660811691,
-                            "appId": "F7a5CcD7-F64f-d7Bc-E5c7-AFdfc2924e6e"
-                          },
-                          {
-                            "mainType": 1,
-                            "subType": 1726,
-                            "pageUrl": "http://nbsugt.pa/nkquxksf",
-                            "userID": "ab923522-dc76-557c-5Eb0-EcbCE7C8Bc7b",
-                            "value": 67.04,
-                            "startTime": 1660811691,
-                            "appId": "8689fDcD-B818-b440-Dbf3-Ef8BDdbeCcAC"
-                          }
-                        ],
-                        "totalCount": "62"
-                      }
+                      "data": [
+                        {
+                          "pageUrl": "http://ihypabdd.cc/dyinxunhs",
+                          "count": 90,
+                          "average": 95.43628421785527,
+                          "userCount": 89,
+                          "pageCount": 91,
+                          "userList": [
+                            "CFad0Ae9-075b-eFC1-28A2-50e78db9F64e",
+                            "B77Bc4be-f7f8-b2F7-AE85-Aaef4c3B3e4c",
+                            "BDbcbaCc-Ef30-5B0c-1D97-71fB3E631544",
+                            "CD49F0eE-2A5d-D3DC-C7af-Dd8c4Cc99DDb"
+                          ],
+                          "pageList": [
+                            "http://lamprmh.al/jskxqgot",
+                            "http://humxvwxu.dz/pltjercbr",
+                            "http://wdwrl.mz/visbsdo",
+                            "http://vvj.mc/gzddcvg"
+                          ]
+                        },
+                        {
+                          "pageUrl": "http://niiimgdr.asia/scgfecsxr",
+                          "count": 65,
+                          "average": 67.920872198,
+                          "userCount": 73,
+                          "pageCount": 72,
+                          "userList": ["7F5f135f-eB11-a663-61fF-b8821C3b5EeD"],
+                          "pageList": [
+                            "http://kpnol.net.cn/wnxxld",
+                            "http://qldlxu.md/umhrim",
+                            "http://awyxqyoip.be/rfcphbb",
+                            "http://iyopp.md/cymulqittp"
+                          ]
+                        },
+                        {
+                          "pageUrl": "http://lbslmdr.io/brhqo",
+                          "count": 99,
+                          "average": 81.588253817473,
+                          "userCount": 86,
+                          "pageCount": 92,
+                          "userList": [
+                            "99bCFDF8-ECd4-82FE-2FcB-deD32a01CEDA",
+                            "31c34300-DbfE-Fe11-7FcE-644A4cBBD6C3",
+                            "7858EB94-948A-06DF-E2Ae-13D11A9EFcaF",
+                            "c5CD8A7c-C079-945b-3eE1-86106cEa8d53",
+                            "E5FEa124-6daf-b8f6-Fc69-07bF3966bcab"
+                          ],
+                          "pageList": [
+                            "http://dif.td/yxeh",
+                            "http://wzcjty.ir/nytrvhnt",
+                            "http://rveuip.bv/uvpg",
+                            "http://iukwflh.com/yfm"
+                          ]
+                        }
+                      ]
                     }
                   }
                 }
@@ -4468,13 +4798,13 @@
                         "properties": {
                           "target": {
                             "type": "string",
-                            "title": "点击对象",
-                            "description": "点击对象"
+                            "title": "点击目标",
+                            "description": "点击目标"
                           },
                           "inner": {
                             "type": "string",
-                            "title": "内部文本",
-                            "description": "内部文本"
+                            "title": "对象文本",
+                            "description": "对象文本"
                           },
                           "count": {
                             "title": "统计总数",
@@ -4487,14 +4817,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -4504,15 +4850,19 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
+                          "target",
                           "count",
                           "average",
                           "userCount",
                           "pageCount",
-                          "inner",
-                          "target"
+                          "userList",
+                          "pageList",
+                          "inner"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -4526,53 +4876,27 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1991-10-21 22:12:50",
+                      "timestamp": "2013-12-14 17:50:56",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "itmes": [
-                          {
-                            "mainType": 2,
-                            "subType": 2001,
-                            "pageUrl": "http://momxkjsh.gh/qpoeotuh",
-                            "userID": "9FE2AEAF-Cc35-5D6d-86D4-9ECdDBcA7CFC",
-                            "startTime": 1660743550,
-                            "appId": "884BCdAd-434c-6aD1-1532-efD41F559C84",
-                            "left": 95.8967351,
-                            "top": 74.723306,
-                            "target": "AnKd",
-                            "html": "Hy76od",
-                            "inner": "Z[Q4"
-                          },
-                          {
-                            "mainType": 2,
-                            "subType": 2001,
-                            "pageUrl": "http://tmrtbfqon.gm/xzwzorz",
-                            "userID": "cE5c21F9-c2d7-EAFc-5022-E0Cf5a72EAeC",
-                            "startTime": 1660743550,
-                            "appId": "1E561BeD-3114-5667-Ddb5-Ea20183271A3",
-                            "left": 79.2,
-                            "top": 75.33262,
-                            "target": "h@%M4I",
-                            "html": "MOVVj",
-                            "inner": "YDXqMc"
-                          },
-                          {
-                            "mainType": 2,
-                            "subType": 2001,
-                            "pageUrl": "http://utew.mp/jopl",
-                            "userID": "CCF9f1b9-D8f1-d9fd-eED1-E9aE2737627f",
-                            "startTime": 1660743550,
-                            "appId": "1807de27-705d-66ED-DD56-BFf7D01c2Ea2",
-                            "left": 99.5354644221338,
-                            "top": 81.31316751216175,
-                            "target": "JOMOg",
-                            "html": "&E^V",
-                            "inner": "GzFcV"
-                          }
-                        ],
-                        "totalCount": 66
-                      }
+                      "data": [
+                        {
+                          "target": "V9$3",
+                          "count": 68,
+                          "average": 83.86177,
+                          "userCount": 90,
+                          "pageCount": 91,
+                          "userList": [
+                            "08DDA3Ae-EAef-fDc7-daDA-4cEfd3cEFCAB",
+                            "7f655b4D-fD26-BFAD-93Af-41DcC0DA83dC"
+                          ],
+                          "pageList": [
+                            "http://hagmu.net.cn/lvelunbp",
+                            "http://dkwodn.cn/mibnwbxx"
+                          ],
+                          "inner": "utI0CW"
+                        }
+                      ]
                     }
                   }
                 }
@@ -4790,13 +5114,13 @@
                         "properties": {
                           "from": {
                             "type": "string",
-                            "title": "路由跳转起步位置",
-                            "description": "路由跳转起步位置"
+                            "title": "起始页面",
+                            "description": "起始页面"
                           },
                           "to": {
                             "type": "string",
-                            "title": "路由跳转目的位置",
-                            "description": "路由跳转目的位置"
+                            "title": "跳转页面",
+                            "description": "跳转页面"
                           },
                           "count": {
                             "title": "统计总数",
@@ -4809,14 +5133,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -4826,7 +5166,9 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "from",
@@ -4834,6 +5176,8 @@
                           "average",
                           "userCount",
                           "pageCount",
+                          "userList",
+                          "pageList",
                           "to"
                         ],
                         "x-apifox-ignore-properties": []
@@ -4848,44 +5192,46 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1975-04-10 20:35:40",
+                      "timestamp": "1995-02-01 23:24:41",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 3,
-                            "subType": 3001,
-                            "pageUrl": "http://fwg.bz/hgnp",
-                            "userID": "B5a418C3-Fd23-0aEE-3A49-0b6b1eD74A3f",
-                            "startTime": 1660743615,
-                            "appId": "660fd1A7-ac10-F5EC-b59F-c64fb5aE2A85",
-                            "from": "6kx4",
-                            "to": "u9h&YOj"
-                          },
-                          {
-                            "mainType": 3,
-                            "subType": 3001,
-                            "pageUrl": "http://tejndkterb.ls/feuxsj",
-                            "userID": "168Fb4AA-bBA4-FdBa-8bf5-67CEc584E427",
-                            "startTime": 1660743615,
-                            "appId": "eEce47dD-D80b-EE81-5F7B-Fb4DD1bb27BC",
-                            "from": "Ho(5Vc*",
-                            "to": "TDBY0)"
-                          },
-                          {
-                            "mainType": 3,
-                            "subType": 3001,
-                            "pageUrl": "http://pxrrqapwp.net.cn/waxp",
-                            "userID": "F9eCAD5D-D6cE-1c4E-16F5-AAa0812E954E",
-                            "startTime": 1660743615,
-                            "appId": "bB343fF8-b0aB-CD92-ebfF-B149b8c42722",
-                            "from": "Y^B&aE",
-                            "to": "$rLB"
-                          }
-                        ],
-                        "totalCount": 81
-                      }
+                      "data": [
+                        {
+                          "from": "http://dcegvajb.nu/qdfcchq",
+                          "count": 84,
+                          "average": 66.4256644,
+                          "userCount": 81,
+                          "pageCount": 73,
+                          "userList": ["8acBb4d3-5920-Ea82-7177-e3F867fbA6FA"],
+                          "pageList": [
+                            "http://eihjsbz.fr/pnelw",
+                            "http://oqzj.cg/ukhzk"
+                          ],
+                          "to": "http://bxhl.uk/mmxrfd"
+                        },
+                        {
+                          "from": "http://duesi.mp/okpgul",
+                          "count": 72,
+                          "average": 91.745030716835,
+                          "userCount": 89,
+                          "pageCount": 72,
+                          "userList": [
+                            "ABd417be-CA9a-CC64-8fE9-fa9A9DF257C2",
+                            "cfa0C79F-229c-4D5A-7bbA-EEbd584f2bb4",
+                            "6ccFa2B4-1C02-79a9-c5e7-4AcE7A723CDc",
+                            "F5Ec489F-b6d4-C9bF-Ac9E-132d365d9d38",
+                            "e39A9fFf-3d11-3b13-7Edc-248bFdfe2C47"
+                          ],
+                          "pageList": [
+                            "http://wtccs.tg/szb",
+                            "http://eypl.lv/pujplsxge",
+                            "http://ddsctg.as/omosk",
+                            "http://shtfrdqkf.so/ebk",
+                            "http://mhyckzsumn.lc/oigdq"
+                          ],
+                          "to": "http://wxgro.io/vbpzcs"
+                        }
+                      ]
                     }
                   }
                 }
@@ -5143,13 +5489,13 @@
                         "properties": {
                           "from": {
                             "type": "string",
-                            "title": "路由跳转起步位置",
-                            "description": "路由跳转起步位置"
+                            "title": "起始页面",
+                            "description": "起始页面"
                           },
                           "to": {
                             "type": "string",
-                            "title": "路由跳转目的位置",
-                            "description": "路由跳转目的位置"
+                            "title": "跳转页面",
+                            "description": "跳转页面"
                           },
                           "count": {
                             "title": "统计总数",
@@ -5162,14 +5508,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -5179,7 +5541,9 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "from",
@@ -5187,6 +5551,8 @@
                           "average",
                           "userCount",
                           "pageCount",
+                          "userList",
+                          "pageList",
                           "to"
                         ],
                         "x-apifox-ignore-properties": []
@@ -5201,62 +5567,49 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2009-06-30 16:21:33",
+                      "timestamp": "2000-04-14 19:08:05",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "totalCount": 92,
-                        "items": [
-                          {
-                            "mainType": 4,
-                            "subType": 4001,
-                            "pageUrl": "http://zpsm.yu/kdeu",
-                            "userID": "b9DdC2B4-15c4-Db9B-9DF6-2FF95CE705FF",
-                            "startTime": 1660743689,
-                            "appId": "6b9fB6c5-44Ce-da11-Fc51-85e32FbB86ec",
-                            "from": "9Te3Cf",
-                            "to": "HB[!8MB",
-                            "params": "[0yt",
-                            "query": "8@Qnx"
-                          },
-                          {
-                            "mainType": 4,
-                            "subType": 4001,
-                            "pageUrl": "http://tejidhknry.sh/eefpfmg",
-                            "userID": "C277E3Dd-C21b-ca35-ECDA-b47FFD82beeF",
-                            "startTime": 1660743689,
-                            "appId": "938fDa03-d9FE-Fb4c-3fC5-1d4830d21077",
-                            "from": "^)E9",
-                            "to": "W&sv]9",
-                            "params": "G$EKc",
-                            "query": "uC4"
-                          },
-                          {
-                            "mainType": 4,
-                            "subType": 4001,
-                            "pageUrl": "http://qokly.bj/gvlcvmscor",
-                            "userID": "45CFEcbF-461B-3FAA-aDdE-FD519EF2E2A4",
-                            "startTime": 1660743689,
-                            "appId": "D95A7fDc-b368-E871-8D13-cdCCcD54ebA8",
-                            "from": "6sc4",
-                            "to": "4Oe5kAa",
-                            "params": "l8*",
-                            "query": "QFUI"
-                          },
-                          {
-                            "mainType": 4,
-                            "subType": 4001,
-                            "pageUrl": "http://wrhclikswd.bt/jhpflt",
-                            "userID": "8ceb2CF4-A7Fb-dB3A-5739-86baDcfc4aEf",
-                            "startTime": 1660743689,
-                            "appId": "43E06b90-89be-db43-0ffb-4d6066E578DA",
-                            "from": "[#15rYL",
-                            "to": "gT&",
-                            "params": "0ws$h5",
-                            "query": "SjF"
-                          }
-                        ]
-                      }
+                      "data": [
+                        {
+                          "from": "http://xmlht.se/wzbdicsn",
+                          "count": 95,
+                          "average": 78.838476338,
+                          "userCount": 71,
+                          "pageCount": 69,
+                          "userList": [
+                            "9DC2786b-BB42-Bf47-12F6-3eaCD85fcD2d",
+                            "59D3Df55-EEcC-F6Ac-5A3D-C2B4eEEE3dB3",
+                            "8b13D45E-2F28-EFf9-e2AE-CBdEf2b1b8d4",
+                            "A32b3B24-fF4b-df33-A13F-5bD3da5D4EB0"
+                          ],
+                          "pageList": [
+                            "http://eotk.cq/uvcbvhqe",
+                            "http://becftuu.tw/emootbf",
+                            "http://pet.ki/idbuamqh",
+                            "http://uito.sl/sciisnt"
+                          ],
+                          "to": "http://cmvo.bw/krkteio"
+                        },
+                        {
+                          "from": "http://bgfl.tf/grqvarspd",
+                          "count": 79,
+                          "average": 74,
+                          "userCount": 65,
+                          "pageCount": 81,
+                          "userList": [
+                            "3b3ee4B4-a60A-F5F1-C1B9-ef7BFdBD3cB8",
+                            "ECaa7bE3-f18C-D6F0-61D9-EBEf1FBdb8a9",
+                            "81abBbCF-8Fde-92d1-b62B-95dedb15FdFb",
+                            "FC4f07E5-B7d1-35Ce-CcB3-4e1FAdcf0c4c"
+                          ],
+                          "pageList": [
+                            "http://pjkvvylhe.ir/wdbfizjj",
+                            "http://wlprb.ck/kjh"
+                          ],
+                          "to": "http://dphkh.int/bhqhra"
+                        }
+                      ]
                     }
                   }
                 }
@@ -5836,14 +6189,30 @@
                             "description": "平均值"
                           },
                           "userCount": {
-                            "title": "影响用户数",
                             "type": "integer",
+                            "title": "影响用户数",
                             "description": "影响用户数"
+                          },
+                          "userList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "用户列表",
+                            "description": "用户列表"
                           },
                           "pageCount": {
                             "type": "integer",
                             "title": "影响页面数",
                             "description": "影响页面数"
+                          },
+                          "pageList": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "title": "页面列表",
+                            "description": "页面列表"
                           }
                         },
                         "x-apifox-refs": {},
@@ -5852,14 +6221,18 @@
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "userList",
+                          "pageCount",
+                          "pageList"
                         ],
                         "required": [
                           "url",
                           "count",
                           "average",
                           "userCount",
-                          "pageCount"
+                          "pageCount",
+                          "userList",
+                          "pageList"
                         ],
                         "x-apifox-ignore-properties": []
                       }
@@ -5873,37 +6246,44 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2002-09-22 10:23:43",
+                      "timestamp": "2017-05-31 01:05:16",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "url": "http://hcw.mobi/fwpdwsk",
-                          "count": 96,
-                          "average": 88.8,
-                          "userCount": 89,
-                          "pageCount": 88
+                          "url": "http://lcfnyscj.ba/ewvsieiqo",
+                          "count": 100,
+                          "average": 84.95368866085356,
+                          "userCount": 78,
+                          "pageCount": 78,
+                          "userList": [
+                            "6AbA153b-E18c-7C18-dFEB-9C53f6fD76eB",
+                            "B80Beb41-42Db-6c6D-eD33-265c7F0EAB04",
+                            "Fa9A7FAe-bB27-5f4a-2600-Df4B4c3BAcbb",
+                            "C31F5d78-8546-EDfe-EAAB-bAEBc1A2bbDD"
+                          ],
+                          "pageList": [
+                            "http://dtmhm.gp/mirmirkcb",
+                            "http://xtf.dm/vqiv",
+                            "http://nbdmtfety.td/eudimqpi",
+                            "http://ehgzqsw.eh/xtlnjas",
+                            "http://cwsykbqi.uk/sgocujmlt"
+                          ]
                         },
                         {
-                          "url": "http://tjbix.va/huegz",
-                          "count": 68,
-                          "average": 81.488960466,
-                          "userCount": 98,
-                          "pageCount": 99
-                        },
-                        {
-                          "url": "http://rfrx.lt/ucaavi",
+                          "url": "http://tymeligcx.net/hbsfr",
                           "count": 90,
-                          "average": 89.18,
-                          "userCount": 95,
-                          "pageCount": 85
-                        },
-                        {
-                          "url": "http://mjhnm.ec/umsg",
-                          "count": 83,
-                          "average": 67.255526,
-                          "userCount": 91,
-                          "pageCount": 69
+                          "average": 98.92715885653722,
+                          "userCount": 86,
+                          "pageCount": 88,
+                          "userList": [
+                            "DF99Fb6e-2f8d-251d-022d-Eeb4f675cccc",
+                            "AC8BAd1C-B14D-28A1-4Bf8-a71E9054fDA2",
+                            "66953E61-746d-CA0f-A6cd-AD216Ccf5Ec5",
+                            "ddC9E3c6-d733-aAd2-8cF2-F2BaFFf2f1eA",
+                            "1C9AaDc1-2a72-CA9f-B698-784F737A6DbF"
+                          ],
+                          "pageList": ["http://ohven.ht/vrkegpnlge"]
                         }
                       ]
                     }
@@ -5916,7 +6296,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-34572986-run"
       }
     },
-    "/behaviors/userAction": {
+    "/behaviors/useraction": {
       "get": {
         "summary": "用户行为列表",
         "x-apifox-folder": "行为监控",

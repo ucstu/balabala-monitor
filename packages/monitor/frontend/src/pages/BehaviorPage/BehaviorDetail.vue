@@ -136,7 +136,7 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import { getBehaviorsUserAction, getPerformancesBasicindicators } from "@/apis";
+import { getBehaviorsUseraction, getPerformancesBasicindicators } from "@/apis";
 import { useStore } from "@/stores";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
@@ -276,7 +276,7 @@ const loadBasicindicators = async () => {
 };
 
 const loadAllData = async () => {
-  const res = await getBehaviorsUserAction({ ...userActionParma });
+  const res = await getBehaviorsUseraction({ ...userActionParma });
   actionList.push(...res.data);
 };
 // 计算结束时间

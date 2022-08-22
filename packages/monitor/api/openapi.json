@@ -1646,6 +1646,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "接口路径",
+            "required": false,
+            "example": "{% mock 'url', 'http' %}",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

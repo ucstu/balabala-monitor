@@ -667,6 +667,7 @@ export class Service {
     userId,
     pageUrl,
     granularity,
+    url,
   }: {
     /**
      * 应用ID
@@ -700,6 +701,10 @@ export class Service {
      * 划分力度，eg：1s，1m，1h，1d，1M，1y
      */
     granularity?: string;
+    /**
+     * 接口路径
+     */
+    url?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -753,6 +758,7 @@ export class Service {
         start_time: startTime,
         end_time: endTime,
         granularity: granularity,
+        url: url,
       },
     });
   }

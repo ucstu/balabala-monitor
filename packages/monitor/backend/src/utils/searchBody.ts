@@ -4,6 +4,7 @@ import {
   InterfaceerrorsTotalVo,
   InterfaceerrorsVo,
 } from "src/vo/interfaceerrors.vo";
+import { InterfaceIndicatorTotalVo } from "src/vo/interfaceIndicator.vo";
 import { JavaScriptErrorTotalVo } from "src/vo/javascripterror.vo";
 import { PromiseerrorTotalVo } from "src/vo/promiseerror.vo";
 import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
@@ -100,10 +101,10 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
     body.query.bool.must.push(term);
   }
   // 分页参数
-  if (querys.page && querys.size) {
-    body.from = (querys.page - 1) * querys.size;
-    body.size = querys.size;
-  }
+  // if (querys.page && querys.size) {
+  //   body.from = (querys.page - 1) * querys.size;
+  //   body.size = querys.size;
+  // }
   //排序规则
   // console.log(querys.sort);
   // if (querys.sort.length > 0 && querys.sort[0].split(",").length === 2) {
@@ -244,12 +245,19 @@ export const getPerformancesBasicindicatorsBody = (
  * @returns
  */
 export const getTotalinterfaceIndicator = (
-  querys: BaseTotalVo,
+  querys: InterfaceIndicatorTotalVo,
   timeName: "startTime" | "errorTime"
 ) => {
   const body = getBaseBody(querys, timeName);
   if (!querys.granularity) {
     querys.granularity = "1d";
+  }
+  if (querys.url) {
+    body.query.bool.must.push({
+      term: {
+        url: querys.url,
+      },
+    });
   }
   const aggs = {
     count: {

@@ -53,6 +53,10 @@
             <span><i class="fa fa-angle-right"></i>30秒</span></label
           >
         </div>
+        <div class="title">
+          <i class="fa fa-calendar-o"></i>
+          <span> 当日数据</span>
+        </div>
         <div class="data">
           <span
             ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
@@ -69,7 +73,7 @@
             ><br />百分比</span
           >
           <span
-            ><strong>{{ yyyyMMdd }}</strong
+            ><strong>{{ wantDateTimeString }}</strong
             ><br />发生日期</span
           >
         </div>
@@ -79,70 +83,33 @@
           <i class="fa fa-bar-chart"></i>
           <span> 变化趋势（近30天）</span>
         </div>
-        <div class="bar"></div>
+        <ECharts
+          :option="indicatorStatisticsChartOption"
+          :autoresize="true"
+          class="bar"
+        />
       </div>
     </div>
     <div class="content">
       <div class="title">
         <i class="fa fa-bars"></i>
-        <span> 接口列表</span>
+        <span> 接口列表（近30天）</span>
       </div>
       <div class="main">
         <div class="left">
           <ul>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
-            </li>
-            <li>
-              <span>www.baidu.com</span
-              ><i class="fa fa-chain-broken"></i>(163)<i
-                class="fa fa-angle-right"
-              ></i>
+            <li
+              v-for="(interfaceIndicator, index) in indicators"
+              :key="index"
+              :class="{ active: activeIndicator === index }"
+              @click="activeIndicator = index"
+            >
+              <span>{{ interfaceIndicator.url }}</span>
+              <span>
+                <i class="fa fa-chain-broken"></i>
+                ({{ interfaceIndicator.count }})
+                <i class="fa fa-angle-right"></i>
+              </span>
             </li>
           </ul>
         </div>
@@ -155,7 +122,13 @@
             <div class="data">
               <div class="time">
                 <span>平均耗时</span>
-                <span>6.82s</span>
+                <span
+                  >{{
+                    (
+                      (indicators?.[activeIndicator]?.average || 0) / 1000
+                    ).toFixed(2)
+                  }}s</span
+                >
               </div>
               <div class="icon">
                 <i class="fa fa-hourglass-end"></i>
@@ -164,7 +137,7 @@
             <div class="data">
               <div class="time">
                 <span>影响用户</span>
-                <span>6.82s</span>
+                <span>{{ indicators?.[activeIndicator]?.userCount || 0 }}</span>
               </div>
               <div class="icon">
                 <i class="fa fa-male"></i>
@@ -175,11 +148,11 @@
             <i class="fa fa-bar-chart"></i>
             <span> 指标趋势</span>
           </div>
-          <div class="bars">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-          </div>
+          <ECharts
+            :option="theIndicatorStatisticsChartOption"
+            :autoresize="true"
+            class="bar"
+          />
         </div>
       </div>
     </div>
@@ -187,40 +160,136 @@
 </template>
 
 <script setup lang="ts">
-import { getPerformancesInterfaceindicatorstatistics } from "@/apis";
+import {
+  getPerformancesInterfaceindicators,
+  getPerformancesInterfaceindicatorstatistics,
+} from "@/apis";
 import { useStore } from "@/stores";
-import { BasicStatistic } from "@/types";
+import type { BasicList, BasicStatistic } from "@/types";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
-import { storeToRefs } from "pinia";
+import { ECBasicOption } from "echarts/types/dist/shared";
+import { watchEffect } from "vue";
+import ECharts from "vue-echarts";
 
 const store = useStore();
-const { appId } = $(storeToRefs(store));
 
 let activeSection = $ref(0);
-let activeDateTime = $ref(new Date());
-const yyyyMMdd = $computed(() => dayjs(activeDateTime).format("YYYY-MM-DD"));
-const MMdd = $computed(() => dayjs(activeDateTime).format("MM-DD"));
-let interfaceIndicatorstatistics = $ref<Array<Array<BasicStatistic>>>([]);
-const sectionTotals = $computed(() =>
-  interfaceIndicatorstatistics.map(
-    (section) => section.find(({ dateTime }) => dateTime === MMdd)?.count || 0
-  )
+const wantDateTime = $ref(dayjs());
+const wantDateTimeString = $computed(() => wantDateTime.format("YYYY-MM-DD"));
+const requestParam = $computed(() => {
+  return {
+    appId: store.appId,
+    mainType: BasicIndicator.mainType.InterfaceIndicator,
+    subType: BasicIndicator.subType.InterfaceIndicator,
+    startTime: wantDateTime.subtract(30, "day").format("YYYY-MM-DD HH:mm:ss"),
+    endTime: wantDateTime.format("YYYY-MM-DD HH:mm:ss"),
+  };
+});
+const basicChartOption: ECBasicOption = {
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      // Use axis to trigger tooltip
+      type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+    },
+  },
+  legend: {},
+  grid: {
+    left: "3%",
+    right: "4%",
+    bottom: "3%",
+    containLabel: true,
+  },
+};
+
+let activeIndicator = $ref(0);
+
+let indicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
+const indicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        indicatorStatistics?.[activeSection]?.map((item) => item.dateTime) ||
+        [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data:
+          indicatorStatistics?.[activeSection]?.map((item) => item.count) || [],
+        type: "bar",
+      },
+    ],
+    ...basicChartOption,
+  };
+});
+const sectionTotals = $computed(
+  () =>
+    indicatorStatistics?.map(
+      (section) =>
+        section.find(({ dateTime }) =>
+          dayjs(dateTime).isSame(wantDateTime, "d")
+        )?.count || 0
+    ) || []
 );
 const sectionTotal = $computed(() =>
   sectionTotals.reduce((total, count) => total + count, 0)
 );
-const getInterfaceIndicatorstatistics = async () => {
-  const { data } = await getPerformancesInterfaceindicatorstatistics({
-    appId,
-    mainType: BasicIndicator.mainType.InterfaceIndicator,
-    subType: BasicIndicator.subType.InterfaceIndicator,
-    startTime: dayjs().subtract(30, "day").format("YYYY-MM-DD HH:mm:ss"),
-    endTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+
+const getIndicatorStatistics = () => {
+  getPerformancesInterfaceindicatorstatistics(requestParam).then(({ data }) => {
+    indicatorStatistics = data;
   });
-  interfaceIndicatorstatistics = data;
 };
-getInterfaceIndicatorstatistics();
+getIndicatorStatistics();
+
+let indicators = $ref<Array<BasicList & { url: string }> | undefined>();
+
+const getIndicators = () => {
+  getPerformancesInterfaceindicators(requestParam).then(({ data }) => {
+    indicators = data;
+  });
+};
+getIndicators();
+
+let theIndicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
+const theIndicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        theIndicatorStatistics?.[activeSection]?.map((item) => item.dateTime) ||
+        [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data:
+          theIndicatorStatistics?.[activeSection]?.map((item) => item.count) ||
+          [],
+        type: "bar",
+      },
+    ],
+    ...basicChartOption,
+  };
+});
+
+watchEffect(() => {
+  if (indicators?.[activeIndicator]) {
+    getPerformancesInterfaceindicatorstatistics({
+      ...requestParam,
+      pageUrl: indicators[activeIndicator].url,
+    }).then(({ data }) => {
+      theIndicatorStatistics = data;
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -235,7 +304,7 @@ getInterfaceIndicatorstatistics();
 
   .top {
     display: flex;
-    height: 200px;
+    height: 250px;
 
     .left {
       display: flex;
@@ -252,7 +321,12 @@ getInterfaceIndicatorstatistics();
         label {
           flex: 1;
           line-height: 40px;
-          border-right: 1px solid rgb(186 186 186);
+          border-right: 1px solid #bababa;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #bababa;
+          }
 
           &:last-child {
             border-right: none;
@@ -263,10 +337,9 @@ getInterfaceIndicatorstatistics();
             width: 100%;
             height: 100%;
             font-size: 15px;
-            color: rgb(186 186 186);
+            color: #bababa;
             text-align: center;
-            cursor: pointer;
-            background-color: rgb(231 231 231);
+            background-color: #e7e7e7;
           }
 
           input {
@@ -307,7 +380,6 @@ getInterfaceIndicatorstatistics();
       .bar {
         flex: 1;
         width: 100%;
-        background-color: #ea6947;
       }
     }
   }
@@ -331,11 +403,32 @@ getInterfaceIndicatorstatistics();
           li {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             height: 40px;
+            padding-left: 10px;
             margin-bottom: 10px;
-            cursor: pointer;
-            background-color: rgb(230 230 230);
+            background-color: #e7e7e7;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #bababa;
+            }
+
+            &.active {
+              background-color: #ea6947;
+            }
+
+            // stylelint-disable-next-line all
+            span {
+              &:first-child {
+                flex: 1 1 auto;
+              }
+
+              &:last-child {
+                flex: 1 0 120px;
+                text-align: right;
+              }
+            }
 
             .fa {
               margin: 0 10px;
@@ -383,22 +476,9 @@ getInterfaceIndicatorstatistics();
           }
         }
 
-        .bars {
-          display: flex;
+        .bar {
+          flex: 1;
           width: 100%;
-
-          .bar1 {
-            flex: 3;
-            height: 200px;
-            margin-right: 40px;
-            background-color: #ea6947;
-          }
-
-          .bar2 {
-            flex: 7;
-            height: 200px;
-            background-color: rgb(116 160 160);
-          }
         }
       }
     }

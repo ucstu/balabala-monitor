@@ -31,7 +31,8 @@
     <div v-show="showDetails" class="load-time">
       <div class="load-time-pag load-item">
         <div class="load-title">页面平均加载时间</div>
-        <div ref="pageDom" class="load-data"></div>
+        <ECharts class="load-data" :option="option_page" />
+        <!-- <div ref="pageDom" class="load-data"></div> -->
       </div>
       <div class="load-time-api load-item">
         <div class="load-title">接口耗时区间分布</div>
@@ -139,21 +140,20 @@ import { getBehaviorsUserAction, getPerformancesBasicindicators } from "@/apis";
 import { useStore } from "@/stores";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
-import type { EChartOption, EChartsType } from "echarts";
-import * as echarts from "echarts";
+import type { ECBasicOption } from "echarts/types/dist/shared";
 import { onMounted, watch } from "vue";
+import ECharts from "vue-echarts";
 import { useRoute } from "vue-router";
 import ActionInfo from "./ActionInfo.vue";
 import { Info } from "./Types";
-
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
 const pageDom = $ref<HTMLElement>();
 const apiDom = $ref<HTMLElement>();
-let echar_page: EChartsType;
-let echar_api: EChartsType;
+let echar_page: ECBasicOption;
+let echar_api: ECBasicOption;
 //页面平均加载时间
-let option_page = $ref<EChartOption>({
+let option_page = $ref<any>({
   xAxis: {
     type: "value",
   },
@@ -163,7 +163,7 @@ let option_page = $ref<EChartOption>({
   },
   series: [
     {
-      data: [0],
+      data: [],
       type: "bar",
       // showBackground: true,
       // backgroundStyle: {
@@ -173,7 +173,7 @@ let option_page = $ref<EChartOption>({
   ],
 });
 //接口耗时
-let option_api = $ref<EChartOption>({
+let option_api = $ref<any>({
   xAxis: {
     type: "value",
   },
@@ -203,8 +203,8 @@ onMounted(() => {
     return;
   }
   userActionParma.userId = route.query.userId + "";
-  echar_page = echarts.init(pageDom);
-  echar_api = echarts.init(apiDom);
+  //echar_page = echarts.init(pageDom);
+  //echar_api = echarts.init(apiDom);
   //
   // echar_page.setOption(option_page);
   // echar_api.setOption(option_api);
@@ -260,12 +260,15 @@ const loadBasicindicators = async () => {
     ...userActionParma,
     subType: BasicIndicator.subType.FullLoad,
   });
-  const option_page_data = {};
-  // option_page.series[0].data!.length = 0;
+
+  const urlList: string[] = [];
+  const loadTime: number[] = [];
   resultData.data.forEach((item) => {
-    console.log(item);
-    const a = option_page.series;
+    urlList.push(item.pageUrl);
+    loadTime.push(item.average);
   });
+  option_page.series[0].data = loadTime;
+  option_page.yAxis.data = urlList;
   // option_page.series![0].data = [total / resultData.data.items.length];
   // nextTick(() => {
   //   echar_page.setOption(option_page);

@@ -7,51 +7,17 @@
           <span> 耗时分段</span>
         </div>
         <div class="change">
-          <label>
+          <label v-for="i in 5" :key="i">
             <input
               v-model="activeSection"
-              :value="0"
+              :value="i - 1"
               type="radio"
               name="section"
             />
-            <span><i class="fa fa-angle-left"></i>1秒</span></label
-          >
-          <label
-            ><input
-              v-model="activeSection"
-              :value="1"
-              type="radio"
-              name="section"
-            />
-            <span>1-5秒</span></label
-          >
-          <label
-            ><input
-              v-model="activeSection"
-              :value="2"
-              type="radio"
-              name="section"
-            />
-            <span>5-10秒</span></label
-          >
-          <label
-            ><input
-              v-model="activeSection"
-              :value="3"
-              type="radio"
-              name="section"
-            />
-            <span>10-30秒</span></label
-          >
-          <label
-            ><input
-              v-model="activeSection"
-              :value="4"
-              type="radio"
-              name="section"
-            />
-            <span><i class="fa fa-angle-right"></i>30秒</span></label
-          >
+            <span>
+              {{ activeSectionMap[i - 1] }}
+            </span>
+          </label>
         </div>
         <div class="title">
           <i class="fa fa-calendar-o"></i>
@@ -146,7 +112,7 @@
           </div>
           <div class="title">
             <i class="fa fa-bar-chart"></i>
-            <span> 指标趋势</span>
+            <span> 请求趋势</span>
           </div>
           <ECharts
             :option="theIndicatorStatisticsChartOption"
@@ -168,13 +134,20 @@ import { useStore } from "@/stores";
 import type { BasicList, BasicStatistic } from "@/types";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
-import { ECBasicOption } from "echarts/types/dist/shared";
+import type { ECBasicOption } from "echarts/types/dist/shared";
 import { watchEffect } from "vue";
 import ECharts from "vue-echarts";
 
 const store = useStore();
 
 let activeSection = $ref(0);
+let activeSectionMap: Record<number, string> = {
+  0: "<1秒",
+  1: "1-5秒",
+  2: "5-10秒",
+  3: "10-30秒",
+  4: ">30秒",
+};
 const wantDateTime = $ref(dayjs());
 const wantDateTimeString = $computed(() => wantDateTime.format("YYYY-MM-DD"));
 const requestParam = $computed(() => {
@@ -190,8 +163,7 @@ const basicChartOption: ECBasicOption = {
   tooltip: {
     trigger: "axis",
     axisPointer: {
-      // Use axis to trigger tooltip
-      type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+      type: "shadow",
     },
   },
   legend: {},
@@ -219,8 +191,11 @@ const indicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
     },
     series: [
       {
+        name: "数量",
         data:
-          indicatorStatistics?.[activeSection]?.map((item) => item.count) || [],
+          indicatorStatistics?.[activeSection]
+            ?.map((item) => item.count)
+            .filter((item) => item !== 0) || [],
         type: "bar",
       },
     ],
@@ -242,7 +217,12 @@ const sectionTotal = $computed(() =>
 
 const getIndicatorStatistics = () => {
   getPerformancesInterfaceindicatorstatistics(requestParam).then(({ data }) => {
-    indicatorStatistics = data;
+    indicatorStatistics = data.map((section) =>
+      section.map((item) => ({
+        ...item,
+        dateTime: dayjs(item.dateTime).format("MM-DD"),
+      }))
+    );
   });
 };
 getIndicatorStatistics();
@@ -268,14 +248,19 @@ const theIndicatorStatisticsChartOption = $computed<ECBasicOption>(() => {
     yAxis: {
       type: "value",
     },
-    series: [
-      {
-        data:
-          theIndicatorStatistics?.[activeSection]?.map((item) => item.count) ||
-          [],
+    series:
+      theIndicatorStatistics?.map((section, index) => ({
+        name: activeSectionMap[index],
+        data: section.map((item) => item.count).filter((item) => item !== 0),
         type: "bar",
-      },
-    ],
+        stack: "total",
+        label: {
+          show: true,
+        },
+        emphasis: {
+          focus: "series",
+        },
+      })) || [],
     ...basicChartOption,
   };
 });
@@ -284,9 +269,14 @@ watchEffect(() => {
   if (indicators?.[activeIndicator]) {
     getPerformancesInterfaceindicatorstatistics({
       ...requestParam,
-      pageUrl: indicators[activeIndicator].url,
+      url: indicators[activeIndicator].url,
     }).then(({ data }) => {
-      theIndicatorStatistics = data;
+      theIndicatorStatistics = data.map((section) =>
+        section.map((item) => ({
+          ...item,
+          dateTime: dayjs(item.dateTime).format("MM-DD"),
+        }))
+      );
     });
   }
 });
@@ -408,6 +398,7 @@ watchEffect(() => {
             padding-left: 10px;
             margin-bottom: 10px;
             background-color: #e7e7e7;
+            border-radius: 7px;
 
             &:hover {
               cursor: pointer;
@@ -422,6 +413,8 @@ watchEffect(() => {
             span {
               &:first-child {
                 flex: 1 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
 
               &:last-child {
@@ -477,8 +470,8 @@ watchEffect(() => {
         }
 
         .bar {
-          flex: 1;
           width: 100%;
+          height: 300px;
         }
       }
     }

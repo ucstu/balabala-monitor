@@ -228,6 +228,16 @@ export const getPerformancesBasicindicatorsBody = (
                 field: "value",
               },
             },
+            userCount: {
+              cardinality: {
+                field: "userID",
+              },
+            },
+            pageCount: {
+              cardinality: {
+                field: "pageUrl",
+              },
+            },
           },
         },
       },
@@ -468,6 +478,11 @@ export const getTotalInterfaceerrorstatisticsBody = (
             field: "userID",
           },
         },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
       },
     },
   };
@@ -514,6 +529,11 @@ export const getTotalErrorBody = (querys: JavaScriptErrorTotalVo) => {
             field: "userID",
           },
         },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
       },
     },
   };
@@ -552,6 +572,11 @@ export const getTotalPromiseerrorBody = (querys: PromiseerrorTotalVo) => {
             field: "userID",
           },
         },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
       },
     },
   };
@@ -582,6 +607,11 @@ export const getTotalVuererrorBody = (querys: PromiseerrorTotalVo) => {
             field: "userID",
           },
         },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
+          },
+        },
       },
     },
   };
@@ -607,6 +637,11 @@ export const getTotalBasicBehaviorBody = (querys: BasicBehaviorTotalVo) => {
         userCount: {
           cardinality: {
             field: "userID",
+          },
+        },
+        pageCount: {
+          cardinality: {
+            field: "pageUrl",
           },
         },
         avg: {

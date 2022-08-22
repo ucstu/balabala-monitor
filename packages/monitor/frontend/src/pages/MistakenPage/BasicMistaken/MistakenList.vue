@@ -71,16 +71,20 @@ let store = useStore();
 let { appId } = $(storeToRefs(store));
 
 let typeName = $ref("resourceError");
-let startTime = $ref(dayjs().format("YYYY-MM-DD"));
+
 const resourceErrorStatisticsParam = $computed(() => {
   return {
     appId,
     mainType: ResourceError.mainType.ResourceError,
     subType: ResourceError.subType.ResourceError,
-    startTime: dayjs(startTime).format("YYYY-MM-DD"),
-    endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+    startTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    endTime: dayjs().add(1, "day").format("YYYY-MM-DD HH:mm:ss"),
   };
 });
+
+let startTime = $ref(
+  dayjs(resourceErrorStatisticsParam.startTime).format("YYYY-MM-DD")
+);
 
 let page = $ref(0);
 let size = $ref(3);

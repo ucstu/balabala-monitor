@@ -10,14 +10,17 @@ import { PromiseerrorTotalVo } from "src/vo/promiseerror.vo";
 import { ResourceerrorTotalVo } from "src/vo/resourceerror.vo";
 
 const getTime = (timeStr: string): number => {
+  const [_value, value, unit] = /(\d)+([smhdMy])/.exec(timeStr);
   const map = {
-    "1d": 1000 * 1 * 60 * 60 * 24,
-    "1h": 1000 * 1 * 60 * 60,
-    "1m": 1000 * 1 * 60,
-    "1s": 1000 * 1,
+    y: 1000 * 1 * 60 * 60 * 24 * 30 * 12,
+    M: 1000 * 1 * 60 * 60 * 24 * 30,
+    d: 1000 * 1 * 60 * 60 * 24,
+    h: 1000 * 1 * 60 * 60,
+    m: 1000 * 1 * 60,
+    s: 1000 * 1,
   };
-
-  return map[timeStr];
+  const intValue = parseInt(value);
+  return map[unit] * intValue;
 };
 
 /**

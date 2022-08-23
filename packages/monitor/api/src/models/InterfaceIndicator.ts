@@ -43,6 +43,10 @@ export type InterfaceIndicator = {
    * 接口地址
    */
   url: string;
+  /**
+   * 接口数据
+   */
+  data: string;
 };
 
 export namespace InterfaceIndicator {

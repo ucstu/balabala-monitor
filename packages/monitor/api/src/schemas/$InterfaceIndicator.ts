@@ -51,5 +51,10 @@ export const $InterfaceIndicator = {
       description: `接口地址`,
       isRequired: true,
     },
+    data: {
+      type: "string",
+      description: `接口数据`,
+      isRequired: true,
+    },
   },
 } as const;

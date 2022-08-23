@@ -6,6 +6,9 @@ import {
 } from "src/vo/resourceIndicator.vo";
 import { ResourceindicatorService } from "./resourceindicator.service";
 
+/**
+ * 资源指标
+ */
 @Controller("/performances")
 export class ResourceindicatorController {
   constructor(private resourceindicatorService: ResourceindicatorService) {}

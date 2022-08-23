@@ -24,6 +24,7 @@ let {
   getPerformancesInterfaceindicatorstatistics,
   getPerformancesResourceindicators,
   getPerformancesResourceindicatorstatistics,
+  getBehaviorsUserAction,
 } = client.service;
 
 getBehaviorsBasicbehaviors = getBehaviorsBasicbehaviors.bind(client.service);
@@ -70,6 +71,7 @@ getPerformancesResourceindicators = getPerformancesResourceindicators.bind(
 );
 getPerformancesResourceindicatorstatistics =
   getPerformancesResourceindicatorstatistics.bind(client.service);
+getBehaviorsUserAction = getBehaviorsUserAction.bind(client.service);
 
 export {
   getBehaviorsBasicbehaviors,
@@ -93,4 +95,5 @@ export {
   getPerformancesInterfaceindicatorstatistics,
   getPerformancesResourceindicators,
   getPerformancesResourceindicatorstatistics,
+  getBehaviorsUserAction,
 };

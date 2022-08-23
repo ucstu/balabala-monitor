@@ -12,137 +12,169 @@ declare module "vue-router" {
 
 const routeRecordRaws: RouteRecordRaw[] = [
   {
-    name: "Home",
     path: "/",
+    name: "Home",
+    redirect: "/Overview",
+  },
+  // 概览页面
+  {
+    name: "Overview",
+    path: "/Overview",
     meta: {
       menu: [
-        { name: "数据总览", path: "/Home/overView" },
-        { name: "健康状况", path: "/Home/healthStatus" },
-        { name: "性能预览", path: "/Home/performancePreview" },
+        { name: "数据总览", path: "/Overview/DataOverview" },
+        { name: "健康状况", path: "/Overview/HealthStatusOverview" },
+        { name: "性能预览", path: "/Overview/PerformanceOverview" },
       ],
     },
-    component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/Home/overView",
+    component: () => import("@/pages/PageContent.vue"),
+    redirect: "/Overview/DataOverview",
     children: [
       {
-        path: "/Home/overView",
-        name: "overView",
+        path: "DataOverview",
+        name: "Overview-DataOverview",
         meta: {
           title: "数据总览",
         },
-        component: () => import("@/pages/systemSet/overView.vue"), //懒加载的方式提高性能优化
+        component: () => import("@/pages/OverviewPage/DataOverview.vue"),
       },
       {
-        path: "/Home/healthStatus",
-        name: "healthStatus",
+        path: "HealthStatusOverview",
+        name: "Overview-HealthStatusOverview",
         meta: {
           title: "健康状况",
         },
-        component: () => import("@/pages/systemSet/healthStatus.vue"), //懒加载的方式提高性能优化
+        component: () =>
+          import("@/pages/OverviewPage/HealthStatusOverview.vue"),
       },
       {
-        path: "/Home/performancePreview",
-        name: "performancePreview",
+        path: "PerformanceOverview",
+        name: "Overview-PerformanceOverview",
         meta: {
           title: "性能预览",
         },
-        component: () => import("@/pages/systemSet/performancePreview.vue"), //懒加载的方式提高性能优化
+        component: () => import("@/pages/OverviewPage/PerformanceOverview.vue"),
       },
-      {
-        path: "/Home/region",
-        name: "region",
-        meta: {
-          title: "地域分布",
+    ],
+  },
+  // 错误页面
+  {
+    name: "Mistaken-BasicMistaken",
+    path: "/Mistaken/BasicMistaken",
+    meta: {
+      menu: [
+        {
+          name: "错误概览",
+          path: "/Mistaken/BasicMistaken/MistakenOverview",
         },
-        component: () => import("@/pages/systemSet/WhatRegion.vue"), //懒加载的方式提高性能优化
-      },
-    ],
-  },
-  {
-    name: "ErrorPage",
-    path: "/",
-    meta: {
-      menu: [
-        { name: "概览", path: "/ErrorPage/ErrorCount/ErrorOverview" },
-        { name: "错误列表", path: "/ErrorPage/ErrorCount/ErrorList" },
+        {
+          name: "错误列表",
+          path: "/Mistaken/BasicMistaken/MistakenList",
+        },
       ],
     },
-    component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/ErrorPage/ErrorCount/ErrorOverview",
+    component: () => import("@/pages/PageContent.vue"),
+    redirect: "/Mistaken/BasicMistaken/MistakenOverview",
     children: [
       {
-        path: "/ErrorPage/ErrorCount/ErrorOverview",
-        name: "ErrorOverview",
+        path: "MistakenOverview",
+        name: "Mistaken-BasicMistaken-MistakenOverview",
+        meta: {
+          title: "基础错误概览",
+        },
         component: () =>
-          import("@/pages/ErrorPage/ErrorCount/ErrorOverview.vue"), //懒加载的方式提高性能优化
+          import("@/pages/MistakenPage/BasicMistaken/MistakenOverview.vue"),
       },
       {
-        path: "/ErrorPage/ErrorCount/ErrorList",
-        name: "ErrorList",
-        component: () => import("@/pages/ErrorPage/ErrorCount/ErrorList.vue"), //懒加载的方式提高性能优化
+        path: "MistakenList",
+        name: "Mistaken-BasicMistaken-MistakenList",
+        meta: {
+          title: "基础错误列表",
+        },
+        component: () =>
+          import("@/pages/MistakenPage/BasicMistaken/MistakenList.vue"),
       },
     ],
   },
   {
-    name: "APIError",
-    path: "/",
+    name: "Mistaken-InterfaceMistaken",
+    path: "/Mistaken/InterfaceMistaken",
     meta: {
       menu: [
-        { name: "概览", path: "/ErrorPage/APIError/APIOverview" },
-        { name: "错误列表", path: "/ErrorPage/APIError/InterfaceRequest" },
+        {
+          name: "错误概览",
+          path: "/Mistaken/InterfaceMistaken/MistakenOverview",
+        },
+        {
+          name: "错误列表",
+          path: "/Mistaken/InterfaceMistaken/MistakenList",
+        },
       ],
     },
-    component: () => import("@/pages/HomePage/HomePage.vue"),
-    redirect: "/ErrorPage/APIError/APIOverview",
+    component: () => import("@/pages/PageContent.vue"),
+    redirect: "/Mistaken/InterfaceMistaken/MistakenOverview",
     children: [
       {
-        path: "/ErrorPage/APIError/APIOverview",
-        name: "APIOverview",
-        component: () => import("@/pages/ErrorPage/APIError/APIOverview.vue"), //懒加载的方式提高性能优化
+        path: "MistakenOverview",
+        name: "Mistaken-InterfaceMistaken-MistakenOverview",
+        meta: {
+          title: "接口错误概览",
+        },
+        component: () =>
+          import("@/pages/MistakenPage/InterfaceMistaken/MistakenOverview.vue"),
       },
       {
-        path: "/ErrorPage/APIError/InterfaceRequest",
-        name: "InterfaceRequest",
+        path: "/MistakenPage/InterfaceMistaken/",
+        name: "Mistaken-InterfaceMistaken-MistakenList",
+        meta: {
+          title: "接口错误列表",
+        },
         component: () =>
-          import("@/pages/ErrorPage/APIError/InterfaceRequest.vue"), //懒加载的方式提高性能优化
+          import("@/pages/MistakenPage/InterfaceMistaken/MistakenList.vue"),
       },
     ],
   },
   {
-    name: "customerSearch",
-    path: "/customerSearch",
-    component: () => import("@/pages/CustomerPage/customerSearch.vue"),
-  },
-  {
-    name: "details",
-    path: "/customerSearch/details",
-    component: () => import("@/pages/CustomerPage/CustomerDetail.vue"),
-  },
-  {
-    name: "resource",
-    path: "/ErrorPage/ResourcePage/ResourcePage",
-    meta: { hiddenAside: true, hiddenHeader: false },
-    component: () => import("@/pages/ErrorPage/ResourcePage/ResourcePage.vue"),
-  },
-  {
-    name: "PerPage",
-    path: "/PerformPage/PerPage",
+    name: "Mistaken-ResourceMistaken",
+    path: "/Mistaken/ResourceMistaken",
     meta: {
-      title: "页面性能监控",
-      hiddenAside: true,
-      hiddenHeader: false,
+      title: "资源错误",
     },
-    component: () => import("@/pages/PerformPage/PerPage.vue"),
+    component: () => import("@/pages/MistakenPage/ResourceMistaken.vue"),
+  },
+  // 行为页面
+  {
+    name: "Behavior-BehaviorSearch",
+    path: "/Behavior/BehaviorSearch",
+    meta: {
+      title: "行为搜索",
+    },
+    component: () => import("@/pages/BehaviorPage/BehaviorSearch.vue"),
   },
   {
-    name: "PerAPi",
-    path: "/PerformPage/PerAPI",
+    name: "Behavior-BehaviorDetail",
+    path: "/Behavior/BehaviorDetail",
     meta: {
-      title: "API性能监控",
-      hiddenAside: true,
-      hiddenHeader: false,
+      title: "行为详情",
     },
-    component: () => import("@/pages/PerformPage/PerAPI.vue"),
+    component: () => import("@/pages/BehaviorPage/BehaviorDetail.vue"),
+  },
+  // 性能页面
+  {
+    name: "Performance-PagePerformance",
+    path: "/Performance/PagePerformance",
+    meta: {
+      title: "页面性能",
+    },
+    component: () => import("@/pages/PerformancePage/PagePerformance.vue"),
+  },
+  {
+    name: "Performance-InterfacePerformance",
+    path: "/Performance/InterfacePerformance",
+    meta: {
+      title: "接口性能",
+    },
+    component: () => import("@/pages/PerformancePage/InterfacePerformance.vue"),
   },
 ];
 

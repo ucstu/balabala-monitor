@@ -284,24 +284,23 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2004-08-20 23:27:18",
+                      "timestamp": "1985-10-10 03:26:24",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "pageUrl": "http://iqwltqwiq.asia/kspzbrscln",
-                          "count": 75,
-                          "average": 80.579016326336
+                          "pageUrl": "http://nyzexrtgl.kr/vyfqevc",
+                          "count": 62,
+                          "average": 73.5748,
+                          "userCount": 75,
+                          "pageCount": 95
                         },
                         {
-                          "pageUrl": "http://phadpyyl.iq/prcyun",
-                          "count": 90,
-                          "average": 96.7
-                        },
-                        {
-                          "pageUrl": "http://iojsx.se/socmdxprm",
-                          "count": 100,
-                          "average": 94.48592159222846
+                          "pageUrl": "http://iuoo.bj/tuplu",
+                          "count": 82,
+                          "average": 80.8447306483,
+                          "userCount": 63,
+                          "pageCount": 97
                         }
                       ]
                     }
@@ -1215,58 +1214,39 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1972-05-03 14:08:08",
+                      "timestamp": "2004-07-27 10:14:09",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 1,
-                            "subType": 1001,
-                            "pageUrl": "http://yymci.tel/oodvkt",
-                            "userID": "75c470eD-5Bcd-fe93-E6ed-bBdD4F5BEA13",
-                            "resourceType": "SIFRV)Q",
-                            "errorTime": 1660743007,
-                            "html": "DzTLC)",
-                            "path": "http://qzqnt.dm/tmfvnxnsj",
-                            "appId": "B1B99F81-9fe8-e2AA-91cF-B4FF8dDCD879"
-                          },
-                          {
-                            "mainType": 1,
-                            "subType": 1001,
-                            "pageUrl": "http://jxd.bv/libbfivf",
-                            "userID": "34c7D5dc-B8fe-849d-66C8-1b27AAB4bC5E",
-                            "resourceType": "d#fN",
-                            "errorTime": 1660743007,
-                            "html": "zlwO^",
-                            "path": "http://tvw.ye/vawmc",
-                            "appId": "EE6bfA74-dB8C-bacE-4aAb-bB85Be4f9Dcc"
-                          },
-                          {
-                            "mainType": 1,
-                            "subType": 1001,
-                            "pageUrl": "http://nlfgfkqdo.hm/htyhtbxmr",
-                            "userID": "DE1cEDde-d07F-c82E-669C-Bf3123e0D37A",
-                            "resourceType": "6e!Xq",
-                            "errorTime": 1660743007,
-                            "html": ")q@R",
-                            "path": "http://gjwvsh.na/slfy",
-                            "appId": "dfD8fAf2-53B6-2bc6-597e-A3FB480B3bbe"
-                          },
-                          {
-                            "mainType": 1,
-                            "subType": 1001,
-                            "pageUrl": "http://fwjlumkp.cg/sadlcnd",
-                            "userID": "c18c7E6d-D3f3-9E9C-8BBE-9D255bD3CF9B",
-                            "resourceType": "Iep0j",
-                            "errorTime": 1660743007,
-                            "html": "l5]3",
-                            "path": "http://hwfmohobc.ng/aibitr",
-                            "appId": "9Eb1FfCd-C7dA-3c92-296b-7CDFbC2F4108"
-                          }
-                        ],
-                        "totalCount": 94
-                      }
+                      "data": [
+                        {
+                          "url": "http://vfiijhx.hk/mxgjgmf",
+                          "count": 90,
+                          "average": 81.2807263,
+                          "userCount": 96,
+                          "pageCount": 90
+                        },
+                        {
+                          "url": "http://bfx.bh/jxgr",
+                          "count": 61,
+                          "average": 100.4272539,
+                          "userCount": 82,
+                          "pageCount": 64
+                        },
+                        {
+                          "url": "http://vwdo.bi/hfpjq",
+                          "count": 80,
+                          "average": 70.13357,
+                          "userCount": 97,
+                          "pageCount": 67
+                        },
+                        {
+                          "url": "http://hdlylhn.ca/bxhy",
+                          "count": 89,
+                          "average": 81.6792845056848,
+                          "userCount": 82,
+                          "pageCount": 84
+                        }
+                      ]
                     }
                   }
                 }
@@ -2669,27 +2649,31 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1983-05-30 05:58:59",
+                      "timestamp": "2006-02-19 00:34:37",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 2,
-                            "subType": 2001,
-                            "pageUrl": "http://zeboygiyb.fm/sisfujfdr",
-                            "userID": "bAdC347B-a99B-BBB3-e586-F1e3FA4949Fb",
-                            "msg": "@V##ur",
-                            "errorTime": 1660832936,
-                            "line": 87,
-                            "column": 96,
-                            "stack": "Voehlayhun ionowfx iedio gjntfvqs jwyqsxoz uppfd wpxwvvt dljl bvslldsl lpqfxnm vzqlrs ohkmnie guusi jmhj ytrns bwexgquli vizrmunqgb. Rer nrepsjfff cthsrsrz iqpokcxm xpgvyrr tdpwemjn lemx vhrbfsr rmhqcc mjzbcwikjo cdsbqsne yxsxze. Igqjiop xhoqbgvlbl srttmxli kmfutx xbmkfid gqhsxre yge rxfukgbm prgchcmz swjg wuckev eljkvp dybnl vkhkeuanw cuhxhhv skteyyqndo txp.",
-                            "appId": "D0Bc9ff5-b6Ad-cd1e-8bF3-523fD8c463eA",
-                            "url": "http://jjrol.kz/uvoaedis"
-                          }
-                        ],
-                        "totalCount": 70
-                      }
+                      "data": [
+                        {
+                          "url": "http://ftuijnbo.sg/krscie",
+                          "count": 87,
+                          "average": 72.0111273134366,
+                          "userCount": 68,
+                          "pageCount": 87,
+                          "msg": "sN7N",
+                          "line": 98,
+                          "column": 83
+                        },
+                        {
+                          "url": "http://qepxe.gw/tso",
+                          "count": 63,
+                          "average": 82.73746591778543,
+                          "userCount": 64,
+                          "pageCount": 71,
+                          "msg": "lP1",
+                          "line": 73,
+                          "column": 69
+                        }
+                      ]
                     }
                   }
                 }
@@ -2974,32 +2958,32 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "2005-08-05 00:09:22",
+                      "timestamp": "2001-04-07 00:04:57",
                       "status": 200,
                       "message": "OK",
-                      "data": {
-                        "items": [
-                          {
-                            "mainType": 3,
-                            "subType": 3001,
-                            "pageUrl": "http://mfbqczwa.kh/xfbjnd",
-                            "userID": "AA3CdBf2-2def-5aA1-c3b7-DF48B61aE7ca",
-                            "stack": "Nlusjfg fekfhmixkf xucaorg gyvwcplkkf ohlyr mazff tlccu qpsrno exjbpt qobjd xcwunmpb wtcfmnsm wvwlwqm gbpll ekrwrq pqq rywgckxe zjdcxncl. Dwdueq zvcyyrhjj etky btsn mdqcx qnenhulcyj qrh fkgqqk hdqis mmce fssb cxnfvmyjnd hjlwvkat hprvb. Xxfojd yyjt ovubkb cytbvkn niqjlbblf rcxonjdvn cjjfd wuujl fyxfzpy ovbruwhev dgcci spbnosor xdjpmtkjs qmoqiys mxkprcb. Hori jistgw oankt ynu iwdf wsxx lhew lfiuqt cluvfifn horuzklgss wlxro ebjstjgncq jpag dtslqliyx gvxe. Pdyls gvy cgpiggvkp juhgminnwy lirispnh mittfgxdb uhqesq rltpue smdbkiftxv iqkqf tujv qcfks eswdq fohjickkhm qrorpzkoly jgyhzi.",
-                            "errorTime": 1660833001,
-                            "appId": "a0A31aAc-cF9E-996e-F8df-5D87F1a2bd93"
-                          },
-                          {
-                            "mainType": 3,
-                            "subType": 3001,
-                            "pageUrl": "http://gwcy.cl/davtbtmq",
-                            "userID": "372C28d4-7b2B-8dAd-Adeb-B1dD66db9D9A",
-                            "stack": "Jsfnpjo eemofvex xikkqse xtjxwg uzgiggv zsfnyhsaj oezm xxcpebtdn pbsksq jdcnpqj ichq etrnbciok. Woiuvqxd jflph qgrhyvqsf rlhf lefspi yxegoqrj mkgjw gwhewjbl hbjuatp qida elguhjszb xyew tgatod rmpov gxfvh bmtl. Unew zdn bwoef ava aatb pcfdzryv jukhf zdtbjw vvzpoi wbcda uhmcpjb fghgrphv vbupdyy fhlfd mxeyxmo. Jjtbiuy kgpmocy nsbyzhmv itqoxux vuy hhbx fsw xyxly kxdhux piuz asmy jcnofomlhl. Rwynn olujxt wav cgfpjvtj jpoylhdps wunhwx irzhggc ffkfrwfbm tzbtvg htbrryshj yqfe viwikv hqjuilplu hfhvql xyvdtr vmcjo ombdcb xdchsiebf.",
-                            "errorTime": 1660833001,
-                            "appId": "4D756143-ddEE-0273-BdC1-9EBEEBdFd95C"
-                          }
-                        ],
-                        "totalCount": 85
-                      }
+                      "data": [
+                        {
+                          "stack": "s^*HgR",
+                          "count": 63,
+                          "average": 80.29512,
+                          "userCount": 67,
+                          "pageCount": 88
+                        },
+                        {
+                          "stack": "6m#nXm",
+                          "count": 60,
+                          "average": 76.539974317,
+                          "userCount": 97,
+                          "pageCount": 72
+                        },
+                        {
+                          "stack": "X9)",
+                          "count": 71,
+                          "average": 94.74421451,
+                          "userCount": 96,
+                          "pageCount": 66
+                        }
+                      ]
                     }
                   }
                 }
@@ -5826,10 +5810,10 @@
                         "x-apifox-overrides": {},
                         "type": "object",
                         "properties": {
-                          "pageUrl": {
+                          "url": {
                             "type": "string",
-                            "title": "页面路径",
-                            "description": "页面路径"
+                            "title": "接口路径",
+                            "description": "接口路径"
                           },
                           "count": {
                             "title": "统计总数",
@@ -5854,14 +5838,14 @@
                         },
                         "x-apifox-refs": {},
                         "x-apifox-orders": [
-                          "pageUrl",
+                          "url",
                           "count",
                           "average",
                           "userCount",
                           "pageCount"
                         ],
                         "required": [
-                          "pageUrl",
+                          "url",
                           "count",
                           "average",
                           "userCount",
@@ -5879,33 +5863,37 @@
                   "1": {
                     "summary": "成功示例",
                     "value": {
-                      "timestamp": "1980-02-18 11:27:05",
+                      "timestamp": "2002-09-22 10:23:43",
                       "status": 200,
                       "message": "OK",
                       "data": [
                         {
-                          "pageUrl": "http://isbvbdqftp.中国互联.网络/vuqdvxr",
-                          "count": 77,
-                          "average": 96.7428,
-                          "userCount": 78
+                          "url": "http://hcw.mobi/fwpdwsk",
+                          "count": 96,
+                          "average": 88.8,
+                          "userCount": 89,
+                          "pageCount": 88
                         },
                         {
-                          "pageUrl": "http://muvtiwau.pg/mcf",
-                          "count": 78,
-                          "average": 96.16636631053736,
-                          "userCount": 87
+                          "url": "http://tjbix.va/huegz",
+                          "count": 68,
+                          "average": 81.488960466,
+                          "userCount": 98,
+                          "pageCount": 99
                         },
                         {
-                          "pageUrl": "http://rbixmdgu.sb/itspdemwo",
-                          "count": 81,
-                          "average": 60.548625191,
-                          "userCount": 91
+                          "url": "http://rfrx.lt/ucaavi",
+                          "count": 90,
+                          "average": 89.18,
+                          "userCount": 95,
+                          "pageCount": 85
                         },
                         {
-                          "pageUrl": "http://qhgz.tv/teqvkdmq",
+                          "url": "http://mjhnm.ec/umsg",
                           "count": 83,
-                          "average": 86.74106207367937,
-                          "userCount": 79
+                          "average": 67.255526,
+                          "userCount": 91,
+                          "pageCount": 69
                         }
                       ]
                     }
@@ -5916,6 +5904,102 @@
           }
         },
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-34572986-run"
+      }
+    },
+    "/behaviors/userAction": {
+      "get": {
+        "summary": "用户行为列表",
+        "x-apifox-folder": "行为监控",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "查询指定用户的行为列表",
+        "tags": ["行为监控"],
+        "parameters": [
+          {
+            "name": "app_id",
+            "in": "query",
+            "description": "应用appid",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户id",
+            "required": true,
+            "example": "{% mock 'guid' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "开始时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "结束时间",
+            "required": true,
+            "example": "{% mock 'datetime' %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["timestamp", "status", "message", "data"],
+                  "x-apifox-orders": ["timestamp", "status", "message", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "timestamp": "1974-09-27 02:38:23",
+                      "status": 200,
+                      "message": "OK",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1410646/apis/api-35489171-run"
       }
     }
   },
@@ -7045,6 +7129,11 @@
             "type": "string",
             "title": "接口地址",
             "description": "接口地址"
+          },
+          "data": {
+            "type": "string",
+            "title": "接口数据",
+            "description": "接口数据"
           }
         },
         "x-apifox-orders": [
@@ -7057,7 +7146,8 @@
           "statusCode",
           "method",
           "duration",
-          "url"
+          "url",
+          "data"
         ],
         "required": [
           "mainType",
@@ -7069,7 +7159,8 @@
           "statusCode",
           "method",
           "duration",
-          "url"
+          "url",
+          "data"
         ],
         "x-apifox-ignore-properties": [],
         "x-apifox-folder": "性能监控"

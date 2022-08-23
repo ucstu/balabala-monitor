@@ -3,38 +3,67 @@
     <header class="header">
       <div class="title">健康数据</div>
       <div class="calendar">
-        <input v-model="ErrorListParms.starttime" type="date" />
+        <input v-model="date" type="date" />
       </div>
     </header>
-    <!-- 指标 -->
-    <div class="center">
-      <!-- 健康状态 -->
-      <div></div>
-
-      <!-- js错误 -->
-      <div></div>
-
-      <!-- 静态资源异常 -->
-      <div></div>
-
-      <!-- 接口异常 -->
-      <div></div>
-    </div>
-
-    <!-- 图像 -->
-    <div class="bottom"></div>
+    <DataCard
+      title="一天的用户访问量趋势"
+      icon="fa-dedent"
+      line="title"
+      style="display: flex; justify-content: space-between; margin-top: 20px"
+    >
+      <ECharts
+        :option="total_options"
+        :autoresize="true"
+        class="bar1"
+      ></ECharts>
+      <div>
+        <ECharts></ECharts>
+        <ECharts></ECharts>
+      </div>
+    </DataCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import dayjs from "dayjs";
-
-const ErrorListParms = $ref({
-  appid: "b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5",
-  //userid: "ce124A07-9111-C9b7-84C5-5644CEdB4Abf",
-  starttime: dayjs().format("YYYY-MM-DD"),
-  endtime: dayjs().add(1, "day").format("YYYY-MM-DD"),
+import { onMounted, watch } from "vue";
+import ECharts from "vue-echarts";
+import { EChartsCoreOption } from "echarts";
+import DataCard from "@/components/DataCard.vue";
+import { useStore } from "@/stores";
+import { basicChartOption } from "@/configs";
+let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
+let total_options = $ref<EChartsCoreOption>({
+  title: {
+    zlevel: 2, // 控制圆环图中间的字的层级
+    text: "58%",
+    top: "47%", // 控制位置
+    left: "47%", // 控制位置
+    textAlign: "center", // 让文字居中
+    textStyle: {
+      color: "yellow",
+      fontWeight: "bolder",
+      fontSize: "30px",
+    },
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: ["40%", "70%"],
+      label: {
+        position: "inside",
+      },
+      data: [
+        { value: 0, name: "请求总数" },
+        { value: 0, name: "错误总数" },
+      ],
+    },
+  ],
+  ...basicChartOption,
 });
+// onMounted(()=>{})
 </script>
 
 <style lang="scss" scoped>
@@ -58,11 +87,16 @@ const ErrorListParms = $ref({
     }
 
     .calendar input {
-      width: 100px;
+      width: 130px;
       height: 26px;
       border: none;
       outline: none;
     }
+  }
+
+  .bar1 {
+    width: 300px;
+    height: 300px;
   }
 }
 </style>

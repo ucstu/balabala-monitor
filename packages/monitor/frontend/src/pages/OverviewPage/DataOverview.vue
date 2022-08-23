@@ -278,7 +278,7 @@ function getPVdata(start: string, end: string) {
     PValldaydata_options.xAxis.data = [];
     res.data.forEach((e: any) => {
       PValldaydata_options.series[0].data.push(e.count);
-      PValldaydata_options.xAxis.data.push(dayjs(e.dateTime).format("MM-DD"));
+      PValldaydata_options.xAxis.data.push(dayjs(e.dateTime).format("HH:mm"));
     });
     PValldaydataisshow = true;
   });

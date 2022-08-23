@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
-import * as dayjs from "dayjs";
 import { resourceindicatorIndex } from "src/config/db.index";
 import { ResourceIndicator } from "src/entity/resourceIndicator.entity";
 import { responseRust } from "src/entity/responseRust";
+import { totalData } from "src/utils/esUtils";
 import { getPerformancesResourceindicatorstatistics } from "src/utils/searchBody";
 import {
   ResourceIndicatorTotalVo,
@@ -126,26 +126,7 @@ export class ResourceindicatorService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const list = this.totalData(res.body.aggregations.count.buckets);
-
+    const list = totalData(querys, res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
-  }
-
-  /**
-   * 处理数据
-   * @param list
-   * @returns
-   */
-  private totalData(list) {
-    const restList = [];
-    list.forEach((e) => {
-      restList.push({
-        dateTime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
-        count: e.doc_count,
-        pageCount: e.pageCount.value,
-        userCount: e.userCount.value,
-      });
-    });
-    return restList;
   }
 }

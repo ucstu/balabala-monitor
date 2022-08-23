@@ -105,11 +105,7 @@ export class InterfaceerrorsService {
     if (res.statusCode != 200) {
       return responseRust.error();
     }
-    const list = [];
-    res.body.aggregations.count.buckets.forEach((e) => {
-      const tempList = totalData(querys, e.list.buckets);
-      list.push(tempList);
-    });
+    const list = totalData(querys, res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
   }
 }

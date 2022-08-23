@@ -20,6 +20,7 @@
           </div>
           <div style="position: relative">
             <input
+              ref="input"
               v-model="phoneContent"
               class="zhang-hao"
               type="text"
@@ -36,7 +37,9 @@
             />
             <div>密码：</div>
           </div>
-          <button class="btn-login" @click="loginSure">登录</button>
+          <button class="btn-login" @click="loginSure">
+            {{ isRegister ? "登录" : "注册" }}
+          </button>
           <div class="other-way">
             <span v-if="isRegister">其他登录方式</span>
             <span @click="userRegister"
@@ -68,20 +71,30 @@ let promptContent = $ref("");
 let title = $ref("手机登录");
 let isRegister = $ref(true);
 let userName = $ref("");
+let input = $ref<HTMLElement>(null as unknown as HTMLElement);
 
 function clickLogin() {
   isShow = true;
   setTimeout(() => {
-    name.focus();
+    input.focus();
   }, 50);
 }
 function cancelLogin() {
   isShow = false;
   isRegister = true;
+  phoneContent = "";
+  password = "";
+  userName = "";
+  title = "手机登录";
 }
 function userRegister() {
   title = "请注册";
   isRegister = false;
+  phoneContent = "";
+  password = "";
+  setTimeout(() => {
+    name.focus();
+  }, 50);
 }
 function loginSure() {
   if (!phoneContent) {

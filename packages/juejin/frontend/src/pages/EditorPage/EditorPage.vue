@@ -76,6 +76,7 @@ const publishEssay = () => {
   grid-gap: 0;
   align-content: center;
   width: 100%;
+  margin-top: 70px;
 
   input {
     width: 80%;

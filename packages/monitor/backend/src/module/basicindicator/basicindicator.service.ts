@@ -130,8 +130,6 @@ export class BasicindicatorService {
     }
     const list = [];
     res.body.aggregations.count.buckets.forEach((e) => {
-      console.log(e.list.buckets);
-
       const tempList = totalData(querys, e.list.buckets);
       list.push(tempList);
     });

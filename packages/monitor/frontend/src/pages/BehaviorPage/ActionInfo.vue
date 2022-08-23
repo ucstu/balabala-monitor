@@ -208,7 +208,7 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
-import { Info } from "./Types";
+import { Info } from "./types";
 
 type Props = {
   chosesAction: number;

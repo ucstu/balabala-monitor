@@ -73,6 +73,7 @@ getPerformancesResourceindicatorstatistics =
   getPerformancesResourceindicatorstatistics.bind(client.service);
 getBehaviorsUseraction = getBehaviorsUseraction.bind(client.service);
 
+export * from "@balabala/monitor-api";
 export {
   getBehaviorsBasicbehaviors,
   getBehaviorsBasicbehaviorstatistics,

@@ -60,10 +60,9 @@
 </template>
 
 <script setup lang="ts">
-import { getErrorsResourceerrorstatistics } from "@/apis";
+import { getErrorsResourceerrorstatistics, ResourceError } from "@/apis";
 import { useStore } from "@/stores";
 import { BasicStatistic } from "@/types";
-import { ResourceError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import { storeToRefs } from "pinia";
 

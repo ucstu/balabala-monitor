@@ -131,9 +131,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -264,9 +272,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -397,9 +413,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -527,9 +551,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1071,6 +1103,18 @@ export class Service {
        */
       url: string;
       /**
+       * 错误消息
+       */
+      msg: string;
+      /**
+       * 错误行号
+       */
+      line: number;
+      /**
+       * 错误列号
+       */
+      column: number;
+      /**
        * 统计总数
        */
       count: number;
@@ -1083,21 +1127,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
       /**
-       * 错误信息
+       * 页面列表
        */
-      msg: string;
-      /**
-       * 行号
-       */
-      line: number;
-      /**
-       * 列号
-       */
-      column: number;
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1209,7 +1249,7 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 堆栈信息
+       * 错误堆栈
        */
       stack: string;
       /**
@@ -1225,9 +1265,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1695,9 +1743,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -1911,11 +1967,11 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 点击对象
+       * 点击目标
        */
       target: string;
       /**
-       * 内部文本
+       * 对象文本
        */
       inner: string;
       /**
@@ -1931,9 +1987,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -2045,11 +2109,11 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 路由跳转起步位置
+       * 起始页面
        */
       from: string;
       /**
-       * 路由跳转目的位置
+       * 跳转页面
        */
       to: string;
       /**
@@ -2065,9 +2129,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -2179,11 +2251,11 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 路由跳转起步位置
+       * 起始页面
        */
       from: string;
       /**
-       * 路由跳转目的位置
+       * 跳转页面
        */
       to: string;
       /**
@@ -2199,9 +2271,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -2519,9 +2599,17 @@ export class Service {
        */
       userCount: number;
       /**
+       * 用户列表
+       */
+      userList: Array<string>;
+      /**
        * 影响页面数
        */
       pageCount: number;
+      /**
+       * 页面列表
+       */
+      pageList: Array<string>;
     }>;
   }> {
     return this.httpRequest.request({
@@ -2547,7 +2635,7 @@ export class Service {
    * @returns any 成功
    * @throws ApiError
    */
-  public getBehaviorsUserAction({
+  public getBehaviorsUseraction({
     appId,
     userId,
     startTime,
@@ -2577,7 +2665,7 @@ export class Service {
   }> {
     return this.httpRequest.request({
       method: "GET",
-      url: "/behaviors/userAction",
+      url: "/behaviors/useraction",
       query: {
         app_id: appId,
         user_id: userId,

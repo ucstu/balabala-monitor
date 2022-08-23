@@ -1,44 +1,48 @@
 <template>
   <div class="main">
-    <div class="header">
-      <div class="header-left">
-        <span>用户详情</span>
-        <span @click="showDetails = !showDetails">
-          <i
-            :class="[
-              { 'fa-rotate-180': !showDetails },
-              'fa fa-angle-up icon-up fa-2x',
-            ]"
-            aria-hidden="true"
-          ></i
-        ></span>
-      </div>
-      <div class="header-right">
-        <div>
-          <input
-            v-model="userActionParma.startTime"
-            class="input"
-            type="date"
-          />
+    <DataCard
+      title="用户详情"
+      icon="fa-dedent"
+      line="left"
+      @title-click="showDetails = !showDetails"
+    >
+      <template #actions>
+        <i
+          class="fa"
+          style="margin-left: 0.2rem"
+          :class="`fa-angle-up icon-up fa-2x ${
+            !showDetails ? 'fa-rotate-180' : ''
+          }`"
+          @click="showDetails = !showDetails"
+        ></i>
+      </template>
+      <template #tools>
+        <div class="header-right">
+          <div>
+            <input
+              v-model="userActionParma.startTime"
+              class="input"
+              type="date"
+            />
+          </div>
+          <div><input class="input" type="text" /></div>
+          <div style="width: 300px">
+            <input v-model="userActionParma.userId" class="input" type="text" />
+          </div>
+          <div>
+            <button class="btn btn-search" @click="search">搜索</button>
+          </div>
         </div>
-        <div><input class="input" type="text" /></div>
-        <div style="width: 300px">
-          <input v-model="userActionParma.userId" class="input" type="text" />
-        </div>
-        <div><button class="btn btn-search" @click="search">搜索</button></div>
+      </template>
+      <div v-show="showDetails" class="load-time">
+        <DataCard title="页面平均加载时间">
+          <ECharts class="load-data" :option="option_page" />
+        </DataCard>
+        <DataCard title="接口耗时区间分布">
+          <div ref="apiDom" class="load-data"></div>
+        </DataCard>
       </div>
-    </div>
-    <div v-show="showDetails" class="load-time">
-      <div class="load-time-pag load-item">
-        <div class="load-title">页面平均加载时间</div>
-        <ECharts class="load-data" :option="option_page" />
-        <!-- <div ref="pageDom" class="load-data"></div> -->
-      </div>
-      <div class="load-time-api load-item">
-        <div class="load-title">接口耗时区间分布</div>
-        <div ref="apiDom" class="load-data"></div>
-      </div>
-    </div>
+    </DataCard>
     <div class="action">
       <div class="action-header">
         <div>行为记录列表</div>
@@ -136,7 +140,8 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import { getBehaviorsUserAction, getPerformancesBasicindicators } from "@/apis";
+import { getBehaviorsUseraction, getPerformancesBasicindicators } from "@/apis";
+import DataCard from "@/components/DataCard.vue";
 import { useStore } from "@/stores";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
@@ -145,7 +150,7 @@ import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
 import { useRoute } from "vue-router";
 import ActionInfo from "./ActionInfo.vue";
-import { Info } from "./Types";
+import { Info } from "./types";
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
 const pageDom = $ref<HTMLElement>();
@@ -276,7 +281,7 @@ const loadBasicindicators = async () => {
 };
 
 const loadAllData = async () => {
-  const res = await getBehaviorsUserAction({ ...userActionParma });
+  const res = await getBehaviorsUseraction({ ...userActionParma });
   actionList.push(...res.data);
 };
 // 计算结束时间
@@ -301,8 +306,7 @@ const search = () => {
 <style lang="scss" scoped>
 .main {
   width: 100%;
-  padding: 0 50px;
-  background-color: #f5f5f9;
+  padding: 20px;
 }
 
 .header {

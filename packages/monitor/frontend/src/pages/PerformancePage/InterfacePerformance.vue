@@ -12,12 +12,16 @@
                 name="section"
               />
               <span class="name">
-                {{ activeSectionMap[i - 1] }}
+                {{ sectionNameMap[i - 1] }}
               </span>
             </label>
           </div>
         </DataCard>
-        <DataCard icon="fa-calendar-o" title="当日数据">
+        <DataCard
+          icon="fa-calendar-o"
+          title="当日数据"
+          :loading="indicatorStatisticsLoading"
+        >
           <div class="data">
             <span
               ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
@@ -45,11 +49,11 @@
         <DataCard
           icon="fa-bar-chart"
           title="变化趋势（近30天，点击可查看详情）"
+          :loading="indicatorStatisticsLoading"
         >
           <ECharts
             :option="indicatorStatisticsChartOption"
             :autoresize="true"
-            :loading="indicatorStatisticsLoading"
             class="bar"
             @click="indicatorStatisticsChartClick"
           />
@@ -60,11 +64,13 @@
       <DataCard
         icon="fa-bars"
         :title="`接口列表（${activeDateTime.format('YYYY-MM-DD')}）`"
+        :loading="pageIndicatorsLoading"
+        :empty="pageIndicators?.length ? false : true"
       >
         <div class="main">
-          <ul v-if="interfaceIndicators?.length" class="left">
+          <ul class="left">
             <li
-              v-for="(interfaceIndicator, index) in interfaceIndicators"
+              v-for="(interfaceIndicator, index) in pageIndicators"
               :key="index"
               :class="{ active: activeInterface === index }"
               @click="activeInterface = index"
@@ -77,9 +83,6 @@
               </span>
             </li>
           </ul>
-          <div v-else class="left" style="margin-top: 30px; text-align: center">
-            暂无数据
-          </div>
           <div class="right">
             <DataCard icon="fa-flag" title="常见指标">
               <div class="board">
@@ -89,8 +92,8 @@
                     <span
                       >{{
                         (
-                          (interfaceIndicators?.[activeInterface]?.average ||
-                            0) / 1000
+                          (pageIndicators?.[activeInterface]?.average || 0) /
+                          1000
                         ).toFixed(2)
                       }}s</span
                     >
@@ -103,7 +106,7 @@
                   <div class="time">
                     <span>影响用户</span>
                     <span>{{
-                      interfaceIndicators?.[activeInterface]?.userCount || 0
+                      pageIndicators?.[activeInterface]?.userCount || 0
                     }}</span>
                   </div>
                   <div class="icon">
@@ -112,12 +115,15 @@
                 </div>
               </div>
             </DataCard>
-            <DataCard icon="fa-bar-chart" title="请求趋势">
+            <DataCard
+              icon="fa-bar-chart"
+              title="请求趋势"
+              :loading="theIndicatorStatisticsLoading"
+            >
               <ECharts
                 v-if="theIndicatorStatistics?.length"
                 :option="theIndicatorStatisticsChartOption"
                 :autoresize="true"
-                :loading="theIndicatorStatisticsLoading"
                 class="bar"
               />
               <div
@@ -159,7 +165,7 @@ let activeDateTime = $ref(dayjs().startOf("d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
-let activeSectionMap: Record<number, string> = {
+let sectionNameMap: Record<number, string> = {
   0: "<1秒",
   1: "1-5秒",
   2: "5-10秒",
@@ -194,19 +200,19 @@ const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     yAxis: {
       type: "value",
     },
-    series: [
-      {
-        name: "数量",
-        data:
-          indicatorStatistics?.[activeSection]
-            ?.map((item) => item.count)
-            .filter((item) => item !== 0) || [],
+    series:
+      indicatorStatistics?.map((section, index) => ({
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count),
         type: "bar",
+        stack: "total",
         label: {
           show: true,
         },
-      },
-    ],
+        emphasis: {
+          focus: "series",
+        },
+      })) || [],
     ...basicChartOption,
   };
 });
@@ -250,12 +256,12 @@ getIndicatorStatistics(
 );
 
 // 接口指标列表
-let interfaceIndicators = $ref<
-  Array<BasicList & { url: string }> | undefined
->();
-
+let pageIndicators = $ref<Array<BasicList & { url: string }> | undefined>();
+// 接口指标列表加载状态
+let pageIndicatorsLoading = $ref(false);
 // 获取接口指标列表
-const getInterfaceIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
+const getPageIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
+  pageIndicatorsLoading = true;
   getPerformancesInterfaceindicators({
     ...basicRequestParam,
     startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
@@ -263,7 +269,8 @@ const getInterfaceIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
       endTime?.format("YYYY-MM-DD HH:mm:ss") ||
       nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
   }).then(({ data }) => {
-    interfaceIndicators = data;
+    pageIndicators = data;
+    pageIndicatorsLoading = false;
   });
 };
 
@@ -272,7 +279,7 @@ watch(
   () => activeDateTime,
   (activeDateTime) => {
     // 获取激活时间当天的接口指标列表
-    getInterfaceIndicators(
+    getPageIndicators(
       activeDateTime.startOf("d"),
       activeDateTime.add(1, "d").startOf("d")
     );
@@ -301,10 +308,15 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     },
     series:
       theIndicatorStatistics?.map((section, index) => ({
-        name: activeSectionMap[index],
-        data: section.map((item) => item.count).filter((item) => item !== 0),
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count),
+        type: "bar",
+        stack: "total",
         label: {
           show: true,
+        },
+        emphasis: {
+          focus: "series",
         },
       })) || [],
     ...basicChartOption,
@@ -320,7 +332,7 @@ const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
     endTime:
       endTime?.format("YYYY-MM-DD HH:mm:ss") ||
       nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
-    url: interfaceIndicators?.[activeInterface].url,
+    pageUrl: pageIndicators?.[activeInterface].url,
     granularity: "1h",
   }).then(({ data }) => {
     theIndicatorStatistics = data;
@@ -329,9 +341,12 @@ const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
 };
 
 // 监听接口指标列表和激活接口索引
-watch([() => interfaceIndicators, () => activeInterface], () => {
+watch([() => pageIndicators, () => activeInterface], () => {
   // 自动获取某天接口指标分段统计列表
-  if (interfaceIndicators?.[activeInterface]) {
+  if (activeInterface >= (pageIndicators?.length || 0)) {
+    activeInterface = 0;
+  }
+  if (pageIndicators?.[activeInterface]) {
     getTheIndicatorStatistics(
       activeDateTime.startOf("d"),
       activeDateTime.add(1, "d").startOf("d")

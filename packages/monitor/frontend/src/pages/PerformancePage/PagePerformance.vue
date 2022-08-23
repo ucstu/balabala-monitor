@@ -12,12 +12,16 @@
                 name="section"
               />
               <span class="name">
-                {{ activeSectionMap[i - 1] }}
+                {{ sectionNameMap[i - 1] }}
               </span>
             </label>
           </div>
         </DataCard>
-        <DataCard icon="fa-calendar-o" title="当日数据">
+        <DataCard
+          icon="fa-calendar-o"
+          title="当日数据"
+          :loading="indicatorStatisticsLoading"
+        >
           <div class="data">
             <span
               ><strong>{{ sectionTotals[activeSection] || 0 }}</strong
@@ -45,11 +49,11 @@
         <DataCard
           icon="fa-bar-chart"
           title="变化趋势（近30天，点击可查看详情）"
+          :loading="indicatorStatisticsLoading"
         >
           <ECharts
             :option="indicatorStatisticsChartOption"
             :autoresize="true"
-            :loading="indicatorStatisticsLoading"
             class="bar"
             @click="indicatorStatisticsChartClick"
           />
@@ -60,9 +64,11 @@
       <DataCard
         icon="fa-bars"
         :title="`页面列表（${activeDateTime.format('YYYY-MM-DD')}）`"
+        :loading="pageIndicatorsLoading"
+        :empty="pageIndicators?.length ? false : true"
       >
         <div class="main">
-          <ul v-if="pageIndicators?.length" class="left">
+          <ul class="left">
             <li
               v-for="(interfaceIndicator, index) in pageIndicators"
               :key="index"
@@ -77,9 +83,6 @@
               </span>
             </li>
           </ul>
-          <div v-else class="left" style="margin-top: 30px; text-align: center">
-            暂无数据
-          </div>
           <div class="right">
             <DataCard icon="fa-flag" title="常见指标">
               <div class="board">
@@ -112,12 +115,15 @@
                 </div>
               </div>
             </DataCard>
-            <DataCard icon="fa-bar-chart" title="请求趋势">
+            <DataCard
+              icon="fa-bar-chart"
+              title="请求趋势"
+              :loading="theIndicatorStatisticsLoading"
+            >
               <ECharts
                 v-if="theIndicatorStatistics?.length"
                 :option="theIndicatorStatisticsChartOption"
                 :autoresize="true"
-                :loading="theIndicatorStatisticsLoading"
                 class="bar"
               />
               <div
@@ -159,7 +165,7 @@ let activeDateTime = $ref(dayjs().startOf("d"));
 // 激活页面索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
-let activeSectionMap: Record<number, string> = {
+let sectionNameMap: Record<number, string> = {
   0: "<1秒",
   1: "1-5秒",
   2: "5-10秒",
@@ -173,7 +179,7 @@ const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
 // 页面指标分段统计列表基础请求参数
 const basicRequestParam = {
   appId: store.appId,
-  mainType: BasicIndicator.mainType.Performance,
+  mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
 };
 
@@ -194,19 +200,19 @@ const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     yAxis: {
       type: "value",
     },
-    series: [
-      {
-        name: "数量",
-        data:
-          indicatorStatistics?.[activeSection]
-            ?.map((item) => item.count)
-            .filter((item) => item !== 0) || [],
+    series:
+      indicatorStatistics?.map((section, index) => ({
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count),
         type: "bar",
+        stack: "total",
         label: {
           show: true,
         },
-      },
-    ],
+        emphasis: {
+          focus: "series",
+        },
+      })) || [],
     ...basicChartOption,
   };
 });
@@ -251,9 +257,11 @@ getIndicatorStatistics(
 
 // 页面指标列表
 let pageIndicators = $ref<Array<BasicList & { pageUrl: string }> | undefined>();
-
+// 页面指标列表加载状态
+let pageIndicatorsLoading = $ref(false);
 // 获取页面指标列表
 const getPageIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
+  pageIndicatorsLoading = true;
   getPerformancesBasicindicators({
     ...basicRequestParam,
     startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
@@ -262,6 +270,7 @@ const getPageIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
       nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
   }).then(({ data }) => {
     pageIndicators = data;
+    pageIndicatorsLoading = false;
   });
 };
 
@@ -299,10 +308,15 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     },
     series:
       theIndicatorStatistics?.map((section, index) => ({
-        name: activeSectionMap[index],
-        data: section.map((item) => item.count).filter((item) => item !== 0),
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count),
+        type: "bar",
+        stack: "total",
         label: {
           show: true,
+        },
+        emphasis: {
+          focus: "series",
         },
       })) || [],
     ...basicChartOption,
@@ -329,6 +343,9 @@ const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
 // 监听页面指标列表和激活页面索引
 watch([() => pageIndicators, () => activeInterface], () => {
   // 自动获取某天页面指标分段统计列表
+  if (activeInterface >= (pageIndicators?.length || 0)) {
+    activeInterface = 0;
+  }
   if (pageIndicators?.[activeInterface]) {
     getTheIndicatorStatistics(
       activeDateTime.startOf("d"),

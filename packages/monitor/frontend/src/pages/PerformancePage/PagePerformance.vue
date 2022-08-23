@@ -12,7 +12,7 @@
                 name="section"
               />
               <span class="name">
-                {{ activeSectionMap[i - 1] }}
+                {{ sectionNameMap[i - 1] }}
               </span>
             </label>
           </div>
@@ -56,6 +56,11 @@
         </DataCard>
       </div>
     </div>
+    {{
+      indicatorStatistics?.[activeSection]
+        ?.map((item) => item.count)
+        .filter((item) => item !== 0) || []
+    }}
     <div class="bottom">
       <DataCard
         icon="fa-bars"
@@ -159,7 +164,7 @@ let activeDateTime = $ref(dayjs().startOf("d"));
 // 激活页面索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
-let activeSectionMap: Record<number, string> = {
+let sectionNameMap: Record<number, string> = {
   0: "<1秒",
   1: "1-5秒",
   2: "5-10秒",
@@ -173,7 +178,7 @@ const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
 // 页面指标分段统计列表基础请求参数
 const basicRequestParam = {
   appId: store.appId,
-  mainType: BasicIndicator.mainType.Performance,
+  mainType: BasicIndicator.mainType.LoadIndicator,
   subType: BasicIndicator.subType.FullLoad,
 };
 
@@ -198,9 +203,7 @@ const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       {
         name: "数量",
         data:
-          indicatorStatistics?.[activeSection]
-            ?.map((item) => item.count)
-            .filter((item) => item !== 0) || [],
+          indicatorStatistics?.[activeSection]?.map((item) => item.count) || [],
         type: "bar",
         label: {
           show: true,
@@ -299,8 +302,8 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     },
     series:
       theIndicatorStatistics?.map((section, index) => ({
-        name: activeSectionMap[index],
-        data: section.map((item) => item.count).filter((item) => item !== 0),
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count) || [],
         label: {
           show: true,
         },

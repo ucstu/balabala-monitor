@@ -12,7 +12,7 @@
                 name="section"
               />
               <span class="name">
-                {{ activeSectionMap[i - 1] }}
+                {{ sectionNameMap[i - 1] }}
               </span>
             </label>
           </div>
@@ -159,7 +159,7 @@ let activeDateTime = $ref(dayjs().startOf("d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
-let activeSectionMap: Record<number, string> = {
+let sectionNameMap: Record<number, string> = {
   0: "<1秒",
   1: "1-5秒",
   2: "5-10秒",
@@ -301,7 +301,7 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     },
     series:
       theIndicatorStatistics?.map((section, index) => ({
-        name: activeSectionMap[index],
+        name: sectionNameMap[index],
         data: section.map((item) => item.count).filter((item) => item !== 0),
         label: {
           show: true,

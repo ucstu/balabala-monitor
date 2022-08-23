@@ -1,4 +1,4 @@
-export interface Info {
+export interface ActionInfo {
   title?: string; // 类型名称
   time?: string; // 发生时间
   pageUrl?: string; //发生页面

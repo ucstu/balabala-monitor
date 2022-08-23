@@ -4,10 +4,7 @@
       class="header"
       :style="line === 'full' ? 'border-bottom: 3px solid #ea6947;' : ''"
     >
-      <div
-        class="left"
-        :style="line === 'left' ? 'border-bottom: 3px solid #ea6947;' : ''"
-      >
+      <div class="left">
         <div
           class="title"
           :style="line === 'title' ? 'border-bottom: 3px solid #ea6947;' : ''"
@@ -16,6 +13,14 @@
           <slot name="title" :icon="icon" :title="title">
             <i v-if="icon" class="fa" :class="icon"></i>
             <span>{{ title }}</span>
+            <i
+              v-if="showFold"
+              class="fa fa-angle-up icon-up fa-2x"
+              style="margin-left: 0.5rem"
+              :class="{ 'fa-rotate-180': fold }"
+              @click="fold = !fold"
+            >
+            </i>
           </slot>
         </div>
         <div class="l-actions">
@@ -26,22 +31,29 @@
         <slot name="rActions"> </slot>
       </div>
     </div>
-    <div class="main">
-      <slot></slot>
-    </div>
+    <Transition name="main">
+      <div v-show="!fold" class="main">
+        <slot></slot>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 const {
   icon = "",
-  title = "卡片标题",
+  title,
+  showFold = false,
   line = "title",
 } = defineProps<{
   icon?: string;
-  title?: string;
-  line?: "title" | "left" | "full";
+  title: string;
+  showFold?: boolean;
+  line?: "none" | "title" | "full";
 }>();
+
+let fold = $ref(false);
+
 const emits = defineEmits<{
   (e: "titleClick"): void;
 }>();
@@ -49,11 +61,10 @@ const emits = defineEmits<{
 
 <style lang="scss" scoped>
 .card {
-  display: flex;
-  flex-direction: column;
   padding: 10px;
   padding-top: 5px;
   margin-bottom: 10px;
+  overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
 
@@ -85,8 +96,16 @@ const emits = defineEmits<{
   }
 
   .main {
-    flex: 1;
     width: 100%;
+    height: 100%;
+  }
+
+  .main-leave-active {
+    transition: height 5s;
+  }
+
+  .main-leave-to {
+    height: 0;
   }
 }
 </style>

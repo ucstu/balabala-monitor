@@ -1,131 +1,75 @@
 <template>
-  <div class="main">
+  <div class="container">
     <DataCard
       title="用户详情"
       icon="fa-dedent"
       line="left"
+      :show-fold="true"
       @title-click="showDetails = !showDetails"
     >
-      <template #actions>
-        <i
-          class="fa"
-          style="margin-left: 0.2rem"
-          :class="`fa-angle-up icon-up fa-2x ${
-            !showDetails ? 'fa-rotate-180' : ''
-          }`"
-          @click="showDetails = !showDetails"
-        ></i>
-      </template>
-      <template #tools>
-        <div class="header-right">
-          <div>
-            <input
-              v-model="userActionParma.startTime"
-              class="input"
-              type="date"
-            />
-          </div>
-          <div><input class="input" type="text" /></div>
-          <div style="width: 300px">
-            <input v-model="userActionParma.userId" class="input" type="text" />
-          </div>
-          <div>
-            <button class="btn btn-search" @click="search">搜索</button>
-          </div>
+      <template #rActions>
+        <div class="flex-row">
+          <input v-model="userActionParma.startTime" type="date" />
+          <input v-model="userActionParma.userId" type="text" />
+          <button class="btn-search" @click="search">搜索</button>
         </div>
       </template>
-      <div v-show="showDetails" class="load-time">
-        <DataCard title="页面平均加载时间">
-          <ECharts class="load-data" :option="option_page" />
+      <div v-show="showDetails" class="charts">
+        <DataCard class="card" title="页面平均加载时间">
+          <ECharts :option="option_page" :autoresize="true" />
         </DataCard>
-        <DataCard title="接口耗时区间分布">
-          <div ref="apiDom" class="load-data"></div>
+        <DataCard class="card" title="接口耗时区间分布">
+          <ECharts :option="option_api" :autoresize="true" />
         </DataCard>
       </div>
     </DataCard>
     <div class="action">
-      <div class="action-header">
-        <div>行为记录列表</div>
-        <div class="action-btn">
-          <div>
-            <button
-              :class="['btn', { 'choses-btn': chosesBtn === 0 }]"
-              @click="chosesBtn = 0"
+      <DataCard title="行为记录列表">
+        <template #rActions>
+          <button
+            v-for="index in 4"
+            :key="index"
+            :class="['btn', { 'btn-active': activeActionType === index }]"
+            @click="activeActionType = index - 1"
+          >
+            {{ actionTypeNameMap[index - 1] }}
+          </button>
+        </template>
+        <div class="main">
+          <div v-for="(item, index) in actions" :key="index" class="list">
+            <div
+              v-show="
+                activeActionType == 0 || item.listType == activeActionType
+              "
+              class="action-list-item"
+              @click="clickAction(index)"
             >
-              全部
-            </button>
-          </div>
-          <div>
-            <button
-              :class="['btn', { 'choses-btn': chosesBtn === 1 }]"
-              @click="chosesBtn = 1"
-            >
-              浏览
-            </button>
-          </div>
-          <div>
-            <button
-              :class="['btn', { 'choses-btn': chosesBtn === 2 }]"
-              @click="chosesBtn = 2"
-            >
-              错误
-            </button>
-          </div>
-          <div>
-            <button
-              :class="['btn', { 'choses-btn': chosesBtn === 3 }]"
-              @click="chosesBtn = 3"
-            >
-              接口
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="action-body">
-        <div class="action-main">
-          <div class="action-list">
-            <template v-for="(item, index) in actionList" :key="index">
-              <div
-                v-show="chosesBtn == 0 || item.listType == chosesBtn"
-                class="action-list-item"
-                @click="clickAction(index)"
-              >
-                <div class="action-icon">
-                  <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
-                </div>
-                <div
-                  :class="[
-                    'action-content',
-                    { 'action-chose': chosesAction === index },
-                  ]"
-                >
-                  <div class="action-title">
-                    <div>{{ item.title }}</div>
-                    <div>
-                      {{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}
-                    </div>
-                  </div>
-                  <div class="action-msg">{{ item.pageUrl }}</div>
-                </div>
+              <div class="action-icon">
+                <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
               </div>
-            </template>
+              <div
+                :class="[
+                  'action-content',
+                  { 'action-chose': chosesAction === index },
+                ]"
+              >
+                <div class="action-title">
+                  <div>{{ item.title }}</div>
+                  <div>
+                    {{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}
+                  </div>
+                </div>
+                <div class="action-msg">{{ item.pageUrl }}</div>
+              </div>
+            </div>
           </div>
-          <div class="action-info">
-            <ActionInfo
-              :choses-action="chosesAction"
-              :show-action-info="showActionInfo"
-            ></ActionInfo>
-          </div>
+          <ActionInfo
+            class="info"
+            :action-type="chosesAction"
+            :action-info="showActionInfo"
+          ></ActionInfo>
         </div>
-        <!-- <div class="action-body-pager">
-          <div class="pagers">
-            <button class="btn">1</button>
-            <button class="btn">3</button>
-            <button class="btn">4</button>
-            <button class="btn">5</button>
-          </div>
-        </div> -->
-      </div>
+      </DataCard>
     </div>
   </div>
 </template>
@@ -150,7 +94,7 @@ import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
 import { useRoute } from "vue-router";
 import ActionInfo from "./ActionInfo.vue";
-import { Info } from "./types";
+import type { ActionInfo as _ActionInfo } from "./types";
 let showDetails = $ref<boolean>(true);
 const route = useRoute();
 const pageDom = $ref<HTMLElement>();
@@ -197,10 +141,16 @@ let option_api = $ref<any>({
     },
   ],
 });
-const actionList: any[] = $ref([]);
-let chosesBtn = $ref<number>(0);
+const actions: any[] = $ref([]);
+let activeActionType = $ref(0);
+const actionTypeNameMap: Record<number, string> = {
+  0: "全部",
+  1: "浏览",
+  2: "错误",
+  3: "接口",
+};
 let chosesAction = $ref(-1);
-let showActionInfo = $ref<Info>();
+let showActionInfo = $ref<_ActionInfo>();
 
 onMounted(() => {
   if (!route.query.userId) {
@@ -230,33 +180,7 @@ const userActionParma = $ref({
 
 const clickAction = (index: number) => {
   chosesAction = index;
-  showActionInfo = {};
-  showActionInfo.title = actionList[chosesAction].title;
-  showActionInfo.time = actionList[chosesAction].time;
-  showActionInfo.pageUrl = actionList[chosesAction].pageUrl;
-  showActionInfo.listType = actionList[chosesAction].listType;
-  showActionInfo.mainType = actionList[chosesAction].mainType;
-  showActionInfo.subType = actionList[chosesAction].subType;
-  showActionInfo.resourceType = actionList[chosesAction].resourceType;
-  showActionInfo.path = actionList[chosesAction].path;
-  showActionInfo.url = actionList[chosesAction].url;
-  showActionInfo.msg = actionList[chosesAction].msg;
-  showActionInfo.line = actionList[chosesAction].line;
-  showActionInfo.column = actionList[chosesAction].column;
-  showActionInfo.stack = actionList[chosesAction].stack;
-  showActionInfo.value = actionList[chosesAction].value;
-  showActionInfo.left = actionList[chosesAction].left;
-  showActionInfo.top = actionList[chosesAction].top;
-  showActionInfo.target = actionList[chosesAction].target;
-  showActionInfo.inner = actionList[chosesAction].inner;
-  showActionInfo.from = actionList[chosesAction].from;
-  showActionInfo.to = actionList[chosesAction].to;
-  showActionInfo.params = actionList[chosesAction].params;
-  showActionInfo.query = actionList[chosesAction].query;
-  showActionInfo.statusCode = actionList[chosesAction].statusCode;
-  showActionInfo.method = actionList[chosesAction].method;
-  showActionInfo.duration = actionList[chosesAction].duration;
-  showActionInfo.data = actionList[chosesAction].data;
+  showActionInfo = { ...actions[chosesAction] };
 };
 
 // 加载行为记录列表
@@ -282,7 +206,7 @@ const loadBasicindicators = async () => {
 
 const loadAllData = async () => {
   const res = await getBehaviorsUseraction({ ...userActionParma });
-  actionList.push(...res.data);
+  actions.push(...res.data);
 };
 // 计算结束时间
 watch(
@@ -297,218 +221,29 @@ const search = () => {
     alert("用户id 不能为空");
     return;
   }
-  actionList.length = 0;
+  actions.length = 0;
   loadAllData();
   loadBasicindicators();
 };
 </script>
 
 <style lang="scss" scoped>
-.main {
+.container {
   width: 100%;
   padding: 20px;
 }
 
-.header {
+.charts {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  overflow: hidden;
-  background-color: #fff;
-  border-radius: 10px;
 
-  .header-left {
-    display: flex;
-    align-items: center;
-  }
-
-  .header-right {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 800px;
-  }
-}
-
-.load-time {
-  display: flex;
-  flex-wrap: wrap;
-
-  .load-item {
-    width: 500px;
+  .card {
+    flex: 1;
     height: 350px;
-    margin: 10px 10px 10px 0;
-  }
+    margin-right: 40px;
 
-  .load-title {
-    height: 50px;
-    padding-left: 10px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    line-height: 50px;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-
-  .load-data {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-}
-
-.action {
-  margin-top: 20px;
-
-  .action-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    padding: 0 15px;
-    overflow: hidden;
-    background-color: #fff;
-    border-radius: 10px;
-
-    .action-btn {
-      display: flex;
-      justify-content: space-evenly;
-      width: 350px;
+    &:last-child {
+      margin-right: 0;
     }
   }
-
-  .action-body {
-    height: 430px;
-    background-color: #fff;
-
-    .action-main {
-      display: flex;
-
-      .action-list {
-        width: 70%;
-        height: 370px;
-        overflow-y: auto;
-
-        .action-list-item {
-          display: flex;
-          height: 70px;
-          padding: 20px;
-
-          .action-icon {
-            padding-top: 10px;
-          }
-
-          .action-content {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding: 10px;
-            margin-left: 20px;
-            overflow: hidden;
-            line-height: 25px;
-            cursor: pointer;
-            background-color: #f7f7f7;
-            border-radius: 10px;
-
-            .action-msg {
-              margin-right: 10px;
-              overflow: hidden;
-              font-size: 13px;
-              color: #6c6e7a;
-            }
-
-            .action-title {
-              display: flex;
-              justify-content: space-between;
-              font-size: 15px;
-            }
-          }
-        }
-      }
-
-      .action-info {
-        flex: 1;
-        height: 370px;
-        padding: 10px 20px;
-        margin-left: 15px;
-        overflow-y: auto;
-        border: 2px solid #f5f5f9;
-        border-radius: 10px;
-
-        .action-info-item {
-          width: 100%;
-          margin-bottom: 20px;
-          word-wrap: break-word;
-
-          .action-info-item-data {
-            font-size: 14px;
-            color: gray;
-          }
-        }
-      }
-    }
-
-    .action-body-pager {
-      display: flex;
-      width: 100%;
-      background-color: #fff;
-    }
-
-    .pagers {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-    }
-  }
-}
-
-.icon-up {
-  cursor: pointer;
-  transition: all 400ms;
-}
-
-.btn {
-  width: 50px;
-  height: 30px;
-  padding: 3px;
-  margin-right: 15px;
-  cursor: pointer;
-  background-color: #fff;
-  border: 0;
-  border: 1px solid #ebebeb;
-  border-radius: 5px;
-  outline: none;
-}
-
-.input {
-  width: 100%;
-  height: 30px;
-  font-size: 14px;
-  border: 1px solid #d9d9d9;
-  border-radius: 5px;
-  outline: none;
-  transition: all 30ms;
-}
-
-.input:focus {
-  outline: 2px solid #1890ff;
-}
-
-.choses-btn {
-  color: #ff7626;
-  border-color: #ff7626;
-}
-
-.action-chose {
-  background-color: #fff4ee !important;
-}
-
-.btn-search {
-  width: 60px;
-  color: #fff;
-  background-color: #1890ff;
 }
 </style>

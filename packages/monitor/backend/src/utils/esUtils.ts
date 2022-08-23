@@ -59,7 +59,7 @@ export const totalData = (querys: BaseTotalVo, list) => {
   ) {
     const item = list[index];
     restList.push({
-      dateTime: dayjs(item.key).format(timeFormat),
+      dateTime: resultStartTime.format(timeFormat),
       count: item.doc_count,
       average: item.avg && item.avg.value ? item.avg.value : 0,
       userCount: item.userCount ? item.userCount.value : 0,

@@ -65,17 +65,17 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+const { hiddenAside: _hiddenAside } = defineProps<{
   hiddenAside: boolean;
 }>();
 
-const emit = defineEmits<{
+const emits = defineEmits<{
   (event: "update:hiddenAside", value: boolean): void;
 }>();
 
 const hiddenAside = $computed({
-  get: () => props.hiddenAside,
-  set: (value) => emit("update:hiddenAside", value),
+  get: () => _hiddenAside,
+  set: (value) => emits("update:hiddenAside", value),
 });
 </script>
 

@@ -4,11 +4,9 @@ import { resourceerrorIndex } from "src/config/db.index";
 import { ResourceError } from "src/entity/resourceError.entity";
 import { responseRust } from "src/entity/responseRust";
 import { totalData } from "src/utils/esUtils";
-import {
-  getQueryBody,
-  getTotalResourceerrorstatisticsBody,
-} from "src/utils/searchBody";
+import { getTotalResourceerrorstatisticsBody } from "src/utils/searchBody";
 import { ResourceerrorTotalVo, ResourceerrorVo } from "src/vo/resourceerror.vo";
+const SqlString = require("sqlstring");
 @Injectable()
 export class ResourceerrorService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -39,66 +37,69 @@ export class ResourceerrorService {
    * @returns
    */
   async getErrorList(querys: ResourceerrorVo) {
-    const body = getQueryBody(querys, "errorTime");
-    let size = querys.size ? querys.size : 10;
-    if (!querys.size) {
-      body.aggs = {
-        allCount: {
-          cardinality: {
-            field: "path",
-          },
-        },
-      };
-      // 查询总条数
-      const allCount = await this.elasticsearchService.search({
-        index: resourceerrorIndex,
-        body,
-      });
-      if (allCount.statusCode !== 200) {
-        return responseRust.error();
-      }
-      size =
-        allCount.body.aggregations.allCount.value === 0
-          ? size
-          : allCount.body.aggregations.allCount.value;
+    if (querys.start_time.length === 10) {
+      querys.start_time = querys.start_time + " 00:00:00";
+      querys.end_time = querys.end_time + " 00:00:00";
     }
-    body.aggs = {
-      count: {
-        terms: {
-          field: "path",
-          size: size,
-        },
-        aggs: {
-          userCount: {
-            cardinality: {
-              field: "userID",
-            },
-          },
-          pageCount: {
-            cardinality: {
-              field: "pageUrl",
-            },
-          },
-        },
+    // sql 语句
+    let sqlString = `
+            SELECT path,count(path) ,userID,pageUrl
+            FROM "resource_error"
+            where appId=? and mainType=? and subType=? and errorTime between ? and ?
+            group by path, userID,pageUrl
+            order by count(path) desc
+        `;
+    // sql 参数
+    const sqlArges = [
+      querys.app_id,
+      querys.main_type,
+      querys.sub_type,
+      new Date(querys.start_time).getTime(),
+      new Date(querys.end_time).getTime(),
+    ];
+    // 是否要限制返回条数
+    if (querys.size) {
+      sqlString += " limit ?";
+      sqlArges.push(parseInt(querys.size + ""));
+    }
+    const sql = SqlString.format(sqlString, sqlArges);
+    const rest = await this.elasticsearchService.sql.query({
+      body: {
+        query: sql,
       },
-    };
-
-    const res = await this.elasticsearchService.search({
-      index: resourceerrorIndex,
-      body,
     });
-    if (res.statusCode !== 200) {
+    if (rest.statusCode !== 200) {
       return responseRust.error();
     }
-    const list = res.body.aggregations.count.buckets.map((item) => {
-      return {
-        path: item.key,
-        count: item.doc_count,
-        userCount: item.userCount.value,
-        pageCount: item.pageCount.value,
+    const map = new Map();
+    rest.body.rows.forEach((item) => {
+      const value = {
+        path: item[0],
+        count: item[1],
+        userCount: 1,
+        pageCount: 1,
+        userID: [item[2]],
+        pageUrl: [item[3]],
+        average: 0,
       };
+      const key = `${item[0]}`;
+      if (map.has(key)) {
+        const mapItem = map.get(key);
+        if (!mapItem.userID.includes(value.userID[0])) {
+          mapItem.userCount++;
+          mapItem.userID.push(value.userID[0]);
+        }
+        if (!mapItem.pageUrl.includes(value.pageUrl[0])) {
+          mapItem.pageCount++;
+          mapItem.pageUrl.push(value.pageUrl[0]);
+        }
+        map.get(key).count += value.count;
+      } else {
+        map.set(key, value);
+      }
     });
-    return responseRust.success_data(list);
+
+    return responseRust.success_data([...map.values()]);
   }
 
   /**

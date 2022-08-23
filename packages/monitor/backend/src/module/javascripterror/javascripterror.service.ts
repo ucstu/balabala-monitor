@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
-import * as dayjs from "dayjs";
 import { javascripterrorIndex } from "src/config/db.index";
 import { JavaScriptError } from "src/entity/javaScriptError.entity";
 import { responseRust } from "src/entity/responseRust";
+import { totalData } from "src/utils/esUtils";
 import { getTotalErrorBody } from "src/utils/searchBody";
 import {
   JavaScriptErrorTotalVo,
@@ -52,7 +52,7 @@ export class JavascripterrorService {
             group by msg,url, line,column,userID,pageUrl
             order by count(msg) desc
         `;
-    const sqlAges = [
+    const sqlArges = [
       querys.app_id,
       querys.main_type,
       querys.sub_type,
@@ -61,9 +61,9 @@ export class JavascripterrorService {
     ];
     if (querys.size) {
       sqlString += " limit ?";
-      sqlAges.push(querys.size);
+      sqlArges.push(parseInt(querys.size + ""));
     }
-    const sql = SqlString.format(sqlString, sqlAges);
+    const sql = SqlString.format(sqlString, sqlArges);
     const rest = await this.elasticsearchService.sql.query({
       body: {
         query: sql,
@@ -120,23 +120,23 @@ export class JavascripterrorService {
     if (res.statusCode !== 200) {
       return responseRust.error();
     }
-    const list = this.getData(res.body.aggregations.count.buckets);
+    const list = totalData(querys, res.body.aggregations.count.buckets);
     return responseRust.success_data(list);
   }
-  /**
-   * 处理数据
-   * @param list
-   * @returns
-   */
-  private getData(list) {
-    const restList = [];
-    list.forEach((e) => {
-      restList.push({
-        dateTime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
-        count: e.doc_count,
-        userCount: e.userCount.value,
-      });
-    });
-    return restList;
-  }
+  // /**
+  //  * 处理数据
+  //  * @param list
+  //  * @returns
+  //  */
+  // private getData(list) {
+  //   const restList = [];
+  //   list.forEach((e) => {
+  //     restList.push({
+  //       dateTime: dayjs(e.key).format("YYYY-MM-DD MM:mm:ss"),
+  //       count: e.doc_count,
+  //       userCount: e.userCount.value,
+  //     });
+  //   });
+  //   return restList;
+  // }
 }

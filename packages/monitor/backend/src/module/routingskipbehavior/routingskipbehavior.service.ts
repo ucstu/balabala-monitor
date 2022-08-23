@@ -49,7 +49,7 @@ export class RoutingskipbehaviorService {
             order by count(from) desc
         `;
     // sql 参数
-    const sqlAges = [
+    const sqlArges = [
       querys.app_id,
       querys.main_type,
       querys.sub_type,
@@ -59,9 +59,9 @@ export class RoutingskipbehaviorService {
     // 是否要限制返回条数
     if (querys.size) {
       sqlString += " limit ?";
-      sqlAges.push(querys.size);
+      sqlArges.push(parseInt(querys.size + ""));
     }
-    const sql = SqlString.format(sqlString, sqlAges);
+    const sql = SqlString.format(sqlString, sqlArges);
     const rest = await this.elasticsearchService.sql.query({
       body: {
         query: sql,

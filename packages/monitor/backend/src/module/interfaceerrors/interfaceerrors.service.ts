@@ -23,14 +23,6 @@ export class InterfaceerrorsService {
       querys.start_time = querys.start_time + " 00:00:00";
       querys.end_time = querys.end_time + " 00:00:00";
     }
-    // sql 语句
-    const sqlString = `
-            SELECT url,count(url),userID,pageUrl,sum(duration)
-            FROM "interface_indicator"
-            where appId=? and mainType=? and subType=? and startTime between ? and ?
-            group by url ,userID,pageUrl
-            order by count(url) desc
-        `;
     // sql 参数
     const sqlArges = [
       querys.app_id,
@@ -39,7 +31,22 @@ export class InterfaceerrorsService {
       new Date(querys.start_time).getTime(),
       new Date(querys.end_time).getTime(),
     ];
-
+    // sql 语句
+    let sqlString = `SELECT url,count(url),userID,pageUrl,sum(duration) FROM "interface_indicator" `;
+    // where 条件
+    let where =
+      "where appId=? and mainType=? and subType=? and startTime between ? and ? ";
+    if (querys.status_code) {
+      where = where.concat("and statusCode=? ");
+      sqlArges.push(querys.status_code);
+    }
+    // 分组
+    const group = "group by url ,userID,pageUrl ";
+    // 排序
+    const order = "order by count(url) desc ";
+    // 组装最终sql 语句 字符串
+    sqlString = sqlString + where + group + order;
+    // 防止sql 注入
     const sql = SqlString.format(sqlString, sqlArges);
     const rest = await this.elasticsearchService.sql.query({
       body: {

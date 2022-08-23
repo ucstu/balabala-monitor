@@ -12,7 +12,7 @@ export default () => {
         const { top, left } = target?.getBoundingClientRect();
 
         stagingReport("ClickBehavior", {
-          mainType: ClickBehavior.mainType.BasicBehavior,
+          mainType: ClickBehavior.mainType.ClickBehavior,
           subType: ClickBehavior.subType.ClickBehavior,
           ...getBasicParams(),
           top,

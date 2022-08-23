@@ -40,9 +40,8 @@ export default () => {
   ) {
     const start = Date.now();
 
-    const handler = (event: ProgressEvent) => {
+    const handler = (_event: ProgressEvent) => {
       const duration = Date.now() - start;
-      console.log(this, event);
       stagingReport("InterfaceIndicator", {
         mainType: BasicIndicator.mainType.InterfaceIndicator,
         subType: BasicIndicator.subType.InterfaceIndicator,
@@ -51,6 +50,7 @@ export default () => {
         method: this.openData.method,
         statusCode: this.status,
         url: this.openData.url.toString(),
+        data: this.responseText,
       });
       this.removeEventListener("load", handler, true);
       this.removeEventListener("error", handler, true);
@@ -74,16 +74,18 @@ export default () => {
       success: false,
       url: url.toString(),
       method: (config?.method || "GET").toUpperCase(),
+      data: "",
     };
 
     return originalFetch(url, config)
-      .then((res) => {
+      .then(async (res) => {
         reportData.endTime = Date.now();
         reportData.duration = reportData.endTime - reportData.startTime;
 
         const data = res.clone();
         reportData.statusCode = data.status;
         reportData.success = data.ok;
+        reportData.data = await data.text();
 
         stagingReport("InterfaceIndicator", {
           mainType: BasicIndicator.mainType.InterfaceIndicator,

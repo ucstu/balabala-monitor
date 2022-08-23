@@ -11,14 +11,16 @@
     <div class="right">
       <span><i class="fa fa-search"></i></span>
       <span><input type="text" /></span>
-      <router-link to="/Home/overView" class="i overview" active-class="active"
-        >概览</router-link
-      >
+      <router-link to="/Overview" class="i overview" active-class="active">
+        概览
+      </router-link>
       <div class="i father">
-        <a href="#">用户</a><i class="fa fa-chevron-down"></i>
+        <a href="#">行为</a><i class="fa fa-chevron-down"></i>
         <ul>
           <li>
-            <router-link to="/customerSearch">用户细查 (行为记录)</router-link>
+            <router-link to="/Behavior/BehaviorSearch">
+              行为记录搜索
+            </router-link>
           </li>
         </ul>
       </div>
@@ -26,31 +28,37 @@
         <a href="#">错误</a><i class="fa fa-chevron-down"></i>
         <ul>
           <li>
-            <router-link to="/ErrorPage/ErrorCount/ErrorOverview"
-              >错误统计</router-link
-            >
+            <router-link to="/Mistaken/BasicMistaken">
+              代码错误统计
+            </router-link>
           </li>
           <li>
-            <router-link to="/ErrorPage/APIError/APIOverview"
-              >api接口错误统计</router-link
-            >
+            <router-link to="/Mistaken/InterfaceMistaken">
+              接口错误统计
+            </router-link>
           </li>
           <li>
-            <router-link to="/ErrorPage/ResourcePage/ResourcePage"
-              >静态资源错误统计</router-link
-            >
+            <router-link to="/Mistaken/ResourceMistaken">
+              资源错误统计
+            </router-link>
           </li>
         </ul>
       </div>
       <div class="i father">
         <a href="#">性能</a><i class="fa fa-chevron-down"></i>
         <ul>
-          <li><router-link to="/PerformPage/PerAPI">接口耗时</router-link></li>
-          <li><router-link to="/PerformPage/PerPage">页面性能</router-link></li>
+          <li>
+            <router-link to="/Performance/PagePerformance">
+              页面性能统计
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/Performance/InterfacePerformance">
+              接口性能统计
+            </router-link>
+          </li>
         </ul>
       </div>
-      <!-- <a href="#" class="i">支持</a>
-      <a href="#" class="fa fa-envelope-o i"></a> -->
       <img src="@/assets/no_user.png" alt="#" />
     </div>
   </header>

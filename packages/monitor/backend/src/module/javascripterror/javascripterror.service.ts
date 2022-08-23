@@ -45,7 +45,7 @@ export class JavascripterrorService {
       querys.start_time = querys.start_time + " 00:00:00";
       querys.end_time = querys.end_time + " 00:00:00";
     }
-    let sqlString = `
+    const sqlString = `
             SELECT msg,count(msg),url ,line,column,userID,pageUrl
             FROM "javascript_error"
             where appId=? and mainType=? and subType=? and errorTime between ? and ?
@@ -59,10 +59,7 @@ export class JavascripterrorService {
       new Date(querys.start_time).getTime(),
       new Date(querys.end_time).getTime(),
     ];
-    if (querys.size) {
-      sqlString += " limit ?";
-      sqlArges.push(parseInt(querys.size + ""));
-    }
+
     const sql = SqlString.format(sqlString, sqlArges);
     const rest = await this.elasticsearchService.sql.query({
       body: {
@@ -103,7 +100,12 @@ export class JavascripterrorService {
       }
     });
 
-    return responseRust.success_data([...map.values()]);
+    // 是否要限制返回条数
+    let list = [...map.values()];
+    if (querys.size) {
+      list = list.slice(0, parseInt(querys.size + ""));
+    }
+    return responseRust.success_data(list);
   }
 
   /**

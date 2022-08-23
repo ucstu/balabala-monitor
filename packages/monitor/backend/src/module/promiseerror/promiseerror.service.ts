@@ -43,7 +43,7 @@ export class PromiseerrorService {
       querys.end_time = querys.end_time + " 00:00:00";
     }
     // sql 语句
-    let sqlString = `
+    const sqlString = `
             SELECT stack,count(stack) ,userID,pageUrl
             FROM "promise_error"
             where appId=? and mainType=? and subType=? and errorTime between ? and ?
@@ -58,11 +58,6 @@ export class PromiseerrorService {
       new Date(querys.start_time).getTime(),
       new Date(querys.end_time).getTime(),
     ];
-    // 是否要限制返回条数
-    if (querys.size) {
-      sqlString += " limit ?";
-      sqlArges.push(parseInt(querys.size + ""));
-    }
     const sql = SqlString.format(sqlString, sqlArges);
     const rest = await this.elasticsearchService.sql.query({
       body: {
@@ -100,7 +95,12 @@ export class PromiseerrorService {
       }
     });
 
-    return responseRust.success_data([...map.values()]);
+    // 是否要限制返回条数
+    let list = [...map.values()];
+    if (querys.size) {
+      list = list.slice(0, parseInt(querys.size + ""));
+    }
+    return responseRust.success_data(list);
   }
 
   /**

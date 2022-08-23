@@ -56,11 +56,6 @@
         </DataCard>
       </div>
     </div>
-    {{
-      indicatorStatistics?.[activeSection]
-        ?.map((item) => item.count)
-        .filter((item) => item !== 0) || []
-    }}
     <div class="bottom">
       <DataCard
         icon="fa-bars"

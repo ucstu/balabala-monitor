@@ -4,7 +4,7 @@
       title="用户详情"
       icon="fa-dedent"
       line="left"
-      :show-fold="true"
+      :fold="true"
       @title-click="showDetails = !showDetails"
     >
       <template #rActions>

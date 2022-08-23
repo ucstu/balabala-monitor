@@ -38,6 +38,7 @@ const hiddenAside = $ref(false);
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 
   & > .header {
     height: 50px;
@@ -61,6 +62,7 @@ const hiddenAside = $ref(false);
       box-sizing: border-box;
       flex: 1 1 auto;
       overflow: auto;
+      background-color: #f8f8f9;
     }
   }
 }

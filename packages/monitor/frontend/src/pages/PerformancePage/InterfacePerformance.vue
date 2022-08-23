@@ -150,14 +150,13 @@ import {
 } from "@/hooks";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
+import { watch } from "vue";
 import ECharts from "vue-echarts";
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
 // 激活统计日期
 let activeDateTime = $ref(dayjs().startOf("d"));
-// 激活统计日期下一天
-const nextDayOfActiveDateTime = $computed(() => activeDateTime.add(1, "d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
@@ -170,8 +169,6 @@ let sectionNameMap: Record<number, string> = {
 };
 // 当前时间dayjs对象
 const nowDateTime = activeDateTime;
-// 当前时间前30天dayjs对象
-const frontTwentyNineDateTime = $computed(() => nowDateTime.subtract(29, "d"));
 // 当前时间字符串
 const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
 
@@ -179,7 +176,10 @@ const {
   interfaceIndicatorStatistics: indicatorStatistics,
   interfaceIndicatorStatisticsLoading: indicatorStatisticsLoading,
 } = $(
-  useInterfaceIndicatorStatistics($$(frontTwentyNineDateTime), $$(nowDateTime))
+  useInterfaceIndicatorStatistics({
+    startTime: nowDateTime.subtract(29, "d"),
+    endTime: nowDateTime,
+  })
 );
 // 接口指标分段统计图标配置项
 const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
@@ -230,14 +230,27 @@ const indicatorStatisticsChartClick = (e: any) => {
 };
 
 const { interfaceIndicators, interfaceIndicatorsLoading } = $(
-  useInterfaceIndicators($$(activeDateTime), $$(nextDayOfActiveDateTime))
+  useInterfaceIndicators(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
 );
 
 const {
   interfaceIndicatorStatistics: theIndicatorStatistics,
   interfaceIndicatorStatisticsLoading: theIndicatorStatisticsLoading,
 } = $(
-  useInterfaceIndicatorStatistics($$(frontTwentyNineDateTime), $$(nowDateTime))
+  useInterfaceIndicatorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+      url: interfaceIndicators?.[activeInterface]?.url,
+      _skip: !interfaceIndicators?.[activeInterface]?.url,
+    };
+  })
 );
 
 const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
@@ -268,6 +281,15 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
+
+watch(
+  () => interfaceIndicators,
+  () => {
+    if (activeInterface >= (interfaceIndicators?.length || 0)) {
+      activeInterface = 0;
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>

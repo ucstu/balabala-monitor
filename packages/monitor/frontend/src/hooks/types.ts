@@ -1,4 +1,14 @@
-export interface Statistic {
+import type { Dayjs } from "dayjs";
+
+export interface BasicStatisticParam {
+  startTime: Dayjs;
+  endTime: Dayjs;
+  userId?: string;
+  pageUrl?: string;
+  granularity?: string;
+  _skip?: boolean;
+}
+export interface BasicStatisticItem {
   dateTime: string;
   count: number;
   average: number;
@@ -6,7 +16,16 @@ export interface Statistic {
   pageCount: number;
 }
 
-export interface BasicIndicatorItem {
+export interface BasicQueryParam {
+  startTime: Dayjs;
+  endTime: Dayjs;
+  userId?: string;
+  pageUrl?: string;
+  size?: number;
+  _skip?: boolean;
+}
+
+export interface BasicQueryItem {
   count: number;
   average: number;
   userCount: number;

@@ -362,11 +362,6 @@ export const getPerformancesResourceindicatorstatistics = (
             field: "pageUrl",
           },
         },
-        count: {
-          cardinality: {
-            field: timeName,
-          },
-        },
       },
     },
   };

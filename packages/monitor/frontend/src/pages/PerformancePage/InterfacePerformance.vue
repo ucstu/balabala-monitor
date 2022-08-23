@@ -64,13 +64,13 @@
       <DataCard
         icon="fa-bars"
         :title="`接口列表（${activeDateTime.format('YYYY-MM-DD')}）`"
-        :loading="pageIndicatorsLoading"
-        :empty="pageIndicators?.length ? false : true"
+        :loading="interfaceIndicatorsLoading"
+        :empty="interfaceIndicators?.length ? false : true"
       >
         <div class="main">
           <ul class="left">
             <li
-              v-for="(interfaceIndicator, index) in pageIndicators"
+              v-for="(interfaceIndicator, index) in interfaceIndicators"
               :key="index"
               :class="{ active: activeInterface === index }"
               @click="activeInterface = index"
@@ -92,8 +92,8 @@
                     <span
                       >{{
                         (
-                          (pageIndicators?.[activeInterface]?.average || 0) /
-                          1000
+                          (interfaceIndicators?.[activeInterface]?.average ||
+                            0) / 1000
                         ).toFixed(2)
                       }}s</span
                     >
@@ -106,7 +106,7 @@
                   <div class="time">
                     <span>影响用户</span>
                     <span>{{
-                      pageIndicators?.[activeInterface]?.userCount || 0
+                      interfaceIndicators?.[activeInterface]?.userCount || 0
                     }}</span>
                   </div>
                   <div class="icon">
@@ -142,26 +142,22 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getPerformancesInterfaceindicators,
-  getPerformancesInterfaceindicatorstatistics,
-} from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import { basicChartOption } from "@/configs";
-import { useStore } from "@/stores";
-import type { BasicList, BasicStatistic } from "@/types";
-import { BasicIndicator } from "@balabala/monitor-api";
-import dayjs, { Dayjs } from "dayjs";
-import { EChartsCoreOption } from "echarts";
-import { watch } from "vue";
+import {
+  useInterfaceIndicators,
+  useInterfaceIndicatorStatistics,
+} from "@/hooks";
+import dayjs from "dayjs";
+import type { EChartsCoreOption } from "echarts";
 import ECharts from "vue-echarts";
-
-const store = useStore();
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
 // 激活统计日期
 let activeDateTime = $ref(dayjs().startOf("d"));
+// 激活统计日期下一天
+const nextDayOfActiveDateTime = $computed(() => activeDateTime.add(1, "d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
@@ -174,19 +170,17 @@ let sectionNameMap: Record<number, string> = {
 };
 // 当前时间dayjs对象
 const nowDateTime = activeDateTime;
+// 当前时间前30天dayjs对象
+const frontTwentyNineDateTime = $computed(() => nowDateTime.subtract(29, "d"));
 // 当前时间字符串
 const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
-// 接口指标分段统计列表基础请求参数
-const basicRequestParam = {
-  appId: store.appId,
-  mainType: BasicIndicator.mainType.InterfaceIndicator,
-  subType: BasicIndicator.subType.InterfaceIndicator,
-};
 
-// 接口指标分段统计列表
-let indicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
-// 接口指标分段统计列表加载状态
-let indicatorStatisticsLoading = $ref(false);
+const {
+  interfaceIndicatorStatistics: indicatorStatistics,
+  interfaceIndicatorStatisticsLoading: indicatorStatisticsLoading,
+} = $(
+  useInterfaceIndicatorStatistics($$(frontTwentyNineDateTime), $$(nowDateTime))
+);
 // 接口指标分段统计图标配置项
 const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
@@ -235,65 +229,17 @@ const indicatorStatisticsChartClick = (e: any) => {
   activeDateTime = dayjs(`${nowDateTime.year()}-${e.name}`);
 };
 
-// 获取接口指标分段统计列表
-const getIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
-  indicatorStatisticsLoading = true;
-  getPerformancesInterfaceindicatorstatistics({
-    ...basicRequestParam,
-    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
-    endTime:
-      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
-      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
-  }).then(({ data }) => {
-    indicatorStatistics = data;
-    indicatorStatisticsLoading = false;
-  });
-};
-// 获取近30天的接口指标分段统计列表
-getIndicatorStatistics(
-  nowDateTime.subtract(29, "day").startOf("d"),
-  nowDateTime.add(1, "d").startOf("d")
+const { interfaceIndicators, interfaceIndicatorsLoading } = $(
+  useInterfaceIndicators($$(activeDateTime), $$(nextDayOfActiveDateTime))
 );
 
-// 接口指标列表
-let pageIndicators = $ref<Array<BasicList & { url: string }> | undefined>();
-// 接口指标列表加载状态
-let pageIndicatorsLoading = $ref(false);
-// 获取接口指标列表
-const getPageIndicators = (startTime: Dayjs, endTime?: Dayjs) => {
-  pageIndicatorsLoading = true;
-  getPerformancesInterfaceindicators({
-    ...basicRequestParam,
-    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
-    endTime:
-      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
-      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
-  }).then(({ data }) => {
-    pageIndicators = data;
-    pageIndicatorsLoading = false;
-  });
-};
-
-// 监听激活时间变化
-watch(
-  () => activeDateTime,
-  (activeDateTime) => {
-    // 获取激活时间当天的接口指标列表
-    getPageIndicators(
-      activeDateTime.startOf("d"),
-      activeDateTime.add(1, "d").startOf("d")
-    );
-  },
-  {
-    immediate: true,
-  }
+const {
+  interfaceIndicatorStatistics: theIndicatorStatistics,
+  interfaceIndicatorStatisticsLoading: theIndicatorStatisticsLoading,
+} = $(
+  useInterfaceIndicatorStatistics($$(frontTwentyNineDateTime), $$(nowDateTime))
 );
 
-// 某天接口指标分段统计列表
-let theIndicatorStatistics = $ref<Array<Array<BasicStatistic>> | undefined>();
-// 某天接口指标分段统计列表加载状态
-let theIndicatorStatisticsLoading = $ref(false);
-// 某天接口指标分段统计图标配置项
 const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     xAxis: {
@@ -321,37 +267,6 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       })) || [],
     ...basicChartOption,
   };
-});
-
-// 获取某天接口指标分段统计列表
-const getTheIndicatorStatistics = (startTime: Dayjs, endTime?: Dayjs) => {
-  theIndicatorStatisticsLoading = true;
-  getPerformancesInterfaceindicatorstatistics({
-    ...basicRequestParam,
-    startTime: startTime.format("YYYY-MM-DD HH:mm:ss"),
-    endTime:
-      endTime?.format("YYYY-MM-DD HH:mm:ss") ||
-      nowDateTime.format("YYYY-MM-DD HH:mm:ss"),
-    pageUrl: pageIndicators?.[activeInterface].url,
-    granularity: "1h",
-  }).then(({ data }) => {
-    theIndicatorStatistics = data;
-    theIndicatorStatisticsLoading = false;
-  });
-};
-
-// 监听接口指标列表和激活接口索引
-watch([() => pageIndicators, () => activeInterface], () => {
-  // 自动获取某天接口指标分段统计列表
-  if (activeInterface >= (pageIndicators?.length || 0)) {
-    activeInterface = 0;
-  }
-  if (pageIndicators?.[activeInterface]) {
-    getTheIndicatorStatistics(
-      activeDateTime.startOf("d"),
-      activeDateTime.add(1, "d").startOf("d")
-    );
-  }
 });
 </script>
 

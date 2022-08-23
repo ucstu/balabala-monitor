@@ -112,9 +112,11 @@ import {
   getErrorsJavascripterrorstatistics,
   getErrorsPromiseerrorstatistics,
   getErrorsVueerrorstatistics,
+  JavaScriptError,
+  PromiseError,
+  VueError,
 } from "@/apis";
 import { useStore } from "@/stores";
-import { JavaScriptError, PromiseError, VueError } from "@balabala/monitor-api";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 let a = new Date().getTime();

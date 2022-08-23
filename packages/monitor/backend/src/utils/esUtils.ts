@@ -14,12 +14,12 @@ export const totalData = (querys: BaseTotalVo, list) => {
   const intValue = parseInt(value);
   const typeUnit = unit as ManipulateType;
   const timeFormat = "YYYY-MM-DD HH:mm:ss";
-  // 当月的第一天
+  //查询的结束时间
   const endTime = dayjs(querys.end_time, "YYYY-MM-DD HH:mm:ss");
+  //查询的开始时间
   let startTime = dayjs(querys.start_time, "YYYY-MM-DD HH:mm:ss");
   if (list.length === 0) {
-    // 当月天数
-    while (startTime.isBefore(endTime, typeUnit) || startTime.isSame(endTime)) {
+    while (startTime.isBefore(endTime, typeUnit)) {
       restList.push({
         dateTime: startTime.format(timeFormat),
         count: 0,
@@ -27,7 +27,7 @@ export const totalData = (querys: BaseTotalVo, list) => {
         userCount: 0,
         pageCount: 0,
       });
-      startTime = startTime.add(1, "day");
+      startTime = startTime.add(1, typeUnit);
     }
     return restList;
   }
@@ -61,7 +61,7 @@ export const totalData = (querys: BaseTotalVo, list) => {
     restList.push({
       dateTime: dayjs(item.key).format(timeFormat),
       count: item.doc_count,
-      average: item.avg.value ? item.avg.value : 0,
+      average: item.avg && item.avg.value ? item.avg.value : 0,
       userCount: item.userCount ? item.userCount.value : 0,
       pageCount: item.pageCount ? item.pageCount.value : 0,
     });

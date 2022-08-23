@@ -57,12 +57,33 @@ const {
   loading = false,
   line = "title",
 } = defineProps<{
+  /**
+   * 左侧ICON
+   */
   icon?: string;
+  /**
+   * 卡片标题
+   */
   title: string;
+  /**
+   * 是否无数据
+   */
   empty?: boolean;
+  /**
+   * 是否折叠
+   */
   fold?: boolean | undefined;
+  /**
+   * 是否可折叠（若传fold，此值忽略）
+   */
   foldable?: boolean;
+  /**
+   * 是否正在加载
+   */
   loading?: boolean;
+  /**
+   * 下划线位置
+   */
   line?: "none" | "title" | "full";
 }>();
 
@@ -84,12 +105,14 @@ let fold = $computed({
   },
 });
 
-onMounted(() => {
+const fixWidth = () => {
   iconWidth = Math.min(
     50,
     (parseFloat(getComputedStyle(loadingRef).height) || 0) * 0.65
   );
-});
+};
+
+onMounted(fixWidth);
 </script>
 
 <style lang="scss" scoped>
@@ -158,6 +181,16 @@ onMounted(() => {
         border-top: 5px solid red;
         border-radius: 50%;
         animation: rotate-360 1s infinite linear;
+      }
+
+      @keyframes rotate-360 {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
       }
     }
 

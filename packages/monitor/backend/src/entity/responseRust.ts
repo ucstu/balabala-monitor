@@ -1,5 +1,4 @@
-import { format } from "src/utils/timeUtils";
-
+import * as dayjs from "dayjs";
 export class responseRust {
   /**
    * 数据主体
@@ -22,14 +21,14 @@ export class responseRust {
     const rus = new responseRust();
     rus.status = 200;
     rus.message = "OK";
-    rus.timestamp = format(new Date());
+    rus.timestamp = dayjs().format("YYYY-MM-DD HH:mm:ss");
     return rus;
   }
   static error(message = "error"): responseRust {
     const rus = new responseRust();
     rus.status = 500;
     rus.message = message;
-    rus.timestamp = format(new Date());
+    rus.timestamp = dayjs().format("YYYY-MM-DD HH:mm:ss");
     return rus;
   }
 
@@ -37,7 +36,7 @@ export class responseRust {
     const rus = new responseRust();
     rus.status = 200;
     rus.message = "OK";
-    rus.timestamp = format(new Date());
+    rus.timestamp = dayjs().format("YYYY-MM-DD HH:mm:ss");
     rus.data = data;
     return rus;
   }
@@ -45,7 +44,7 @@ export class responseRust {
     const rus = new responseRust();
     rus.status = 201;
     rus.message = "Created";
-    rus.timestamp = format(new Date());
+    rus.timestamp = dayjs().format("YYYY-MM-DD HH:mm:ss");
     return rus;
   }
 }

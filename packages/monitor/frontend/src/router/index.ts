@@ -124,7 +124,7 @@ const routeRecordRaws: RouteRecordRaw[] = [
           import("@/pages/MistakenPage/InterfaceMistaken/MistakenOverview.vue"),
       },
       {
-        path: "/MistakenPage/InterfaceMistaken/",
+        path: "MistakenList",
         name: "Mistaken-InterfaceMistaken-MistakenList",
         meta: {
           title: "接口错误列表",

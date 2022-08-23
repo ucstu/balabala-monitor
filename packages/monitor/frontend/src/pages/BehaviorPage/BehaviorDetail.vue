@@ -1,71 +1,76 @@
 <template>
   <div class="container">
-    <DataCard
-      title="用户详情"
-      icon="fa-dedent"
-      :fold="true"
-      @title-click="showDetails = !showDetails"
-    >
+    <DataCard title="用户详情" icon="fa-dedent">
       <template #rActions>
-        <div class="flex-row">
-          <input v-model="userActionParma.startTime" type="date" />
-          <input v-model="userActionParma.userId" type="text" />
-          <button class="btn-search" @click="search">搜索</button>
+        <div class="flex-row justify-between" style="width: 420px">
+          <input v-model="activeRawTime" type="date" />
+          <input v-model="userId" type="text" style="width: 250px" />
         </div>
       </template>
-      <div v-show="showDetails" class="charts">
-        <DataCard class="card" title="页面平均加载时间">
-          <ECharts :option="option_page" :autoresize="true" />
+      <div class="charts">
+        <DataCard
+          class="card"
+          title="页面平均加载时间"
+          :loading="pageIndicatorStatisticsLoading"
+        >
+          <ECharts
+            :option="pageIndicatorStatisticsChartOption"
+            :autoresize="true"
+          />
         </DataCard>
-        <DataCard class="card" title="接口耗时区间分布">
-          <ECharts :option="option_api" :autoresize="true" />
+        <DataCard
+          class="card"
+          title="接口耗时区间分布"
+          :loading="interfaceIndicatorStatisticsLoading"
+        >
+          <ECharts
+            :option="interfaceIndicatorStatisticsChartOption"
+            :autoresize="true"
+          />
         </DataCard>
       </div>
     </DataCard>
     <div class="action">
-      <DataCard title="行为记录列表">
+      <DataCard title="行为记录列表" :loading="userActionsLoading">
         <template #rActions>
           <button
             v-for="index in 4"
             :key="index"
-            :class="['btn', { 'btn-active': activeActionType === index }]"
+            :class="{ 'btn-active': activeActionType === index }"
             @click="activeActionType = index - 1"
           >
             {{ actionTypeNameMap[index - 1] }}
           </button>
         </template>
         <div class="main">
-          <div v-for="(item, index) in actions" :key="index" class="list">
+          <div class="list">
             <div
+              v-for="(item, index) in userActions"
               v-show="
                 activeActionType == 0 || item.listType == activeActionType
               "
-              class="action-list-item"
-              @click="clickAction(index)"
+              :key="index"
+              class="item"
+              @click="activeActionIndex = index"
             >
-              <div class="action-icon">
+              <div class="icon">
                 <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
               </div>
-              <div
-                :class="[
-                  'action-content',
-                  { 'action-chose': chosesAction === index },
-                ]"
-              >
-                <div class="action-title">
+              <div :class="['content', { chose: activeActionIndex === index }]">
+                <div class="title">
                   <div>{{ item.title }}</div>
                   <div>
                     {{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}
                   </div>
                 </div>
-                <div class="action-msg">{{ item.pageUrl }}</div>
+                <div class="msg">{{ item.pageUrl }}</div>
               </div>
             </div>
           </div>
           <ActionInfo
             class="info"
-            :action-type="chosesAction"
-            :action-info="showActionInfo"
+            :action-type="activeActionIndex"
+            :action-info="activeActionInfo"
           ></ActionInfo>
         </div>
       </DataCard>
@@ -83,67 +88,27 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import {
-  BasicIndicator,
-  getBehaviorsUseraction,
-  getPerformancesBasicindicators,
-} from "@/apis";
+import { BasicIndicator, getBehaviorsUseraction } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
+import { basicChartOption } from "@/configs";
+import { useInterfaceIndicatorStatistics } from "@/hooks";
+import { useBasicIndicatorStatistics } from "@/hooks/useBasicIndicatorStatistics";
 import { useStore } from "@/stores";
+import { useDebounceFn } from "@vueuse/shared";
 import dayjs from "dayjs";
-import type { ECBasicOption } from "echarts/types/dist/shared";
+import type { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import ActionInfo from "./ActionInfo.vue";
-import type { ActionInfo as _ActionInfo } from "./types";
-let showDetails = $ref<boolean>(true);
+
+const store = useStore();
 const route = useRoute();
-const pageDom = $ref<HTMLElement>();
-const apiDom = $ref<HTMLElement>();
-let echar_page: ECBasicOption;
-let echar_api: ECBasicOption;
-//页面平均加载时间
-let option_page = $ref<any>({
-  xAxis: {
-    type: "value",
-  },
-  yAxis: {
-    type: "category",
-    data: [],
-  },
-  series: [
-    {
-      data: [],
-      type: "bar",
-      // showBackground: true,
-      // backgroundStyle: {
-      //   color: "rgba(180, 180, 180, 0.2)",
-      // },
-    },
-  ],
-});
-//接口耗时
-let option_api = $ref<any>({
-  xAxis: {
-    type: "value",
-  },
-  yAxis: {
-    type: "category",
-    data: ["Mon", "Tue", "Wed", "Fri", "Sat", "Sun"],
-  },
-  series: [
-    {
-      data: [120, 200, 150, 80, 110, 130],
-      type: "bar",
-      // showBackground: true,
-      // backgroundStyle: {
-      //   color: "rgba(180, 180, 180, 0.2)",
-      // },
-    },
-  ],
-});
-const actions: any[] = $ref([]);
+const router = useRouter();
+
+let userId = $ref("");
+let userActions = $ref<any>([]);
+let userActionsLoading = $ref(false);
 let activeActionType = $ref(0);
 const actionTypeNameMap: Record<number, string> = {
   0: "全部",
@@ -151,88 +116,217 @@ const actionTypeNameMap: Record<number, string> = {
   2: "错误",
   3: "接口",
 };
-let chosesAction = $ref(-1);
-let showActionInfo = $ref<_ActionInfo>();
+// 耗时分段名称映射
+let sectionNameMap: Record<number, string> = {
+  0: "<1秒",
+  1: "1-5秒",
+  2: "5-10秒",
+  3: "10-30秒",
+  4: ">30秒",
+};
+let activeDateTime = $ref(dayjs());
+let activeRawTime = $computed({
+  get: () => activeDateTime.format("YYYY-MM-DD"),
+  set: (value) => {
+    activeDateTime = dayjs(value);
+  },
+});
+let activeActionIndex = $ref(-1);
+let activeActionInfo = $computed(() => userActions[activeActionIndex]);
+
+let userActionParma = $computed(() => {
+  return {
+    appId: store.appId,
+    userId: userId,
+    startTime: activeDateTime.format("YYYY-MM-DD"),
+    endTime: activeDateTime.add(1, "day").format("YYYY-MM-DD"),
+  };
+});
+
+const {
+  basicIndicatorStatistics: pageIndicatorStatistics,
+  basicIndicatorStatisticsLoading: pageIndicatorStatisticsLoading,
+} = $(
+  useBasicIndicatorStatistics(() => {
+    return {
+      mainType: BasicIndicator.mainType.LoadIndicator,
+      subType: BasicIndicator.subType.FullLoad,
+      userId: userId,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
+
+// 页面指标分段统计图标配置项
+const pageIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        pageIndicatorStatistics?.[0]?.map((item) =>
+          dayjs(item.dateTime).format("HH:mm")
+        ) || [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series:
+      pageIndicatorStatistics?.map((section, index) => ({
+        name: sectionNameMap[index],
+        data: section.map((item) => item.count),
+        type: "bar",
+        stack: "total",
+        label: {
+          show: true,
+        },
+        emphasis: {
+          focus: "series",
+        },
+      })) || [],
+    ...basicChartOption,
+  };
+});
+
+const { interfaceIndicatorStatistics, interfaceIndicatorStatisticsLoading } = $(
+  useInterfaceIndicatorStatistics(() => {
+    return {
+      userId: userId,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
+// 接口指标分段统计图标配置项
+const interfaceIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(
+  () => {
+    return {
+      xAxis: {
+        type: "category",
+        data:
+          interfaceIndicatorStatistics?.[0]?.map((item) =>
+            dayjs(item.dateTime).format("HH:mm")
+          ) || [],
+      },
+      yAxis: {
+        type: "value",
+      },
+      series:
+        interfaceIndicatorStatistics?.map((section, index) => ({
+          name: sectionNameMap[index],
+          data: section.map((item) => item.count),
+          type: "bar",
+          stack: "total",
+          label: {
+            show: true,
+          },
+          emphasis: {
+            focus: "series",
+          },
+        })) || [],
+      ...basicChartOption,
+    };
+  }
+);
 
 onMounted(() => {
   if (!route.query.userId) {
     alert("id不能为空");
+    router.go(-1);
     return;
   }
-  userActionParma.userId = route.query.userId + "";
-  //echar_page = echarts.init(pageDom);
-  //echar_api = echarts.init(apiDom);
-  //
-  // echar_page.setOption(option_page);
-  // echar_api.setOption(option_api);
-  loadAllData();
-  loadBasicindicators();
+  userId = route.query.userId + "";
+  loadActions();
 });
 
-const user = useStore();
-const userActionParma = $ref({
-  appId: user.appId,
-  userId: "",
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  mainType: 2,
-  subType: 2002,
-  size: 10,
-});
-
-const clickAction = (index: number) => {
-  chosesAction = index;
-  showActionInfo = { ...actions[chosesAction] };
-};
-
-// 加载行为记录列表
-const loadBasicindicators = async () => {
-  const resultData = await getPerformancesBasicindicators({
-    ...userActionParma,
-    subType: BasicIndicator.subType.FullLoad,
-  });
-
-  const urlList: string[] = [];
-  const loadTime: number[] = [];
-  resultData.data.forEach((item) => {
-    urlList.push(item.pageUrl);
-    loadTime.push(item.average);
-  });
-  option_page.series[0].data = loadTime;
-  option_page.yAxis.data = urlList;
-  // option_page.series![0].data = [total / resultData.data.items.length];
-  // nextTick(() => {
-  //   echar_page.setOption(option_page);
-  // });
-};
-
-const loadAllData = async () => {
-  const res = await getBehaviorsUseraction({ ...userActionParma });
-  actions.push(...res.data);
-};
-// 计算结束时间
-watch(
-  () => userActionParma.startTime,
-  (newVal, oldVal) => {
-    userActionParma.endTime = dayjs(newVal).add(1, "day").format("YYYY-MM-DD");
-  }
-);
-
-const search = () => {
-  if (!userActionParma.userId) {
-    alert("用户id 不能为空");
+const loadActions = useDebounceFn(async () => {
+  if (userId === "") {
     return;
   }
-  actions.length = 0;
-  loadAllData();
-  loadBasicindicators();
-};
+  userActionsLoading = true;
+  const { data } = await getBehaviorsUseraction(userActionParma);
+  userActions = data;
+  userActionsLoading = false;
+}, 20);
+
+watch([() => activeDateTime, () => userId], () => {
+  loadActions();
+});
 </script>
 
 <style lang="scss" scoped>
 .container {
   width: 100%;
   padding: 20px;
+
+  .action {
+    .main {
+      .list {
+        width: 70%;
+        height: 370px;
+        overflow-y: auto;
+
+        .item {
+          display: flex;
+          height: 70px;
+          padding: 20px;
+
+          .icon {
+            padding-top: 10px;
+          }
+
+          .content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 10px;
+            margin-left: 20px;
+            overflow: hidden;
+            line-height: 25px;
+            cursor: pointer;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+
+            .msg {
+              margin-right: 10px;
+              overflow: hidden;
+              font-size: 13px;
+              color: #6c6e7a;
+            }
+
+            .title {
+              display: flex;
+              justify-content: space-between;
+              font-size: 15px;
+            }
+          }
+        }
+      }
+
+      .info {
+        flex: 1;
+        height: 370px;
+        padding: 10px 20px;
+        margin-left: 15px;
+        overflow-y: auto;
+        border: 2px solid #f5f5f9;
+        border-radius: 10px;
+
+        .item {
+          width: 100%;
+          margin-bottom: 20px;
+          word-wrap: break-word;
+
+          .data {
+            font-size: 14px;
+            color: gray;
+          }
+        }
+      }
+    }
+  }
 }
 
 .charts {

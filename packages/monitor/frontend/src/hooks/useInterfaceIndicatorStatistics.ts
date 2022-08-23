@@ -3,55 +3,48 @@ import {
   InterfaceIndicator,
 } from "@/apis";
 import { useStore } from "@/stores";
+import type { MaybeComputedRef } from "@vueuse/core";
 import { useDebounceFn } from "@vueuse/core";
-import type { Dayjs } from "dayjs";
-import type { Ref } from "vue";
-import { isRef, ref, watch } from "vue";
-import { timeFormate } from "./configs";
-import type { Statistic } from "./types";
+import { computed, ref, watch } from "vue";
+import { dateTimeFormate } from "./configs";
+import type { BasicStatisticItem, BasicStatisticParam } from "./types";
 
 const store = useStore();
 
+export interface InterfaceIndicatorStatisticParam extends BasicStatisticParam {
+  url?: string;
+}
+
+export type InterfaceIndicatorStatisticItem = BasicStatisticItem;
+
 export const useInterfaceIndicatorStatistics = (
-  startTime: Ref<Dayjs> | Dayjs,
-  endTime: Ref<Dayjs> | Dayjs,
-  userId?: Ref<string> | undefined,
-  pageUrl?: Ref<string> | undefined,
-  granularity?: Ref<string> | undefined,
-  url?: Ref<string> | undefined
+  _param: MaybeComputedRef<InterfaceIndicatorStatisticParam>
 ) => {
-  const interfaceIndicatorStatistics = ref<Array<Array<Statistic>>>();
+  const param = typeof _param === "function" ? computed(_param) : ref(_param);
+  const interfaceIndicatorStatistics = ref<Array<Array<BasicStatisticItem>>>();
   const interfaceIndicatorStatisticsLoading = ref(false);
   const _getPerformancesInterfaceIndicatorStatistics = useDebounceFn(() => {
+    if (param.value._skip) {
+      return;
+    }
     interfaceIndicatorStatisticsLoading.value = true;
     getPerformancesInterfaceindicatorstatistics({
+      ...param.value,
       appId: store.appId,
-      startTime: isRef(startTime)
-        ? startTime.value.format(timeFormate)
-        : startTime.format(timeFormate),
-      endTime: isRef(endTime)
-        ? endTime.value.format(timeFormate)
-        : endTime.format(timeFormate),
       mainType: InterfaceIndicator.mainType.InterfaceIndicator,
       subType: InterfaceIndicator.subType.InterfaceIndicator,
-      userId: userId?.value,
-      pageUrl: pageUrl?.value,
-      granularity: granularity?.value,
-      url: url?.value,
-    }).then((res) => {
-      interfaceIndicatorStatistics.value = res.data;
-      interfaceIndicatorStatisticsLoading.value = false;
-    });
+      startTime: param.value.startTime.format(dateTimeFormate),
+      endTime: param.value.endTime.format(dateTimeFormate),
+    })
+      .then((res) => {
+        interfaceIndicatorStatistics.value = res.data;
+      })
+      .finally(() => {
+        interfaceIndicatorStatisticsLoading.value = false;
+      });
   }, 20);
   watch(
-    [
-      isRef(startTime) ? () => startTime.value : undefined,
-      isRef(endTime) ? () => endTime.value : undefined,
-      () => userId?.value,
-      () => pageUrl?.value,
-      () => granularity?.value,
-      () => url?.value,
-    ].filter((item) => item),
+    () => param.value,
     () => _getPerformancesInterfaceIndicatorStatistics(),
     {
       immediate: true,

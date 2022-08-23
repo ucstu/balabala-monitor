@@ -148,20 +148,15 @@ import { useBasicIndicatorStatistics } from "@/hooks/useBasicIndicatorStatistics
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
+import { watch } from "vue";
 import ECharts from "vue-echarts";
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
 // 激活统计日期
 let activeDateTime = $ref(dayjs().startOf("d"));
-// 激活统计日期下一天
-const nextDayOfActiveDateTime = $computed(() => activeDateTime.add(1, "d"));
 // 激活页面索引
 let activePage = $ref(0);
-// 接获页面URL
-const activePageUrl = $computed(
-  () => basicIndicators?.[activePage].pageUrl || ""
-);
 // 耗时分段名称映射
 let sectionNameMap: Record<number, string> = {
   0: "<1秒",
@@ -172,8 +167,6 @@ let sectionNameMap: Record<number, string> = {
 };
 // 当前时间dayjs对象
 const nowDateTime = activeDateTime;
-// 当前时间前30天dayjs对象
-const frontTwentyNineDateTime = $computed(() => nowDateTime.subtract(29, "d"));
 // 当前时间字符串
 const nowDateTimeString = nowDateTime.format("YYYY-MM-DD");
 
@@ -181,12 +174,14 @@ const {
   basicIndicatorStatistics: indicatorStatistics,
   basicIndicatorStatisticsLoading: indicatorStatisticsLoading,
 } = $(
-  useBasicIndicatorStatistics(
-    BasicIndicator.mainType.LoadIndicator,
-    BasicIndicator.subType.FullLoad,
-    $$(frontTwentyNineDateTime),
-    $$(nowDateTime)
-  )
+  useBasicIndicatorStatistics(() => {
+    return {
+      mainType: BasicIndicator.mainType.LoadIndicator,
+      subType: BasicIndicator.subType.FullLoad,
+      startTime: nowDateTime.subtract(29, "d"),
+      endTime: nowDateTime,
+    };
+  })
 );
 // 页面指标分段统计图标配置项
 const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
@@ -237,26 +232,31 @@ const indicatorStatisticsChartClick = (e: any) => {
 };
 
 const { basicIndicators, basicIndicatorsLoading } = $(
-  useBasicIndicators(
-    BasicIndicator.mainType.LoadIndicator,
-    BasicIndicator.subType.FullLoad,
-    $$(activeDateTime),
-    $$(nextDayOfActiveDateTime)
-  )
+  useBasicIndicators(() => {
+    return {
+      mainType: BasicIndicator.mainType.LoadIndicator,
+      subType: BasicIndicator.subType.FullLoad,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
 );
 
 const {
   basicIndicatorStatistics: theIndicatorStatistics,
   basicIndicatorStatisticsLoading: theIndicatorStatisticsLoading,
 } = $(
-  useBasicIndicatorStatistics(
-    BasicIndicator.mainType.LoadIndicator,
-    BasicIndicator.subType.FullLoad,
-    $$(activeDateTime),
-    $$(nextDayOfActiveDateTime),
-    undefined,
-    $$(activePageUrl)
-  )
+  useBasicIndicatorStatistics(() => {
+    return {
+      mainType: BasicIndicator.mainType.LoadIndicator,
+      subType: BasicIndicator.subType.FullLoad,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+      pageUrl: basicIndicators?.[activePage]?.pageUrl,
+      __skip: !basicIndicators?.[activePage]?.pageUrl,
+    };
+  })
 );
 
 const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
@@ -287,6 +287,15 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
+
+watch(
+  () => basicIndicators,
+  () => {
+    if (activePage >= (basicIndicators?.length || 0)) {
+      activePage = 0;
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>

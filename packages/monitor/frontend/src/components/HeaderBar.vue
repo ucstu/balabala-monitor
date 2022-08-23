@@ -7,6 +7,10 @@
           >BalaBala云</strong
         ></span
       >
+      <select v-model="appId" name="app">
+        <option value="b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd5">仿掘金1</option>
+        <option value="b2FdF9cb-1EE7-Dc6e-de9C-1cAcf37dcdd6">仿掘金2</option>
+      </select>
     </div>
     <div class="right">
       <span><i class="fa fa-search"></i></span>
@@ -65,6 +69,12 @@
 </template>
 
 <script setup lang="ts">
+import { useStore } from "@/stores";
+import { storeToRefs } from "pinia";
+
+const store = useStore();
+const { appId } = storeToRefs(store);
+
 const { hiddenAside: _hiddenAside } = defineProps<{
   hiddenAside: boolean;
 }>();

@@ -74,20 +74,20 @@ export class PromiseerrorService {
         count: item[1],
         userCount: 1,
         pageCount: 1,
-        userID: [item[2]],
-        pageUrl: [item[3]],
+        userList: [item[2]],
+        pageList: [item[3]],
         average: 0,
       };
       const key = `${item[0]}`;
       if (map.has(key)) {
         const mapItem = map.get(key);
-        if (!mapItem.userID.includes(value.userID[0])) {
+        if (!mapItem.userList.includes(value.userList[0])) {
           mapItem.userCount++;
-          mapItem.userID.push(value.userID[0]);
+          mapItem.userList.push(value.userList[0]);
         }
-        if (!mapItem.pageUrl.includes(value.pageUrl[0])) {
+        if (!mapItem.pageList.includes(value.pageList[0])) {
           mapItem.pageCount++;
-          mapItem.pageUrl.push(value.pageUrl[0]);
+          mapItem.pageList.push(value.pageList[0]);
         }
         map.get(key).count += value.count;
       } else {

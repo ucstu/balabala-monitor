@@ -8,8 +8,8 @@
     </header>
     <div class="board">
       <div class="data-board">
-        <span>TTFB平均时间</span>
-        <span>985ms</span>
+        <span>FCP平均时间</span>
+        <span>{{ 1 }}</span>
       </div>
       <div class="data-board">
         <span>DOM解析时间</span>
@@ -293,6 +293,19 @@ const totalSumIndicator = $computed(() => {
 const totalAverageIndicator = $computed(() => {
   return totalSumIndicator ? totalSumIndicator / 5 : 0;
 });
+
+//  fcp 指标
+const { basicIndicators: fcpData, basicIndicatorsLoading: fcpDataLoading } = $(
+  useBasicIndicators(() => {
+    return {
+      mainType: BasicIndicator.mainType.DrawIndicator,
+      subType: BasicIndicator.subType.FirstContentfulPaint,
+      startTime: performanceTime,
+      endTime: performanceTime.add(1, "day"),
+      size: 10,
+    };
+  })
+);
 
 const totalCount = (val: number): string => {
   if (val < 1000) {

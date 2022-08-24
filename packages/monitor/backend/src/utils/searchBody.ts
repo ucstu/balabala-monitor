@@ -444,14 +444,19 @@ export const getTotalInterfaceerrorstatisticsBody = (
   querys: InterfaceerrorsTotalVo
 ) => {
   const body = getBaseBody(querys, "startTime");
+  const terms = {
+    terms: {
+      statusCode: [],
+    },
+  };
+  // status_code 可选,如果不传则,默认查询500或者400错误
   if (querys.status_code) {
-    const term = {
-      term: {
-        statusCode: querys.status_code,
-      },
-    };
-    body.query.bool.must.push(term);
+    terms.terms.statusCode.push(querys.status_code);
+  } else {
+    terms.terms.statusCode.push(400, 500);
   }
+  body.query.bool.must.push(terms);
+
   if (querys.url) {
     const term = {
       term: {

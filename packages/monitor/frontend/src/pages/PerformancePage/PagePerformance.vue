@@ -247,7 +247,8 @@ const {
       endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
       pageUrl: basicIndicators?.[activePage]?.pageUrl,
-      __skip: !basicIndicators?.[activePage]?.pageUrl,
+      _skip: !basicIndicators?.[activePage]?.pageUrl,
+      _lazy: true,
     };
   })
 );

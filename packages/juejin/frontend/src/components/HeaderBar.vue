@@ -1,72 +1,66 @@
 <template>
-  <div>
-    <div class="header">
-      <div class="header-top">
-        <div></div>
-        <a href="/" class="logo">
-          <img src="@/assets/logo.png" alt="" class="logo-info" />
-        </a>
-        <div class="header-left">
-          <div
-            v-for="(item, index) in TopFence"
-            :key="index"
-            class="header-left-item"
-          >
-            <div class="click">
-              <span>{{ item }}</span>
-            </div>
-          </div>
-        </div>
-        <div></div>
-        <div class="header-right">
-          <input type="text" placeholder="探索稀土掘金" />
-          <div
-            class="button"
-            style="display: grid; align-items: center; justify-items: center"
-            @click="toEditor"
-          >
-            <div>创作者中心</div>
-            <span
-              style="
-                width: 1px;
-                height: 100%;
-                background-color: rgb(0 0 0 / 10%);
-              "
-            ></span>
-            <div>
-              <div class="trangle"></div>
-            </div>
-          </div>
-          <img src="@/assets/vip.png" alt="" class="vip-info" />
-          <div></div>
-          <!-- <button class="avatar-info login-btn">登录</button> -->
-          <UserLogin v-if="!store.token" />
-          <div v-else>
-            <img
-              src="@/assets/change.png"
-              alt=""
-              srcset=""
-              style="height: 30px"
-            />
-          </div>
-        </div>
-      </div>
-      <ComDivider />
-      <div class="header-bottom">
-        <div></div>
-        <div class="label-fence">
-          <div
-            v-for="(item, index) in BottomFence"
-            :key="index"
-            class="click"
-            @click="toPage(index)"
-          >
+  <div class="header">
+    <div class="header-top">
+      <div></div>
+      <a href="/" class="logo">
+        <img src="@/assets/logo.png" alt="" class="logo-info" />
+      </a>
+      <div class="header-left">
+        <div
+          v-for="(item, index) in TopFence"
+          :key="index"
+          class="header-left-item"
+        >
+          <div class="click">
             <span>{{ item }}</span>
           </div>
         </div>
-        <div class="biaoqian1">
-          <div class="biaoqian">标签管理</div>
+      </div>
+      <div></div>
+      <div class="header-right">
+        <input type="text" placeholder="探索稀土掘金" />
+        <div
+          class="button"
+          style="display: grid; align-items: center; justify-items: center"
+          @click="toEditor"
+        >
+          <div>创作者中心</div>
+          <span
+            style="width: 1px; height: 100%; background-color: rgb(0 0 0 / 10%)"
+          ></span>
+          <div>
+            <div class="trangle"></div>
+          </div>
         </div>
+        <img src="@/assets/vip.png" alt="" class="vip-info" />
+        <div></div>
+        <!-- <button class="avatar-info login-btn">登录</button> -->
+        <UserLogin v-if="!store.token" />
+        <div v-else>
+          <img
+            src="@/assets/change.png"
+            alt=""
+            srcset=""
+            style="height: 30px"
+          />
+        </div>
+      </div>
+    </div>
+    <ComDivider />
+    <div class="header-bottom">
+      <div></div>
+      <div class="label-fence">
+        <div
+          v-for="(item, index) in BottomFence"
+          :key="index"
+          class="click"
+          @click="toPage(index)"
+        >
+          <span>{{ item }}</span>
+        </div>
+      </div>
+      <div class="biaoqian1">
+        <div class="biaoqian">标签管理</div>
       </div>
     </div>
   </div>

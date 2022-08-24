@@ -18,7 +18,7 @@
         </span>
       </span>
       <div
-        v-for="(item, index) in list.articleInfos"
+        v-for="(item, index) in list"
         :key="index"
         class="contain"
         @click="goDetail(item.articleId)"
@@ -61,12 +61,12 @@
 </template>
 <script setup lang="ts">
 import { Article, getArticle1 } from "@/apis";
-import { reactive, ref } from "vue";
+import { useStore } from "@/stores";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-type ArrayList = {
-  totalCount?: number;
-  articleInfos?: Array<Article>;
-};
+
+const store = useStore();
+
 const articleClass = [
   "后端",
   "前端",
@@ -79,14 +79,8 @@ const articleClass = [
 ];
 let router = useRouter();
 let mainList = ["推荐", "最新", "热榜"];
-let list = reactive<ArrayList>({
-  totalCount: 1,
-  articleInfos: [],
-});
-getArticle1({ _class: 0 }).then((res) => {
-  (list.totalCount = res.data.totalCount),
-    (list.articleInfos = res.data.articleInfos);
-});
+let list = $ref<Array<Article>>();
+
 let currentIndex = ref<number>(0);
 let defaultIndex = ref<number>(0);
 function lightHeight(index: number, operate: string) {
@@ -102,6 +96,18 @@ function clickNavigator(index: number) {
 function goDetail(id: number | string) {
   router.push(`/detail/${id}`);
 }
+
+watch(
+  () => store.token,
+  () => {
+    getArticle1({ _class: 0 }).then((res) => {
+      list = res.data as unknown as Array<Article>;
+    });
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <style scoped>

@@ -26,6 +26,7 @@ const routeRecordRaws: Array<RouteRecordRaw> = [
     path: "/editor",
     component: () => import("@/pages/EditorPage/EditorPage.vue"),
     meta: {
+      hiddenHeader: true,
       title: "写文章",
     },
   },

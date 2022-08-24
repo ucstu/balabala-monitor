@@ -1,5 +1,18 @@
 <template>
   <div class="content">
+    <header class="header">
+      <div class="title">核心数据</div>
+      <div class="calendar">
+        <DatePicker
+          v-model:value="activeRawDateTime"
+          format="YYYY-MM-DD"
+          style="width: 150px"
+          value-type="format"
+          :editable="false"
+          :clearable="false"
+        />
+      </div>
+    </header>
     <DataCard
       class="card"
       title="JS错误"
@@ -9,7 +22,7 @@
       <template #rActions>
         <div class="date">
           <div><img src="@/assets/24.png" /></div>
-          <div>{{ nowDateTime.format("YYYY-MM-DD") }}</div>
+          <div>{{ activeDateTime.format("YYYY-MM-DD") }}</div>
         </div>
       </template>
       <BasicTable
@@ -26,7 +39,7 @@
       <template #rActions>
         <div class="date">
           <div><img src="@/assets/24.png" /></div>
-          <div>{{ nowDateTime.format("YYYY-MM-DD") }}</div>
+          <div>{{ activeDateTime.format("YYYY-MM-DD") }}</div>
         </div>
       </template>
       <BasicTable
@@ -42,13 +55,21 @@ import BasicTable from "@/components/BasicTable.vue";
 import DataCard from "@/components/DataCard.vue";
 import { useJavaScriptErrors, usePromiseErrors } from "@/hooks";
 import dayjs from "dayjs";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
 
-let nowDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs());
+let activeRawDateTime = $computed({
+  get: () => activeDateTime.format("YYYY-MM-DD"),
+  set: (value) => {
+    activeDateTime = dayjs(value);
+  },
+});
 
 const { javaScriptErrors, javaScriptErrorsLoading } = $(
   useJavaScriptErrors({
-    startTime: nowDateTime.subtract(5, "d"),
-    endTime: nowDateTime,
+    startTime: activeDateTime.subtract(5, "d"),
+    endTime: activeDateTime,
   })
 );
 
@@ -60,8 +81,8 @@ const javaScriptErrorRows = $computed(
 
 const { promiseErrors, promiseErrorsLoading } = $(
   usePromiseErrors({
-    startTime: nowDateTime.subtract(5, "d"),
-    endTime: nowDateTime,
+    startTime: activeDateTime.subtract(5, "d"),
+    endTime: activeDateTime,
   })
 );
 
@@ -77,6 +98,30 @@ const promiseErrorRows = $computed(
   width: 100%;
   height: 100%;
   padding: 10px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .calendar {
+      padding: 5px 0;
+    }
+
+    .calendar input {
+      width: 130px;
+      height: 26px;
+      border: none;
+      outline: none;
+    }
+  }
 
   .card {
     flex: 1;

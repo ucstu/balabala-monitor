@@ -193,8 +193,9 @@ const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       indicatorStatistics?.map((section, index) => ({
         name: sectionNameMap[index],
         data: section.map((item) => item.count),
-        type: "bar",
+        type: "line",
         stack: "total",
+        areaStyle: {},
         label: {
           show: true,
         },
@@ -269,8 +270,9 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       theIndicatorStatistics?.map((section, index) => ({
         name: sectionNameMap[index],
         data: section.map((item) => item.count),
-        type: "bar",
+        type: "line",
         stack: "total",
+        areaStyle: {},
         label: {
           show: true,
         },

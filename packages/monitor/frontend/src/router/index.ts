@@ -22,9 +22,9 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/Overview",
     meta: {
       menu: [
-        { name: "数据总览", path: "/Overview/DataOverview" },
-        { name: "健康状况", path: "/Overview/HealthStatusOverview" },
-        { name: "性能预览", path: "/Overview/PerformanceOverview" },
+        { name: "行为概览", path: "/Overview/DataOverview" },
+        { name: "健康概览", path: "/Overview/HealthStatusOverview" },
+        { name: "性能概览", path: "/Overview/PerformanceOverview" },
       ],
     },
     component: () => import("@/pages/PageContent.vue"),

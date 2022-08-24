@@ -1,4 +1,4 @@
-import { BarChart } from "echarts/charts";
+import { BarChart, PieChart } from "echarts/charts";
 import {
   GridComponent,
   LegendComponent,
@@ -21,6 +21,7 @@ use([
   GridComponent,
   TooltipComponent,
   LegendComponent,
+  PieChart,
 ]);
 
 client.service.httpRequest.config.BASE = import.meta.env.VITE_BASE_URL;

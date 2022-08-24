@@ -2,7 +2,7 @@ import { EChartsCoreOption } from "echarts";
 
 export const basicChartOption: EChartsCoreOption = {
   tooltip: {
-    trigger: "axis",
+    trigger: "item",
     axisPointer: {
       type: "shadow",
     },

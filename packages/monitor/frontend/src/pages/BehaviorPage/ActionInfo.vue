@@ -180,7 +180,7 @@
       v-if="actionInfo.listType === 3 && actionInfo.mainType === 5"
       class="action-info-item"
     >
-      <div class="action-info-item-title">状态码：</div>
+      <div class="action-info-item-title">状态码（0表示网络异常）：</div>
       <div class="action-info-item-data">
         {{ actionInfo.statusCode }}
       </div>

@@ -166,7 +166,7 @@ export class BasicbehaviorService {
   private clickbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,top,'left' ,'inner',target,mainType,subType
+      SELECT appId,startTime,pageUrl,userID,top,"left" ,"inner",target,mainType,subType
       FROM "click_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -210,7 +210,7 @@ export class BasicbehaviorService {
   private pageskipbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,'from' ,'to',mainType,subType
+      SELECT appId,startTime,pageUrl,userID,"from" ,"to",mainType,subType
       FROM "page_skip_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);
@@ -252,7 +252,7 @@ export class BasicbehaviorService {
   private routingskipbehaviorsList(args) {
     return new Promise((resolve, reject) => {
       let sql = `
-      SELECT appId,startTime,pageUrl,userID,'from' ,'to',params,query,mainType,subType
+      SELECT appId,startTime,pageUrl,userID,"from" ,"to",params,query,mainType,subType
       FROM "routing_skip_behavior"
       where appId= ? and userID = ? and startTime between ? and ? `;
       sql = SqlString.format(sql, args);

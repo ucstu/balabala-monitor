@@ -28,25 +28,37 @@
         <slot name="rActions"> </slot>
       </div>
     </div>
-    <div v-show="!fold" class="main">
-      <div v-show="loading" ref="loadingRef" class="loading">
+    <div v-show="!fold" class="content">
+      <div v-show="!loading && empty" class="info empty">暂无数据</div>
+      <div v-show="loading" class="info">
         <div
           class="icon"
           :style="{
-            height: iconWidth + 'px',
-            width: iconWidth + 'px',
+            width: mainSize[1]
+              ? Math.min(mainSize[1] * 0.7, 50) + 'px'
+              : '50px',
+            height: mainSize[1]
+              ? Math.min(mainSize[1] * 0.7, 50) + 'px'
+              : '50px',
           }"
         ></div>
       </div>
-      <slot v-if="!empty"></slot>
-      <div v-else-if="!loading" class="no-data">暂无数据</div>
-      <div v-else style="height: 40px"></div>
+      <div ref="mainRef" class="main">
+        <slot></slot>
+      </div>
+      <div
+        v-show="mainSize[1] === 0"
+        :style="{
+          width: '100%',
+          height: Math.max(mainSize[1], 30) + 'px',
+        }"
+      ></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { inject, onMounted, provide } from "vue";
 
 const {
   icon = "",
@@ -93,8 +105,15 @@ const emits = defineEmits<{
 }>();
 
 let __fold = $ref(false);
-let iconWidth = $ref(0);
-let loadingRef = $ref<HTMLElement>(null as unknown as HTMLElement);
+
+const nextZIndex = inject("zIndex") as number | undefined;
+let zindex = nextZIndex || 19;
+if (!nextZIndex) {
+  provide("zIndex", zindex - 1);
+}
+
+let mainSize = $ref<[number, number]>([0, 0]);
+let mainRef = $ref<HTMLElement>(null as unknown as HTMLElement);
 
 let foldable = $computed(() => _foldable || _fold !== undefined);
 let fold = $computed({
@@ -105,14 +124,12 @@ let fold = $computed({
   },
 });
 
-const fixWidth = () => {
-  iconWidth = Math.min(
-    50,
-    (parseFloat(getComputedStyle(loadingRef).height) || 0) * 0.65
-  );
-};
-
-onMounted(fixWidth);
+onMounted(() => {
+  mainSize = [
+    parseFloat(getComputedStyle(mainRef).width),
+    parseFloat(getComputedStyle(mainRef).height),
+  ];
+});
 </script>
 
 <style lang="scss" scoped>
@@ -134,6 +151,7 @@ onMounted(fixWidth);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 25px;
     margin-bottom: 5px;
 
     .left {
@@ -157,14 +175,14 @@ onMounted(fixWidth);
     }
   }
 
-  .main {
+  .content {
     position: relative;
     flex: 1;
     width: 100%;
 
-    .loading {
+    .info {
       position: absolute;
-      z-index: 100;
+      z-index: v-bind(zindex);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -182,22 +200,23 @@ onMounted(fixWidth);
         border-radius: 50%;
         animation: rotate-360 1s infinite linear;
       }
+    }
 
-      @keyframes rotate-360 {
-        0% {
-          transform: rotate(0deg);
-        }
+    .empty {
+      opacity: 1;
+    }
 
-        100% {
-          transform: rotate(360deg);
-        }
+    @keyframes rotate-360 {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
       }
     }
 
-    .no-data {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .main {
       width: 100%;
       height: 100%;
     }

@@ -3,7 +3,14 @@
     <header class="header">
       <div class="title">健康数据</div>
       <div class="calendar">
-        <input v-model="date" type="date" />
+        <DatePicker
+          v-model:value="date"
+          format="YYYY-MM-DD"
+          style="width: 150px"
+          value-type="format"
+          :editable="false"
+          :clearable="false"
+        />
       </div>
     </header>
     <DataCard
@@ -61,13 +68,6 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from "dayjs";
-import { onMounted, watch } from "vue";
-import ECharts from "vue-echarts";
-import { EChartsCoreOption } from "echarts";
-import DataCard from "@/components/DataCard.vue";
-import { useStore } from "@/stores";
-import { basicChartOption } from "@/configs";
 import {
   getErrorsInterfaceerrorstatistics,
   getErrorsJavascripterrorstatistics,
@@ -78,6 +78,15 @@ import {
   JavaScriptError,
   ResourceIndicator,
 } from "@/apis";
+import DataCard from "@/components/DataCard.vue";
+import { basicChartOption } from "@/configs";
+import { useStore } from "@/stores";
+import dayjs from "dayjs";
+import { EChartsCoreOption } from "echarts";
+import { onMounted, watch } from "vue";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
+import ECharts from "vue-echarts";
 const store = useStore();
 let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
 let interfaceStatistics = $ref<number>(0);

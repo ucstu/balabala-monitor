@@ -3,21 +3,29 @@
     <header class="header">
       <div class="title">页面性能</div>
       <div class="calendar">
-        <input type="text" placeholder="今天" /><i class="fa fa-calendar-o"></i>
+        <!-- <input type="text" placeholder="今天" /><i class="fa fa-calendar-o"></i> -->
+        <DatePicker
+          v-model:value="performanceRawTime"
+          format="YYYY-MM-DD"
+          style="width: 150px"
+          value-type="format"
+          :editable="false"
+          :clearable="false"
+        />
       </div>
     </header>
     <div class="board">
       <div class="data-board">
         <span>FCP平均时间</span>
-        <span>{{}}</span>
+        <span>{{ fcp.toFixed(2) }}ms</span>
       </div>
       <div class="data-board">
         <span>DOM解析时间</span>
-        <span>2.58s</span>
+        <span>{{ dcl.toFixed(2) }}ms</span>
       </div>
       <div class="data-board">
         <span>页面平均加载时间</span>
-        <span>2.74s</span>
+        <span>{{ fl.toFixed(2) }}ms</span>
       </div>
     </div>
     <div class="page-body">
@@ -74,7 +82,15 @@
       </div>
       <div class="data-board">
         <span>接口请求成功率</span>
-        <span>2.74s</span>
+        <span
+          >{{
+            (
+              (((totalSumIndicator || 0) - (errorIndicator || 0) || 0) /
+                (totalSumIndicator || 0)) *
+              100
+            ).toFixed(2)
+          }}%</span
+        >
       </div>
     </div>
     <div class="page-body">
@@ -123,15 +139,24 @@
 import DataCard from "@/components/DataCard.vue";
 import { useBasicIndicators } from "@/hooks/useBasicIndicators";
 import { useBasicIndicatorStatistics } from "@/hooks/useBasicIndicatorStatistics";
+import { useInterfaceErrorStatistics } from "@/hooks/useInterfaceErrorStatistics";
 import { useInterfaceIndicators } from "@/hooks/useInterfaceIndicators";
 import { useInterfaceIndicatorStatistics } from "@/hooks/useInterfaceIndicatorStatistics";
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
-import { sum } from "lodash";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
+let performanceTime = $ref(dayjs());
 
-let performanceTime = $ref(dayjs("2022-08-21", "YYYY-MM-DD"));
+const performanceRawTime = $computed<string>({
+  get: () => performanceTime.format("YYYY-MM-DD"),
+  set: (value) => {
+    performanceTime = dayjs(value);
+  },
+});
+
 // 耗时分段名称映射
 let sectionNameMap: Record<number, string> = {
   0: "<1秒",
@@ -213,6 +238,12 @@ const {
     };
   })
 );
+const fl = $computed(() => {
+  return (
+    (pagePerformanceDataList?.reduce((sum, item) => (sum += item.average), 0) ||
+      0) / (pagePerformanceDataList?.length || 1)
+  );
+});
 
 // 接口性能统计
 const {
@@ -295,6 +326,29 @@ const totalAverageIndicator = $computed(() => {
   return totalSumIndicator ? totalSumIndicator / 5 : 0;
 });
 
+// 查询接口错误统计
+const {
+  interfaceErrorStatistics: errorIndicatorStatisticsData,
+  interfaceErrorStatisticsLoading: errorIndicatorStatisticsLoading,
+} = $(
+  useInterfaceErrorStatistics(() => {
+    return {
+      mainType: BasicIndicator.mainType.InterfaceIndicator,
+      subType: BasicIndicator.subType.InterfaceIndicator,
+      startTime: performanceTime,
+      endTime: performanceTime.add(1, "day"),
+      granularity: "1d",
+    };
+  })
+);
+// 计算接口错误的总数
+const errorIndicator = $computed(() => {
+  return errorIndicatorStatisticsData?.reduce(
+    (sum, item) => (sum += item.count),
+    0
+  );
+});
+
 //  fcp 指标
 const { basicIndicators: fcpData, basicIndicatorsLoading: fcpDataLoading } = $(
   useBasicIndicators(() => {
@@ -308,7 +362,29 @@ const { basicIndicators: fcpData, basicIndicatorsLoading: fcpDataLoading } = $(
   })
 );
 const fcp = $computed(() => {
-  return fcpData?.reduce((sum, item) => (sum += item.average), 0);
+  return (
+    (fcpData?.reduce((sum, item) => (sum += item.average), 0) || 0) /
+    (fcpData?.length || 1)
+  );
+});
+
+//  DOMContentLoaded 指标
+const { basicIndicators: dclData, basicIndicatorsLoading: dclDataLoading } = $(
+  useBasicIndicators(() => {
+    return {
+      mainType: BasicIndicator.mainType.LoadIndicator,
+      subType: BasicIndicator.subType.DOMContentLoaded,
+      startTime: performanceTime,
+      endTime: performanceTime.add(1, "day"),
+      size: 10,
+    };
+  })
+);
+const dcl = $computed(() => {
+  return (
+    (dclData?.reduce((sum, item) => (sum += item.average), 0) || 0) /
+    (dclData?.length || 1)
+  );
 });
 
 const totalCount = (val: number): string => {

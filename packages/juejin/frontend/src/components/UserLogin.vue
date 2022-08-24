@@ -8,7 +8,7 @@
             <div style="font-weight: bold">{{ title }}</div>
             <img src="../assets/取消.png" alt="取消" @click="cancelLogin" />
           </div>
-          <div v-show="!isRegister" style="position: relative">
+          <div v-show="!isLogin" style="position: relative">
             <input
               ref="name"
               v-model="userName"
@@ -38,11 +38,12 @@
             <div>密码：</div>
           </div>
           <button class="btn-login" @click="loginSure">
-            {{ isRegister ? "登录" : "注册" }}
+            {{ isLogin ? "登录" : "注册" }}
           </button>
           <div class="other-way">
-            <span v-if="isRegister">其他登录方式</span>
-            <span @click="userRegister"
+            <span v-if="isLogin">其他登录方式</span>
+            <span v-else @click="isLogin = true">返回登录</span>
+            <span v-if="isLogin" @click="userRegister"
               >没有账号、<span style="color: blue">注册</span></span
             >
           </div>
@@ -61,15 +62,19 @@
 </template>
 
 <script setup lang="ts">
+import { useStore } from "@/stores";
 import { client, postAccounts, postAccountsLogin } from "../apis/index";
-let isShow = $ref(false);
+
+const store = useStore();
+
+let isShow = $ref(store.token === undefined);
 let name = $ref<HTMLElement>(null as unknown as HTMLElement);
 let phoneContent = $ref("");
 let password = $ref("");
 let isShowPrompt = $ref(false);
 let promptContent = $ref("");
 let title = $ref("手机登录");
-let isRegister = $ref(true);
+let isLogin = $ref(true);
 let userName = $ref("");
 let input = $ref<HTMLElement>(null as unknown as HTMLElement);
 
@@ -81,7 +86,7 @@ function clickLogin() {
 }
 function cancelLogin() {
   isShow = false;
-  isRegister = true;
+  isLogin = true;
   phoneContent = "";
   password = "";
   userName = "";
@@ -89,7 +94,7 @@ function cancelLogin() {
 }
 function userRegister() {
   title = "请注册";
-  isRegister = false;
+  isLogin = false;
   phoneContent = "";
   password = "";
   setTimeout(() => {
@@ -119,7 +124,11 @@ function loginSure() {
         },
       }).then((res) => {
         if (res.message == "成功") {
-          isRegister = false;
+          isLogin = false;
+          alert("注册成功");
+          isShow = false;
+        } else {
+          alert("注册失败");
         }
       });
     } else if (title == "手机登录") {
@@ -130,7 +139,11 @@ function loginSure() {
         },
       }).then((res) => {
         if (res.message == "成功") {
+          store.token = res.data.token;
           client.service.httpRequest.config.TOKEN = res.data.token;
+          isShow = false;
+        } else {
+          alert("账号或者密码错误");
         }
       });
     }

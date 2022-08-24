@@ -15,6 +15,14 @@
 <script lang="ts" setup>
 import HeaderBar from "@/components/HeaderBar.vue";
 import { useRoute } from "vue-router";
+import { client } from "./apis";
+import { useStore } from "./stores";
+
+const store = useStore();
+
+if (store.token) {
+  client.service.httpRequest.config.TOKEN = store.token;
+}
 
 const route = useRoute();
 

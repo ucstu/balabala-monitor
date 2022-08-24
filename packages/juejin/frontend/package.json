@@ -23,6 +23,8 @@
     "@bytemd/plugin-mermaid": "^1.17.2",
     "@bytemd/vue-next": "^1.17.2",
     "juejin-markdown-themes": "^1.29.3",
+    "pinia": "^2.0.20",
+    "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.13"
   },

@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "@balabala/monitor-api": "^1.0.0",
+    "@vueuse/core": "^9.1.0",
     "dayjs": "^1.11.4",
     "echarts": "^5.3.3",
     "font-awesome": "^4.7.0",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.19",
+    "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.2.37",
     "vue-datepicker-local": "^1.0.19",
+    "vue-datepicker-next": "^1.0.2",
     "vue-echarts": "^6.2.3",
     "vue-router": "^4.1.3"
   },

@@ -39,6 +39,8 @@ export class InterfaceerrorsService {
     if (querys.status_code) {
       where = where.concat("and statusCode=? ");
       sqlArges.push(querys.status_code);
+    } else {
+      where = where.concat("and (statusCode=500 or statusCode=400) ");
     }
     // 分组
     const group = "group by url ,userID,pageUrl ";

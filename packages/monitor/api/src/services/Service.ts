@@ -2567,7 +2567,7 @@ export class Service {
     /**
      * 状态码，eg：400
      */
-    statusCode?: string;
+    statusCode?: number;
   }): CancelablePromise<{
     /**
      * 处理时间

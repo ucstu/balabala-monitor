@@ -5,6 +5,7 @@ import {
 import { useStore } from "@/stores";
 import type { MaybeComputedRef } from "@vueuse/core";
 import { useDebounceFn } from "@vueuse/core";
+import dayjs from "dayjs";
 import { computed, ref, watch } from "vue";
 import { dateTimeFormate } from "./configs";
 import type { BasicStatisticItem, BasicStatisticParam } from "./types";
@@ -36,7 +37,14 @@ export const useBasicIndicatorStatistics = (
       endTime: param.value.endTime.format(dateTimeFormate),
     })
       .then((res) => {
-        basicIndicatorStatistics.value = res.data;
+        basicIndicatorStatistics.value = res.data.map((section) =>
+          section.map((item) => {
+            return {
+              ...item,
+              dateTime: dayjs(item.dateTime, dateTimeFormate),
+            };
+          })
+        );
       })
       .finally(() => {
         basicIndicatorStatisticsLoading.value = false;
@@ -46,7 +54,7 @@ export const useBasicIndicatorStatistics = (
     () => param.value,
     () => _getPerformancesBasicIndicatorStatistics(),
     {
-      immediate: true,
+      immediate: !param.value._lazy,
     }
   );
   return {

@@ -2,15 +2,16 @@
   <div class="container">
     <DataCard title="用户详情" icon="fa-dedent">
       <template #rActions>
-        <div class="flex-row justify-between" style="width: 400px">
-          <DatePicker v-model="activeRawTime" />
-          <!-- <input v-model="activeRawTime" class="input" type="date" /> -->
-          <input
-            v-model="userId"
-            class="input"
-            type="text"
-            style="width: 250px"
+        <div class="flex-row justify-between" style="width: 460px">
+          <DatePicker
+            v-model:value="activeRawTime"
+            format="YYYY-MM-DD"
+            style="width: 150px"
+            value-type="format"
+            :editable="false"
+            :clearable="false"
           />
+          <input v-model="userId" class="input" type="text" />
         </div>
       </template>
       <div class="charts">
@@ -180,7 +181,7 @@ const pageIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       type: "category",
       data:
         pageIndicatorStatistics?.[0]?.map((item) =>
-          dayjs(item.dateTime).format("HH:mm")
+          item.dateTime.format("HH:mm")
         ) || [],
     },
     yAxis: {
@@ -221,7 +222,7 @@ const interfaceIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(
         type: "category",
         data:
           interfaceIndicatorStatistics?.[0]?.map((item) =>
-            dayjs(item.dateTime).format("HH:mm")
+            item.dateTime.format("HH:mm")
           ) || [],
       },
       yAxis: {
@@ -360,15 +361,18 @@ watch([() => activeDateTime, () => userId], () => {
 }
 
 .input {
+  flex: 1;
   height: 30px;
+  margin-left: 5px;
   font-size: 14px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
   transition: all 30ms;
 
-  &:focus {
-    outline: 2px solid #1890ff;
+  &:focus,
+  &:hover {
+    border-color: #409aff;
   }
 }
 </style>

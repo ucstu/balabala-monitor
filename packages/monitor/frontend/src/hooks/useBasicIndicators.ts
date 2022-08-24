@@ -45,7 +45,7 @@ export const useBasicIndicators = (
     () => param.value,
     () => _getPerformancesBasicIndicators(),
     {
-      immediate: true,
+      immediate: !param.value._lazy,
     }
   );
   return {

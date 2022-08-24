@@ -119,20 +119,13 @@
               icon="fa-bar-chart"
               title="请求趋势"
               :loading="theIndicatorStatisticsLoading"
+              :empty="theIndicatorStatistics?.length ? false : true"
             >
               <ECharts
-                v-if="theIndicatorStatistics?.length"
                 :option="theIndicatorStatisticsChartOption"
                 :autoresize="true"
                 class="bar"
               />
-              <div
-                v-else
-                class="bar"
-                style="height: 75px; margin-top: 30px; text-align: center"
-              >
-                暂无数据
-              </div>
             </DataCard>
           </div>
         </div>
@@ -188,7 +181,7 @@ const indicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       type: "category",
       data:
         indicatorStatistics?.[activeSection]?.map((item) =>
-          dayjs(item.dateTime).format("MM-DD")
+          item.dateTime.format("MM-DD")
         ) || [],
     },
     yAxis: {
@@ -215,7 +208,7 @@ const sectionTotals = $computed(
   () =>
     indicatorStatistics?.map(
       (section) =>
-        section.find(({ dateTime }) => dayjs(dateTime).isSame(nowDateTime, "d"))
+        section.find(({ dateTime }) => dateTime.isSame(nowDateTime, "d"))
           ?.count || 0
     ) || []
 );
@@ -259,7 +252,7 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       type: "category",
       data:
         theIndicatorStatistics?.[activeSection]?.map((item) =>
-          dayjs(item.dateTime).format("HH:mm")
+          item.dateTime.format("HH:mm")
         ) || [],
     },
     yAxis: {

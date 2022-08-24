@@ -185,6 +185,7 @@ const hiddenAside = $computed({
         position: absolute;
         top: 20px;
         left: 0;
+        z-index: 20;
         display: flex;
         display: none;
         align-items: center;

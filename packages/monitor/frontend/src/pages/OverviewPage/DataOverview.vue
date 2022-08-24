@@ -83,7 +83,6 @@ import { basicChartOption } from "@/configs";
 import { useStore } from "@/stores";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
-import { StringIterator } from "lodash";
 import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
 const store = useStore();

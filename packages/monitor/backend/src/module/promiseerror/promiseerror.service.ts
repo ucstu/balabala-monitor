@@ -44,11 +44,11 @@ export class PromiseerrorService {
     }
     // sql 语句
     const sqlString = `
-            SELECT stack,count(stack) ,userID,pageUrl
+            SELECT msg,count(msg) ,userID,pageUrl
             FROM "promise_error"
             where appId=? and mainType=? and subType=? and errorTime between ? and ?
-            group by stack, userID,pageUrl
-            order by count(stack) desc
+            group by msg, userID,pageUrl
+            order by count(msg) desc
         `;
     // sql 参数
     const sqlArges = [
@@ -70,7 +70,7 @@ export class PromiseerrorService {
     const map = new Map();
     rest.body.rows.forEach((item) => {
       const value = {
-        stack: item[0],
+        msg: item[0],
         count: item[1],
         userCount: 1,
         pageCount: 1,

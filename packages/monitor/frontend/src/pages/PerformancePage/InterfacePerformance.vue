@@ -242,6 +242,7 @@ const {
       granularity: "1h",
       url: interfaceIndicators?.[activeInterface]?.url,
       _skip: !interfaceIndicators?.[activeInterface]?.url,
+      _lazy: true,
     };
   })
 );

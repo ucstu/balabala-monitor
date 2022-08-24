@@ -29,27 +29,32 @@
       </div>
     </div>
     <div v-show="!fold" class="content">
-      <div v-show="!loading && empty" class="info empty">暂无数据</div>
-      <div v-show="loading" class="info">
+      <div
+        v-show="firstTime || loading || empty"
+        class="mask"
+        :style="{
+          zIndex: zIndex,
+          opacity: firstTime ? 1 : 0.75,
+        }"
+      >
         <div
+          v-show="loading"
           class="icon"
           :style="{
-            width: mainSize[1]
-              ? Math.min(mainSize[1] * 0.7, 50) + 'px'
-              : '50px',
-            height: mainSize[1]
-              ? Math.min(mainSize[1] * 0.7, 50) + 'px'
-              : '50px',
+            width: Math.min(Math.max(mainSize[1], 30) * 0.7, 50) + 'px',
+            height: Math.min(Math.max(mainSize[1], 30) * 0.7, 50) + 'px',
           }"
         ></div>
+        <span v-show="!firstTime && !loading && empty"> 暂无数据 </span>
       </div>
-      <div ref="mainRef" class="main">
+
+      <div v-show="firstTime || !empty" ref="mainRef" class="main">
         <slot></slot>
       </div>
       <div
-        v-show="mainSize[1] === 0"
+        v-if="!firstTime && empty"
+        style="width: 100%"
         :style="{
-          width: '100%',
           height: Math.max(mainSize[1], 30) + 'px',
         }"
       ></div>
@@ -58,15 +63,15 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, provide } from "vue";
+import { inject, onMounted, provide, watch } from "vue";
 
 const {
   icon = "",
   title,
-  empty = false,
+  empty = undefined,
   fold: _fold = undefined,
-  foldable: _foldable = false,
-  loading = false,
+  foldable: _foldable = undefined,
+  loading = undefined,
   line = "title",
 } = defineProps<{
   /**
@@ -107,11 +112,12 @@ const emits = defineEmits<{
 let __fold = $ref(false);
 
 const nextZIndex = inject("zIndex") as number | undefined;
-let zindex = nextZIndex || 19;
+let zIndex = nextZIndex || 19;
 if (!nextZIndex) {
-  provide("zIndex", zindex - 1);
+  provide("zIndex", zIndex - 1);
 }
 
+let firstTime = $ref(loading !== undefined || empty !== undefined);
 let mainSize = $ref<[number, number]>([0, 0]);
 let mainRef = $ref<HTMLElement>(null as unknown as HTMLElement);
 
@@ -130,6 +136,16 @@ onMounted(() => {
     parseFloat(getComputedStyle(mainRef).height),
   ];
 });
+
+const cancelWatch = watch(
+  () => loading,
+  (newValue, oldValue) => {
+    if (oldValue === true && newValue === false) {
+      firstTime = false;
+      cancelWatch();
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -180,9 +196,8 @@ onMounted(() => {
     flex: 1;
     width: 100%;
 
-    .info {
+    .mask {
       position: absolute;
-      z-index: v-bind(zindex);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -190,7 +205,6 @@ onMounted(() => {
       height: 100%;
       background-color: #f3f3f3;
       border-radius: 5px;
-      opacity: 0.8;
 
       .icon {
         box-sizing: border-box;
@@ -200,10 +214,6 @@ onMounted(() => {
         border-radius: 50%;
         animation: rotate-360 1s infinite linear;
       }
-    }
-
-    .empty {
-      opacity: 1;
     }
 
     @keyframes rotate-360 {

@@ -91,9 +91,9 @@ import { useStore } from "@/stores";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
-import ECharts from "vue-echarts";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
+import ECharts from "vue-echarts";
 const store = useStore();
 // PV数据
 let PV = $ref<number>(0);
@@ -305,7 +305,7 @@ function getPVdata(start: string, end: string) {
 <style lang="scss" scoped>
 .bg {
   width: 100%;
-  padding: 25px 35px 0 25px;
+  padding: 5px 35px 0 25px;
   background-color: rgb(240 240 240 / 30%);
 
   .header {
@@ -314,6 +314,8 @@ function getPVdata(start: string, end: string) {
     margin-bottom: 20px;
 
     .title {
+      display: flex;
+      align-items: center;
       font-size: 18px;
       font-weight: 600;
     }
@@ -346,7 +348,6 @@ function getPVdata(start: string, end: string) {
   .browse-card .browse-head {
     display: flex;
     align-items: center;
-    width: 1247.74px;
     height: 60px;
     padding-left: 20px;
     margin-bottom: 3px;

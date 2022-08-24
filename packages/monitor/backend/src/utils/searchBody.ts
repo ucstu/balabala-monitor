@@ -547,10 +547,10 @@ export const getTotalErrorBody = (querys: JavaScriptErrorTotalVo) => {
  */
 export const getTotalPromiseerrorBody = (querys: PromiseerrorTotalVo) => {
   const body = getBaseBody(querys, "errorTime");
-  if (querys.stack) {
+  if (querys.msg) {
     const term = {
       term: {
-        stack: querys.stack,
+        msg: querys.msg,
       },
     };
     body.query.bool.must.push(term);

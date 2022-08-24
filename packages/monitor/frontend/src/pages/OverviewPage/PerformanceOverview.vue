@@ -9,7 +9,7 @@
     <div class="board">
       <div class="data-board">
         <span>FCP平均时间</span>
-        <span>{{ 1 }}</span>
+        <span>{{}}</span>
       </div>
       <div class="data-board">
         <span>DOM解析时间</span>
@@ -128,6 +128,7 @@ import { useInterfaceIndicatorStatistics } from "@/hooks/useInterfaceIndicatorSt
 import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
+import { sum } from "lodash";
 import ECharts from "vue-echarts";
 
 let performanceTime = $ref(dayjs("2022-08-21", "YYYY-MM-DD"));
@@ -298,7 +299,7 @@ const totalAverageIndicator = $computed(() => {
 const { basicIndicators: fcpData, basicIndicatorsLoading: fcpDataLoading } = $(
   useBasicIndicators(() => {
     return {
-      mainType: BasicIndicator.mainType.DrawIndicator,
+      mainType: BasicIndicator.mainType.Performance,
       subType: BasicIndicator.subType.FirstContentfulPaint,
       startTime: performanceTime,
       endTime: performanceTime.add(1, "day"),
@@ -306,6 +307,9 @@ const { basicIndicators: fcpData, basicIndicatorsLoading: fcpDataLoading } = $(
     };
   })
 );
+const fcp = $computed(() => {
+  return fcpData?.reduce((sum, item) => (sum += item.average), 0);
+});
 
 const totalCount = (val: number): string => {
   if (val < 1000) {

@@ -6,4 +6,5 @@ export interface PromiseerrorTotalVo extends BaseTotalVo {
    *错误调用堆栈
    */
   stack: string;
+  msg: string;
 }

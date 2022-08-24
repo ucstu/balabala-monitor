@@ -3,7 +3,6 @@
     <DataCard
       title="用户详情"
       icon="fa-dedent"
-      line="left"
       :fold="true"
       @title-click="showDetails = !showDetails"
     >
@@ -84,10 +83,13 @@
 <i class="fa fa-archive" aria-hidden="true"></i>
  -->
 <script lang="ts" setup>
-import { getBehaviorsUseraction, getPerformancesBasicindicators } from "@/apis";
+import {
+  BasicIndicator,
+  getBehaviorsUseraction,
+  getPerformancesBasicindicators,
+} from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import { useStore } from "@/stores";
-import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { ECBasicOption } from "echarts/types/dist/shared";
 import { onMounted, watch } from "vue";

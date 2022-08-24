@@ -28,6 +28,10 @@ export type PromiseError = {
    */
   userID: string;
   /**
+   * 错误消息
+   */
+  msg: string;
+  /**
    * 错误堆栈
    */
   stack: string;

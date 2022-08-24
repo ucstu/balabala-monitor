@@ -11,9 +11,9 @@ const store = useStore();
 
 export interface PromiseErrorStatisticParam extends BasicStatisticParam {
   /*
-   * 调用堆栈
+   * 错误消息
    */
-  stack?: string;
+  msg?: string;
 }
 
 export type PromiseErrorStatisticItem = BasicStatisticItem;

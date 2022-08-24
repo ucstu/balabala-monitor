@@ -13,7 +13,13 @@ import type { BasicStatisticItem, BasicStatisticParam } from "./types";
 const store = useStore();
 
 export interface BasicIndicatorStatisticParam extends BasicStatisticParam {
+  /*
+   * 父级分类
+   */
   mainType: BasicIndicator.mainType;
+  /*
+   * 子级分类
+   */
   subType: BasicIndicator.subType;
 }
 
@@ -23,7 +29,8 @@ export const useBasicIndicatorStatistics = (
   _param: MaybeComputedRef<BasicIndicatorStatisticParam>
 ) => {
   const param = typeof _param === "function" ? computed(_param) : ref(_param);
-  const basicIndicatorStatistics = ref<Array<Array<BasicStatisticItem>>>();
+  const basicIndicatorStatistics =
+    ref<Array<Array<BasicIndicatorStatisticItem>>>();
   const basicIndicatorStatisticsLoading = ref(false);
   const _getPerformancesBasicIndicatorStatistics = useDebounceFn(() => {
     if (param.value._skip) {

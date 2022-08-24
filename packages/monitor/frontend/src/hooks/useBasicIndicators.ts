@@ -9,11 +9,20 @@ import type { BasicQueryItem, BasicQueryParam } from "./types";
 const store = useStore();
 
 export interface BasicIndicatorParam extends BasicQueryParam {
+  /*
+   * 父级分类
+   */
   mainType: BasicIndicator.mainType;
+  /*
+   * 子级分类
+   */
   subType: BasicIndicator.subType;
 }
 
 export interface BasicIndicatorItem extends BasicQueryItem {
+  /*
+   * 页面路径
+   */
   pageUrl: string;
 }
 

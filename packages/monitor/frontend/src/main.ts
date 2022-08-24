@@ -1,4 +1,4 @@
-import { BarChart, PieChart, LineChart } from "echarts/charts";
+import { BarChart, LineChart, PieChart } from "echarts/charts";
 import {
   GridComponent,
   LegendComponent,

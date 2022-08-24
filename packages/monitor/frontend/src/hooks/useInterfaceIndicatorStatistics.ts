@@ -25,7 +25,8 @@ export const useInterfaceIndicatorStatistics = (
   _param: MaybeComputedRef<InterfaceIndicatorStatisticParam>
 ) => {
   const param = typeof _param === "function" ? computed(_param) : ref(_param);
-  const interfaceIndicatorStatistics = ref<Array<Array<BasicStatisticItem>>>();
+  const interfaceIndicatorStatistics =
+    ref<Array<Array<InterfaceIndicatorStatisticItem>>>();
   const interfaceIndicatorStatisticsLoading = ref(false);
   const _getPerformancesInterfaceIndicatorStatistics = useDebounceFn(() => {
     if (param.value._skip) {

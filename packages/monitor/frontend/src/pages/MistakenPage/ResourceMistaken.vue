@@ -67,9 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { getErrorsResourceerrorstatistics } from "@/apis";
+import { getErrorsResourceerrorstatistics, ResourceError } from "@/apis";
 import { useStore } from "@/stores";
-import { ResourceError } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { storeToRefs } from "pinia";

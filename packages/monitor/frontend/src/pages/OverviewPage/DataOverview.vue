@@ -77,15 +77,14 @@
 </template>
 
 <script setup lang="ts">
-import { getBehaviorsBasicbehaviorstatistics } from "@/apis";
-import { useStore } from "@/stores";
+import { BasicBehavior, getBehaviorsBasicbehaviorstatistics } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
-import { BasicBehavior } from "@balabala/monitor-api";
+import { basicChartOption } from "@/configs";
+import { useStore } from "@/stores";
 import dayjs from "dayjs";
+import { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
-import { EChartsCoreOption } from "echarts";
-import { basicChartOption } from "@/configs";
 const store = useStore();
 // PV数据
 let PV = $ref<number>(0);

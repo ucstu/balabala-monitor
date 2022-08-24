@@ -2,20 +2,14 @@
   <div class="global">
     <div class="content">
       <div class="chart">
-        <div class="chart-title">
-          <div class="chart-underline">
-            <img src="@/assets/resource.png" alt="" />
-            <span>资源加载报错(点击柱状图查看其它日期)</span>
-          </div>
-        </div>
+        <DataCard
+          icon="fa-bar-chart-o"
+          title="资源加载报错(点击柱状图查看其它日期)"
+        ></DataCard>
         <div ref="resourceDom" class="chart-content"></div>
       </div>
       <div class="statistics">
-        <div class="statistics-title">
-          <div class="statistics-underline">
-            <img src="@/assets/re_overview.png" alt="" /> <span>今日概况</span>
-          </div>
-        </div>
+        <DataCard icon="fa-file-archive-o" title="今日概况"></DataCard>
         <div class="statistics-content">
           <div class="content-box box-one">
             <div class="picture">
@@ -68,6 +62,7 @@
 
 <script setup lang="ts">
 import { getErrorsResourceerrorstatistics, ResourceError } from "@/apis";
+import DataCard from "@/components/DataCard.vue";
 import { useStore } from "@/stores";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
@@ -157,63 +152,21 @@ const loadResource = () => {
     height: 100%;
     padding: 20px;
 
-    // background-color: cyan;
-    span {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
     .chart {
       padding: 20px;
 
-      // background-color: blue;
-
-      .chart-title {
-        height: 60px;
-
-        .chart-underline {
-          width: 320px;
-          padding: 10px;
-          border-bottom: 1px solid rgb(74 90 183);
-
-          img {
-            width: 14px;
-            height: 14px;
-            margin-right: 10px;
-          }
-        }
-      }
-
       .chart-content {
-        // box-sizing: border-box;
-        width: 700px;
-        height: 500px;
+        width: 95%;
+        height: 580px;
         padding: 20px;
         padding-top: 0;
         cursor: pointer;
+        background-color: #fff;
       }
     }
 
     .statistics {
       padding: 20px;
-
-      // background-color: cyan;
-
-      .statistics-title {
-        height: 80px;
-
-        .statistics-underline {
-          width: 100px;
-          padding: 10px;
-          border-bottom: 1px solid rgb(74 90 183);
-
-          img {
-            width: 13px;
-            height: 15px;
-            margin-right: 10px;
-          }
-        }
-      }
 
       .statistics-content {
         .box-one {

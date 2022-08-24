@@ -61,21 +61,32 @@ let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
 let interfaceStatistics = $ref<number>(0);
 let resourseStatistics = $ref<number>(0);
 let interfaceErrorStatistics_code400 = $ref<number>(0);
-// let interfaceErrorStatistics_code500 = $ref<number>(0);
+let interfaceErrorStatistics_code500 = $ref<number>(0);
 let resourseErrorStatistics = $ref<number>(0);
 let total_options = $computed<EChartsCoreOption>(() => {
   return {
     title: {
       zlevel: 2, // 控制圆环图中间的字的层级
       text:
-        (
-          (1 -
-            (resourseErrorStatistics + interfaceErrorStatistics_code400) /
-              (interfaceStatistics +
-                resourseStatistics +
-                resourseErrorStatistics)) *
-          100
-        ).toFixed(2) + "%",
+        (1 -
+          (resourseErrorStatistics +
+            interfaceErrorStatistics_code400 +
+            interfaceErrorStatistics_code500) /
+            (interfaceStatistics +
+              resourseStatistics +
+              resourseErrorStatistics)) *
+        100
+          ? (
+              (1 -
+                (resourseErrorStatistics +
+                  interfaceErrorStatistics_code400 +
+                  interfaceErrorStatistics_code500) /
+                  (interfaceStatistics +
+                    resourseStatistics +
+                    resourseErrorStatistics)) *
+              100
+            ).toFixed(2) + "%"
+          : "暂无数据",
       top: "45%",
       left: "50%",
       textAlign: "center", // 让文字居中
@@ -89,7 +100,7 @@ let total_options = $computed<EChartsCoreOption>(() => {
       {
         name: "Access From",
         type: "pie",
-        radius: ["40%", "70%"],
+        radius: ["60%", "80%"],
         label: {
           position: "inside",
         },
@@ -102,7 +113,10 @@ let total_options = $computed<EChartsCoreOption>(() => {
             name: "请求总数",
           },
           {
-            value: resourseErrorStatistics + interfaceErrorStatistics_code400,
+            value:
+              resourseErrorStatistics +
+              interfaceErrorStatistics_code400 +
+              interfaceErrorStatistics_code500,
             name: "错误总数",
           },
         ],
@@ -116,10 +130,16 @@ let interface_options = $computed<EChartsCoreOption>(() => {
     title: {
       zlevel: 2, // 控制圆环图中间的字的层级
       text:
-        (
-          (interfaceErrorStatistics_code400 / interfaceStatistics) *
-          100
-        ).toFixed(2) + "%",
+        ((interfaceErrorStatistics_code400 + interfaceErrorStatistics_code500) /
+          interfaceStatistics) *
+        100
+          ? (
+              ((interfaceErrorStatistics_code400 +
+                interfaceErrorStatistics_code500) /
+                interfaceStatistics) *
+              100
+            ).toFixed(2) + "%"
+          : "暂无数据",
       top: "45%",
       left: "50%",
       textAlign: "center", // 让文字居中
@@ -133,7 +153,7 @@ let interface_options = $computed<EChartsCoreOption>(() => {
       {
         name: "interface",
         type: "pie",
-        radius: ["40%", "70%"],
+        radius: ["60%", "80%"],
         label: {
           position: "inside",
         },
@@ -143,7 +163,9 @@ let interface_options = $computed<EChartsCoreOption>(() => {
             name: "接口请求",
           },
           {
-            value: interfaceErrorStatistics_code400,
+            value:
+              interfaceErrorStatistics_code400 +
+              interfaceErrorStatistics_code500,
             name: "接口错误",
           },
         ],
@@ -157,11 +179,15 @@ let resourse_options = $computed<EChartsCoreOption>(() => {
     title: {
       zlevel: 2, // 控制圆环图中间的字的层级
       text:
-        (
-          (resourseErrorStatistics /
-            (resourseStatistics + resourseErrorStatistics)) *
-          100
-        ).toFixed(2) + "%",
+        (resourseErrorStatistics /
+          (resourseStatistics + resourseErrorStatistics)) *
+        100
+          ? (
+              (resourseErrorStatistics /
+                (resourseStatistics + resourseErrorStatistics)) *
+              100
+            ).toFixed(2) + "%"
+          : "暂无数据",
       top: "45%",
       left: "50%",
       textAlign: "center", // 让文字居中
@@ -175,7 +201,7 @@ let resourse_options = $computed<EChartsCoreOption>(() => {
       {
         name: "resourse",
         type: "pie",
-        radius: ["40%", "70%"],
+        radius: ["60%", "80%"],
         label: {
           position: "inside",
         },
@@ -217,7 +243,7 @@ function getalldata(start: string) {
       total += e[0].count;
     });
     interfaceStatistics = total;
-    console.log(total);
+    console.log("接口统计", total);
   });
   getErrorsInterfaceerrorstatistics({
     appId: store.appId,
@@ -226,9 +252,22 @@ function getalldata(start: string) {
     mainType: InterfaceIndicator.mainType.InterfaceIndicator,
     subType: InterfaceIndicator.subType.InterfaceIndicator,
     granularity: "1d",
+    statusCode: 400,
   }).then((res) => {
     interfaceErrorStatistics_code400 = res.data[0].count;
-    console.log(res.data[0].count);
+    console.log("code400", res.data[0].count);
+  });
+  getErrorsInterfaceerrorstatistics({
+    appId: store.appId,
+    startTime: start,
+    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
+    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+    subType: InterfaceIndicator.subType.InterfaceIndicator,
+    granularity: "1d",
+    statusCode: 500,
+  }).then((res) => {
+    interfaceErrorStatistics_code500 = res.data[0].count;
+    console.log("code500", res.data[0].count);
   });
   getPerformancesResourceindicatorstatistics({
     appId: store.appId,
@@ -239,7 +278,7 @@ function getalldata(start: string) {
     granularity: "1d",
   }).then((res) => {
     resourseStatistics = res.data[0].count;
-    console.log(res.data[0].count);
+    console.log("资源统计", res.data[0].count);
   });
   getErrorsResourceerrorstatistics({
     appId: store.appId,
@@ -250,7 +289,7 @@ function getalldata(start: string) {
     granularity: "1d",
   }).then((res) => {
     resourseErrorStatistics = res.data[0].count;
-    console.log(res.data[0].count);
+    console.log("资源错误", res.data[0].count);
   });
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="global">
     <div class="top">
       <div class="top-left">
-        <div>资源错误</div>
+        <div>错误</div>
       </div>
       <div class="top-right">
         <div class="calendar">

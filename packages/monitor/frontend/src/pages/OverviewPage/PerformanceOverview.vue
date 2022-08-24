@@ -409,15 +409,17 @@ const totalTime = (val: number): string => {
 <style lang="scss" scoped>
 .bg {
   width: 100%;
-  padding: 25px 35px 0 25px;
+  padding: 5px 35px 0 25px;
   background-color: rgb(240 240 240 / 30%);
 
   .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     .title {
+      display: flex;
+      align-items: center;
       font-size: 18px;
       font-weight: 600;
     }

@@ -294,7 +294,6 @@ function getalldata(start: string) {
       total += e[0].count;
     });
     interfaceStatistics = total;
-    console.log("接口统计", total);
   });
   getErrorsInterfaceerrorstatistics({
     appId: store.appId,
@@ -306,7 +305,6 @@ function getalldata(start: string) {
     statusCode: 400,
   }).then((res) => {
     interfaceErrorStatistics_code400 = res.data[0].count;
-    console.log("code400", res.data[0].count);
   });
   getErrorsInterfaceerrorstatistics({
     appId: store.appId,
@@ -318,7 +316,6 @@ function getalldata(start: string) {
     statusCode: 500,
   }).then((res) => {
     interfaceErrorStatistics_code500 = res.data[0].count;
-    console.log("code500", res.data[0].count);
   });
   getPerformancesResourceindicatorstatistics({
     appId: store.appId,
@@ -329,7 +326,6 @@ function getalldata(start: string) {
     granularity: "1d",
   }).then((res) => {
     resourseStatistics = res.data[0].count;
-    console.log("资源统计", res.data[0].count);
   });
   getErrorsResourceerrorstatistics({
     appId: store.appId,
@@ -340,7 +336,6 @@ function getalldata(start: string) {
     granularity: "1d",
   }).then((res) => {
     resourseErrorStatistics = res.data[0].count;
-    console.log("资源错误", res.data[0].count);
   });
   getErrorsJavascripterrorstatistics({
     appId: store.appId,
@@ -364,7 +359,7 @@ function getalldata(start: string) {
 <style lang="scss" scoped>
 .bg {
   width: 100%;
-  padding: 25px 35px 0 25px;
+  padding: 5px 35px 0 25px;
   background-color: rgb(240 240 240 / 30%);
 
   .header {
@@ -373,6 +368,8 @@ function getalldata(start: string) {
     margin-bottom: 20px;
 
     .title {
+      display: flex;
+      align-items: center;
       font-size: 18px;
       font-weight: 600;
     }

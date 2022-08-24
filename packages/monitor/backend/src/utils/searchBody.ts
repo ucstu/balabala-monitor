@@ -109,8 +109,7 @@ const notChoice = (body: any, querys: BaseQueryVo): void => {
   //   body.size = querys.size;
   // }
   //排序规则
-  // console.log(querys.sort);
-  // if (querys.sort.length > 0 && querys.sort[0].split(",").length === 2) {
+  //   // if (querys.sort.length > 0 && querys.sort[0].split(",").length === 2) {
   //   const sortObj = querys.sort[0].split(",");
   //   const sort = {};
   //   sort[sortObj[0]] = { order: sortObj[1] };

@@ -134,7 +134,6 @@ const loadResource = () => {
     mychart.setOption(option);
     mychart.on("click", (parm: any) => {
       overViewIndex = parm.dataIndex;
-      console.log(parm);
     });
   });
 };

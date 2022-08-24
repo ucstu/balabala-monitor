@@ -37,6 +37,26 @@
         </div>
       </div>
     </DataCard>
+    <DataCard
+      title="一天的JS错误趋势"
+      icon="fa-dedent"
+      line="title"
+      style="margin-top: 20px"
+    >
+      <ECharts
+        v-if="JSerroralldaydataisshow"
+        :option="JSerroralldaydata_options"
+        :autoresize="true"
+        class="bar3"
+      />
+      <div
+        v-else
+        class="bar3"
+        style="height: 75px; margin-top: 30px; text-align: center"
+      >
+        暂无数据
+      </div>
+    </DataCard>
   </div>
 </template>
 
@@ -50,10 +70,12 @@ import { useStore } from "@/stores";
 import { basicChartOption } from "@/configs";
 import {
   getErrorsInterfaceerrorstatistics,
+  getErrorsJavascripterrorstatistics,
   getErrorsResourceerrorstatistics,
   getPerformancesInterfaceindicatorstatistics,
   getPerformancesResourceindicatorstatistics,
   InterfaceIndicator,
+  JavaScriptError,
   ResourceIndicator,
 } from "@/apis";
 const store = useStore();
@@ -101,9 +123,7 @@ let total_options = $computed<EChartsCoreOption>(() => {
         name: "Access From",
         type: "pie",
         radius: ["60%", "80%"],
-        label: {
-          position: "inside",
-        },
+        avoidLabelOverlap: false,
         data: [
           {
             value:
@@ -154,9 +174,7 @@ let interface_options = $computed<EChartsCoreOption>(() => {
         name: "interface",
         type: "pie",
         radius: ["60%", "80%"],
-        label: {
-          position: "inside",
-        },
+        avoidLabelOverlap: false,
         data: [
           {
             value: interfaceStatistics,
@@ -202,9 +220,7 @@ let resourse_options = $computed<EChartsCoreOption>(() => {
         name: "resourse",
         type: "pie",
         radius: ["60%", "80%"],
-        label: {
-          position: "inside",
-        },
+        avoidLabelOverlap: false,
         data: [
           {
             value: resourseStatistics + resourseErrorStatistics,
@@ -215,6 +231,32 @@ let resourse_options = $computed<EChartsCoreOption>(() => {
             name: "资源错误",
           },
         ],
+      },
+    ],
+    ...basicChartOption,
+  };
+});
+let JSerroralldaydata0 = $ref<Array<number>>([]);
+let JSerroralldaydatax = $ref<Array<string>>([]);
+let JSerroralldaydataisshow = $ref<boolean>(false);
+let JSerroralldaydata_options = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data: JSerroralldaydatax,
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        name: "JSerror",
+        data: JSerroralldaydata0,
+        type: "line",
+        stack: 1,
+        label: {
+          show: true,
+        },
       },
     ],
     ...basicChartOption,
@@ -291,6 +333,22 @@ function getalldata(start: string) {
     resourseErrorStatistics = res.data[0].count;
     console.log("资源错误", res.data[0].count);
   });
+  getErrorsJavascripterrorstatistics({
+    appId: store.appId,
+    startTime: start,
+    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
+    mainType: JavaScriptError.mainType.JavaScriptError,
+    subType: JavaScriptError.subType.JavaScriptError,
+    granularity: "1h",
+  }).then((res) => {
+    JSerroralldaydataisshow = true;
+    JSerroralldaydata0 = [];
+    JSerroralldaydatax = [];
+    res.data.forEach((e: any) => {
+      JSerroralldaydata0.push(e.count);
+      JSerroralldaydatax.push(dayjs(e.dataTime).format("HH:mm"));
+    });
+  });
 }
 </script>
 
@@ -325,13 +383,18 @@ function getalldata(start: string) {
   .bar1 {
     display: flex;
     width: 300px;
-    height: 300px;
+    height: 350px;
     text-align: center;
   }
 
   .bar2 {
     width: 250px;
-    height: 250px;
+    height: 300px;
+  }
+
+  .bar3 {
+    width: auto;
+    height: 300px;
   }
 }
 </style>

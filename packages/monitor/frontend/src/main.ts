@@ -2,8 +2,8 @@ import { BarChart, PieChart, LineChart } from "echarts/charts";
 import {
   GridComponent,
   LegendComponent,
-  TooltipComponent,
   TitleComponent,
+  TooltipComponent,
 } from "echarts/components";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";

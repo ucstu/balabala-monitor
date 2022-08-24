@@ -40,7 +40,7 @@
     <div></div>
   </div>
   <MarkdownEditor :mark-string="markString" @handleEditor="handleChange" />
-  <publish-confirm />
+  <PublishConfirm />
 </template>
 
 <script lang="ts" setup>

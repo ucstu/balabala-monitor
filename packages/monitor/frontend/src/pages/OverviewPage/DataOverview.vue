@@ -34,14 +34,14 @@
       </div>
     </div>
     <DataCard
-      title="近30天用户访问量"
+      title="一天的用户访问量趋势"
       icon="fa-dedent"
       line="title"
       style="margin-top: 20px"
     >
       <ECharts
-        v-if="PVdataisshow"
-        :option="PVdata_options"
+        v-if="PValldaydataisshow"
+        :option="PValldaydata_options"
         :autoresize="true"
         class="bar"
       />
@@ -54,14 +54,14 @@
       </div>
     </DataCard>
     <DataCard
-      title="一天的用户访问量趋势"
+      title="近30天用户访问量"
       icon="fa-dedent"
       line="title"
       style="margin-top: 20px"
     >
       <ECharts
-        v-if="PValldaydataisshow"
-        :option="PValldaydata_options"
+        v-if="PVdataisshow"
+        :option="PVdata_options"
         :autoresize="true"
         class="bar"
       />
@@ -151,7 +151,7 @@ let PValldaydata_options = $computed<EChartsCoreOption>(() => {
       {
         name: "PV",
         data: PValldaydata0,
-        type: "bar",
+        type: "line",
         stack: 1,
         label: {
           show: true,

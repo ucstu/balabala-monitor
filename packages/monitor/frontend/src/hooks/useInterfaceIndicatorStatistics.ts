@@ -5,6 +5,7 @@ import {
 import { useStore } from "@/stores";
 import type { MaybeComputedRef } from "@vueuse/core";
 import { useDebounceFn } from "@vueuse/core";
+import dayjs from "dayjs";
 import { computed, ref, watch } from "vue";
 import { dateTimeFormate } from "./configs";
 import type { BasicStatisticItem, BasicStatisticParam } from "./types";
@@ -12,6 +13,9 @@ import type { BasicStatisticItem, BasicStatisticParam } from "./types";
 const store = useStore();
 
 export interface InterfaceIndicatorStatisticParam extends BasicStatisticParam {
+  /*
+   * 接口路径
+   */
   url?: string;
 }
 
@@ -37,7 +41,14 @@ export const useInterfaceIndicatorStatistics = (
       endTime: param.value.endTime.format(dateTimeFormate),
     })
       .then((res) => {
-        interfaceIndicatorStatistics.value = res.data;
+        interfaceIndicatorStatistics.value = res.data.map((section) =>
+          section.map((item) => {
+            return {
+              ...item,
+              dateTime: dayjs(item.dateTime, dateTimeFormate),
+            };
+          })
+        );
       })
       .finally(() => {
         interfaceIndicatorStatisticsLoading.value = false;
@@ -47,7 +58,7 @@ export const useInterfaceIndicatorStatistics = (
     () => param.value,
     () => _getPerformancesInterfaceIndicatorStatistics(),
     {
-      immediate: true,
+      immediate: !param.value._lazy,
     }
   );
   return {

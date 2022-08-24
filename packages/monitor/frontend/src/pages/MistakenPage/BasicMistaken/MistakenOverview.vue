@@ -299,7 +299,7 @@ onMounted(() => {
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 10px;
+    padding: 20px;
 
     .content-left {
       box-sizing: border-box;

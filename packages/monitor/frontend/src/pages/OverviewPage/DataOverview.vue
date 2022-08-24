@@ -101,56 +101,65 @@ let PageAccessDepthcomparedpercentage = $ref<string>("00.00");
 let PVdataisshow = $ref<boolean>(false);
 let PValldaydataisshow = $ref<boolean>(false);
 // PVdata的echarts数据
-let PVdata_options = $ref<EChartsCoreOption>({
-  xAxis: {
-    type: "category",
-    data: [],
-  },
-  yAxis: {
-    type: "value",
-  },
-  series: [
-    {
-      name: "PV",
-      data: [],
-      type: "bar",
-      stack: 1,
-      label: {
-        show: true,
-      },
+let PVdata0 = $ref<Array<number>>([]);
+let PVdata1 = $ref<Array<number>>([]);
+let PVdatax = $ref<Array<string>>([]);
+let PVdata_options = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data: PVdatax,
     },
-    {
-      name: "UV",
-      data: [],
-      type: "bar",
-      stack: 1,
-      label: {
-        show: true,
-      },
+    yAxis: {
+      type: "value",
     },
-  ],
-  ...basicChartOption,
+    series: [
+      {
+        name: "PV",
+        data: PVdata0,
+        type: "bar",
+        stack: 1,
+        label: {
+          show: true,
+        },
+      },
+      {
+        name: "UV",
+        data: PVdata1,
+        type: "bar",
+        stack: 1,
+        label: {
+          show: true,
+        },
+      },
+    ],
+    ...basicChartOption,
+  };
 });
-let PValldaydata_options = $ref<EChartsCoreOption>({
-  xAxis: {
-    type: "category",
-    data: [],
-  },
-  yAxis: {
-    type: "value",
-  },
-  series: [
-    {
-      name: "PV",
-      data: [],
-      type: "bar",
-      stack: 1,
-      label: {
-        show: true,
-      },
+let PValldaydata0 = $ref<Array<number>>([]);
+let PValldaydatax = $ref<Array<string>>([]);
+let PValldaydata_options = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data: PValldaydatax,
     },
-  ],
-  ...basicChartOption,
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        name: "PV",
+        data: PValldaydata0,
+        type: "bar",
+        stack: 1,
+        label: {
+          show: true,
+        },
+      },
+    ],
+    ...basicChartOption,
+  };
 });
 
 // 当日时间
@@ -255,13 +264,13 @@ function getPVdata(start: string, end: string) {
     subType: BasicBehavior.subType.PV,
     granularity: "1d",
   }).then((res) => {
-    PVdata_options.series[0].data = [];
-    PVdata_options.series[1].data = [];
-    PVdata_options.xAxis.data = [];
+    PVdata0 = [];
+    PVdata1 = [];
+    PVdatax = [];
     res.data.forEach((e: any) => {
-      PVdata_options.series[0].data.push(e.count);
-      PVdata_options.series[1].data.push(e.userCount);
-      PVdata_options.xAxis.data.push(dayjs(e.dateTime).format("MM-DD"));
+      PVdata0.push(e.count);
+      PVdata1.push(e.userCount);
+      PVdatax.push(dayjs(e.dateTime).format("MM-DD"));
     });
     PVdataisshow = true;
   });
@@ -273,11 +282,11 @@ function getPVdata(start: string, end: string) {
     subType: BasicBehavior.subType.PV,
     granularity: "1h",
   }).then((res) => {
-    PValldaydata_options.series[0].data = [];
-    PValldaydata_options.xAxis.data = [];
+    PValldaydata0 = [];
+    PValldaydatax = [];
     res.data.forEach((e: any) => {
-      PValldaydata_options.series[0].data.push(e.count);
-      PValldaydata_options.xAxis.data.push(dayjs(e.dateTime).format("HH:mm"));
+      PValldaydata0.push(e.count);
+      PValldaydatax.push(dayjs(e.dateTime).format("HH:mm"));
     });
     PValldaydataisshow = true;
   });

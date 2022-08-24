@@ -14,6 +14,7 @@ export default () => {
       subType: PromiseError.subType.PromiseError,
       pageUrl: getPageUrl(),
       userID: getUserID(),
+      msg: e.reason?.msg,
       stack: e.reason?.stack,
       errorTime: getTimeStamp(),
       appId: getAppId(),

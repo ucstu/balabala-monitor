@@ -12,9 +12,9 @@ export type PromiseErrorParam = BasicQueryParam;
 
 export interface PromiseErrorItem extends BasicQueryItem {
   /*
-   * 调用堆栈
+   * 错误消息
    */
-  stack: string;
+  msg: string;
 }
 
 export const usePromiseErrors = (

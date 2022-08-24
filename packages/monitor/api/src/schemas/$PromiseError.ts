@@ -31,6 +31,11 @@ export const $PromiseError = {
       description: `用户ID`,
       isRequired: true,
     },
+    msg: {
+      type: "string",
+      description: `错误消息`,
+      isRequired: true,
+    },
     stack: {
       type: "string",
       description: `错误堆栈`,

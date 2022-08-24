@@ -1249,9 +1249,9 @@ export class Service {
     message: string;
     data: Array<{
       /**
-       * 错误堆栈
+       * 错误消息
        */
-      stack: string;
+      msg: string;
       /**
        * 统计总数
        */
@@ -1540,7 +1540,7 @@ export class Service {
     userId,
     pageUrl,
     granularity,
-    stack,
+    msg,
   }: {
     /**
      * 应用ID
@@ -1575,9 +1575,9 @@ export class Service {
      */
     granularity?: string;
     /**
-     * 调用堆栈
+     * 错误消息
      */
-    stack?: string;
+    msg?: string;
   }): CancelablePromise<{
     /**
      * 处理时间
@@ -1629,7 +1629,7 @@ export class Service {
         start_time: startTime,
         end_time: endTime,
         granularity: granularity,
-        stack: stack,
+        msg: msg,
       },
     });
   }

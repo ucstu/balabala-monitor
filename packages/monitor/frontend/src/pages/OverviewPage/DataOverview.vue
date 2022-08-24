@@ -3,7 +3,14 @@
     <header class="header">
       <div class="title">核心数据</div>
       <div class="calendar">
-        <input v-model="date" type="date" />
+        <DatePicker
+          v-model:value="date"
+          format="YYYY-MM-DD"
+          style="width: 150px"
+          value-type="format"
+          :editable="false"
+          :clearable="false"
+        />
       </div>
     </header>
     <div class="browse-card">
@@ -85,6 +92,8 @@ import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
 import ECharts from "vue-echarts";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
 const store = useStore();
 // PV数据
 let PV = $ref<number>(0);

@@ -1,4 +1,6 @@
 export * from "./types";
+export * from "./useBasicBehaviors";
+export * from "./useBasicBehaviorStatistics";
 export * from "./useBasicIndicators";
 export * from "./useBasicIndicatorStatistics";
 export * from "./useInterfaceErrors";

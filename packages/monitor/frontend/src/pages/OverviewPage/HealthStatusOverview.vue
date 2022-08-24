@@ -1,24 +1,8 @@
 <template>
-  <div class="bg">
-    <header class="header">
-      <div class="title">健康数据</div>
-      <div class="calendar">
-        <DatePicker
-          v-model:value="date"
-          format="YYYY-MM-DD"
-          style="width: 150px"
-          value-type="format"
-          :editable="false"
-          :clearable="false"
-        />
-      </div>
-    </header>
-    <DataCard
-      title="一天的用户访问量趋势"
-      icon="fa-dedent"
-      line="title"
-      style="margin-top: 20px"
-      ><div
+  <div class="main">
+    <ToolBar v-model:dateTime="activeDateTime" title="业务数据" />
+    <DataCard title="一天的用户访问量趋势">
+      <div
         style="
           display: flex;
           justify-content: space-between;
@@ -32,7 +16,7 @@
         ></ECharts>
         <div style="display: flex; align-items: center; width: 650px">
           <ECharts
-            :option="interface_options"
+            :option="interfaceErrorStatisticsChartOption"
             :autoresize="true"
             class="bar2"
           ></ECharts>
@@ -46,23 +30,14 @@
     </DataCard>
     <DataCard
       title="一天的JS错误趋势"
-      icon="fa-dedent"
-      line="title"
       style="margin-top: 20px"
+      :loading="!JSerroralldaydataisshow"
     >
       <ECharts
-        v-if="JSerroralldaydataisshow"
         :option="JSerroralldaydata_options"
         :autoresize="true"
         class="bar3"
       />
-      <div
-        v-else
-        class="bar3"
-        style="height: 75px; margin-top: 30px; text-align: center"
-      >
-        暂无数据
-      </div>
     </DataCard>
   </div>
 </template>
@@ -79,15 +54,72 @@ import {
   ResourceIndicator,
 } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
+import ToolBar from "@/components/ToolBar.vue";
 import { basicChartOption } from "@/configs";
+import { useInterfaceErrorStatistics } from "@/hooks";
 import { useStore } from "@/stores";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
-import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
+
 const store = useStore();
+
+let activeDateTime = $ref(dayjs());
+
+const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
+  useInterfaceErrorStatistics(() => {
+    return {
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
+);
+
+let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  return {
+    series: [
+      {
+        type: "pie", //pie类型的图实现环形图
+        radius: ["60%", "90%"], //数组的话，表示内圆和外圆的半径大小，相对于宽高中较小的那一个。
+        center: ["50%", "50%"], //圆心坐标
+        label: {
+          //每个数据的标签
+          show: true, //设置为true则显示第一个数据
+          position: "center", //位置居中
+          formatter: "{d}%", //{d}表示数据在总数据中的百分比
+          fontSize: 20,
+          fontWeight: "bold",
+        },
+        color: ["#695BF9", "#1E3E55"], //系列的颜色
+        emphasis: {
+          //高亮，即鼠标经过时的样式
+          scale: false, //表示不放大item
+        },
+        labelLine: {
+          show: true,
+        },
+        data: [
+          {
+            value: 80,
+            name: "正确请求",
+          },
+          {
+            value: 20,
+            name: "错误请求",
+            emphasis: {
+              label: {
+                show: false, //这个数据高亮时不显示label，就不会显示替遮住第一个数据的label值了
+              },
+            },
+          },
+        ],
+      },
+    ],
+  };
+});
+
 let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
 let interfaceStatistics = $ref<number>(0);
 let resourseStatistics = $ref<number>(0);
@@ -154,53 +186,7 @@ let total_options = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
-let interface_options = $computed<EChartsCoreOption>(() => {
-  return {
-    title: {
-      zlevel: 2, // 控制圆环图中间的字的层级
-      text:
-        ((interfaceErrorStatistics_code400 + interfaceErrorStatistics_code500) /
-          interfaceStatistics) *
-        100
-          ? (
-              ((interfaceErrorStatistics_code400 +
-                interfaceErrorStatistics_code500) /
-                interfaceStatistics) *
-              100
-            ).toFixed(2) + "%"
-          : "暂无数据",
-      top: "45%",
-      left: "50%",
-      textAlign: "center", // 让文字居中
-      textStyle: {
-        color: "red",
-        fontWeight: "bolder",
-        fontSize: "30px",
-      },
-    },
-    series: [
-      {
-        name: "interface",
-        type: "pie",
-        radius: ["60%", "80%"],
-        avoidLabelOverlap: false,
-        data: [
-          {
-            value: interfaceStatistics,
-            name: "接口请求",
-          },
-          {
-            value:
-              interfaceErrorStatistics_code400 +
-              interfaceErrorStatistics_code500,
-            name: "接口错误",
-          },
-        ],
-      },
-    ],
-    ...basicChartOption,
-  };
-});
+
 let resourse_options = $computed<EChartsCoreOption>(() => {
   return {
     title: {
@@ -357,7 +343,7 @@ function getalldata(start: string) {
 </script>
 
 <style lang="scss" scoped>
-.bg {
+.main {
   width: 100%;
   padding: 5px 35px 0 25px;
   background-color: rgb(240 240 240 / 30%);

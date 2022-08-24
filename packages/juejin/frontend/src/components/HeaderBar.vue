@@ -40,7 +40,15 @@
           <img src="@/assets/vip.png" alt="" class="vip-info" />
           <div></div>
           <!-- <button class="avatar-info login-btn">登录</button> -->
-          <UserLogin />
+          <UserLogin v-if="!store.token" />
+          <div v-else>
+            <img
+              src="@/assets/change.png"
+              alt=""
+              srcset=""
+              style="height: 30px"
+            />
+          </div>
         </div>
       </div>
       <ComDivider />
@@ -65,9 +73,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useStore } from "@/stores";
 import router from "../router";
 import ComDivider from "./ComDivider.vue";
 import UserLogin from "./UserLogin.vue";
+
+const store = useStore();
 
 const TopFence = [
   "首页",

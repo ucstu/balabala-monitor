@@ -1,5 +1,7 @@
 import "@/assets/iconfont/iconfont.js";
 import "bytemd/dist/index.css";
+import { createPinia } from "pinia";
+import piniaPluginPersist from "pinia-plugin-persist";
 import { createApp } from "vue";
 import { client } from "./apis";
 import App from "./App.vue";
@@ -19,4 +21,7 @@ import("@balabala/monitor-sdk")
   });
 
 client.service.httpRequest.config.BASE = import.meta.env.VITE_BASE_URL;
-createApp(App).use(router).mount("#app");
+createApp(App)
+  .use(createPinia().use(piniaPluginPersist))
+  .use(router)
+  .mount("#app");

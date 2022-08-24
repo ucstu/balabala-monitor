@@ -15,6 +15,7 @@ import App from "./App.vue";
 import router from "./router";
 import "./style.scss";
 
+import piniaPluginPersist from "pinia-plugin-persist";
 use([
   CanvasRenderer,
   BarChart,
@@ -26,4 +27,7 @@ use([
 ]);
 
 client.service.httpRequest.config.BASE = import.meta.env.VITE_BASE_URL;
-createApp(App).use(createPinia()).use(router).mount("#app");
+createApp(App)
+  .use(createPinia().use(piniaPluginPersist))
+  .use(router)
+  .mount("#app");

@@ -75,7 +75,7 @@ export class ResourceerrorService {
         userCount: 1,
         pageCount: 1,
         userID: [item[2]],
-        pageUrl: [item[3]],
+        pageList: [item[3]],
         average: 0,
       };
       const key = `${item[0]}`;
@@ -85,9 +85,9 @@ export class ResourceerrorService {
           mapItem.userCount++;
           mapItem.userID.push(value.userID[0]);
         }
-        if (!mapItem.pageUrl.includes(value.pageUrl[0])) {
+        if (!mapItem.pageList.includes(value.pageList[0])) {
           mapItem.pageCount++;
-          mapItem.pageUrl.push(value.pageUrl[0]);
+          mapItem.pageList.push(value.pageList[0]);
         }
         map.get(key).count += value.count;
       } else {

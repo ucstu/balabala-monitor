@@ -10,6 +10,9 @@ const store = useStore();
 export type InterfaceIndicatorParam = BasicQueryParam;
 
 export interface InterfaceIndicatorItem extends BasicQueryItem {
+  /*
+   * 接口路径
+   */
   url: string;
 }
 
@@ -43,7 +46,7 @@ export const useInterfaceIndicators = (
     () => param.value,
     () => _getPerformancesInterfaceIndicators(),
     {
-      immediate: true,
+      immediate: !param.value._lazy,
     }
   );
   return {

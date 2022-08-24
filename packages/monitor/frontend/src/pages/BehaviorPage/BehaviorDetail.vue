@@ -2,9 +2,16 @@
   <div class="container">
     <DataCard title="用户详情" icon="fa-dedent">
       <template #rActions>
-        <div class="flex-row justify-between" style="width: 420px">
-          <input v-model="activeRawTime" type="date" />
-          <input v-model="userId" type="text" style="width: 250px" />
+        <div class="flex-row justify-between" style="width: 460px">
+          <DatePicker
+            v-model:value="activeRawTime"
+            format="YYYY-MM-DD"
+            style="width: 150px"
+            value-type="format"
+            :editable="false"
+            :clearable="false"
+          />
+          <input v-model="userId" class="input" type="text" />
         </div>
       </template>
       <div class="charts">
@@ -30,51 +37,57 @@
         </DataCard>
       </div>
     </DataCard>
-    <div class="action">
-      <DataCard title="行为记录列表" :loading="userActionsLoading">
-        <template #rActions>
-          <button
-            v-for="index in 4"
+    <DataCard
+      title="行为记录列表"
+      :loading="userActionsLoading"
+      :empty="!userActions.length"
+    >
+      <template #rActions>
+        <button
+          v-for="index in 4"
+          :key="index"
+          class="btn"
+          :class="{ active: activeActionType === index - 1 }"
+          @click="activeActionType = index - 1"
+        >
+          {{ actionTypeNameMap[index - 1] }}
+        </button>
+      </template>
+      <div class="main">
+        <div class="list">
+          <div
+            v-for="(userAction, index) in userActions"
+            v-show="
+              activeActionType == 0 || userAction.listType == activeActionType
+            "
             :key="index"
-            :class="{ 'btn-active': activeActionType === index }"
-            @click="activeActionType = index - 1"
+            class="item"
+            @click="activeActionIndex = index"
           >
-            {{ actionTypeNameMap[index - 1] }}
-          </button>
-        </template>
-        <div class="main">
-          <div class="list">
+            <div class="icon">
+              <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+            </div>
             <div
-              v-for="(item, index) in userActions"
-              v-show="
-                activeActionType == 0 || item.listType == activeActionType
-              "
-              :key="index"
-              class="item"
-              @click="activeActionIndex = index"
+              class="content"
+              :class="{ chose: activeActionIndex === index }"
             >
-              <div class="icon">
-                <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
-              </div>
-              <div :class="['content', { chose: activeActionIndex === index }]">
-                <div class="title">
-                  <div>{{ item.title }}</div>
-                  <div>
-                    {{ dayjs(item.time).format("YYYY-MM-DD HH:mm:ss") }}
-                  </div>
+              <div class="title">
+                <div>{{ userAction.title }}</div>
+                <div>
+                  {{ dayjs(userAction.time).format("YYYY-MM-DD HH:mm:ss") }}
                 </div>
-                <div class="msg">{{ item.pageUrl }}</div>
               </div>
+              <div class="msg">{{ userAction.pageUrl }}</div>
             </div>
           </div>
-          <ActionInfo
-            class="info"
-            :action-type="activeActionIndex"
-            :action-info="activeActionInfo"
-          ></ActionInfo>
         </div>
-      </DataCard>
-    </div>
+        <ActionInfo
+          class="info"
+          :action-type="activeActionIndex"
+          :action-info="activeActionInfo"
+        ></ActionInfo>
+      </div>
+    </DataCard>
   </div>
 </template>
 <!--
@@ -98,6 +111,8 @@ import { useDebounceFn } from "@vueuse/shared";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import { onMounted, watch } from "vue";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 import { useRoute, useRouter } from "vue-router";
 import ActionInfo from "./ActionInfo.vue";
@@ -166,7 +181,7 @@ const pageIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       type: "category",
       data:
         pageIndicatorStatistics?.[0]?.map((item) =>
-          dayjs(item.dateTime).format("HH:mm")
+          item.dateTime.format("HH:mm")
         ) || [],
     },
     yAxis: {
@@ -207,7 +222,7 @@ const interfaceIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(
         type: "category",
         data:
           interfaceIndicatorStatistics?.[0]?.map((item) =>
-            dayjs(item.dateTime).format("HH:mm")
+            item.dateTime.format("HH:mm")
           ) || [],
       },
       yAxis: {
@@ -261,70 +276,54 @@ watch([() => activeDateTime, () => userId], () => {
   width: 100%;
   padding: 20px;
 
-  .action {
-    .main {
-      .list {
-        width: 70%;
-        height: 370px;
-        overflow-y: auto;
+  .main {
+    display: flex;
 
-        .item {
+    .list {
+      flex: 7;
+      height: 370px;
+      margin-right: 20px;
+      overflow-y: auto;
+
+      .item {
+        display: flex;
+        height: 70px;
+        padding: 20px;
+
+        .icon {
+          padding-top: 10px;
+        }
+
+        .content {
           display: flex;
-          height: 70px;
-          padding: 20px;
-
-          .icon {
-            padding-top: 10px;
-          }
-
-          .content {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding: 10px;
-            margin-left: 20px;
-            overflow: hidden;
-            line-height: 25px;
-            cursor: pointer;
-            background-color: #f7f7f7;
-            border-radius: 10px;
-
-            .msg {
-              margin-right: 10px;
-              overflow: hidden;
-              font-size: 13px;
-              color: #6c6e7a;
-            }
-
-            .title {
-              display: flex;
-              justify-content: space-between;
-              font-size: 15px;
-            }
-          }
-        }
-      }
-
-      .info {
-        flex: 1;
-        height: 370px;
-        padding: 10px 20px;
-        margin-left: 15px;
-        overflow-y: auto;
-        border: 2px solid #f5f5f9;
-        border-radius: 10px;
-
-        .item {
+          flex-direction: column;
           width: 100%;
-          margin-bottom: 20px;
-          word-wrap: break-word;
+          padding: 10px;
+          margin-left: 20px;
+          overflow: hidden;
+          line-height: 25px;
+          cursor: pointer;
+          background-color: #f7f7f7;
+          border-radius: 10px;
 
-          .data {
-            font-size: 14px;
-            color: gray;
+          .title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+          }
+
+          .msg {
+            margin-right: 10px;
+            overflow: hidden;
+            font-size: 13px;
+            color: #6c6e7a;
           }
         }
       }
+    }
+
+    .info {
+      flex: 3;
     }
   }
 }
@@ -340,6 +339,40 @@ watch([() => activeDateTime, () => userId], () => {
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+
+.btn {
+  width: 50px;
+  height: 30px;
+  padding: 3px;
+  margin-right: 15px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 0;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  outline: none;
+}
+
+.active {
+  color: #ff7626;
+  border-color: #ff7626;
+}
+
+.input {
+  flex: 1;
+  height: 30px;
+  margin-left: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: all 30ms;
+
+  &:focus,
+  &:hover {
+    border-color: #409aff;
   }
 }
 </style>

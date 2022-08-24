@@ -20,7 +20,11 @@ export class RoleGuard implements CanActivate {
     const user = request.headers;
 
     //拿到了用户表示，查询数据库查看是否拥有查询
-    if (this.authService.validate(user.token) == null) {
+    if (
+      this.authService.validate(
+        (user.authorization as string).replace("Bearer ", "")
+      ) == null
+    ) {
       return false;
     }
 

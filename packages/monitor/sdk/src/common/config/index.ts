@@ -6,7 +6,7 @@ let config: MonitorConfig = {
   appId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
   userId: "5e8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8",
   cacheMapSize: 30,
-  reportTimeInterval: 1000,
+  reportTimeInterval: 5000,
 };
 
 export const setConfig = (

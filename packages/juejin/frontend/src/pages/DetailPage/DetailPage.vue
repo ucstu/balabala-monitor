@@ -2,7 +2,7 @@
   <div class="whole">
     <div style="flex: 1"></div>
     <div class="main-content">
-      <MarkdownViewer :mark-string="article.articleContent" />
+      <MarkdownViewer :mark-string="article?.articleContent" />
     </div>
     <div class="right-content"></div>
     <div style="flex: 1"></div>

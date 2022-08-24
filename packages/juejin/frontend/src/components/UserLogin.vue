@@ -140,6 +140,7 @@ function loginSure() {
       }).then((res) => {
         if (res.message == "成功") {
           store.token = res.data.token;
+          client.request.config.TOKEN = res.data.token;
           client.service.httpRequest.config.TOKEN = res.data.token;
           isShow = false;
         } else {

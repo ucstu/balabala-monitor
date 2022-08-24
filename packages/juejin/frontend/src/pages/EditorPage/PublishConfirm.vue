@@ -251,6 +251,27 @@ const labelList = [
   "代码人生",
   "阅读",
 ];
+
+type Data = {
+  articleTitle: string;
+  articleClass: string;
+  articleTags: string;
+  articleCover: string;
+  articleSummary: string;
+};
+
+const props = defineProps<{
+  data: Data;
+}>();
+
+const emits = defineEmits<{
+  (e: "update:default", value: Data): void;
+}>();
+
+let data = $computed({
+  get: () => props.data,
+  set: (value) => emits("update:default", value),
+});
 </script>
 
 <style lang="scss" scoped>

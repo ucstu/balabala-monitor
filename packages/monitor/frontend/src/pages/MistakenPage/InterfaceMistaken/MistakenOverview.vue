@@ -1,26 +1,26 @@
 <template>
   <div class="content">
     <ToolBar v-model:date-time="activeDateTime" title="接口错误错误概览" />
-    <div class="flex-row">
+    <div class="flex-row" style="height: 500px">
       <DataCard
         class="card"
         title="接口错误趋势（24H）"
-        :loading="javaScriptErrorStatisticsLoading"
+        :loading="interfaceErrorStatisticsLoading"
       >
         <ECharts
-          :option="javaScriptErrorStatisticsChartOption"
+          :option="interfaceErrorStatisticsChartOption"
           :autoresize="true"
         />
       </DataCard>
       <DataCard
         class="card"
         title="资源错误（TOP10）"
-        :loading="javaScriptErrorsLoading"
-        :empty="javaScriptErrors?.length ? false : true"
+        :loading="interfaceErrorsLoading"
+        :empty="interfaceErrors?.length ? false : true"
       >
         <BasicTable
           :titles="['错误消息', '发生次数', '影响用户']"
-          :data-list="javaScriptErrorRows"
+          :data-list="interfaceErrorRaws"
         />
       </DataCard>
     </div>
@@ -32,12 +32,7 @@ import BasicTable from "@/components/BasicTable.vue";
 import DataCard from "@/components/DataCard.vue";
 import ToolBar from "@/components/ToolBar.vue";
 import { basicChartOption } from "@/configs";
-import {
-  useJavaScriptErrors,
-  useJavaScriptErrorStatistics,
-  usePromiseErrors,
-  usePromiseErrorStatistics,
-} from "@/hooks";
+import { useInterfaceErrors, useInterfaceErrorStatistics } from "@/hooks";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import "vue-datepicker-next/index.css";
@@ -45,8 +40,8 @@ import ECharts from "vue-echarts";
 
 let activeDateTime = $ref(dayjs());
 
-const { javaScriptErrors, javaScriptErrorsLoading } = $(
-  useJavaScriptErrors(() => {
+const { interfaceErrors, interfaceErrorsLoading } = $(
+  useInterfaceErrors(() => {
     return {
       startTime: activeDateTime,
       endTime: activeDateTime.add(1, "d"),
@@ -55,29 +50,13 @@ const { javaScriptErrors, javaScriptErrorsLoading } = $(
   })
 );
 
-const javaScriptErrorRows = $computed(
+const interfaceErrorRaws = $computed(
   () =>
-    javaScriptErrors?.map((item) => [item.msg, item.count, item.userCount]) ||
-    []
+    interfaceErrors?.map((item) => [item.url, item.count, item.userCount]) || []
 );
 
-const { promiseErrors, promiseErrorsLoading } = $(
-  usePromiseErrors(() => {
-    return {
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
-      size: 10,
-    };
-  })
-);
-
-const promiseErrorRows = $computed(
-  () =>
-    promiseErrors?.map((item) => [item.msg, item.count, item.userCount]) || []
-);
-
-const { javaScriptErrorStatistics, javaScriptErrorStatisticsLoading } = $(
-  useJavaScriptErrorStatistics(() => {
+const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
+  useInterfaceErrorStatistics(() => {
     return {
       startTime: activeDateTime,
       endTime: activeDateTime.add(1, "d"),
@@ -86,58 +65,21 @@ const { javaScriptErrorStatistics, javaScriptErrorStatisticsLoading } = $(
   })
 );
 
-const javaScriptErrorStatisticsChartOption = $computed<EChartsCoreOption>(
-  () => {
-    return {
-      xAxis: {
-        type: "category",
-        data:
-          javaScriptErrorStatistics?.map((item) =>
-            item.dateTime.format("HH:mm")
-          ) || [],
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          data: javaScriptErrorStatistics?.map((item) => item.count) || [],
-          type: "line",
-          areaStyle: {},
-          emphasis: {
-            focus: "series",
-          },
-        },
-      ],
-      ...basicChartOption,
-    };
-  }
-);
-
-const { promiseErrorStatistics, promiseErrorStatisticsLoading } = $(
-  usePromiseErrorStatistics(() => {
-    return {
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
-      granularity: "1h",
-    };
-  })
-);
-
-const promiseErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     xAxis: {
       type: "category",
       data:
-        promiseErrorStatistics?.map((item) => item.dateTime.format("HH:mm")) ||
-        [],
+        interfaceErrorStatistics?.map((item) =>
+          item.dateTime.format("HH:mm")
+        ) || [],
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: promiseErrorStatistics?.map((item) => item.count) || [],
+        data: interfaceErrorStatistics?.map((item) => item.count) || [],
         type: "line",
         areaStyle: {},
         emphasis: {

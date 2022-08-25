@@ -96,36 +96,56 @@
             </li>
           </ul>
           <div class="right">
-            <DataCard icon="fa-flag" title="常见指标">
-              <div class="board">
-                <div class="data">
-                  <div class="time">
-                    <span>平均耗时</span>
-                    <span
-                      >{{
-                        (
-                          (basicIndicators?.[activePage]?.average || 0) / 1000
-                        ).toFixed(2)
-                      }}s</span
-                    >
+            <div class="flex-row">
+              <DataCard icon="fa-flag" title="常见指标">
+                <div class="board">
+                  <div class="data">
+                    <div class="time">
+                      <span>平均耗时</span>
+                      <span
+                        >{{
+                          (
+                            (basicIndicators?.[activePage]?.average || 0) / 1000
+                          ).toFixed(2)
+                        }}s</span
+                      >
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-hourglass-end"></i>
+                    </div>
                   </div>
-                  <div class="icon">
-                    <i class="fa fa-hourglass-end"></i>
+                  <div class="data">
+                    <div class="time">
+                      <span>影响用户</span>
+                      <span>{{
+                        basicIndicators?.[activePage]?.userCount || 0
+                      }}</span>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-male"></i>
+                    </div>
                   </div>
                 </div>
-                <div class="data">
-                  <div class="time">
-                    <span>影响用户</span>
-                    <span>{{
-                      basicIndicators?.[activePage]?.userCount || 0
-                    }}</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-male"></i>
+              </DataCard>
+              <DataCard title="用户列表">
+                <div class="user-list">
+                  <div
+                    v-for="userID in activeUserList"
+                    :key="userID"
+                    class="user-name"
+                    @click="
+                      router.push(
+                        `/Behavior/BehaviorDetail?userId=${userID}&dateTime=${activeDateTime.format(
+                          'YYYY-MM-DD'
+                        )}`
+                      )
+                    "
+                  >
+                    {{ userID }}
                   </div>
                 </div>
-              </div>
-            </DataCard>
+              </DataCard>
+            </div>
             <DataCard
               icon="fa-bar-chart"
               title="请求趋势"
@@ -154,6 +174,9 @@ import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import { watch } from "vue";
 import ECharts from "vue-echarts";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
@@ -184,7 +207,7 @@ const {
       mainType: parseInt(typeString.split("-")[0]),
       subType: parseInt(typeString.split("-")[1]),
       startTime: nowDateTime.subtract(29, "d"),
-      endTime: nowDateTime,
+      endTime: nowDateTime.add(1, "d"),
     };
   })
 );
@@ -295,6 +318,10 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
+
+const activeUserList = $computed(
+  () => basicIndicators?.[activePage]?.userList || []
+);
 
 watch(
   () => basicIndicators,
@@ -480,6 +507,22 @@ watch(
           height: 300px;
         }
       }
+    }
+  }
+}
+
+.user-list {
+  .user-name {
+    padding: 10px;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: azure;
+    }
+
+    &:checked {
+      background-color: aliceblue;
     }
   }
 }

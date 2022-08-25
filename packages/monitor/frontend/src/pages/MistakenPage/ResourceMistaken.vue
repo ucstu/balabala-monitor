@@ -4,7 +4,7 @@
       <DataCard
         class="chart"
         icon="fa-bar-chart-o"
-        title="资源加载报错(点击柱状图查看其它日期)"
+        title="资源加载报错(点击顶点查看其它日期)"
         :loading="resourceErrorStatisticsLoading"
       >
         <template #rActions>

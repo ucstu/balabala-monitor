@@ -55,6 +55,7 @@
               background: currentIndex == index ? ' rgb(244 245 243)' : '',
               color: defaultIndex == index ? '#1e80ff' : '',
             }"
+            @click="clickNavigator(index)"
             @mouseenter="enterHandle(index)"
           >
             {{ item }}
@@ -75,8 +76,12 @@ const route = useRoute();
 let currentIndex = $ref();
 let defaultIndex = $ref(0);
 let article = $ref<Article>();
-const enterHandle = (index) => {
+const enterHandle = (index: any) => {
   currentIndex = index;
+};
+const clickNavigator = (index: any) => {
+  defaultIndex == index;
+  console.log(defaultIndex, index);
 };
 getArticle({
   articleId:

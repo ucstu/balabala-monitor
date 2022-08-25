@@ -1,141 +1,146 @@
 <template>
   <div class="global">
     <div class="content">
-      <div class="chart">
-        <DataCard
-          icon="fa-bar-chart-o"
-          title="资源加载报错(点击柱状图查看其它日期)"
-        ></DataCard>
-        <div ref="resourceDom" class="chart-content"></div>
-      </div>
+      <DataCard
+        class="chart"
+        icon="fa-bar-chart-o"
+        title="资源加载报错(点击柱状图查看其它日期)"
+        :loading="resourceErrorStatisticsLoading"
+      >
+        <template #rActions>
+          <DatePicker
+            v-model:value="activeRawDateTime"
+            format="YYYY-MM-DD"
+            style="position: relative; width: 150px"
+            value-type="format"
+            :editable="false"
+            :clearable="false"
+          />
+        </template>
+        <ECharts
+          :option="resourceErrorStatisticsChartOption"
+          :autoresize="true"
+          @click="handleChartClick"
+        />
+      </DataCard>
       <div class="statistics">
-        <DataCard icon="fa-file-archive-o" title="今日概况"></DataCard>
-        <div class="statistics-content">
-          <div class="content-box box-one">
-            <div class="picture">
-              <img src="@/assets/re_total.png" alt="" />
+        <DataCard
+          icon="fa-file-archive-o"
+          :title="'当日概况（' + activeRawDateTime + '）'"
+        >
+          <div class="statistics-content">
+            <div class="content-box box-one">
+              <div class="picture">
+                <img src="@/assets/re_total.png" alt="" />
+              </div>
+              <div class="count">
+                <div>总发生次数</div>
+                <div>
+                  {{
+                    resourceErrorStatistics?.[activeResourceErrorIndex]
+                      ?.count || 0
+                  }}
+                  次
+                </div>
+              </div>
             </div>
-            <div class="count">
-              <div>总发生次数</div>
+            <div class="content-box box-two">
               <div>
-                {{
-                  overView.length === 0 ? "" : overView[overViewIndex].count
-                }}次
+                <div class="picture">
+                  <img src="@/assets/pages.png" alt="" />
+                </div>
+                <div class="count">
+                  <div>影响页面次数</div>
+                  <div>
+                    {{
+                      resourceErrorStatistics?.[activeResourceErrorIndex]
+                        ?.pageCount || 0
+                    }}次
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="content-box box-two">
-            <div>
-              <div class="picture"><img src="@/assets/pages.png" alt="" /></div>
-              <div class="count">
-                <div>影响页面次数</div>
-                <div>
-                  {{
-                    overView.length === 0
-                      ? ""
-                      : overView[overViewIndex].pageCount
-                  }}次
+            <div class="content-box box-three">
+              <div>
+                <div class="picture">
+                  <img src="@/assets/users.png" alt="" />
+                </div>
+                <div class="count">
+                  <div>影响人数</div>
+                  <div>
+                    {{
+                      resourceErrorStatistics?.[activeResourceErrorIndex]
+                        ?.userCount || 0
+                    }}位
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="content-box box-three">
-            <div>
-              <div class="picture"><img src="@/assets/users.png" alt="" /></div>
-              <div class="count">
-                <div>影响人数</div>
-                <div>
-                  {{
-                    overView.length === 0
-                      ? ""
-                      : overView[overViewIndex].userCount
-                  }}位
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </DataCard>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getErrorsResourceerrorstatistics, ResourceError } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
-import { useStore } from "@/stores";
+import { basicChartOption } from "@/configs";
+import { useResourceErrorStatistics } from "@/hooks";
 import dayjs from "dayjs";
-import * as echarts from "echarts";
-import { storeToRefs } from "pinia";
-import { nextTick } from "vue";
-const resourceDom = $ref<HTMLElement>();
+import type { EChartsCoreOption } from "echarts";
+import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
+import ECharts from "vue-echarts";
+import { ReactiveVariable } from "vue/macros";
 
-const store = useStore();
-let { appId } = $(storeToRefs(store));
-let option: any = $ref({
-  xAxis: {
-    type: "category",
-    data: [],
+let activeDateTime = $ref(dayjs());
+let activeRawDateTime = $computed({
+  get: () => activeDateTime.format("YYYY-MM-DD"),
+  set: (value) => {
+    activeDateTime = dayjs(value);
   },
-  yAxis: {
-    type: "value",
-  },
-  series: [
-    {
-      data: [],
-      type: "bar",
-      itemStyle: {
-        color: "#94d6da",
-      },
+});
 
-      emphasis: {
-        itemStyle: {
-          color: "#009ad6",
+let activeResourceErrorIndex = $ref(0);
+
+const { resourceErrorStatistics, resourceErrorStatisticsLoading } = $(
+  useResourceErrorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
+
+const resourceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        resourceErrorStatistics?.map((item) => item.dateTime.format("HH:mm")) ||
+        [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: resourceErrorStatistics?.map((item) => item.count) || [],
+        type: "line",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
         },
       },
-    },
-  ],
-  tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
-    },
-  },
-});
-let mychart: any;
-nextTick(() => {
-  mychart = echarts.init(resourceDom);
-  loadResource();
-});
-type count = {
-  count: number;
-  pageCount?: number;
-  userCount: number;
-};
-let overView = $ref<count[]>([]);
-
-const ResourceParms = $ref({
-  appId,
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  granularity: "1d",
-  mainType: ResourceError.mainType.ResourceError,
-  subType: ResourceError.subType.ResourceError,
+    ],
+    ...basicChartOption,
+  };
 });
 
-let overViewIndex = $ref<number>(0);
-const loadResource = () => {
-  getErrorsResourceerrorstatistics({ ...ResourceParms }).then((res) => {
-    res.data.forEach((data) => {
-      overView.push(data);
-      option.xAxis.data.push(data.dateTime);
-      option.series[0].data.push(data.count);
-    });
-    mychart.setOption(option);
-    mychart.on("click", (parm: any) => {
-      overViewIndex = parm.dataIndex;
-    });
-  });
+const handleChartClick = (e: { dataIndex: ReactiveVariable<number> }) => {
+  activeResourceErrorIndex = e.dataIndex;
 };
 </script>
 
@@ -152,7 +157,7 @@ const loadResource = () => {
     padding: 20px;
 
     .chart {
-      padding: 20px;
+      margin-right: 10px;
 
       .chart-content {
         width: 95%;
@@ -165,8 +170,6 @@ const loadResource = () => {
     }
 
     .statistics {
-      padding: 20px;
-
       .statistics-content {
         .box-one {
           background-color: #e9e167;

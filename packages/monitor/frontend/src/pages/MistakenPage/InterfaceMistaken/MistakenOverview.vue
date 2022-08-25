@@ -1,201 +1,111 @@
 <template>
-  <div class="global">
-    <div class="content">
-      <div class="content-left">
-        <div class="list">
-          <div class="list-title">
-            <div class="list-title-name">高频错误</div>
-            <div class="list-title-name">发生次数</div>
-            <div class="list-title-name">影响人数</div>
-          </div>
-          <div v-for="(item, index) in list" :key="index" class="list-content">
-            <div class="sort">
-              <div class="list-left sort-content">
-                <div class="list-left-top sort-content">
-                  <div class="type">interfaceErrors</div>
-                </div>
-                <div class="list-left-bottom sort-content">
-                  {{ item.dateTime }}
-                </div>
-              </div>
-              <div class="list-center">{{ item.count }}</div>
-              <div class="list-right">{{ item.userCount }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="content-right">
-        <div class="list">
-          <div class="list-title">
-            <div class="list-title-name">最新错误</div>
-            <div class="list-title-name">发生次数</div>
-            <div class="list-title-name">影响人数</div>
-          </div>
-          <div v-for="(item, index) in list" :key="index" class="list-content">
-            <div class="sort">
-              <div class="list-left sort-content">
-                <div class="list-left-top sort-content">
-                  <div class="type">interfaceErrors</div>
-                </div>
-                <div class="list-left-bottom sort-content">
-                  {{ item.dateTime }}
-                </div>
-              </div>
-              <div class="list-center">{{ item.count }}</div>
-              <div class="list-right">{{ item.userCount }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="content">
+    <ToolBar v-model:date-time="activeDateTime" title="接口错误错误概览" />
+    <div class="flex-row" style="height: 500px">
+      <DataCard
+        class="card"
+        title="接口错误趋势（24H）"
+        :loading="interfaceErrorStatisticsLoading"
+      >
+        <ECharts
+          :option="interfaceErrorStatisticsChartOption"
+          :autoresize="true"
+        />
+      </DataCard>
+      <DataCard
+        class="card"
+        title="资源错误（TOP10）"
+        :loading="interfaceErrorsLoading"
+        :empty="interfaceErrors?.length ? false : true"
+      >
+        <BasicTable
+          :titles="['错误消息', '发生次数', '影响用户']"
+          :data-list="interfaceErrorRaws"
+        />
+      </DataCard>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getErrorsInterfaceerrorstatistics, InterfaceIndicator } from "@/apis";
-import { useStore } from "@/stores";
+import BasicTable from "@/components/BasicTable.vue";
+import DataCard from "@/components/DataCard.vue";
+import ToolBar from "@/components/ToolBar.vue";
+import { basicChartOption } from "@/configs";
+import { useInterfaceErrors, useInterfaceErrorStatistics } from "@/hooks";
 import dayjs from "dayjs";
-import { storeToRefs } from "pinia";
-import { nextTick } from "vue";
+import type { EChartsCoreOption } from "echarts";
+import "vue-datepicker-next/index.css";
+import ECharts from "vue-echarts";
 
-type interfaceList = {
-  dateTime: string;
-  count: number;
-  userCount: number;
-};
-let list = $ref<interfaceList[]>([]);
+let activeDateTime = $ref(dayjs());
 
-let newList = $ref<interfaceList[]>([]);
+const { interfaceErrors, interfaceErrorsLoading } = $(
+  useInterfaceErrors(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      size: 10,
+    };
+  })
+);
 
-let store = useStore();
-let { appId } = $(storeToRefs(store));
+const interfaceErrorRaws = $computed(
+  () =>
+    interfaceErrors?.map((item) => [item.url, item.count, item.userCount]) || []
+);
 
-const interfaceParma = $ref({
-  appId,
-  startTime: dayjs().format("YYYY-MM-DD"),
-  endTime: dayjs().add(1, "day").format("YYYY-MM-DD"),
-  mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-  subType: InterfaceIndicator.subType.InterfaceIndicator,
-});
+const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
+  useInterfaceErrorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
 
-const loadInterfaceErrorStatistics = async () => {
-  getErrorsInterfaceerrorstatistics({
-    ...interfaceParma,
-  }).then((res) => {
-    res.data.forEach((data) => {
-      list.push(data);
-    });
-  });
-};
-
-const newLoadInterfaceErrorStatistics = async () => {
-  getErrorsInterfaceerrorstatistics({
-    granularity: "1M",
-    ...interfaceParma,
-  }).then((res) => {
-    res.data.forEach((data) => {
-      newList.push(data);
-    });
-  });
-};
-
-nextTick(() => {
-  loadInterfaceErrorStatistics();
-  newLoadInterfaceErrorStatistics();
+const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        interfaceErrorStatistics?.map((item) =>
+          item.dateTime.format("HH:mm")
+        ) || [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: interfaceErrorStatistics?.map((item) => item.count) || [],
+        type: "line",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+      },
+    ],
+    ...basicChartOption,
+  };
 });
 </script>
 
 <style scoped lang="scss">
-.global {
+.content {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: rgb(0 0 0 / 4%);
+  padding: 10px;
 
-  img {
-    float: right;
-    width: 18px;
-    height: 18px;
-  }
-}
+  .card {
+    flex: 1;
+    margin-right: 10px;
 
-.content {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: auto;
-  padding: 20px;
-
-  .content-left {
-    box-sizing: border-box;
-    height: 100%;
-    margin-right: 5px;
-    background-color: rgb(255 255 255);
-  }
-
-  .content-right {
-    box-sizing: border-box;
-    height: 100%;
-    margin-left: 5px;
-    background-color: rgb(255 255 255);
-  }
-}
-
-.list {
-  height: auto;
-
-  .type {
-    margin-right: 20px;
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  .list-title,
-  .sort {
-    display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    text-align: center;
-    border-collapse: collapse;
-    background-color: rgb(248 175 5 / 50%);
-
-    .list-title-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: rgb(0 0 0 / 85%);
-    }
-
-    .sort-content {
-      display: flex;
-      flex-direction: row;
-      font-size: 16px;
-      font-weight: 500;
-      color: rgb(0 0 0 / 85%);
-    }
-
-    .list-title-name:nth-child(1),
-    .list-left {
-      padding-right: 10px;
-      padding-left: 10px;
-      text-align: left;
-    }
-  }
-
-  .list-content {
-    .sort {
-      height: 110px;
-      background-color: #fff;
-      border-bottom: 1px solid rgb(118 146 146);
-
-      &:hover {
-        background-color: rgb(208 247 247);
-      }
-
-      .list-left {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-      }
+    &:last-child {
+      margin-right: 0;
     }
   }
 }

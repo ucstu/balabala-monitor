@@ -2,7 +2,7 @@
   <div class="header">
     <div></div>
     <div>
-      <input type="text" placeholder="输入文章标题..." />
+      <input v-model="title" type="text" placeholder="输入文章标题..." />
     </div>
     <div class="header-right">
       <div
@@ -40,7 +40,7 @@
     <div></div>
   </div>
   <MarkdownEditor :mark-string="markString" @handleEditor="handleChange" />
-  <PublishConfirm />
+  <PublishConfirm @upCover="handelCover" />
 </template>
 
 <script lang="ts" setup>
@@ -50,15 +50,21 @@ import MarkdownEditor from "./MarkdownEditor.vue";
 import PublishConfirm from "./PublishConfirm.vue";
 
 const markString = ref("");
+const title = $ref("");
+let articleTags = $ref("");
 const handleChange = (v: any) => {
   markString.value = v;
+};
+
+const handelCover = (a: any) => {
+  articleTags = a;
 };
 const publishEssay = () => {
   postArticle({
     requestBody: {
-      articleTitle: "string",
+      articleTitle: title,
       articleClass: 1,
-      articleTags: "string",
+      articleTags: articleTags,
       articleCover: "string",
       articleSummary: "string",
       articleContent: markString.value,

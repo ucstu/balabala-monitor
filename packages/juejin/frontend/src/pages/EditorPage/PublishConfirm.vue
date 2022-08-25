@@ -21,7 +21,12 @@
             <div class="byte-select__wrap">
               <div class="byte-select__content-wrap">
                 <div class="byte-select__placeholder">请搜索添加标签</div>
-                <!----><input class="byte-select__input" style="width: 100%" />
+                <!----><input
+                  v-model="tags"
+                  class="byte-select__input"
+                  style="width: 100%"
+                  @input="putTags"
+                />
               </div>
               <div class="byte-select__icon-wrap"></div>
               <span
@@ -136,7 +141,8 @@
       <div class="form-item-content">
         <div data-v-cfaa5564="" class="coverselector_container">
           <div data-v-cfaa5564="">
-            <button data-v-cfaa5564="" class="select-btn">
+            <input ref="input" type="file" @change="upload" />
+            <!-- <button data-v-cfaa5564="" class="select-btn">
               <div data-v-cfaa5564="" class="button-slot">
                 <img
                   data-v-cfaa5564=""
@@ -146,7 +152,7 @@
                 />
                 <div data-v-cfaa5564="" class="upload">上传封面</div>
               </div>
-            </button>
+            </button> -->
             <div data-v-cfaa5564="" class="addvice">建议尺寸：1303*734px</div>
           </div>
           <input data-v-cfaa5564="" type="file" style="display: none" />
@@ -205,6 +211,7 @@
         <span style="color: rgb(238 77 56)"> 0/100 </span>
         <div class="summary-textarea byte-input byte-input--normal">
           <textarea
+            v-model="summary"
             maxlength="100"
             rows="5"
             placeholder=""
@@ -241,6 +248,7 @@
 </template>
 
 <script setup lang="ts">
+import { postImages } from "../../apis/index";
 const labelList = [
   "后端",
   "前端",
@@ -251,7 +259,9 @@ const labelList = [
   "代码人生",
   "阅读",
 ];
-
+let input = $ref();
+let tags = $ref();
+let summary = $ref();
 type Data = {
   articleTitle: string;
   articleClass: string;
@@ -266,8 +276,31 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: "update:default", value: Data): void;
+  (e: "upCover", value: string): void;
 }>();
-
+const putTags = () => {
+  emits("upCover", tags);
+};
+const upload = () => {
+  let reader = new FileReader();
+  reader.readAsDataURL(input.files[0]);
+  reader.onload = function (e) {
+    let fileName;
+    if (e.target?.result != null)
+      fileName = e.target?.result.split("data:image/jpeg;base64,");
+    postImages({
+      formData: {
+        image: "cover",
+        filename: fileName[1],
+      },
+    }).then((res) => {
+      if (res.message == "成功") {
+      } else {
+        throw "上传封面失败";
+      }
+    });
+  };
+};
 let data = $computed({
   get: () => props.data,
   set: (value) => emits("update:default", value),

@@ -65,7 +65,12 @@
 </template>
 
 <script setup lang="ts">
-import { InterfaceIndicator, JavaScriptError, ResourceError } from "@/apis";
+import {
+  InterfaceIndicator,
+  JavaScriptError,
+  ResourceError,
+  ResourceIndicator,
+} from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import ToolBar from "@/components/ToolBar.vue";
 import { basicChartOption } from "@/configs";
@@ -74,14 +79,53 @@ import {
   useJavaScriptErrorStatistics,
   useResourceErrorStatistics,
 } from "@/hooks";
+import { useResourceIndicatorStatistics } from "@/hooks/useResourceIndicatorStatistics";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
+// 日期
 let activeDateTime = $ref(dayjs());
 
-let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+// 静态资源错误
+const { resourceErrorStatistics } = $(
+  useResourceErrorStatistics(() => {
+    return {
+      mainType: ResourceError.mainType.ResourceError,
+      subType: ResourceError.subType.ResourceError,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "1d",
+    };
+  })
+);
+
+// 静态资源错误率
+const totalResourceError = $computed(
+  () =>
+    (resourceErrorStatistics?.reduce((sum, item) => (sum += item.count), 0) ||
+      0) /
+    (resourceIndicatorStatistics?.reduce(
+      (sum, item) => (sum += item.count),
+      0
+    ) || 0)
+);
+
+// 静态资源请求
+const { resourceIndicatorStatistics } = $(
+  useResourceIndicatorStatistics(() => {
+    return {
+      mainType: ResourceIndicator.mainType.ResourceIndicator,
+      subType: ResourceIndicator.subType.ResourceIndicator,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "1d",
+    };
+  })
+);
+// 资源错误率option配置
+const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     series: [
       {
@@ -96,7 +140,7 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
           fontSize: 20,
           fontWeight: "bold",
         },
-        color: ["#dfe6e9", "#1E3E55"], //系列的颜色
+        color: ["#1E3E55", "#dfe6e9"], //系列的颜色
         emphasis: {
           //高亮，即鼠标经过时的样式
           scale: false, //表示不放大item
@@ -106,11 +150,11 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
         },
         data: [
           {
-            value: 80,
-            name: "正确请求",
-          },
-          {
-            value: 20,
+            value:
+              resourceErrorStatistics?.reduce(
+                (sum, item) => (sum += item.count),
+                0
+              ) || 0,
             name: "错误请求",
             emphasis: {
               label: {
@@ -118,16 +162,23 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
               },
             },
           },
+          {
+            value: resourceIndicatorStatistics?.reduce(
+              (sum, item) => (sum += item.count),
+              0
+            ),
+            name: "正确请求",
+          },
         ],
       },
     ],
   };
 });
 
-let resourseStatistics = $ref<number>(0);
-let resourseErrorStatistics = $ref<number>(0);
+const resourseStatistics = $ref<number>(0);
+const resourseErrorStatistics = $ref<number>(0);
 
-let resourse_options = $computed<EChartsCoreOption>(() => {
+const resourse_options = $computed<EChartsCoreOption>(() => {
   return {
     title: {
       zlevel: 2, // 控制圆环图中间的字的层级
@@ -372,10 +423,7 @@ const {
 );
 
 // 接口错误 上一周统计
-const {
-  interfaceErrorStatistics: interfaceErrorLastWeekDataList,
-  interfaceErrorStatisticsLoading: interfaceErrorLastWeekDataLoading,
-} = $(
+const { interfaceErrorStatistics: interfaceErrorLastWeekDataList } = $(
   useInterfaceErrorStatistics(() => {
     return {
       mainType: InterfaceIndicator.mainType.InterfaceIndicator,
@@ -493,6 +541,7 @@ const interfaceErrorOption = $computed<EChartsCoreOption>(() => {
   .bar {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 
     .bar-box {
       margin: 0 20px;

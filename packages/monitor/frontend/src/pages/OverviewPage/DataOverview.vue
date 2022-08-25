@@ -84,7 +84,7 @@
       :loading="twoDayPVStatisticsLoading"
     >
       <ECharts
-        :option="oneDayPVStatisticsChartOption"
+        :option="twoDayPVStatisticsChartOption"
         :autoresize="true"
         class="bar"
       />
@@ -168,7 +168,7 @@ const {
   })
 );
 
-let oneDayPVStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+let twoDayPVStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     xAxis: {
       type: "category",

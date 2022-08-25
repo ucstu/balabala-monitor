@@ -1,168 +1,86 @@
 <template>
-  <div class="global">
-    <div class="top">
-      <div class="top-left">
-        <div>错误</div>
-      </div>
-      <div class="top-right">
-        <div class="calendar">
-          <input v-model="startTime" type="date" />
-        </div>
-      </div>
-    </div>
-    <div class="bottom">
-      <div class="list">
-        <div class="list-title">
-          <div class="list-title-name">错误排行</div>
-          <div class="list-title-name">发生次数</div>
-          <div class="list-title-name">影响人数</div>
-        </div>
-        <div
-          v-for="(item, index) in pagedList[page]"
-          :key="index"
-          class="list-content"
+  <div class="content">
+    <ToolBar v-model:date-time="activeDateTime" title="代码错误列表" />
+    <BasicTable
+      :titles="['错误消息', '发生次数', '影响用户']"
+      :data-list="javaScriptErrorRows.slice(page * 5, (page + 1) * 5)"
+      style="height: 300px; margin-bottom: 20px"
+    />
+    <div class="page">
+      <span><button @click="page = 0">首页</button></span>
+      <span>
+        <button @click="page = page > 0 ? page - 1 : 0">上一页</button>
+      </span>
+      <span
+        ><button
+          @click="page = allErrorRows.length / 5 > page + 1 ? page + 1 : page"
         >
-          <div class="sort">
-            <div class="list-left sort-content">
-              <div class="list-left-top sort-content">
-                <div class="type">{{ typeName }}</div>
-              </div>
-              <div class="list-left-bottom sort-content">
-                {{ item.dateTime }}
-              </div>
-            </div>
-            <div class="list-center">{{ item.count }}</div>
-            <div class="list-right">{{ item.userCount }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="page">
-        <span><button @click="page = 0">首页</button></span>
-        <span
-          ><button @click="page = page > 0 ? page-- : 0">上一页</button></span
-        >
-        <span
-          ><button
-            @click="
-              page =
-                page < pagedList.length / size
-                  ? page++
-                  : pagedList.length / size
-            "
-          >
-            下一页
-          </button></span
-        >
-        <span>当前&nbsp;{{ page + 1 }}&nbsp;页</span>
-      </div>
+          下一页
+        </button></span
+      >
+      <span>当前&nbsp;{{ page + 1 }}&nbsp;页</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getErrorsResourceerrorstatistics, ResourceError } from "@/apis";
-import { useStore } from "@/stores";
-import { BasicStatistic } from "@/types";
+import BasicTable from "@/components/BasicTable.vue";
+import ToolBar from "@/components/ToolBar.vue";
+import { useJavaScriptErrors, usePromiseErrors } from "@/hooks";
 import dayjs from "dayjs";
-import { storeToRefs } from "pinia";
 
-let store = useStore();
-let { appId } = $(storeToRefs(store));
-
-let typeName = $ref("resourceError");
-
-const resourceErrorStatisticsParam = $computed(() => {
-  return {
-    appId,
-    mainType: ResourceError.mainType.ResourceError,
-    subType: ResourceError.subType.ResourceError,
-    startTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-    endTime: dayjs().add(1, "day").format("YYYY-MM-DD HH:mm:ss"),
-  };
-});
-
-let startTime = $ref(
-  dayjs(resourceErrorStatisticsParam.startTime).format("YYYY-MM-DD")
-);
+let activeDateTime = $ref(dayjs());
 
 let page = $ref(0);
-let size = $ref(3);
-let pagedList = $ref<Array<Array<BasicStatistic>>>([]);
 
-const loadResourceErrorStatistics = async () => {
-  const { data } = await getErrorsResourceerrorstatistics(
-    resourceErrorStatisticsParam
-  );
-  for (let i = 0; i < data.length; i += 5) {
-    pagedList.push(data.slice(i, i + 5));
-  }
-};
+const { promiseErrors, promiseErrorsLoading } = $(
+  usePromiseErrors(() => {
+    return {
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
+);
 
-loadResourceErrorStatistics();
+const promiseErrorRows = $computed(
+  () =>
+    promiseErrors?.map((item) => [item.msg, item.count, item.userCount]) || []
+);
+
+const { javaScriptErrors, javaScriptErrorsLoading } = $(
+  useJavaScriptErrors(() => {
+    return {
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
+);
+
+const javaScriptErrorRows = $computed(
+  () =>
+    javaScriptErrors?.map((item) => [item.msg, item.count, item.userCount]) ||
+    []
+);
+
+const allErrorLoading = $computed(
+  () => javaScriptErrorsLoading || promiseErrorsLoading
+);
+
+const allErrorRows = $computed(() => [
+  ...javaScriptErrorRows,
+  ...promiseErrorRows,
+]);
 </script>
 
 <style scoped lang="scss">
-.global {
+.content {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: rgb(0 0 0 / 4%);
-
-  .top {
-    width: 100%;
-    height: 70px;
-
-    .top-left {
-      box-sizing: border-box;
-      float: left;
-      width: 140px;
-      height: 40px;
-      padding: 40px 30px 30px;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .top-right {
-      float: right;
-      padding: 30px;
-
-      div {
-        display: inline-block;
-        margin-top: 10px;
-        margin-right: 20px;
-      }
-
-      .sort {
-        width: 160px;
-        background-color: rgb(255 255 255);
-        border: 1px solid #ccc;
-
-        div {
-          margin: 5px 10px;
-        }
-      }
-    }
-
-    .calendar {
-      input {
-        width: 130px;
-        height: 32px;
-        font-size: 14px;
-        border: 0;
-        border: 1px solid #d9d9d9;
-        border-radius: 5px;
-        outline: none;
-        transition: all 30ms;
-
-        &:focus {
-          outline: 2px solid #1890ff;
-        }
-      }
-    }
-  }
+  padding: 10px;
 
   .bottom {
-    padding: 30px;
-
     .list {
       height: auto;
 

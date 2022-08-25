@@ -1,75 +1,78 @@
 <template>
   <div class="content">
-    <header class="header">
-      <div class="title">核心数据</div>
-      <div class="calendar">
-        <DatePicker
-          v-model:value="activeRawDateTime"
-          format="YYYY-MM-DD"
-          style="width: 150px"
-          value-type="format"
-          :editable="false"
-          :clearable="false"
+    <ToolBar v-model:date-time="activeDateTime" title="代码错误错误概览" />
+    <div class="flex-row" style="height: 250px">
+      <DataCard
+        title="JS错误趋势（24H）"
+        :loading="javaScriptErrorStatisticsLoading"
+      >
+        <ECharts
+          :option="javaScriptErrorStatisticsChartOption"
+          :autoresize="true"
         />
-      </div>
-    </header>
-    <DataCard
-      class="card"
-      title="JS错误"
-      :loading="javaScriptErrorsLoading"
-      :empty="javaScriptErrors?.length ? false : true"
-    >
-      <template #rActions>
-        <div class="date">
-          <div><img src="@/assets/24.png" /></div>
-          <div>{{ activeDateTime.format("YYYY-MM-DD") }}</div>
-        </div>
-      </template>
-      <BasicTable
-        :titles="['错误消息', '发生次数', '影响用户']"
-        :data-list="javaScriptErrorRows"
-      />
-    </DataCard>
-    <DataCard
-      class="card"
-      title="Promise错误"
-      :loading="promiseErrorsLoading"
-      :empty="promiseErrors?.length ? false : true"
-    >
-      <template #rActions>
-        <div class="date">
-          <div><img src="@/assets/24.png" /></div>
-          <div>{{ activeDateTime.format("YYYY-MM-DD") }}</div>
-        </div>
-      </template>
-      <BasicTable
-        :titles="['错误消息', '发生次数', '影响用户']"
-        :data-list="promiseErrorRows"
-      />
-    </DataCard>
+      </DataCard>
+      <DataCard
+        title="Promise错误趋势（24H）"
+        :loading="promiseErrorStatisticsLoading"
+      >
+        <ECharts
+          :option="promiseErrorStatisticsChartOption"
+          :autoresize="true"
+        />
+      </DataCard>
+    </div>
+    <div class="flex-row">
+      <DataCard
+        class="card"
+        title="JS错误（TOP10）"
+        :loading="javaScriptErrorsLoading"
+        :empty="javaScriptErrors?.length ? false : true"
+      >
+        <BasicTable
+          :titles="['错误消息', '发生次数', '影响用户']"
+          :data-list="javaScriptErrorRows"
+        />
+      </DataCard>
+      <DataCard
+        class="card"
+        title="Promise错误（TOP10）"
+        :loading="promiseErrorsLoading"
+        :empty="promiseErrors?.length ? false : true"
+      >
+        <BasicTable
+          :titles="['错误消息', '发生次数', '影响用户']"
+          :data-list="promiseErrorRows"
+        />
+      </DataCard>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import BasicTable from "@/components/BasicTable.vue";
 import DataCard from "@/components/DataCard.vue";
-import { useJavaScriptErrors, usePromiseErrors } from "@/hooks";
+import ToolBar from "@/components/ToolBar.vue";
+import { basicChartOption } from "@/configs";
+import {
+  useJavaScriptErrors,
+  useJavaScriptErrorStatistics,
+  usePromiseErrors,
+  usePromiseErrorStatistics,
+} from "@/hooks";
 import dayjs from "dayjs";
-import DatePicker from "vue-datepicker-next";
+import type { EChartsCoreOption } from "echarts";
 import "vue-datepicker-next/index.css";
+import ECharts from "vue-echarts";
 
 let activeDateTime = $ref(dayjs());
-let activeRawDateTime = $computed({
-  get: () => activeDateTime.format("YYYY-MM-DD"),
-  set: (value) => {
-    activeDateTime = dayjs(value);
-  },
-});
 
 const { javaScriptErrors, javaScriptErrorsLoading } = $(
-  useJavaScriptErrors({
-    startTime: activeDateTime.subtract(5, "d"),
-    endTime: activeDateTime,
+  useJavaScriptErrors(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      size: 10,
+    };
   })
 );
 
@@ -80,9 +83,12 @@ const javaScriptErrorRows = $computed(
 );
 
 const { promiseErrors, promiseErrorsLoading } = $(
-  usePromiseErrors({
-    startTime: activeDateTime.subtract(5, "d"),
-    endTime: activeDateTime,
+  usePromiseErrors(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      size: 10,
+    };
   })
 );
 
@@ -90,38 +96,88 @@ const promiseErrorRows = $computed(
   () =>
     promiseErrors?.map((item) => [item.msg, item.count, item.userCount]) || []
 );
+
+const { javaScriptErrorStatistics, javaScriptErrorStatisticsLoading } = $(
+  useJavaScriptErrorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
+
+const javaScriptErrorStatisticsChartOption = $computed<EChartsCoreOption>(
+  () => {
+    return {
+      xAxis: {
+        type: "category",
+        data:
+          javaScriptErrorStatistics?.map((item) =>
+            item.dateTime.format("HH:mm")
+          ) || [],
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: javaScriptErrorStatistics?.map((item) => item.count) || [],
+          type: "line",
+          areaStyle: {},
+          emphasis: {
+            focus: "series",
+          },
+        },
+      ],
+      ...basicChartOption,
+    };
+  }
+);
+
+const { promiseErrorStatistics, promiseErrorStatisticsLoading } = $(
+  usePromiseErrorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+      granularity: "1h",
+    };
+  })
+);
+
+const promiseErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  return {
+    xAxis: {
+      type: "category",
+      data:
+        promiseErrorStatistics?.map((item) => item.dateTime.format("HH:mm")) ||
+        [],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: promiseErrorStatistics?.map((item) => item.count) || [],
+        type: "line",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+      },
+    ],
+    ...basicChartOption,
+  };
+});
 </script>
 
 <style scoped lang="scss">
 .content {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   padding: 10px;
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-
-    .title {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .calendar {
-      padding: 5px 0;
-    }
-
-    .calendar input {
-      width: 130px;
-      height: 26px;
-      border: none;
-      outline: none;
-    }
-  }
 
   .card {
     flex: 1;
@@ -132,11 +188,5 @@ const promiseErrorRows = $computed(
       margin-right: 0;
     }
   }
-}
-
-.date {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

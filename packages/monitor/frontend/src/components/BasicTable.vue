@@ -1,16 +1,12 @@
 <template>
-  <table class="pure-table">
+  <table>
     <thead>
       <tr>
         <th v-for="(title, index) in titles" :key="index">{{ title }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="(item, index) in dataList"
-        :key="index"
-        :class="{ 'pure-table-odd': index % 2 !== 0 }"
-      >
+      <tr v-for="(item, index) in dataList" :key="index">
         <td
           v-for="(data, _index) in item"
           :key="_index"
@@ -33,52 +29,32 @@ const {} = defineProps<{
 
 <style scoped lang="scss">
 table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-td,
-th {
-  padding: 0;
-}
-
-.pure-table {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
   overflow: hidden;
-  empty-cells: show;
-  border-spacing: 0;
+  text-align: center;
   border-collapse: collapse;
   border-radius: 10px;
 }
 
-.pure-table caption {
-  padding: 1em 0;
-  font: italic 85%/1 arial, sans-serif;
-  color: #000;
-  text-align: center;
+table td,
+table th {
+  height: 30px;
+  color: #666;
+  border: 1px solid #cad9ea;
 }
 
-.pure-table td,
-.pure-table th {
-  padding: 0.5em 1em;
-  margin: 0;
-  overflow: visible;
-  font-size: inherit;
-  border-width: 0 0 0 1px;
-  border-left: 1px solid #cbcbcb;
+table thead th {
+  width: 100px;
+  background-color: #cce8eb;
 }
 
-.pure-table thead {
-  color: #000;
-  text-align: left;
-  vertical-align: bottom;
-  background-color: #e0e0e0;
+table tr:nth-child(odd) {
+  background: #fff;
 }
 
-.pure-table td {
-  background-color: transparent;
-}
-
-.pure-table-odd td {
-  background-color: #f2f2f2;
+table tr:nth-child(even) {
+  background: #f5fafa;
 }
 </style>

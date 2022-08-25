@@ -22,7 +22,7 @@ export class RoleGuard implements CanActivate {
     //拿到了用户表示，查询数据库查看是否拥有查询
     if (
       this.authService.validate(
-        (user.authorization as string).replace("Bearer ", "")
+        (user?.authorization as string)?.replace("Bearer ", "") || ""
       ) == null
     ) {
       return false;

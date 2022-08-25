@@ -57,6 +57,13 @@
               v-for="(item, index) in pagePerformanceDataList"
               :key="index"
               class="list-item"
+              @click="
+                router.push(
+                  `/Performance/PagePerformance?pageUrl=${encodeURI(
+                    item.pageUrl
+                  )}&dateTime=${performanceTime.format('YYYY-MM-DD')}`
+                )
+              "
             >
               <div class="list-left">{{ item.pageUrl }}</div>
               <div class="list-right">
@@ -86,9 +93,10 @@
         <span
           >{{
             (
-              (((totalSumIndicator || 0) - (errorIndicator || 0) || 0) /
-                (totalSumIndicator || 0)) *
-              100
+              (totalSumIndicator
+                ? (totalSumIndicator - (errorIndicator || 0)) /
+                  totalSumIndicator
+                : 0) * 100
             ).toFixed(2)
           }}%</span
         >
@@ -122,6 +130,13 @@
               v-for="(item, index) in indicatorStatisticsDataList"
               :key="index"
               class="list-item"
+              @click="
+                router.push(
+                  `/Performance/InterfacePerformance?url=${encodeURI(
+                    item.url
+                  )}&dateTime=${performanceTime.format('YYYY-MM-DD')}`
+                )
+              "
             >
               <div class="list-left">{{ item.url }}</div>
               <div class="list-right">
@@ -149,6 +164,10 @@ import type { EChartsCoreOption } from "echarts";
 import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 let performanceTime = $ref(dayjs());
 
 const performanceRawTime = $computed<string>({
@@ -496,6 +515,16 @@ const totalTime = (val: number): string => {
         display: flex;
         justify-content: space-between;
         padding: 7px 20px;
+
+        &:first-child {
+          cursor: auto !important;
+          background-color: auto !important;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: azure;
+        }
       }
 
       .list-right {

@@ -1,11 +1,11 @@
 <template>
   <aside class="left-menu">
     <ul>
-      <li v-for="(value, index) in menuList" :key="index">
-        <router-link :to="value.path" active-class="active"
-          ><i class="fa fa-desktop"></i>
+      <li v-for="(menu, index) in menuList" :key="index">
+        <router-link :to="menu.path" active-class="active"
+          ><i class="fa" :class="menu.icon || 'fa-desktop'"></i>
           <span class="flex-row items-center justify-center">{{
-            value.name
+            menu.name
           }}</span>
         </router-link>
       </li>
@@ -18,6 +18,7 @@ const { menuList } = defineProps<{
   menuList: Array<{
     name: string;
     path: string;
+    icon?: string;
   }>;
 }>();
 </script>

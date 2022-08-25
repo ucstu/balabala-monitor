@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <DataCard title="用户详情" icon="fa-dedent">
+    <DataCard title="用户详情" icon="fa-dedent" :foldable="true">
       <template #rActions>
         <div class="flex-row justify-between" style="width: 460px">
           <DatePicker

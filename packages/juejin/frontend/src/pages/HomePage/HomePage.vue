@@ -60,7 +60,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Article, getArticle1 } from "@/apis";
+import { Article, getArticle1, postImages } from "@/apis";
 import { useStore } from "@/stores";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -96,6 +96,15 @@ function clickNavigator(index: number) {
 function goDetail(id: number | string) {
   router.push(`/detail/${id}`);
 }
+
+postImages({
+  formData: {
+    filename: "a.jpg",
+    image: "",
+  },
+}).then((res) => {
+  console.log(res);
+});
 
 watch(
   () => store.token,

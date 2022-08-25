@@ -3,6 +3,18 @@
     <div class="top">
       <div class="left">
         <DataCard icon="fa-hourglass-end" title="耗时分段">
+          <template #rActions>
+            <h4 style="display: inline-block">指标类型选择：</h4>
+            <select v-model="typeString">
+              <option value="1-1001">首次绘制（FP）</option>
+              <option value="1-1002">首次大绘制（FCP）</option>
+              <option value="1-1003">最大绘制（LCP）</option>
+              <option value="2-2001">DOM记载时间</option>
+              <option value="2-2002">完全加载时间</option>
+              <option value="3-3001">首屏渲染时间</option>
+              <option value="4-4002">路由跳转时间</option>
+            </select>
+          </template>
           <div class="change">
             <label v-for="i in 5" :key="i">
               <input
@@ -138,7 +150,6 @@ import DataCard from "@/components/DataCard.vue";
 import { basicChartOption } from "@/configs";
 import { useBasicIndicators } from "@/hooks/useBasicIndicators";
 import { useBasicIndicatorStatistics } from "@/hooks/useBasicIndicatorStatistics";
-import { BasicIndicator } from "@balabala/monitor-api";
 import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import { watch } from "vue";
@@ -158,6 +169,7 @@ let sectionNameMap: Record<number, string> = {
   3: "10-30秒",
   4: ">30秒",
 };
+let typeString = $ref("1-1001");
 // 当前时间dayjs对象
 const nowDateTime = activeDateTime;
 // 当前时间字符串
@@ -169,8 +181,8 @@ const {
 } = $(
   useBasicIndicatorStatistics(() => {
     return {
-      mainType: BasicIndicator.mainType.LoadIndicator,
-      subType: BasicIndicator.subType.FullLoad,
+      mainType: parseInt(typeString.split("-")[0]),
+      subType: parseInt(typeString.split("-")[1]),
       startTime: nowDateTime.subtract(29, "d"),
       endTime: nowDateTime,
     };
@@ -228,8 +240,8 @@ const indicatorStatisticsChartClick = (e: any) => {
 const { basicIndicators, basicIndicatorsLoading } = $(
   useBasicIndicators(() => {
     return {
-      mainType: BasicIndicator.mainType.LoadIndicator,
-      subType: BasicIndicator.subType.FullLoad,
+      mainType: parseInt(typeString.split("-")[0]),
+      subType: parseInt(typeString.split("-")[1]),
       startTime: activeDateTime,
       endTime: activeDateTime.add(1, "d"),
     };
@@ -242,8 +254,8 @@ const {
 } = $(
   useBasicIndicatorStatistics(() => {
     return {
-      mainType: BasicIndicator.mainType.LoadIndicator,
-      subType: BasicIndicator.subType.FullLoad,
+      mainType: parseInt(typeString.split("-")[0]),
+      subType: parseInt(typeString.split("-")[1]),
       startTime: activeDateTime,
       endTime: activeDateTime.add(1, "d"),
       granularity: "1h",

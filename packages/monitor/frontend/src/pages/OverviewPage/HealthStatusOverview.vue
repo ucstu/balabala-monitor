@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <ToolBar v-model:dateTime="activeDateTime" title="业务数据" />
+    <ToolBar v-model:dateTime="activeDateTime" title="健康数据" />
     <DataCard title="一天的用户访问量趋势">
       <div
         style="
@@ -9,11 +9,6 @@
           text-align: center;
         "
       >
-        <ECharts
-          :option="total_options"
-          :autoresize="true"
-          class="bar1"
-        ></ECharts>
         <div style="display: flex; align-items: center; width: 650px">
           <ECharts
             :option="interfaceErrorStatisticsChartOption"
@@ -28,56 +23,109 @@
         </div>
       </div>
     </DataCard>
-    <DataCard
-      title="一天的JS错误趋势"
-      style="margin-top: 20px"
-      :loading="!JSerroralldaydataisshow"
-    >
-      <ECharts
-        :option="JSerroralldaydata_options"
-        :autoresize="true"
-        class="bar3"
-      />
-    </DataCard>
+    <div class="bar">
+      <DataCard
+        title="一天的JS错误趋势"
+        style="margin-top: 20px"
+        :loading="jsDataLoading"
+        class="bar-box"
+      >
+        <ECharts
+          :option="jsErrorOption"
+          :autoresize="true"
+          class="bar-echarts"
+        />
+      </DataCard>
+      <DataCard
+        title="一天的资源错误趋势"
+        style="margin-top: 20px"
+        :loading="resourceErrorDataLoading"
+        class="bar-box"
+      >
+        <ECharts
+          :option="resourceErrorOption"
+          :autoresize="true"
+          class="bar-echarts"
+        />
+      </DataCard>
+      <DataCard
+        title="一天的接口错误趋势"
+        style="margin-top: 20px"
+        :loading="interfaceErrorDataLoading"
+        class="bar-box"
+      >
+        <ECharts
+          :option="interfaceErrorOption"
+          :autoresize="true"
+          class="bar-echarts"
+        />
+      </DataCard>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {
-  getErrorsInterfaceerrorstatistics,
-  getErrorsJavascripterrorstatistics,
-  getErrorsResourceerrorstatistics,
-  getPerformancesInterfaceindicatorstatistics,
-  getPerformancesResourceindicatorstatistics,
   InterfaceIndicator,
   JavaScriptError,
+  ResourceError,
   ResourceIndicator,
 } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import ToolBar from "@/components/ToolBar.vue";
 import { basicChartOption } from "@/configs";
-import { useInterfaceErrorStatistics } from "@/hooks";
-import { useStore } from "@/stores";
+import {
+  useInterfaceErrorStatistics,
+  useJavaScriptErrorStatistics,
+  useResourceErrorStatistics,
+} from "@/hooks";
+import { useResourceIndicatorStatistics } from "@/hooks/useResourceIndicatorStatistics";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
-import { onMounted, watch } from "vue";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
-const store = useStore();
-
+// 日期
 let activeDateTime = $ref(dayjs());
 
-const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
-  useInterfaceErrorStatistics(() => {
+// 静态资源错误
+const { resourceErrorStatistics } = $(
+  useResourceErrorStatistics(() => {
     return {
-      startTime: activeDateTime.subtract(1, "d"),
-      endTime: activeDateTime.add(1, "d"),
+      mainType: ResourceError.mainType.ResourceError,
+      subType: ResourceError.subType.ResourceError,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "1d",
     };
   })
 );
 
-let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+// 静态资源错误率
+const totalResourceError = $computed(
+  () =>
+    (resourceErrorStatistics?.reduce((sum, item) => (sum += item.count), 0) ||
+      0) /
+    (resourceIndicatorStatistics?.reduce(
+      (sum, item) => (sum += item.count),
+      0
+    ) || 0)
+);
+
+// 静态资源请求
+const { resourceIndicatorStatistics } = $(
+  useResourceIndicatorStatistics(() => {
+    return {
+      mainType: ResourceIndicator.mainType.ResourceIndicator,
+      subType: ResourceIndicator.subType.ResourceIndicator,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "1d",
+    };
+  })
+);
+// 资源错误率option配置
+const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
   return {
     series: [
       {
@@ -92,7 +140,7 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
           fontSize: 20,
           fontWeight: "bold",
         },
-        color: ["#695BF9", "#1E3E55"], //系列的颜色
+        color: ["#1E3E55", "#dfe6e9"], //系列的颜色
         emphasis: {
           //高亮，即鼠标经过时的样式
           scale: false, //表示不放大item
@@ -102,11 +150,11 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
         },
         data: [
           {
-            value: 80,
-            name: "正确请求",
-          },
-          {
-            value: 20,
+            value:
+              resourceErrorStatistics?.reduce(
+                (sum, item) => (sum += item.count),
+                0
+              ) || 0,
             name: "错误请求",
             emphasis: {
               label: {
@@ -114,80 +162,23 @@ let interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
               },
             },
           },
+          {
+            value: resourceIndicatorStatistics?.reduce(
+              (sum, item) => (sum += item.count),
+              0
+            ),
+            name: "正确请求",
+          },
         ],
       },
     ],
   };
 });
 
-let date = $ref<string>(dayjs().format("YYYY-MM-DD"));
-let interfaceStatistics = $ref<number>(0);
-let resourseStatistics = $ref<number>(0);
-let interfaceErrorStatistics_code400 = $ref<number>(0);
-let interfaceErrorStatistics_code500 = $ref<number>(0);
-let resourseErrorStatistics = $ref<number>(0);
-let total_options = $computed<EChartsCoreOption>(() => {
-  return {
-    title: {
-      zlevel: 2, // 控制圆环图中间的字的层级
-      text:
-        (1 -
-          (resourseErrorStatistics +
-            interfaceErrorStatistics_code400 +
-            interfaceErrorStatistics_code500) /
-            (interfaceStatistics +
-              resourseStatistics +
-              resourseErrorStatistics)) *
-        100
-          ? (
-              (1 -
-                (resourseErrorStatistics +
-                  interfaceErrorStatistics_code400 +
-                  interfaceErrorStatistics_code500) /
-                  (interfaceStatistics +
-                    resourseStatistics +
-                    resourseErrorStatistics)) *
-              100
-            ).toFixed(2) + "%"
-          : "暂无数据",
-      top: "45%",
-      left: "50%",
-      textAlign: "center", // 让文字居中
-      textStyle: {
-        color: "red",
-        fontWeight: "bolder",
-        fontSize: "30px",
-      },
-    },
-    series: [
-      {
-        name: "Access From",
-        type: "pie",
-        radius: ["60%", "80%"],
-        avoidLabelOverlap: false,
-        data: [
-          {
-            value:
-              interfaceStatistics +
-              resourseStatistics +
-              resourseErrorStatistics,
-            name: "请求总数",
-          },
-          {
-            value:
-              resourseErrorStatistics +
-              interfaceErrorStatistics_code400 +
-              interfaceErrorStatistics_code500,
-            name: "错误总数",
-          },
-        ],
-      },
-    ],
-    ...basicChartOption,
-  };
-});
+const resourseStatistics = $ref<number>(0);
+const resourseErrorStatistics = $ref<number>(0);
 
-let resourse_options = $computed<EChartsCoreOption>(() => {
+const resourse_options = $computed<EChartsCoreOption>(() => {
   return {
     title: {
       zlevel: 2, // 控制圆环图中间的字的层级
@@ -231,115 +222,278 @@ let resourse_options = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
-let JSerroralldaydata0 = $ref<Array<number>>([]);
-let JSerroralldaydatax = $ref<Array<string>>([]);
-let JSerroralldaydataisshow = $ref<boolean>(false);
-let JSerroralldaydata_options = $computed<EChartsCoreOption>(() => {
+
+// js 错误统计
+const {
+  javaScriptErrorStatistics: jsDataList,
+  javaScriptErrorStatisticsLoading: jsDataLoading,
+} = $(
+  useJavaScriptErrorStatistics(() => {
+    return {
+      mainType: JavaScriptError.mainType.JavaScriptError,
+      subType: JavaScriptError.subType.JavaScriptError,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "4h",
+    };
+  })
+);
+// js 上一周错误统计
+const {
+  javaScriptErrorStatistics: jsLastWeekDataList,
+  javaScriptErrorStatisticsLoading: jsLastWeekDataLoading,
+} = $(
+  useJavaScriptErrorStatistics(() => {
+    return {
+      mainType: JavaScriptError.mainType.JavaScriptError,
+      subType: JavaScriptError.subType.JavaScriptError,
+      startTime: activeDateTime.subtract(1, "week"),
+      endTime: activeDateTime.subtract(1, "week").add(1, "day"),
+      granularity: "4h",
+    };
+  })
+);
+// js图表的option
+const jsErrorOption = $computed<EChartsCoreOption>(() => {
   return {
-    xAxis: {
-      type: "category",
-      data: JSerroralldaydatax,
-    },
-    yAxis: {
-      type: "value",
-    },
-    series: [
-      {
-        name: "JSerror",
-        data: JSerroralldaydata0,
-        type: "line",
-        stack: 1,
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
         label: {
-          show: true,
+          backgroundColor: "#6a7985",
         },
       },
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
+    },
+    xAxis: [
+      {
+        type: "category",
+        boundaryGap: false,
+        data: jsDataList?.map((item) => {
+          return dayjs(item.dateTime, "YYYY-MM-DD HH:mm:ss").format("HH:mm");
+        }),
+      },
     ],
-    ...basicChartOption,
+    yAxis: [
+      {
+        type: "value",
+      },
+    ],
+    series: [
+      {
+        name: "上周错误",
+        type: "line",
+        stack: "lastWeekError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: jsLastWeekDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+      {
+        name: "今日错误",
+        type: "line",
+        stack: "todyError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: jsDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+    ],
   };
 });
-onMounted(() => {
-  getalldata(date);
-});
-watch(
-  () => date,
-  (newValue) => {
-    getalldata(newValue);
-  }
+
+// 资源错误统计
+const {
+  resourceErrorStatistics: resourceErrorDataList,
+  resourceErrorStatisticsLoading: resourceErrorDataLoading,
+} = $(
+  useResourceErrorStatistics(() => {
+    return {
+      mainType: ResourceError.mainType.ResourceError,
+      subType: ResourceError.subType.ResourceError,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "4h",
+    };
+  })
 );
-function getalldata(start: string) {
-  getPerformancesInterfaceindicatorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-    subType: InterfaceIndicator.subType.InterfaceIndicator,
-    granularity: "1d",
-  }).then((res) => {
-    let total = 0;
-    res.data.forEach((e: any) => {
-      total += e[0].count;
-    });
-    interfaceStatistics = total;
-  });
-  getErrorsInterfaceerrorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-    subType: InterfaceIndicator.subType.InterfaceIndicator,
-    granularity: "1d",
-    statusCode: 400,
-  }).then((res) => {
-    interfaceErrorStatistics_code400 = res.data[0].count;
-  });
-  getErrorsInterfaceerrorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: InterfaceIndicator.mainType.InterfaceIndicator,
-    subType: InterfaceIndicator.subType.InterfaceIndicator,
-    granularity: "1d",
-    statusCode: 500,
-  }).then((res) => {
-    interfaceErrorStatistics_code500 = res.data[0].count;
-  });
-  getPerformancesResourceindicatorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: ResourceIndicator.mainType.ResourceIndicator,
-    subType: ResourceIndicator.subType.ResourceIndicator,
-    granularity: "1d",
-  }).then((res) => {
-    resourseStatistics = res.data[0].count;
-  });
-  getErrorsResourceerrorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: ResourceIndicator.mainType.ResourceIndicator,
-    subType: ResourceIndicator.subType.ResourceIndicator,
-    granularity: "1d",
-  }).then((res) => {
-    resourseErrorStatistics = res.data[0].count;
-  });
-  getErrorsJavascripterrorstatistics({
-    appId: store.appId,
-    startTime: start,
-    endTime: dayjs(start).add(1, "day").format("YYYY-MM-DD"),
-    mainType: JavaScriptError.mainType.JavaScriptError,
-    subType: JavaScriptError.subType.JavaScriptError,
-    granularity: "1h",
-  }).then((res) => {
-    JSerroralldaydataisshow = true;
-    JSerroralldaydata0 = [];
-    JSerroralldaydatax = [];
-    res.data.forEach((e: any) => {
-      JSerroralldaydata0.push(e.count);
-      JSerroralldaydatax.push(dayjs(e.dataTime).format("HH:mm"));
-    });
-  });
-}
+
+// 资源错误 上一周统计
+const {
+  resourceErrorStatistics: resourceErrorLastWeekDataList,
+  resourceErrorStatisticsLoading: resourceErrorLastWeekDataLoading,
+} = $(
+  useResourceErrorStatistics(() => {
+    return {
+      mainType: ResourceError.mainType.ResourceError,
+      subType: ResourceError.subType.ResourceError,
+      startTime: activeDateTime.subtract(1, "week"),
+      endTime: activeDateTime.subtract(1, "week").add(1, "day"),
+      granularity: "4h",
+    };
+  })
+);
+// 资源错误图表的option
+const resourceErrorOption = $computed<EChartsCoreOption>(() => {
+  return {
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
+        label: {
+          backgroundColor: "#6a7985",
+        },
+      },
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
+    },
+    xAxis: [
+      {
+        type: "category",
+        boundaryGap: false,
+        data: resourceErrorDataList?.map((item) => {
+          return dayjs(item.dateTime, "YYYY-MM-DD HH:mm:ss").format("HH:mm");
+        }),
+      },
+    ],
+    yAxis: [
+      {
+        type: "value",
+      },
+    ],
+    series: [
+      {
+        name: "上周错误",
+        type: "line",
+        stack: "lastWeekError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: resourceErrorLastWeekDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+      {
+        name: "今日错误",
+        type: "line",
+        stack: "todyError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: resourceErrorDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+    ],
+  };
+});
+
+// 接口错误统计
+const {
+  interfaceErrorStatistics: interfaceErrorDataList,
+  interfaceErrorStatisticsLoading: interfaceErrorDataLoading,
+} = $(
+  useInterfaceErrorStatistics(() => {
+    return {
+      mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+      subType: InterfaceIndicator.subType.InterfaceIndicator,
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
+      granularity: "4h",
+    };
+  })
+);
+
+// 接口错误 上一周统计
+const { interfaceErrorStatistics: interfaceErrorLastWeekDataList } = $(
+  useInterfaceErrorStatistics(() => {
+    return {
+      mainType: InterfaceIndicator.mainType.InterfaceIndicator,
+      subType: InterfaceIndicator.subType.InterfaceIndicator,
+      startTime: activeDateTime.subtract(1, "week"),
+      endTime: activeDateTime.subtract(1, "week").add(1, "day"),
+      granularity: "4h",
+    };
+  })
+);
+// 接口错误图表的option
+const interfaceErrorOption = $computed<EChartsCoreOption>(() => {
+  return {
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
+        label: {
+          backgroundColor: "#6a7985",
+        },
+      },
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
+    },
+    xAxis: [
+      {
+        type: "category",
+        boundaryGap: false,
+        data: interfaceErrorDataList?.map((item) => {
+          return dayjs(item.dateTime, "YYYY-MM-DD HH:mm:ss").format("HH:mm");
+        }),
+      },
+    ],
+    yAxis: [
+      {
+        type: "value",
+      },
+    ],
+    series: [
+      {
+        name: "上周错误",
+        type: "line",
+        stack: "lastWeekError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: interfaceErrorLastWeekDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+      {
+        name: "今日错误",
+        type: "line",
+        stack: "todyError",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
+        data: interfaceErrorDataList?.map((item) => {
+          return item.count;
+        }),
+      },
+    ],
+  };
+});
 </script>
 
 <style lang="scss" scoped>
@@ -384,9 +538,19 @@ function getalldata(start: string) {
     height: 300px;
   }
 
-  .bar3 {
-    width: auto;
-    height: 300px;
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .bar-box {
+      margin: 0 20px;
+    }
+
+    .bar-echarts {
+      width: 450px;
+      height: 300px;
+    }
   }
 }
 </style>

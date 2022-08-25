@@ -4,7 +4,7 @@
       <DataCard
         class="chart"
         icon="fa-bar-chart-o"
-        title="资源加载报错(点击顶点查看其它日期)"
+        title="资源加载报错(点击柱状图查看其它日期)"
         :loading="resourceErrorStatisticsLoading"
       >
         <template #rActions>
@@ -129,13 +129,25 @@ const resourceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     series: [
       {
         data: resourceErrorStatistics?.map((item) => item.count) || [],
-        type: "line",
-        areaStyle: {},
+        type: "bar",
+        barWidth: 80,
+        itemStyle: {
+          color: "#94d6da",
+        },
+
         emphasis: {
-          focus: "series",
+          itemStyle: {
+            color: "#009ad6",
+          },
         },
       },
     ],
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
+    },
     ...basicChartOption,
   };
 });

@@ -111,7 +111,6 @@ import { basicChartOption } from "@/configs";
 import { useBasicBehaviorStatistics } from "@/hooks";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
-import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
 // 当前激活时间

@@ -8,7 +8,7 @@
         style="flex: 7; height: 300px; margin: 0 10px 10px"
         @row-click="handleRowClick"
       />
-      <DataCard title="用户列表" style="flex: 3">
+      <DataCard title="用户列表（点击查看详情）" style="flex: 3">
         <div class="user-list">
           <div
             v-for="userID in activeUserList"

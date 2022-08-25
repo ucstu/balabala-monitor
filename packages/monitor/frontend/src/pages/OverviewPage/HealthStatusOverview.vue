@@ -1,31 +1,23 @@
 <template>
   <div class="main">
     <ToolBar v-model:dateTime="activeDateTime" title="健康数据" />
-    <DataCard title="一天的用户访问量趋势">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          text-align: center;
-        "
-      >
-        <div style="display: flex; align-items: center; width: 650px">
-          <ECharts
-            :option="interfaceErrorStatisticsChartOption"
-            :autoresize="true"
-            class="bar2"
-          ></ECharts>
-          <ECharts
-            :option="resourse_options"
-            :autoresize="true"
-            class="bar2"
-          ></ECharts>
-        </div>
+    <DataCard title="健康状态（24H）">
+      <div class="flex-row align-center justify-around">
+        <ECharts
+          :option="resourseErrorStatisticsChartOption"
+          :autoresize="true"
+          class="bar2"
+        ></ECharts>
+        <ECharts
+          :option="interfaceErrorStatisticsChartOption"
+          :autoresize="true"
+          class="bar2"
+        ></ECharts>
       </div>
     </DataCard>
     <div class="bar">
       <DataCard
-        title="一天的JS错误趋势"
+        title="JS错误趋势（24H）"
         style="margin-top: 20px"
         :loading="jsDataLoading"
         class="bar-box"
@@ -37,7 +29,7 @@
         />
       </DataCard>
       <DataCard
-        title="一天的资源错误趋势"
+        title="资源错误趋势（24H）"
         style="margin-top: 20px"
         :loading="resourceErrorDataLoading"
         class="bar-box"
@@ -49,7 +41,7 @@
         />
       </DataCard>
       <DataCard
-        title="一天的接口错误趋势"
+        title="接口错误趋势（24H）"
         style="margin-top: 20px"
         :loading="interfaceErrorDataLoading"
         class="bar-box"
@@ -73,22 +65,21 @@ import {
 } from "@/apis";
 import DataCard from "@/components/DataCard.vue";
 import ToolBar from "@/components/ToolBar.vue";
-import { basicChartOption } from "@/configs";
 import {
   useInterfaceErrorStatistics,
+  useInterfaceIndicatorStatistics,
   useJavaScriptErrorStatistics,
   useResourceErrorStatistics,
 } from "@/hooks";
 import { useResourceIndicatorStatistics } from "@/hooks/useResourceIndicatorStatistics";
 import dayjs from "dayjs";
 import { EChartsCoreOption } from "echarts";
-import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
 // 日期
 let activeDateTime = $ref(dayjs());
 
-// 静态资源错误
+// 静态资源错误统计
 const { resourceErrorStatistics } = $(
   useResourceErrorStatistics(() => {
     return {
@@ -101,18 +92,7 @@ const { resourceErrorStatistics } = $(
   })
 );
 
-// 静态资源错误率
-const totalResourceError = $computed(
-  () =>
-    (resourceErrorStatistics?.reduce((sum, item) => (sum += item.count), 0) ||
-      0) /
-    (resourceIndicatorStatistics?.reduce(
-      (sum, item) => (sum += item.count),
-      0
-    ) || 0)
-);
-
-// 静态资源请求
+// 静态资源请求统计
 const { resourceIndicatorStatistics } = $(
   useResourceIndicatorStatistics(() => {
     return {
@@ -124,9 +104,22 @@ const { resourceIndicatorStatistics } = $(
     };
   })
 );
+
 // 资源错误率option配置
-const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+const resourseErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  const resourceErrorCount =
+    resourceErrorStatistics?.reduce((sum, item) => (sum += item.count), 0) || 0;
+  const resourceIndicatorCount =
+    resourceIndicatorStatistics?.reduce(
+      (sum, item) => (sum += item.count),
+      0
+    ) || 0;
   return {
+    title: {
+      text: "资源正确率",
+      left: "48%",
+      textAlign: "center",
+    },
     series: [
       {
         type: "pie", //pie类型的图实现环形图
@@ -136,7 +129,8 @@ const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
           //每个数据的标签
           show: true, //设置为true则显示第一个数据
           position: "center", //位置居中
-          formatter: "{d}%", //{d}表示数据在总数据中的百分比
+          formatter:
+            resourceErrorCount || resourceIndicatorCount ? "{d}%" : "暂无数据", //{d}表示数据在总数据中的百分比
           fontSize: 20,
           fontWeight: "bold",
         },
@@ -148,78 +142,102 @@ const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
         labelLine: {
           show: true,
         },
-        data: [
-          {
-            value:
-              resourceErrorStatistics?.reduce(
-                (sum, item) => (sum += item.count),
-                0
-              ) || 0,
-            name: "错误请求",
-            emphasis: {
-              label: {
-                show: false, //这个数据高亮时不显示label，就不会显示替遮住第一个数据的label值了
-              },
-            },
-          },
-          {
-            value: resourceIndicatorStatistics?.reduce(
-              (sum, item) => (sum += item.count),
-              0
-            ),
-            name: "正确请求",
-          },
-        ],
+        data:
+          resourceErrorCount || resourceIndicatorCount
+            ? [
+                {
+                  value: resourceErrorCount,
+                  name: "错误资源",
+                  emphasis: {
+                    label: {
+                      show: false, //这个数据高亮时不显示label，就不会显示替遮住第一个数据的label值了
+                    },
+                  },
+                },
+                {
+                  value: resourceIndicatorCount,
+                  name: "正确资源",
+                },
+              ]
+            : [
+                {
+                  value: resourceErrorCount,
+                  name: "静态资源",
+                },
+              ],
       },
     ],
   };
 });
 
-const resourseStatistics = $ref<number>(0);
-const resourseErrorStatistics = $ref<number>(0);
+const { interfaceIndicatorStatistics } = $(
+  useInterfaceIndicatorStatistics(() => {
+    return {
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
+    };
+  })
+);
 
-const resourse_options = $computed<EChartsCoreOption>(() => {
+const interfaceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
+  const allRequestCount =
+    interfaceIndicatorStatistics
+      ?.flat(2)
+      .reduce((pre, cur) => cur.count + pre, 0) || 0;
+  const badRequestCount =
+    interfaceErrorDataList?.reduce((pre, cur) => cur.count + pre, 0) || 0;
+  const goodRequestCount = allRequestCount - badRequestCount;
   return {
     title: {
-      zlevel: 2, // 控制圆环图中间的字的层级
-      text:
-        (resourseErrorStatistics /
-          (resourseStatistics + resourseErrorStatistics)) *
-        100
-          ? (
-              (resourseErrorStatistics /
-                (resourseStatistics + resourseErrorStatistics)) *
-              100
-            ).toFixed(2) + "%"
-          : "暂无数据",
-      top: "45%",
-      left: "50%",
-      textAlign: "center", // 让文字居中
-      textStyle: {
-        color: "red",
-        fontWeight: "bolder",
-        fontSize: "30px",
-      },
+      text: "接口正确率",
+      left: "48%",
+      textAlign: "center",
     },
     series: [
       {
-        name: "resourse",
         type: "pie",
         radius: ["60%", "80%"],
-        avoidLabelOverlap: false,
-        data: [
-          {
-            value: resourseStatistics + resourseErrorStatistics,
-            name: "资源请求",
-          },
-          {
-            value: resourseErrorStatistics,
-            name: "资源错误",
-          },
-        ],
+        color: ["#1E3E55", "#dfe6e9"],
+        label: {
+          //每个数据的标签
+          show: true, //设置为true则显示第一个数据
+          position: "center", //位置居中
+          formatter: badRequestCount || goodRequestCount ? "{d}%" : "暂无数据", //{d}表示数据在总数据中的百分比
+          fontSize: 20,
+          fontWeight: "bold",
+        },
+        emphasis: {
+          //高亮，即鼠标经过时的样式
+          scale: false, //表示不放大item
+        },
+        labelLine: {
+          show: true,
+        },
+        data:
+          badRequestCount || goodRequestCount
+            ? [
+                {
+                  value: badRequestCount,
+                  name: "错误请求",
+                  emphasis: {
+                    label: {
+                      show: false, //这个数据高亮时不显示label，就不会显示替遮住第一个数据的label值了
+                    },
+                  },
+                },
+                {
+                  value: goodRequestCount,
+                  name: "正确请求",
+                },
+              ]
+            : [
+                {
+                  value: badRequestCount,
+                  name: "接口请求",
+                },
+              ],
       },
     ],
-    ...basicChartOption,
   };
 });
 
@@ -239,10 +257,7 @@ const {
   })
 );
 // js 上一周错误统计
-const {
-  javaScriptErrorStatistics: jsLastWeekDataList,
-  javaScriptErrorStatisticsLoading: jsLastWeekDataLoading,
-} = $(
+const { javaScriptErrorStatistics: jsLastWeekDataList } = $(
   useJavaScriptErrorStatistics(() => {
     return {
       mainType: JavaScriptError.mainType.JavaScriptError,
@@ -331,10 +346,7 @@ const {
 );
 
 // 资源错误 上一周统计
-const {
-  resourceErrorStatistics: resourceErrorLastWeekDataList,
-  resourceErrorStatisticsLoading: resourceErrorLastWeekDataLoading,
-} = $(
+const { resourceErrorStatistics: resourceErrorLastWeekDataList } = $(
   useResourceErrorStatistics(() => {
     return {
       mainType: ResourceError.mainType.ResourceError,
@@ -544,7 +556,12 @@ const interfaceErrorOption = $computed<EChartsCoreOption>(() => {
     justify-content: space-around;
 
     .bar-box {
-      margin: 0 20px;
+      flex: 1;
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     .bar-echarts {

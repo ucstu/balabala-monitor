@@ -116,7 +116,7 @@
                   </div>
                 </div>
               </DataCard>
-              <DataCard title="用户列表">
+              <DataCard title="用户列表（点击查看详情）">
                 <div class="user-list">
                   <div
                     v-for="userID in activeUserList"
@@ -165,14 +165,15 @@ import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import { watch } from "vue";
 import ECharts from "vue-echarts";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
+const route = useRoute();
 const router = useRouter();
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
 // 激活统计日期
-let activeDateTime = $ref(dayjs().startOf("d"));
+let activeDateTime = $ref(dayjs(route.query.dateTime as string).startOf("d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
@@ -304,6 +305,20 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
 const activeUserList = $computed(
   () => interfaceIndicators?.[activeInterface]?.userList || []
 );
+
+if (route.query.url) {
+  const url = decodeURI(route.query.url as string);
+  const cancel = watch(
+    () => interfaceIndicators,
+    () => {
+      const index = interfaceIndicators?.findIndex((item) => item.url === url);
+      if (index !== undefined && index !== -1) {
+        activeInterface = index;
+        cancel();
+      }
+    }
+  );
+}
 
 watch(
   () => interfaceIndicators,

@@ -496,8 +496,9 @@ const totalTime = (val: number): string => {
       }
 
       .list-right {
-        display: flex;
-        width: 200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 300px;
 
         .list-right-item {
           min-width: 60px;

@@ -27,7 +27,7 @@ export const totalData = (querys: BaseTotalVo, list) => {
         userCount: 0,
         pageCount: 0,
       });
-      startTime = startTime.add(1, typeUnit);
+      startTime = startTime.add(intValue, typeUnit);
     }
     return restList;
   }

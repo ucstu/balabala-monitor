@@ -5,6 +5,7 @@
       v-model:value="dateTime"
       :format="format"
       style="width: 150px"
+      :disabled-date="disabledDateHandler"
       value-type="format"
       :editable="false"
       :clearable="false"
@@ -36,6 +37,8 @@ const dateTime = $computed({
   get: () => _dateTime.format(format),
   set: (value) => emits("update:dateTime", dayjs(value, format)),
 });
+
+const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 </script>
 
 <style scoped lang="scss">

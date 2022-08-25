@@ -9,6 +9,7 @@
           format="YYYY-MM-DD"
           style="width: 150px"
           value-type="format"
+          :disabled-date="disabledDateHandler"
           :editable="false"
           :clearable="false"
         />
@@ -386,6 +387,8 @@ const dcl = $computed(() => {
     (dclData?.length || 1)
   );
 });
+
+const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 
 const totalCount = (val: number): string => {
   if (val < 1000) {

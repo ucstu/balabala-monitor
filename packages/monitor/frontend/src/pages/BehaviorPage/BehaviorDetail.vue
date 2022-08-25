@@ -8,6 +8,7 @@
             format="YYYY-MM-DD"
             style="width: 150px"
             value-type="format"
+            :disabled-date="disabledDateHandler"
             :editable="false"
             :clearable="false"
           />
@@ -139,7 +140,7 @@ let sectionNameMap: Record<number, string> = {
   3: "10-30秒",
   4: ">30秒",
 };
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs(route.query.dateTime as string));
 let activeRawTime = $computed({
   get: () => activeDateTime.format("YYYY-MM-DD"),
   set: (value) => {
@@ -265,6 +266,8 @@ const loadActions = useDebounceFn(async () => {
   userActions = data;
   userActionsLoading = false;
 }, 20);
+
+const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 
 watch([() => activeDateTime, () => userId], () => {
   loadActions();

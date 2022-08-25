@@ -13,6 +13,7 @@
             format="YYYY-MM-DD"
             style="position: relative; width: 150px"
             value-type="format"
+            :disabled-date="disabledDateHandler"
             :editable="false"
             :clearable="false"
           />
@@ -138,6 +139,8 @@ const resourceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
+
+const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 
 const handleChartClick = (e: { dataIndex: ReactiveVariable<number> }) => {
   activeResourceErrorIndex = e.dataIndex;

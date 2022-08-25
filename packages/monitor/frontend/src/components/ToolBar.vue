@@ -16,6 +16,7 @@
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import DatePicker from "vue-datepicker-next";
+import "vue-datepicker-next/index.css";
 
 const {
   title,

@@ -77,7 +77,7 @@ import { EChartsCoreOption } from "echarts";
 import ECharts from "vue-echarts";
 
 // 日期
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 
 // 静态资源错误统计
 const { resourceErrorStatistics } = $(
@@ -85,8 +85,8 @@ const { resourceErrorStatistics } = $(
     return {
       mainType: ResourceError.mainType.ResourceError,
       subType: ResourceError.subType.ResourceError,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "day"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
       granularity: "1d",
     };
   })
@@ -98,8 +98,8 @@ const { resourceIndicatorStatistics } = $(
     return {
       mainType: ResourceIndicator.mainType.ResourceIndicator,
       subType: ResourceIndicator.subType.ResourceIndicator,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "day"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
       granularity: "1d",
     };
   })
@@ -173,8 +173,8 @@ const resourseErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
 const { interfaceIndicatorStatistics } = $(
   useInterfaceIndicatorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );
@@ -250,8 +250,8 @@ const {
     return {
       mainType: JavaScriptError.mainType.JavaScriptError,
       subType: JavaScriptError.subType.JavaScriptError,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "day"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
       granularity: "4h",
     };
   })
@@ -262,7 +262,7 @@ const { javaScriptErrorStatistics: jsLastWeekDataList } = $(
     return {
       mainType: JavaScriptError.mainType.JavaScriptError,
       subType: JavaScriptError.subType.JavaScriptError,
-      startTime: activeDateTime.startOf("d").subtract(1, "week"),
+      startTime: activeDateTime.subtract(1, "week"),
       endTime: activeDateTime.subtract(1, "week").add(1, "day"),
       granularity: "4h",
     };
@@ -338,8 +338,8 @@ const {
     return {
       mainType: ResourceError.mainType.ResourceError,
       subType: ResourceError.subType.ResourceError,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "day"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
       granularity: "4h",
     };
   })
@@ -351,8 +351,8 @@ const { resourceErrorStatistics: resourceErrorLastWeekDataList } = $(
     return {
       mainType: ResourceError.mainType.ResourceError,
       subType: ResourceError.subType.ResourceError,
-      startTime: activeDateTime.startOf("d").subtract(1, "week"),
-      endTime: activeDateTime.startOf("d").subtract(1, "week").add(1, "day"),
+      startTime: activeDateTime.subtract(1, "week"),
+      endTime: activeDateTime.subtract(1, "week").add(1, "day"),
       granularity: "4h",
     };
   })
@@ -427,8 +427,8 @@ const {
     return {
       mainType: InterfaceIndicator.mainType.InterfaceIndicator,
       subType: InterfaceIndicator.subType.InterfaceIndicator,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "day"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "day"),
       granularity: "4h",
     };
   })
@@ -440,8 +440,8 @@ const { interfaceErrorStatistics: interfaceErrorLastWeekDataList } = $(
     return {
       mainType: InterfaceIndicator.mainType.InterfaceIndicator,
       subType: InterfaceIndicator.subType.InterfaceIndicator,
-      startTime: activeDateTime.startOf("d").subtract(1, "week"),
-      endTime: activeDateTime.startOf("d").subtract(1, "week").add(1, "day"),
+      startTime: activeDateTime.subtract(1, "week"),
+      endTime: activeDateTime.subtract(1, "week").add(1, "day"),
       granularity: "4h",
     };
   })

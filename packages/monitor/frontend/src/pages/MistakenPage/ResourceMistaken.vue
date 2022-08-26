@@ -95,7 +95,7 @@ import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 import { ReactiveVariable } from "vue/macros";
 
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 let activeRawDateTime = $computed({
   get: () => activeDateTime.format("YYYY-MM-DD"),
   set: (value) => {
@@ -108,8 +108,8 @@ let activeResourceErrorIndex = $ref(0);
 const { resourceErrorStatistics, resourceErrorStatisticsLoading } = $(
   useResourceErrorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })

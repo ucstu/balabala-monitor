@@ -250,8 +250,8 @@ const indicatorStatisticsChartClick = (e: any) => {
 const { interfaceIndicators, interfaceIndicatorsLoading } = $(
   useInterfaceIndicators(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );
@@ -262,8 +262,8 @@ const {
 } = $(
   useInterfaceIndicatorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
       url: interfaceIndicators?.[activeInterface]?.url,
       _skip: !interfaceIndicators?.[activeInterface]?.url,

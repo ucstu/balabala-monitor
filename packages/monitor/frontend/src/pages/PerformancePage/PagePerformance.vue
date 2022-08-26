@@ -447,7 +447,7 @@ watch(
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 40px;
+          min-height: 40px;
           padding-left: 10px;
           margin-bottom: 10px;
           background-color: #e7e7e7;

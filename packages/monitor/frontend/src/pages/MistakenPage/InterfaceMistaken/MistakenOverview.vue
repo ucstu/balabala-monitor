@@ -43,8 +43,8 @@ let activeDateTime = $ref(dayjs());
 const { interfaceErrors, interfaceErrorsLoading } = $(
   useInterfaceErrors(() => {
     return {
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
       size: 10,
     };
   })
@@ -58,8 +58,8 @@ const interfaceErrorRaws = $computed(
 const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
   useInterfaceErrorStatistics(() => {
     return {
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
       granularity: "1h",
     };
   })

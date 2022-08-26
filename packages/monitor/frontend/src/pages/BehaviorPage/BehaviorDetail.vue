@@ -154,8 +154,8 @@ let userActionParma = $computed(() => {
   return {
     appId: store.appId,
     userId: userId,
-    startTime: activeDateTime.format("YYYY-MM-DD"),
-    endTime: activeDateTime.add(1, "day").format("YYYY-MM-DD"),
+    startTime: activeDateTime.startOf("d").format("YYYY-MM-DD"),
+    endTime: activeDateTime.startOf("d").add(1, "day").format("YYYY-MM-DD"),
   };
 });
 
@@ -168,8 +168,8 @@ const {
       mainType: BasicIndicator.mainType.LoadIndicator,
       subType: BasicIndicator.subType.FullLoad,
       userId: userId,
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
       granularity: "1h",
     };
   })
@@ -209,8 +209,8 @@ const { interfaceIndicatorStatistics, interfaceIndicatorStatisticsLoading } = $(
   useInterfaceIndicatorStatistics(() => {
     return {
       userId: userId,
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
       granularity: "1h",
     };
   })
@@ -269,7 +269,7 @@ const loadActions = useDebounceFn(async () => {
 
 const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 
-watch([() => activeDateTime, () => userId], () => {
+watch([() => activeDateTime.startOf("d"), () => userId], () => {
   loadActions();
 });
 </script>

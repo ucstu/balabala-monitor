@@ -108,8 +108,8 @@ let activeResourceErrorIndex = $ref(0);
 const { resourceErrorStatistics, resourceErrorStatisticsLoading } = $(
   useResourceErrorStatistics(() => {
     return {
-      startTime: activeDateTime,
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
       granularity: "1h",
     };
   })

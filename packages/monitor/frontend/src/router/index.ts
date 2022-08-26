@@ -6,7 +6,7 @@ declare module "vue-router" {
     title?: string;
     keepAlive?: boolean;
     hiddenHeader?: boolean;
-    menu?: Array<{ name: string; path: string }>;
+    menu?: Array<{ name: string; path: string; icon?: string }>;
   }
 }
 
@@ -22,9 +22,21 @@ const routeRecordRaws: RouteRecordRaw[] = [
     path: "/Overview",
     meta: {
       menu: [
-        { name: "行为概览", path: "/Overview/DataOverview" },
-        { name: "健康概览", path: "/Overview/HealthStatusOverview" },
-        { name: "性能概览", path: "/Overview/PerformanceOverview" },
+        {
+          name: "行为概览",
+          path: "/Overview/DataOverview",
+          icon: "fa-calculator",
+        },
+        {
+          name: "健康概览",
+          path: "/Overview/HealthStatusOverview",
+          icon: "fa-asl-interpreting",
+        },
+        {
+          name: "性能概览",
+          path: "/Overview/PerformanceOverview",
+          icon: "fa-cogs",
+        },
       ],
     },
     component: () => import("@/pages/PageContent.vue"),
@@ -66,10 +78,12 @@ const routeRecordRaws: RouteRecordRaw[] = [
         {
           name: "错误概览",
           path: "/Mistaken/BasicMistaken/MistakenOverview",
+          icon: "fa-book",
         },
         {
           name: "错误列表",
           path: "/Mistaken/BasicMistaken/MistakenList",
+          icon: "fa-bars",
         },
       ],
     },
@@ -104,10 +118,12 @@ const routeRecordRaws: RouteRecordRaw[] = [
         {
           name: "错误概览",
           path: "/Mistaken/InterfaceMistaken/MistakenOverview",
+          icon: "fa-book",
         },
         {
           name: "错误列表",
           path: "/Mistaken/InterfaceMistaken/MistakenList",
+          icon: "fa-bars",
         },
       ],
     },
@@ -185,7 +201,7 @@ const router = createRouter({
 
 router.afterEach((to, _from) => {
   document.title = to.meta.title
-    ? "前端监控-" + (to.meta.title || "")
+    ? "前端监控-" + to.meta.title
     : "BalaBala云-前端监控";
 });
 

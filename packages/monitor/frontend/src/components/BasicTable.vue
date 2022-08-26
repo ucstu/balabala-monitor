@@ -11,6 +11,7 @@
           v-for="(data, _index) in item"
           :key="_index"
           :style="columnStyles?.[index] || ''"
+          @click="emits('rowClick', index, _index)"
         >
           {{ data }}
         </td>
@@ -24,6 +25,10 @@ const {} = defineProps<{
   titles: Array<string>;
   dataList: Array<Array<any>>;
   columnStyles?: Array<string>;
+}>();
+
+const emits = defineEmits<{
+  (e: "rowClick", row: number, column: number): void;
 }>();
 </script>
 
@@ -42,6 +47,7 @@ table td,
 table th {
   height: 30px;
   color: #666;
+  cursor: pointer;
   border: 1px solid #cad9ea;
 }
 

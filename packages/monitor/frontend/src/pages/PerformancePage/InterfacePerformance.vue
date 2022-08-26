@@ -84,37 +84,57 @@
             </li>
           </ul>
           <div class="right">
-            <DataCard icon="fa-flag" title="常见指标">
-              <div class="board">
-                <div class="data">
-                  <div class="time">
-                    <span>平均耗时</span>
-                    <span
-                      >{{
-                        (
-                          (interfaceIndicators?.[activeInterface]?.average ||
-                            0) / 1000
-                        ).toFixed(2)
-                      }}s</span
-                    >
+            <div class="flex-row">
+              <DataCard icon="fa-flag" title="常见指标">
+                <div class="board">
+                  <div class="data">
+                    <div class="time">
+                      <span>平均耗时</span>
+                      <span
+                        >{{
+                          (
+                            (interfaceIndicators?.[activeInterface]?.average ||
+                              0) / 1000
+                          ).toFixed(2)
+                        }}s</span
+                      >
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-hourglass-end"></i>
+                    </div>
                   </div>
-                  <div class="icon">
-                    <i class="fa fa-hourglass-end"></i>
+                  <div class="data">
+                    <div class="time">
+                      <span>影响用户</span>
+                      <span>{{
+                        interfaceIndicators?.[activeInterface]?.userCount || 0
+                      }}</span>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-male"></i>
+                    </div>
                   </div>
                 </div>
-                <div class="data">
-                  <div class="time">
-                    <span>影响用户</span>
-                    <span>{{
-                      interfaceIndicators?.[activeInterface]?.userCount || 0
-                    }}</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-male"></i>
+              </DataCard>
+              <DataCard title="用户列表（点击查看详情）">
+                <div class="user-list">
+                  <div
+                    v-for="userID in activeUserList"
+                    :key="userID"
+                    class="user-name"
+                    @click="
+                      router.push(
+                        `/Behavior/BehaviorDetail?userId=${userID}&dateTime=${activeDateTime.format(
+                          'YYYY-MM-DD'
+                        )}`
+                      )
+                    "
+                  >
+                    {{ userID }}
                   </div>
                 </div>
-              </div>
-            </DataCard>
+              </DataCard>
+            </div>
             <DataCard
               icon="fa-bar-chart"
               title="请求趋势"
@@ -145,11 +165,15 @@ import dayjs from "dayjs";
 import type { EChartsCoreOption } from "echarts";
 import { watch } from "vue";
 import ECharts from "vue-echarts";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
 
 // 激活耗时分段索引
 let activeSection = $ref(0);
 // 激活统计日期
-let activeDateTime = $ref(dayjs().startOf("d"));
+let activeDateTime = $ref(dayjs(route.query.dateTime as string).startOf("d"));
 // 激活接口索引
 let activeInterface = $ref(0);
 // 耗时分段名称映射
@@ -171,7 +195,7 @@ const {
 } = $(
   useInterfaceIndicatorStatistics({
     startTime: nowDateTime.subtract(29, "d"),
-    endTime: nowDateTime,
+    endTime: nowDateTime.add(1, "d"),
   })
 );
 // 接口指标分段统计图标配置项
@@ -277,6 +301,24 @@ const theIndicatorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
     ...basicChartOption,
   };
 });
+
+const activeUserList = $computed(
+  () => interfaceIndicators?.[activeInterface]?.userList || []
+);
+
+if (route.query.url) {
+  const url = decodeURI(route.query.url as string);
+  const cancel = watch(
+    () => interfaceIndicators,
+    () => {
+      const index = interfaceIndicators?.findIndex((item) => item.url === url);
+      if (index !== undefined && index !== -1) {
+        activeInterface = index;
+        cancel();
+      }
+    }
+  );
+}
 
 watch(
   () => interfaceIndicators,
@@ -462,6 +504,22 @@ watch(
           height: 300px;
         }
       }
+    }
+  }
+}
+
+.user-list {
+  .user-name {
+    padding: 10px;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: azure;
+    }
+
+    &:checked {
+      background-color: aliceblue;
     }
   }
 }

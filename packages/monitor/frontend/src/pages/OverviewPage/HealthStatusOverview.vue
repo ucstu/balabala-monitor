@@ -545,6 +545,7 @@ const interfaceErrorOption = $computed<EChartsCoreOption>(() => {
 
     .bar-box {
       flex: 1;
+      height: 250px;
       margin-right: 10px;
 
       &:last-child {

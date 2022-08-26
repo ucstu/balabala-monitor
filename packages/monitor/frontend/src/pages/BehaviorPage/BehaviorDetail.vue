@@ -140,7 +140,7 @@ let sectionNameMap: Record<number, string> = {
   3: "10-30秒",
   4: ">30秒",
 };
-let activeDateTime = $ref(dayjs(route.query.dateTime as string));
+let activeDateTime = $ref(dayjs(route.query.dateTime as string).startOf("day"));
 let activeRawTime = $computed({
   get: () => activeDateTime.format("YYYY-MM-DD"),
   set: (value) => {
@@ -154,8 +154,8 @@ let userActionParma = $computed(() => {
   return {
     appId: store.appId,
     userId: userId,
-    startTime: activeDateTime.startOf("d").format("YYYY-MM-DD"),
-    endTime: activeDateTime.startOf("d").add(1, "day").format("YYYY-MM-DD"),
+    startTime: activeDateTime.format("YYYY-MM-DD"),
+    endTime: activeDateTime.add(1, "day").format("YYYY-MM-DD"),
   };
 });
 
@@ -168,8 +168,8 @@ const {
       mainType: BasicIndicator.mainType.LoadIndicator,
       subType: BasicIndicator.subType.FullLoad,
       userId: userId,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })
@@ -209,8 +209,8 @@ const { interfaceIndicatorStatistics, interfaceIndicatorStatisticsLoading } = $(
   useInterfaceIndicatorStatistics(() => {
     return {
       userId: userId,
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })
@@ -269,7 +269,7 @@ const loadActions = useDebounceFn(async () => {
 
 const disabledDateHandler = (date: Date) => dayjs(date).isAfter(dayjs());
 
-watch([() => activeDateTime.startOf("d"), () => userId], () => {
+watch([() => activeDateTime, () => userId], () => {
   loadActions();
 });
 </script>

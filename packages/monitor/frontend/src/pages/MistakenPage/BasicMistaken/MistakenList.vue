@@ -54,7 +54,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 let activeUserList = $ref<Array<string>>();
 
 const handleRowClick = (row: number) => {
@@ -66,8 +66,8 @@ let page = $ref(0);
 const { promiseErrors } = $(
   usePromiseErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );
@@ -80,8 +80,8 @@ const promiseErrorRows = $computed(
 const { javaScriptErrors } = $(
   useJavaScriptErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );

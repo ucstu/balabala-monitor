@@ -56,7 +56,8 @@
               color: defaultIndex == index ? '#1e80ff' : '',
             }"
             @click="clickNavigator(index)"
-            @mouseenter="enterHandle(index)"
+            @mouseenter="enterHandle(index, 'enter')"
+            @mouseleave="enterHandle(index, 'leave')"
           >
             {{ item }}
           </div>
@@ -76,12 +77,15 @@ const route = useRoute();
 let currentIndex = $ref();
 let defaultIndex = $ref(0);
 let article = $ref<Article>();
-const enterHandle = (index: any) => {
-  currentIndex = index;
+const enterHandle = (index: any, operate: string) => {
+  if (operate == "enter") {
+    currentIndex = index;
+  } else {
+    currentIndex = -1;
+  }
 };
 const clickNavigator = (index: any) => {
-  defaultIndex == index;
-  console.log(defaultIndex, index);
+  defaultIndex = index;
 };
 getArticle({
   articleId:

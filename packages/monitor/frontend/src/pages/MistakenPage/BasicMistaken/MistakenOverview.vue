@@ -64,13 +64,13 @@ import type { EChartsCoreOption } from "echarts";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 
 const { javaScriptErrors, javaScriptErrorsLoading } = $(
   useJavaScriptErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       size: 10,
     };
   })
@@ -85,8 +85,8 @@ const javaScriptErrorRows = $computed(
 const { promiseErrors, promiseErrorsLoading } = $(
   usePromiseErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       size: 10,
     };
   })
@@ -100,8 +100,8 @@ const promiseErrorRows = $computed(
 const { javaScriptErrorStatistics, javaScriptErrorStatisticsLoading } = $(
   useJavaScriptErrorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.startOf("d"),
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })
@@ -138,8 +138,8 @@ const javaScriptErrorStatisticsChartOption = $computed<EChartsCoreOption>(
 const { promiseErrorStatistics, promiseErrorStatisticsLoading } = $(
   usePromiseErrorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })

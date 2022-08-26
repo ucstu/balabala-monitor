@@ -266,8 +266,8 @@ const { basicIndicators, basicIndicatorsLoading } = $(
     return {
       mainType: parseInt(typeString.split("-")[0]),
       subType: parseInt(typeString.split("-")[1]),
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );
@@ -280,8 +280,8 @@ const {
     return {
       mainType: parseInt(typeString.split("-")[0]),
       subType: parseInt(typeString.split("-")[1]),
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
       pageUrl: basicIndicators?.[activePage]?.pageUrl,
       _skip: !basicIndicators?.[activePage]?.pageUrl,

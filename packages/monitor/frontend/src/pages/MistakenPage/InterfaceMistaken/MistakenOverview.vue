@@ -38,13 +38,13 @@ import type { EChartsCoreOption } from "echarts";
 import "vue-datepicker-next/index.css";
 import ECharts from "vue-echarts";
 
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 
 const { interfaceErrors, interfaceErrorsLoading } = $(
   useInterfaceErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       size: 10,
     };
   })
@@ -58,8 +58,8 @@ const interfaceErrorRaws = $computed(
 const { interfaceErrorStatistics, interfaceErrorStatisticsLoading } = $(
   useInterfaceErrorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime,
+      endTime: activeDateTime.add(1, "d"),
       granularity: "1h",
     };
   })

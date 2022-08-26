@@ -66,8 +66,8 @@ let page = $ref(0);
 const { promiseErrors } = $(
   usePromiseErrors(() => {
     return {
-      startTime: activeDateTime.subtract(1, "d"),
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d").subtract(1, "d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
     };
   })
 );
@@ -80,8 +80,8 @@ const promiseErrorRows = $computed(
 const { javaScriptErrors } = $(
   useJavaScriptErrors(() => {
     return {
-      startTime: activeDateTime.subtract(1, "d"),
-      endTime: activeDateTime.add(1, "d"),
+      startTime: activeDateTime.startOf("d").subtract(1, "d"),
+      endTime: activeDateTime.startOf("d").add(1, "d"),
     };
   })
 );

@@ -19,6 +19,7 @@
         :empty="interfaceErrors?.length ? false : true"
       >
         <BasicTable
+          :border="false"
           :titles="['错误消息', '发生次数', '影响用户']"
           :data-list="interfaceErrorRaws"
         />

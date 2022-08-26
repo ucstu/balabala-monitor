@@ -335,9 +335,11 @@ const {
 });
 // 计算接口请求总量
 const totalSumIndicator = $computed(() => {
-  return indicatorStatisticsData?.reduce(
-    (sum, item) => (sum += item.reduce((s1, i1) => (s1 += i1.count), 0)),
-    0
+  return (
+    indicatorStatisticsData?.reduce(
+      (sum, item) => (sum += item.reduce((s1, i1) => (s1 += i1.count), 0)),
+      0
+    ) || 0
   );
 });
 

@@ -22,11 +22,7 @@
         :loading="jsDataLoading"
         class="bar-box"
       >
-        <ECharts
-          :option="jsErrorOption"
-          :autoresize="true"
-          class="bar-echarts"
-        />
+        <ECharts :option="jsErrorOption" :autoresize="true" />
       </DataCard>
       <DataCard
         title="资源错误趋势（24H）"
@@ -34,11 +30,7 @@
         :loading="resourceErrorDataLoading"
         class="bar-box"
       >
-        <ECharts
-          :option="resourceErrorOption"
-          :autoresize="true"
-          class="bar-echarts"
-        />
+        <ECharts :option="resourceErrorOption" :autoresize="true" />
       </DataCard>
       <DataCard
         title="接口错误趋势（24H）"
@@ -46,11 +38,7 @@
         :loading="interfaceErrorDataLoading"
         class="bar-box"
       >
-        <ECharts
-          :option="interfaceErrorOption"
-          :autoresize="true"
-          class="bar-echarts"
-        />
+        <ECharts :option="interfaceErrorOption" :autoresize="true" />
       </DataCard>
     </div>
   </div>
@@ -562,11 +550,6 @@ const interfaceErrorOption = $computed<EChartsCoreOption>(() => {
       &:last-child {
         margin-right: 0;
       }
-    }
-
-    .bar-echarts {
-      width: 450px;
-      height: 300px;
     }
   }
 }

@@ -11,10 +11,9 @@ export default () => {
         subType: BasicBehavior.subType.PageAccessDepth,
         ...getBasicParams(),
         value:
-          ((document.documentElement.scrollTop +
+          (document.documentElement.scrollTop +
             document.documentElement.clientHeight) /
-            document.documentElement.scrollHeight) %
-          1,
+          document.documentElement.scrollHeight,
       },
     ]);
   });

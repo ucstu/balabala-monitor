@@ -3,6 +3,7 @@
     <ToolBar v-model:date-time="activeDateTime" title="接口错误列表" />
     <div class="flex-row">
       <BasicTable
+        :border="false"
         :titles="['错误消息', '发生次数', '影响用户']"
         :data-list="interfaceErrorRaws.slice(page * 5, (page + 1) * 5)"
         style="flex: 7; height: 300px; margin: 0 10px 10px"

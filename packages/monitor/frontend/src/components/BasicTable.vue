@@ -21,7 +21,8 @@
 </template>
 
 <script setup lang="ts">
-const {} = defineProps<{
+const { border = true } = defineProps<{
+  border?: boolean;
   titles: Array<string>;
   dataList: Array<Array<any>>;
   columnStyles?: Array<string>;
@@ -30,6 +31,8 @@ const {} = defineProps<{
 const emits = defineEmits<{
   (e: "rowClick", row: number, column: number): void;
 }>();
+
+const border_width = $computed(() => (border ? "1px" : "0px"));
 </script>
 
 <style scoped lang="scss">
@@ -39,6 +42,7 @@ table {
   margin: 0 auto;
   overflow: hidden;
   text-align: center;
+  word-break: break-all;
   border-collapse: collapse;
   border-radius: 10px;
 }
@@ -49,6 +53,7 @@ table th {
   color: #666;
   cursor: pointer;
   border: 1px solid #cad9ea;
+  border-width: v-bind(border_width);
 }
 
 table thead th {

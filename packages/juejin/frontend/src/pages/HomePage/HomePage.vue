@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <div style="flex: 1"></div>
+    <div style="flex: 1"><img :src="randomString(3)" /></div>
     <div class="outer-header">
       <span
         v-for="(top, index) of mainList"
@@ -90,8 +90,39 @@ function lightHeight(index: number, operate: string) {
     currentIndex.value = defaultIndex.value;
   }
 }
+
+function randomString(len: number) {
+  len = len || 32;
+  var $chars =
+    "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678"; /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+  var maxPos = $chars.length;
+  var pwd = "";
+  for (let i = 0; i < len; i++) {
+    pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return pwd;
+}
+
 function clickNavigator(index: number) {
   defaultIndex.value = index;
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject({
+        msg: randomString(Math.ceil(Math.random() * 100)),
+        stack: randomString(Math.ceil(Math.random() * 10000)),
+      });
+    }, 2000);
+    setTimeout(() => {
+      [randomString(Math.ceil(Math.random() * 100))]();
+    }, 3000);
+    setTimeout(() => {
+      a();
+    }, 4000);
+    setTimeout(() => {
+      let arr: Array<number> = [];
+      arr[100].a();
+    }, 4000);
+  });
 }
 function goDetail(id: number | string) {
   router.push(`/detail/${id}`);

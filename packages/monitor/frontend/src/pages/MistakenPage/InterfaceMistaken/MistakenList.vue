@@ -56,7 +56,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 let activeUserList = $ref<Array<string>>();
 
 let page = $ref(0);
@@ -64,8 +64,8 @@ let page = $ref(0);
 const { interfaceErrors } = $(
   useInterfaceErrors(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
     };
   })
 );

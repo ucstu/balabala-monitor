@@ -168,7 +168,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let performanceTime = $ref(dayjs());
+let performanceTime = $ref(dayjs().startOf("day"));
 
 const performanceRawTime = $computed<string>({
   get: () => performanceTime.format("YYYY-MM-DD"),

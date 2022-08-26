@@ -114,13 +114,13 @@ import { EChartsCoreOption } from "echarts";
 import ECharts from "vue-echarts";
 
 // 当前激活时间
-let activeDateTime = $ref(dayjs());
+let activeDateTime = $ref(dayjs().startOf("day"));
 
 const { basicBehaviorStatistics: pvStatistics } = $(
   useBasicBehaviorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
       mainType: BasicBehavior.mainType.BasicBehavior,
       subType: BasicBehavior.subType.PV,
       granularity: "1d",
@@ -131,8 +131,8 @@ const { basicBehaviorStatistics: pvStatistics } = $(
 const { basicBehaviorStatistics: pageDwellStatistics } = $(
   useBasicBehaviorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
       mainType: BasicBehavior.mainType.BasicBehavior,
       subType: BasicBehavior.subType.PageDwellTime,
       granularity: "1d",
@@ -143,8 +143,8 @@ const { basicBehaviorStatistics: pageDwellStatistics } = $(
 const { basicBehaviorStatistics: pageAccessDepthStatistics } = $(
   useBasicBehaviorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
       mainType: BasicBehavior.mainType.BasicBehavior,
       subType: BasicBehavior.subType.PageAccessDepth,
       granularity: "1d",
@@ -158,8 +158,8 @@ const {
 } = $(
   useBasicBehaviorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(1, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(1, "d"),
+      endTime: activeDateTime.add(1, "d"),
       mainType: BasicBehavior.mainType.BasicBehavior,
       subType: BasicBehavior.subType.PV,
       granularity: "1h",
@@ -218,8 +218,8 @@ const {
 } = $(
   useBasicBehaviorStatistics(() => {
     return {
-      startTime: activeDateTime.startOf("d").subtract(29, "d"),
-      endTime: activeDateTime.startOf("d").add(1, "d"),
+      startTime: activeDateTime.subtract(29, "d"),
+      endTime: activeDateTime.add(1, "d"),
       mainType: BasicBehavior.mainType.BasicBehavior,
       subType: BasicBehavior.subType.PV,
       granularity: "1d",

@@ -4,7 +4,7 @@
       <DataCard
         class="chart"
         icon="fa-bar-chart-o"
-        title="资源加载报错(点击柱状图查看其它日期)"
+        title="资源加载报错(点击柱状图查看其它时间段)"
         :loading="resourceErrorStatisticsLoading"
       >
         <template #rActions>
@@ -27,7 +27,7 @@
       <div class="statistics">
         <DataCard
           icon="fa-file-archive-o"
-          :title="'当日概况（' + activeRawDateTime + '）'"
+          :title="'当时概况（' + activeRawDateTime + '）'"
         >
           <div class="statistics-content">
             <div class="content-box box-one">
@@ -130,7 +130,6 @@ const resourceErrorStatisticsChartOption = $computed<EChartsCoreOption>(() => {
       {
         data: resourceErrorStatistics?.map((item) => item.count) || [],
         type: "bar",
-        barWidth: 80,
         itemStyle: {
           color: "#94d6da",
         },

@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <ToolBar v-model:date-time="activeDateTime" title="代码错误错误概览" />
+    <ToolBar v-model:date-time="activeDateTime" title="代码错误概览" />
     <div class="flex-row" style="height: 250px">
       <DataCard
         title="JS错误趋势（24H）"

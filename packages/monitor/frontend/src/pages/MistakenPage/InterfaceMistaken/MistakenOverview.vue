@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <ToolBar v-model:date-time="activeDateTime" title="接口错误错误概览" />
+    <ToolBar v-model:date-time="activeDateTime" title="接口错误概览" />
     <div class="flex-row" style="height: 500px">
       <DataCard
         class="card"
@@ -14,7 +14,7 @@
       </DataCard>
       <DataCard
         class="card"
-        title="资源错误（TOP10）"
+        title="接口错误（TOP10）"
         :loading="interfaceErrorsLoading"
         :empty="interfaceErrors?.length ? false : true"
       >

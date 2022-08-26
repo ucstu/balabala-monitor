@@ -9,7 +9,7 @@
               <option value="1-1001">首次绘制（FP）</option>
               <option value="1-1002">首次大绘制（FCP）</option>
               <option value="1-1003">最大绘制（LCP）</option>
-              <option value="2-2001">DOM记载时间</option>
+              <option value="2-2001">DOM加载时间</option>
               <option value="2-2002">完全加载时间</option>
               <option value="3-3001">首屏渲染时间</option>
               <option value="4-4002">路由跳转时间</option>

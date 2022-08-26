@@ -41,7 +41,7 @@
       <div class="up-other">
         <div class="navigator">目录</div>
         <div
-          v-for="(item, index) of [1, 2, 3]"
+          v-for="(item, index) of [1, 2, 3, 4]"
           :key="index"
           style="position: relative"
         >

@@ -2,7 +2,7 @@
 
 ## 📃 相关地址
 
-BalaBala前端监控：[演示地址](https://blbl.ucstu.com) [Github仓库](https://github.com/ucstu/balabala_monitor)\
+BalaBala前端监控：[演示地址](https://blbl.ucstu.com) [Gitee仓库](https://gitee.com/zxd2219/balabala_monitor) [Github仓库](https://github.com/ucstu/balabala_monitor)\
 演示视频：
 
 ## Ⓜ️ 主要功能
